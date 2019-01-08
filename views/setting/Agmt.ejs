@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Page level plugin CSS-->
+    <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>설정 > 협약 관리 </h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card  mb-3 pt-3 pl-3 pr-3">
+          <div class="card-body">
+            <h5>협약 관리</h5>
+            <hr class="mt-2">
+        <div class="card-columns">
+          <form action="/setting/agmt" method="post" onsubmit="return Check();"/>
+          <div class="card-body">
+            <div class="card mb-3">
+              <div class="card-body row">
+                <div class="col-sm-12">
+                  <h5 class="card-title mb-1">회원가입 : 개인정보 동의</h5>
+                  <hr class="mt-2">
+                  <p class="card-text small">
+                    <div>
+                      <textarea class="form-control" name="join" id="join" type="text" rows = "7" ><%=AgmtList[0].join%></textarea>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card mb-3">
+              <div class="card-body row">
+                <div class="col-sm-12">
+                  <h5 class="card-title mb-1">최종 보고서</h5>
+                  <hr class="mt-2">
+                  <p class="card-text small">
+                    <div>
+                      <textarea class="form-control" name="fin_agmt" id="fin_agmt" type="text" rows = "7" ><%=AgmtList[0].fin_agmt%></textarea>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card mb-3">
+              <div class="card-body row">
+                <div class="col-sm-12">
+                  <h5 class="card-title mb-1">사용자 메뉴얼 및 소스파일</h5>
+                  <hr class="mt-2">
+                  <p class="card-text small">
+                    <div>
+                      <textarea class="form-control" name="manual_agmt" id="manual_agmt" type="text" rows = "7" ><%=AgmtList[0].manual_agmt%></textarea>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card mb-3">
+              <div class="card-body row">
+                <div class="col-sm-12">
+                  <h5 class="card-title mb-1">시연 동영상</h5>
+                  <hr class="mt-2">
+                  <p class="card-text small">
+                    <div>
+                      <textarea class="form-control" name="demo_agmt" id="demo_agmt" type="text" rows = "7" ><%=AgmtList[0].demo_agmt%></textarea>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card mb-3">
+              <div class="card-body row">
+                <div class="col-sm-12">
+                  <h5 class="card-title mb-1">특허</h5>
+                  <hr class="mt-2">
+                  <p class="card-text small">
+                    <div>
+                      <textarea class="form-control" name="patent_agmt" id="patent_agmt" type="text" rows = "7" ><%=AgmtList[0].patent_agmt%></textarea>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card mb-3">
+              <div class="card-body row">
+                <div class="col-sm-12">
+                  <h5 class="card-title mb-1">프로그램 등록</h5>
+                  <hr class="mt-2">
+                  <p class="card-text small">
+                    <div>
+                      <textarea class="form-control" name="prg_agmt" id="prg_agmt" type="text" rows = "7" ><%=AgmtList[0].prg_agmt%></textarea>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card mb-3">
+              <div class="card-body row">
+                <div class="col-sm-12">
+                  <h5 class="card-title mb-1">논문</h5>
+                  <hr class="mt-2">
+                  <p class="card-text small">
+                    <div>
+                      <textarea class="form-control" name="thesis_agmt" id="thesis_agmt" type="text" rows = "7" ><%=AgmtList[0].thesis_agmt%></textarea>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card mb-3">
+              <div class="card-body row">
+                <div class="col-sm-12">
+                  <h5 class="card-title mb-1">기타</h5>
+                  <hr class="mt-2">
+                  <p class="card-text small">
+                    <div>
+                      <textarea class="form-control" name="ect_agmt" id="ect_agmt" type="text" rows = "7" ><%=AgmtList[0].ect_agmt%></textarea>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+            <div class = "form-group mt-4">
+              <div class="form-row">
+                <div class = "col-md-5">
+                  <label> </label>
+                </div>
+
+                  <div class = "col-md-2">
+                    <input  type="submit" class="btn btn-primary btn-block" name = "EditProject" value="저장" />
+                  </div>
+                </form>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for this page-->
+    <script src="/js/sb-admin-datatables.min.js"></script>
+
+    <script type="text/javascript">
+
+    function Check(){
+      if (confirm ("협약 관련 내용을 수정하시겠습니까?")==true){
+        return true;
+      }else {
+        return false;
+      }
+    }
+
+
+    </script>
+  </body>
+</html>

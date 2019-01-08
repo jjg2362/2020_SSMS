@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+  </head>
+
+  <body style="overflow: hidden;">
+
+    <form>
+      <div class="form-group">
+        <div class="form-row">
+          <div class="order-md-1" style="padding-right: 15px; padding-left: 15px;">
+            <label for="inputCompany"> 회사명 </label>
+            <input class="form-control" name="searchCompany" id="inputCompany" type="text" placeholder="Enter Company">
+          </div>
+
+          <div class="order-md-2" style="padding-right: 15px; padding-left: 15px;">
+            <label for="buttonCompany"> &nbsp </label>
+            <input class="btn btn-primary btn-block" id="buttonCompany" type="button" value="검색/추가" onclick="findCompany();">
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="form-group">
+      <table class="table" id="companyTable">
+        <thead>
+          <tr>
+            <th> 사업자번호 </th>
+            <th> 회사명 </th>
+            <th> 선택 </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td colspan="3" style="text-align: center;">
+              없음
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <script>
+      function findCompany() {
+        var name = document.getElementById('inputCompany').value;
+
+        $.ajax({
+          url: '/mbrmgt/findCompany',
+          type: 'post',
+          data: {
+            'company_name': name
+          },
+          success: function(result) {
+            if(result.length != 0) {
+              $('#companyTable > tbody').children().remove();
+              var str = "";
+
+              for(var i in result) {
+                var bcn = result[i].business_certif_num;
+                var cn = result[i].company_name;
+
+                str += "<tr>";
+                str += "<td>" + bcn + "</td>";
+                str += "<td>" + cn + "</td>";
+                str += "<td> <input class='btn btn-dark' name='' id='' type='button' value='+' onclick=selectCompany('" + bcn + "','" + cn + "')> </td>";
+                str += "</tr>";
+              }
+
+              $("#companyTable > tbody:last").append(str);
+            } else {
+              $('#companyTable > tbody').children().remove();
+              $("#companyTable > tbody:last").append("<tr><td colspan='3' style='text-align: center;'> 없음 </td></tr>");
+            }
+          }
+        });
+      }
+
+      function selectCompany(bcn, cn) {
+        var parentWindow = window.parent.opener;
+
+        parentWindow.document.getElementById('inputCompanyNum').value = bcn;
+        parentWindow.document.getElementById('inputCompany').value = cn;
+
+        window.parent.close();
+      }
+    </script>
+  </body>
+</html>

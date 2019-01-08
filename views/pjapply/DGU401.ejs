@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+  </head>
+
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    </style>
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>프로젝트 관리 > 프로젝트 지원 </h6>
+        </div>
+        <hr class="mt-2">
+         <div class="card  mb-3 pt-3 pl-3 pr-3">
+          <div class="card-body">
+            <h5> 지원 가능 프로젝트  </h5>
+
+            <form action="/pjapply/DGU401" method="post" >
+
+              <div class = "card p-3 mb-3">
+                <div class = "form-row">
+
+                  <div class ="col-md-2">
+                    <select class="form-control" id="selectDevelopment" name="selectDevelopment" >
+                      <option value = "0">=== 개발분야 ===</option>
+                      <% for(var i = 0; i < PJCodeList[1].length; i++) {%>
+                          <option value = "<%=PJCodeList[1][i].code_nm%>"><center><%=PJCodeList[1][i].code_nm%></center></option>
+                           <% } %>
+                    </select>
+                  </div>
+                  <div class ="col-md-8">
+                    <input class="form-control" name="SearchContent" id="SearchContent" type="text" placeholder="Keyword 또는 Project name">
+                  </div>
+                  <div class ="col-md-2">
+                  <input type="submit" class="btn btn-primary btn-block" name = "SearchProject" value="search" />
+
+                  </div>
+                </div>
+              </div>
+              </form>
+
+            <div class="table-responsive" id="SearchAll">
+            <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+              <div class="row">
+                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                  <thead>
+                    <tr role="row">
+                      <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 5%;"><center></center></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 45%;"><center>프로젝트 주제  (세부사항)</center></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20%;"><center>개발분야</center></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20%;"><center>키워드</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- 지원 가능한 프로젝트 조회 -->
+
+                    <% for(var i = 0; i < PJCodeList[0].length; i++) {%>
+                      <% if(moment(curDate).format('YYYY-MM-DD') <= moment(PJCodeList[0][i].prj_aply_cls_date).format('YYYY-MM-DD')) { %>
+                        <tr role="row" class="odd" >
+                          <td class="sorting_1"><center><%= i+1 %></center></center></td>
+                          <td><center><a href="/pjapply/detail/<%= PJCodeList[0][i].prj_id %>"> <%= PJCodeList[0][i].prj_name %> </a></center></td>
+                          <td><center><%= PJCodeList[0][i].prj_dev_field %></center></td>
+                          <td><center><%= PJCodeList[0][i].keyword1 %> / <%= PJCodeList[0][i].keyword2 %> / <%= PJCodeList[0][i].keyword3 %></center></td>
+                          </tr>
+                         <% }} %>
+                        </tbody>
+                     </table>
+                  </div>
+                </div>
+             </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+
+  </body>
+</html>

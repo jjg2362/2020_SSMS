@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Page level plugin CSS-->
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+  </head>
+
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>프로젝트 운영 > 결과물 등록 </h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card mb-2 mt-2 pt-1 pl-3 pr-3">
+          <div class="card-body">
+            <h4>진행중인 프로젝트 목록</h4>
+            <hr class="mt-2">
+            <div class="table-responsive">
+              <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                <div class="row">
+                  <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                    <thead>
+                      <tr role="row">
+                        <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 5%;">번호</th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:13%;">수업유형</th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:55%;">프로젝트 주제</th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:17%;">개발분야</th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;">팀명</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- 프로젝트별 멘토링보고서 조회 -->
+                      <% for(var i = 0; i < PJList.length; i++) {%>
+                        <tr role="row" class="odd" >
+                          <td class="sorting_1"><%= PJList[i].prj_id %></td>
+                          <td class=""><%=PJList[i].term_chk %></td>
+                          <td><a href="/pjmng/DGU521/page/<%=PJList[i].prj_id %>"> <%= PJList[i].prj_name %> </a></td>
+                          <td><%= PJList[i].prj_dev_field %></td>
+                          <td><%= PJList[i].team_name %></td>
+                        </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../js/sb-admin.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="../vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for this page-->
+    <script src="../js/sb-admin-datatables.min.js"></script>
+
+    <script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
+
+
+  </body>
+</html>

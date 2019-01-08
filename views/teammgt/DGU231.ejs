@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin.css" rel="stylesheet">
+
+    <!-- Page level plugin CSS-->
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <h6>팀 관리 > 팀 조회</h6>
+        <hr>
+        <div class="card mb-3">
+          <div class="card-body">
+            <a id="btnExport" href="#" download="" style ="margin-left:92%; ">
+              <input type="button"  class="btn btn-primary"  value="Excel 다운"/>
+            </a>
+            <hr>
+            <div class="table-responsive">
+
+              <table class="table table-bordered-sm" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>분류</th>
+                    <th>학수번호</th>
+                    <th>팀 명</th>
+                    <th>학번</th>
+                    <th>팀장</th>
+                    <th>학년</th>
+                    <th>이름</th>
+                    <th>전공</th>
+                    <th>이메일</th>
+                    <th>전화번호</th>
+                    <th>1지망</th>
+                    <th>2지망</th>
+                    <th>3지망</th>
+                    <th>멘토</th>
+                    <th>프로젝트</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var i = 0; i < teamInfo.length; i++) { %>
+                       <tr>
+                         <% if (teamInfo[i].class_type == '1') { %>
+                           <td>캡스톤디자인</td>
+                         <%} else if (teamInfo[i].class_type == '2') {%>
+                           <td>기업사회맞춤</td>
+                         <%} else if (teamInfo[i].class_type == '3') {%>
+                           <td>다학제캡스톤</td>
+                          <% } else { %>
+                            <td></td>
+                          <% } %>
+                         <td><%= teamInfo[i].class_num %></td>
+                         <td><%= teamInfo[i].team_name %></td>
+
+
+                         <td>
+                           <% if(!(teamInfo[i].std_resume) || teamInfo[i].std_resume =='undefined' ) { %>
+                               <%= teamInfo[i].std_id %>
+                           <% } else { %>
+                             <a onclick="abilityDownload2('<%= teamInfo[i].std_resume %>');" href="javascript:void(0)">
+                               <%= teamInfo[i].std_id %>
+                             </a>
+
+                           <% } %>
+
+
+                         </td>
+
+                         <% if (teamInfo[i].std_id == teamInfo[i].leader_id) {%>
+                           <td> O </td>
+                         <% }else { %>
+                           <td>  </td>
+                         <%}%>
+                         <td><%= teamInfo[i].std_grade%></td>
+                         <td><%= teamInfo[i].std_name %></td>
+                         <td><%= teamInfo[i].major %></td>
+                         <td><%= teamInfo[i].email_ad %></td>
+                         <td><%= teamInfo[i].phone_num %></td>
+                         <td><%= teamInfo[i].pc1_name %></td>
+                         <td><%= teamInfo[i].pc2_name %></td>
+                         <td><%= teamInfo[i].pc3_name %></td>
+                         <td><%= teamInfo[i].mentor_id %></td>
+                         <td><%= teamInfo[i].prj_name %></td>
+                       </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../js/sb-admin.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="../vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for this page-->
+    <script src="../js/sb-admin-datatables.min.js"></script>
+
+    <script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
+
+    <script type="text/javascript">
+
+    function abilityDownload2(fullPath) {
+      var downloadPath = fullPath.substring(7);
+      location.href = "/fileDownload/" + downloadPath + "/want";
+    }
+
+    $(document).ready(function () {
+        $("#btnExport").on('click', function () {
+            var uri = $("#dataTable").excelexportjs({
+                containerid: "dataTable"
+                , datatype:  'table'
+                , returnUri: true
+            });
+            $(this).attr('download', '팀조회.xls').attr('href', uri).attr('target', '_blank');
+        });
+    });
+
+    </script>
+  </body>
+</html>

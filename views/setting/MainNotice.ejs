@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>설정 > 공지관리 </h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card card-register mx-auto mt-1 mb-1">
+          <div class="card-body">
+            <h4>공지 관리</h4>
+            <label style="float: right; color: red"> 512 * 512 사이즈의 이미지를 업로드 해주세요. </label>
+            <hr class="mt-2">
+            <div class="form-row mt-3">
+              <label for="upload_image1">사진파일1:&nbsp</label>
+              <% if(MainInfo[0].image1 != '' && MainInfo[0].image1 != null) { %>
+                <% var id1 = MainInfo[0].image1.split('/') %>
+                <% var id2 = id1[2].length %>
+                <% var id3 = id1[2].substr(14,id2) %>
+                <a onclick="abilityDownload2('<%= MainInfo[0].image1 %>');" href="javascript:void(0)">
+                  <%= id3 %>
+                </a>
+              <% } %>
+            </div>
+            <div class="form-row">
+              <div class = "col-md-9">
+                <form action="/setting/MainNotice/upload/image1" method="post" enctype="multipart/form-data" >
+                <input class="form-control" name="Image1" id="Image1" type="file" >
+              </div>
+              <div class = "col-md-3">
+                <div class="form-row">
+                  <div class = "col-md-1">
+                  </div>
+                  <div class = "col-md-5">
+                    <input  type="submit" class="btn btn-link btn-primary" name = "SaveState1" value="저장" />
+                    </form>
+                  </div>
+                  <div class = "col-md-1">
+                  </div>
+                  <div class = "col-md-5">
+                    <form action="/setting/MainNotice/image1" method="post" enctype="multipart/form-data" >
+                      <input  type="submit" class="btn btn-link btn-primary" name = "DeleteImage1" value="삭제" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row mt-3">
+              <label for="upload_image2">사진파일2:&nbsp</label>
+              <% if(MainInfo[0].image2 != '' && MainInfo[0].image2 != null) { %>
+                <% var id4 = MainInfo[0].image2.split('/') %>
+                <% var id5 = id4[2].length %>
+                <% var id6 = id4[2].substr(14,id5) %>
+                <a onclick="abilityDownload2('<%= MainInfo[0].image2 %>');" href="javascript:void(0)">
+                  <%= id6 %>
+                </a>
+              <% } %>
+            </div>
+            <div class="form-row">
+              <div class = "col-md-9">
+                <form action="/setting/MainNotice/upload/image2" method="post" enctype="multipart/form-data" >
+                <input class="form-control" name="Image2" id="Image2" type="file" >
+              </div>
+              <div class = "col-md-3">
+                <div class="form-row">
+                  <div class = "col-md-1">
+                  </div>
+                  <div class = "col-md-5">
+                    <input  type="submit" class="btn btn-link btn-primary" name = "SaveState2" value="저장" />
+                    </form>
+                  </div>
+                  <div class = "col-md-1">
+                  </div>
+                  <div class = "col-md-5">
+                    <form action="/setting/MainNotice/image2" method="post" enctype="multipart/form-data" >
+                      <input  type="submit" class="btn btn-link btn-primary" name = "DeleteImage2" value="삭제" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row mt-3">
+              <label for="upload_image3">사진파일3:&nbsp</label>
+              <% if(MainInfo[0].image3 != '' && MainInfo[0].image3 != null) { %>
+                <% var id7 = MainInfo[0].image3.split('/') %>
+                <% var id8 = id7[2].length %>
+                <% var id9 = id7[2].substr(14,id8) %>
+                <a onclick="abilityDownload2('<%= MainInfo[0].image3 %>');" href="javascript:void(0)">
+                  <%= id9 %>
+                </a>
+              <% } %>
+            </div>
+            <div class="form-row">
+              <div class = "col-md-9">
+                <form action="/setting/MainNotice/upload/image3" method="post" enctype="multipart/form-data" >
+                <input class="form-control" name="Image3" id="Image3" type="file" >
+              </div>
+              <div class = "col-md-3">
+                <div class="form-row">
+                  <div class = "col-md-1">
+                  </div>
+                  <div class = "col-md-5">
+                    <input  type="submit" class="btn btn-link btn-primary" name = "SaveState3" value="저장" />
+                    </form>
+                  </div>
+                  <div class = "col-md-1">
+                  </div>
+                  <div class = "col-md-5">
+                    <form action="/setting/MainNotice/image3" method="post" enctype="multipart/form-data" >
+                      <input  type="submit" class="btn btn-link btn-primary" name = "DeleteImage3" value="삭제" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row mt-3">
+              <label for="upload_image4">사진파일4:&nbsp</label>
+              <% if(MainInfo[0].image4 != '' && MainInfo[0].image4 != null) { %>
+                <% var id10 = MainInfo[0].image4.split('/') %>
+                <% var id11 = id10[2].length %>
+                <% var id12 = id10[2].substr(14,id11) %>
+                <a onclick="abilityDownload2('<%= MainInfo[0].image4 %>');" href="javascript:void(0)">
+                  <%= id12 %>
+                </a>
+              <% } %>
+            </div>
+            <div class="form-row">
+              <div class = "col-md-9">
+                <form action="/setting/MainNotice/upload/image4" method="post" enctype="multipart/form-data" >
+                <input class="form-control" name="Image4" id="Image4" type="file" >
+              </div>
+              <div class = "col-md-3">
+                <div class="form-row">
+                  <div class = "col-md-1">
+                  </div>
+                  <div class = "col-md-5">
+                    <input  type="submit" class="btn btn-link btn-primary" name = "SaveState4" value="저장" />
+                    </form>
+                  </div>
+                  <div class = "col-md-1">
+                  </div>
+                  <div class = "col-md-5">
+                    <form action="/setting/MainNotice/image4" method="post" enctype="multipart/form-data" >
+                      <input  type="submit" class="btn btn-link btn-primary" name = "DeleteImage4" value="삭제" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row mt-3">
+              <label for="upload_image5">사진파일5:&nbsp</label>
+              <% if(MainInfo[0].image5 != '' && MainInfo[0].image5 != null) { %>
+                <% var id13 = MainInfo[0].image5.split('/') %>
+                <% var id14 = id13[2].length %>
+                <% var id15 = id13[2].substr(14,id14) %>
+                <a onclick="abilityDownload2('<%= MainInfo[0].image5 %>');" href="javascript:void(0)">
+                  <%= id15 %>
+                </a>
+              <% } %>
+            </div>
+            <div class="form-row">
+              <div class = "col-md-9">
+                <form action="/setting/MainNotice/upload/image5" method="post" enctype="multipart/form-data" >
+                <input class="form-control" name="Image5" id="Image5" type="file" >
+              </div>
+              <div class = "col-md-3">
+                <div class="form-row">
+                  <div class = "col-md-1">
+                  </div>
+                  <div class = "col-md-5">
+                    <input  type="submit" class="btn btn-link btn-primary" name = "SaveState5" value="저장" />
+                    </form>
+                  </div>
+                  <div class = "col-md-1">
+                  </div>
+                  <div class = "col-md-5">
+                    <form action="/setting/MainNotice/image5" method="post" enctype="multipart/form-data" >
+                      <input  type="submit" class="btn btn-link btn-primary" name = "DeleteImage5" value="삭제" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+      function abilityDownload2(fullPath) {
+        var downloadPath = fullPath.substring(7);
+        location.href = "/fileDownload/" + downloadPath + "/want";
+      }
+    </script>
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+  </body>
+</html>

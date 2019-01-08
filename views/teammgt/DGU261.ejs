@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin.css" rel="stylesheet">
+
+    <!-- Page level plugin CSS-->
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>팀 관리 > 팀 - 교과목 매칭</h6>
+        </div>
+        <hr>
+
+        <div class="card card-register mx-auto mb-3 pt-3 pl-3 pr-3">
+         <div class="card-body">
+           <div class ="form-row">
+             <h5> 팀 - 교과목 매칭 </h5>
+           </div>
+           <form action="/teammgt/DGU261" method="post" onsubmit="return CheckForm();" />
+
+             <!-- 팀-교과목 매칭 -->
+             <div class="form-group mt-4">
+               <div class="form-row">
+                 <div class ="col-md-4">
+                   <label>팀 </label>
+                 </div>
+                 <div class = "col-md-4">
+                   <label>교과목</label>
+                 </div>
+               </div>
+
+               <!-- 팀-프로젝트-교과목 선택 -->
+               <div class="form-row">
+
+                 <div class="col-md-4 ">
+                   <select class="form-control" id="TeamID" name="TeamID">
+                     <option value = "없음">-- 팀 --</option>
+                     <% for(var i = 0; i < TeamClassName[0].length; i++) {%>
+                         <option value = "<%=TeamClassName[0][i].team_id%>"><%=TeamClassName[0][i].team_name%></option>
+                          <% } %>
+                   </select>
+                 </div>
+
+
+                 <div class="col-md-6">
+                   <select class="form-control" id="ClassInfo" name="ClassInfo" >
+                     <option value = "없음">---- 교과목 ---</option>
+
+                     <% for(var i = 0; i < TeamClassName[1].length; i++) {%>
+                       <%var ClassnumSettings = [TeamClassName[1][i].class_num,TeamClassName[1][i].settings_id] %>
+                         <option value = "<%=ClassnumSettings%>" >
+                           <%=TeamClassName[1][i].class_num%> - <%=TeamClassName[1][i].class_name%> - <%=TeamClassName[1][i].major%> - <%=TeamClassName[1][i].inst_name%></option>
+                          <% } %>
+                   </select>
+                 </div>
+                 <div class = "col-md-2 ">
+                   <input  type="submit" class="btn btn-primary btn-link" name = "MakeProject" value=" 등록 " />
+                 </div>
+
+               </div>
+             </div>
+           </form>
+       </div>
+     </div>
+     <div class="card card-register mx-auto mb-3 pt-3 pl-3 pr-3">
+      <div class="card-body">
+        <div class ="form-row">
+          <h5> 등록 결과</h5>
+        </div>
+
+        <div class="table-responsive">
+
+          <table class="table table-bordered-sm" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+
+                <th>팀</th>
+                <th>교과목</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i = 0; i < TeamClassName[2].length; i++) { %>
+                   <tr>
+                       <td><%=TeamClassName[2][i].team_name%></td>
+                       <td><%=TeamClassName[2][i].class_num%> - <%=TeamClassName[2][i].major%> - <%=TeamClassName[2][i].inst_name%></td>
+
+                   </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+          </div>
+    </div>
+  </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../js/sb-admin.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="../vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for this page-->
+    <script src="../js/sb-admin-datatables.min.js"></script>
+
+
+    <script type="text/javascript">
+
+      function CheckForm(){
+          var _TeamID = document.getElementById("TeamID").value;
+          var _ClassInfo = document.getElementById("ClassInfo").value;
+
+
+          if (_TeamID=="없음"){
+            alert("팀을 선택하세요.");
+            document.getElementById("TeamID").focus();
+            return false;
+          }
+
+          if (_ClassInfo =="없음"){
+            alert("교과목을 선택하세요. ");
+            document.getElementById("ClassInfo").focus();
+            return false;
+          }
+
+          if (confirm("팀 - 교과목을 매칭하시겠습니까? ") == true ) {
+            return true ;
+          }else{
+            return false;
+          }
+      }
+
+
+    </script>
+  </body>
+</html>

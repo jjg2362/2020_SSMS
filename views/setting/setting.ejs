@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+   <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  </head>
+
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    </style>
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>설정 > 학기 일정 관리 > 추가</h6>
+        </div>
+        <hr class="mt-2">
+         <div class="card card-register mx-auto mt-5 mb-5">
+          <div class="card-body">
+            <div class ="form-row">
+              <h5> 학기 일정 추가 </h5>
+            </div>
+
+            <form action="/setting/setting" method="post" id="setting" onsubmit="return CheckForm();" />
+              <!-- 학년/학기 설정 -->
+              <div class="form-group mt-4 mb-4">
+                <div class = "form-row">
+                  <div class ="col-md-4">
+                    <label for="inputPjName"> 연도 </label>
+                    <input class="form-control" name="prj_year" id="prj_year" onkeydown="return showKeyCode(event)" placeholder ="연도">
+                  </div>
+
+                  <div class ="col-md-4">
+                      <label for="inputPjName"> 학기 </label>
+                      <select class="form-control" id="prj_semes" name="prj_semes" >
+                        <option value = "0">---학기---</option>
+                        <option value ="1학기">1학기</option>
+                        <option value ="여름학기">여름학기</option>
+                        <option value ="2학기">2학기</option>
+                        <option value ="겨울학기">겨울학기</option>
+                      </select>
+                    </div>
+
+                    <div class ="col-md-4">
+                        <label for="term_chk"> 분류 </label>
+                        <input class="form-control" name="term_chk" id="term_chk" type="text" placeholder="ex. 전공단기">
+                    </div>
+
+                  </div>
+                </div>
+              <!-- 기간 -->
+              <div class="form-group mt-4 mb-4">
+                <div class = "form-row">
+
+                  <div class ="col-md-6">
+                    <label for="inputPjName"> 학기 시작일 </label>
+                    <input  class="form-control" name ="strt_date" id="strt_date" type="text" placeholder="연도-월-일">
+
+                  </div>
+
+                  <div class ="col-md-6">
+                    <label for="inputPjName"> 마감일 </label>
+                    <input class="form-control" name="cls_date" id="cls_date" type="text" placeholder="연도-월-일">
+                  </div>
+
+                </div>
+              </div>
+              <hr class = "mt-5 mb-5">
+
+              <label for="pj_make_date">기업 : 주제 제안 (프로젝트 개설) 마감일</label>
+              <input class="form-control mb-4" name="prj_make_cls_date" id="prj_make_cls_date" type="text" placeholder="연도-월-일"></input>
+
+              <label for="matching_day_date">매칭데이 날짜 (멘토링 시작 가능 날짜)</label>
+              <input class="form-control mb-4" name="mtch_date" id="mtch_date" type="text" placeholder="연도-월-일" ></input>
+
+              <label for="pj_make_date">학생 : 프로젝트 지원 마감일</label>
+              <input class="form-control mb-4" name="prj_aply_cls_date" id="prj_aply_cls_date" type="text" placeholder="연도-월-일"></input>
+
+              <label for="matching_day_date"> 기업 : 학생 매칭 마감일(1차) </label>
+              <input class="form-control mb-4" name="mtch_cls_date" id="mtch_cls_date" type="text" placeholder="연도-월-일" ></input>
+
+              <label for="pj_make_date">학생 : 프로젝트 계획서 제출 마감일</label>
+              <input class="form-control mb-4" name="prj_plan_ddl" id="prj_plan_ddl" type="text" placeholder="연도-월-일" ></input>
+
+              <label for="matching_day_date">학생 : 프로젝트 보고서 제출 마감일</label>
+              <input class="form-control mb-4" name="prj_rpt_ddl" id="prj_rpt_ddl" type="text" placeholder="연도-월-일" ></input>
+
+              <label for="matching_day_date">결과발표회 날짜</label>
+              <input class="form-control mb-4" name="prj_prst_date" id="prj_prst_date" type="text" placeholder="연도-월-일" ></input>
+
+              <label for="pj_make_date">멘토링 횟수 제한</label>
+              <input class="form-control mb-4" name="mentoring_limit" id="mentoring_limit" onkeydown="return showKeyCode(event)"></input>
+
+              <div class = "form-group mt-4">
+                <div class="form-row">
+                  <div class = "col-md-4">
+                    <label> </label>
+                  </div>
+                  <div class = "col-md-4">
+                    <input  type="submit" class="btn btn-primary btn-block" name = "RegistDate" value="학기 설정 완료" />
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <script type="text/javascript">
+
+      $(function () {
+
+        $("#strt_date").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#cls_date").datepicker({ dateFormat: 'yy-mm-dd' });
+
+        $("#prj_make_cls_date").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#mtch_date").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#prj_plan_ddl").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#prj_rpt_ddl").datepicker({ dateFormat: 'yy-mm-dd' });
+
+        $("#prj_aply_cls_date").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#mtch_cls_date").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#prj_prst_date").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#prj_aply_cls_date").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
+
+
+      function showKeyCode(event) {
+        event = event || window.event;
+        var keyID = (event.which) ? event.which : event.keyCode;
+        if( ( keyID >=48 && keyID <= 57 ) || ( keyID >=96 && keyID <= 105 )|| keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39  )
+        {
+          return;
+        }
+        else
+        {
+          return false;
+        }
+      }
+      function CheckForm(){
+          var _prj_year = document.getElementById("prj_year").value;
+          var _prj_semes = document.getElementById("prj_semes").value;
+          var _term_chk = document.getElementById("term_chk").value;
+
+          var _strt_date = document.getElementById("strt_date").value;
+          var _cls_date = document.getElementById("cls_date").value;
+
+          var _prj_make_cls_date = document.getElementById("prj_make_cls_date").value;
+          var _mtch_date = document.getElementById("mtch_date").value;
+          var _prj_plan_ddl = document.getElementById("prj_plan_ddl").value;
+          var _prj_rpt_ddl = document.getElementById("prj_rpt_ddl").value;
+
+          var _prj_aply_cls_date = document.getElementById("prj_aply_cls_date").value;
+          var _mtch_cls_date = document.getElementById("mtch_cls_date").value;
+          var _prj_prst_date = document.getElementById("prj_prst_date").value;
+          var _mentoring_limit = document.getElementById("mentoring_limit").value;
+
+
+          if (_prj_year==""){
+            alert("모든 내용 필수 입력사항입니다.");
+            document.getElementById("prj_year").focus();
+            return false;
+          }
+
+          if (_prj_semes=='0'){
+            alert("학기를 입력해주세요.");
+            document.getElementById("prj_semes").focus();
+            return false;
+          }
+
+          if (_term_chk=='0'){
+            alert("기간을 입력해주세요.");
+            document.getElementById("term_chk").focus();
+            return false;
+          }
+
+          if (_strt_date ==''){
+            alert("학기 시작일 선택하세요.");
+            document.getElementById("strt_date").focus();
+            return false;
+          }
+
+          if (_cls_date ==''){
+            alert("학기 마감일을 선택하세요.");
+            document.getElementById("cls_date").focus();
+            return false;
+          }
+
+          if (_prj_make_cls_date ==''){
+            alert("기업 주제 제안 (프로젝트 개설) 마감일을 선택하세요.");
+            document.getElementById("prj_make_cls_date").focus();
+            return false;
+          }
+
+          if (_mtch_date ==''){
+            alert("매칭데이 날짜 (멘토링 시작 가능 날짜)을 선택하세요.");
+            document.getElementById("mtch_date").focus();
+            return false;
+          }
+
+          if (_prj_aply_cls_date ==''){
+            alert("학생 : 프로젝트 지원 마감일을 선택하세요.");
+            document.getElementById("prj_aply_cls_date").focus();
+            return false;
+          }
+
+          if (_mtch_cls_date ==''){
+            alert("기업 : 학생 매칭 마감일(1차)을 선택하세요.");
+            document.getElementById("mtch_cls_date").focus();
+            return false;
+          }
+
+          if (_prj_plan_ddl ==''){
+            alert("프로젝트 계획서 제출 마감일을 선택하세요.");
+            document.getElementById("prj_plan_ddl").focus();
+            return false;
+          }
+
+          if (_mentoring_limit ==''){
+            alert("멘토링 횟수 제한을 선택하세요.");
+            document.getElementById("mentoring_limit").focus();
+            return false;
+          }
+
+          if (confirm("'"+_prj_year+"-"+_prj_semes+"-"+_term_chk+"' 일정을 등록하시겠습니까? ") == true ) {
+            return true ;
+          }else{
+            return false;
+          }
+
+      }
+    </script>
+  </body>
+</html>

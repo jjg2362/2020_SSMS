@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin.css" rel="stylesheet">
+
+    <!-- Page level plugin CSS-->
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <h6>팀 관리 > 프로젝트 조회</h6>
+        <hr>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <a id="btnExport" href="#" download="" style ="margin-left:92%; ">
+              <input type="button"  class="btn btn-primary"  value="Excel 다운"/>
+            </a>
+            <hr>
+            <div class="table-responsive">
+              <table class="table table-bordered-sm" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th style="width: 27%;">프로젝트 명</th>
+                    <th style="width: 5%;">멘토</th>
+                    <th style="width: 8%;">이름</th>
+                    <th style="width: 10%;">회사</th>
+                    <th style="width: 10%;">전화번호</th>
+                    <th style="width: 10%;">이메일</th>
+                    <th style="width: 5%;">매칭 팀</th>
+                    <th style="width: 11%;">1지망</th>
+                    <th style="width: 11%;">2지망</th>
+                    <th style="width: 11%;">3지망</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var i = 0; i < PjInfo.length; i++) { %>
+                       <tr>
+                         <td><%= PjInfo[i].prj_id %></td>
+                         <td><%= PjInfo[i].prj_name %></td>
+                         <td><%= PjInfo[i].mentor_id %></td>
+                         <td><%= PjInfo[i].mentor_name %></td>
+                         <td><%= PjInfo[i].company_name %></td>
+                         <td><%= PjInfo[i].phone_num %></td>
+                         <td><%= PjInfo[i].email_ad %></td>
+                         <td><%= PjInfo[i].fixed_team %></td>
+                         <td><%= PjInfo[i].team1 %></td>
+                         <td><%= PjInfo[i].team2 %></td>
+                         <td><%= PjInfo[i].team3 %></td>
+                       </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../js/sb-admin.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="../vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for this page-->
+    <script src="../js/sb-admin-datatables.min.js"></script>
+
+    <script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
+
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnExport").on('click', function () {
+            var uri = $("#dataTable").excelexportjs({
+                containerid: "dataTable"
+                , datatype:  'table'
+                , returnUri: true
+            });
+            $(this).attr('download', '프로젝트조회.xls').attr('href', uri).attr('target', '_blank');
+        });
+    });
+
+    </script>
+  </body>
+</html>

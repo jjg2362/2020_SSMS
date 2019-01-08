@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+  </head>
+
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    </style>
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>프로젝트 개설 > 계획서 관리 > 추가 개설</h6>
+        </div>
+        <hr class="mt-2">
+         <div class="card  mb-3 pt-3 pl-3 pr-3">
+          <div class="card-body">
+            <div class ="form-row">
+              <h5> 계획서 수정 &nbsp </h5><label style="float: right; color: red"> * 모든 항목 필수 입력 </label>
+            </div>
+            <form action="/pjmake/addition" method="post" enctype="multipart/form-data" id="prj_make" onsubmit="return CheckForm();" >
+            <input type = "hidden" name = "projectID" id = "projectID" value ="<%=PjSettingInfo[0][0].prj_id %>" />
+            <input type = "hidden" name = "projectAppendix" id = "projectAppendix" value ="<%=PjSettingInfo[0][0].appendix %>" />
+            <input type = "hidden" name = "mentorid" id = "mentorid" value ="<%=PjSettingInfo[0][0].mentor_id %>" />
+              <!-- 프로젝트 이름 입력 -->
+              <div class="form-group mt-4">
+                <label for="inputPjName"> 과제명 </label>
+                <input class="form-control" name="PjName" id="inputPjName" type="text" placeholder="Project Name" value = "<%=PjSettingInfo[0][0].prj_name%>">
+              </div>
+
+              <!-- 프로젝트 개요 입력 -->
+              <div class="form-group mt-4 mb-4">
+                <label for="prj_outline"> 프로젝트 개요 </label>
+                <input class="form-control" name="prj_outline" id="prj_outline" type="text" placeholder="Project Outline"  value = "<%=PjSettingInfo[0][0].prj_outline%>" onkeyup = "chkword(this, 200)">
+              </div>
+
+              <!-- Pre-Matching 여부 -->
+              <fieldset class="scheduler-border mb-3">
+                <legend class="scheduler-border">Pre-Matching 여부 &nbsp <label style="float: right; color: red"> * Pre-Matching이란, 학기 시작 전 방학동안 미리 진행되는 프로젝트를 말합니다. </label></legend>
+                  <div class="form-row">
+                    <div class="col-md-2" >
+                      <input style="margin-right: 2%;" type="radio" value="1" name="preMat">예
+                    </div>
+                    <div class="col-md-2">
+                      <input style="margin-right: 2%;" type="radio" value="0" name="preMat" checked="checked">아니오
+                    </div>
+                  </div>
+              </fieldset>
+
+
+              <!-- 프로젝트 추진배경 입력 -->
+
+              <fieldset class="scheduler-border mb-3">
+                <legend class="scheduler-border">추진 배경 (배경/필요성/선행사례 등 기술)</legend>
+                  <div class="form-group mt-4">
+                    <label for="prj_bckgrd"> 왜 이 프로젝트를 개발하려고 하는가?   (50자 이상 입력)</label>
+                      <textarea class="form-control" name="prj_bckgrd" id="prj_bckgrd" type="text"  rows = "3" onkeyup = "chkword(this, 300)"><%=PjSettingInfo[0][0].prj_bckgrd%></textarea>
+                  </div>
+
+                  <div class="form-group mt-4">
+                    <label for="prj_ncst"> 응용 분야를 포함하여 산업, 기술 등의 동향을 기술   (50자 이상 입력) </label>
+                    <textarea class="form-control" name="prj_ncst" id="prj_ncst" type="text"   rows = "3" onkeyup = "chkword(this, 300)"><%=PjSettingInfo[0][0].prj_ncst%></textarea>
+                  </div>
+
+                  <div class="form-group mt-4">
+                    <label for="prj_pri_tech"> 필요성 혹은 기존 유사 시스템이 있다면 문제점 제시 등   (50자 이상 입력) </label>
+                    <textarea class="form-control" name="prj_pri_tech" id="prj_pri_tech" type="text"    rows = "3" onkeyup = "chkword(this, 300)"><%=PjSettingInfo[0][0].prj_pri_tech%></textarea>
+                  </div>
+
+                </legend>
+              </fieldset>
+
+              <!-- 프로젝트 목표 및 내용 입력 -->
+
+              <fieldset class="scheduler-border ">
+                <legend class="scheduler-border">목표 및 내용 </legend>
+                  <div class="form-group mt-4">
+                    <label for="prj_goal"> 개발 목표 - 개발하고자 하는 시스템의 목표   (50자 이상 입력)</label>
+                      <textarea class="form-control" name="prj_goal" id="prj_goal" type="text"  rows = "3" onkeyup = "chkword(this, 500)"><%=PjSettingInfo[0][0].prj_goal%></textarea>
+                  </div>
+
+                  <div class="form-group mt-4">
+                    <label for="prj_content"> 개발 내용 - 구성과 기능, 특징 등   (50자 이상 입력) </label>
+                    <textarea class="form-control" name="prj_content" id="prj_content" type="text"  rows = "3" onkeyup = "chkword(this, 500)"><%=PjSettingInfo[0][0].prj_content%></textarea>
+                  </div>
+
+                  <div class="form-group mt-4">
+                    <label for="prj_exp_eff"> 기대효과 - 이 시스템이 개발되면 누구에게 어떤 도움을 줄 수 있는가? (경제적 측면, 사회적 측면 등)   (50자 이상 입력) </label>
+                    <textarea class="form-control" name="prj_exp_eff" id="prj_exp_eff" type="text" rows = "3" onkeyup = "chkword(this, 500)"><%=PjSettingInfo[0][0].prj_exp_eff%></textarea>
+                  </div>
+
+                </legend>
+              </fieldset>
+
+              <!-- 프로젝트 카테고리 입력-->
+              <div class="form-group mt-4">
+                <label for="inputCategory"> 키워드 (Keyword) </label>
+                <div class="form-row">
+                  <div class ="col-md-4">
+                    <input class="form-control" value ="<%=PjSettingInfo[0][0].keyword1%>" name="inputKeyword1" id="inputKeyword1" type="text" placeholder="Project Keyword 1">
+                  </div>
+                  <div class ="col-md-4">
+                    <input class="form-control" value ="<%=PjSettingInfo[0][0].keyword2%>" name="inputKeyword2" id="inputKeyword2" type="text" placeholder="Project Keyword 2">
+                  </div>
+                  <div class ="col-md-4">
+                    <input class="form-control" value ="<%=PjSettingInfo[0][0].keyword3%>" name="inputKeyword3" id="inputKeyword3" type="text" placeholder="Project Keyword 3">
+                  </div>
+                </div>
+              </div>
+
+              <!-- 연구/개발 분야 선택 -->
+              <div class="form-group mt-4">
+                <div class="form-row">
+                  <div class ="col-md-4">
+                    <label>연구 / 개발 분야 </label> <label style=" color: red"> (기존: <%=PjSettingInfo[0][0].prj_dev_field%> ) </label>
+                  </div>
+                  <div class = "col-md-4">
+                    <label>분류 </label><label style=" color: red"> (기존: <%=PjSettingInfo[0][0].settings_id%> ) </label>
+                  </div>
+                  <div class = "col-md-4">
+                    <label>현장실습 수용 </label><label style=" color: red"> (기존: <%=PjSettingInfo[0][0].internship_yn%> ) </label>
+                  </div>
+                </div>
+                <div class="form-row">
+
+
+                  <!-- 연구/ 개발분야 선택 -->
+                  <div class="col-md-4 ">
+
+                    <select class="form-control" id="inputDevelopment" name="developmentSelect" onchange="inputDevType()">
+                      <option value = "없음">---------------- 연구 / 개발분야 ----------------</option>
+                      <% for(var i = 0; i < PjSettingInfo[1].length; i++) {%>
+                          <option value = "<%=PjSettingInfo[1][i].code_nm%>"><%=PjSettingInfo[1][i].code_nm%></option>
+                           <% } %>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <select class="form-control" id="Term" name="Term" >
+                      <option value = "0">----------------------- 분류 -----------------------</option>
+                      <% for(var i = 0; i < PjSettingInfo[2].length; i++) {%>
+                          <option value = "<%=PjSettingInfo[2][i].settings_id%>"><%=PjSettingInfo[2][i].settings_id%> / <%=PjSettingInfo[2][i].prj_year%>-<%=PjSettingInfo[2][i].prj_semes%>-<%=PjSettingInfo[2][i].term_chk%></option>
+                           <% } %>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <select class="form-control" id="internship_yn" name="internship_yn" >
+                      <option value = "2">--------------- 현장실습 수용 여부 ---------------</option>
+                      <option value = "4">가능 (4주, 1개월)</option>
+                      <option value = "8">가능 (8주, 2개월)</option>
+                      <option value = "0">불가능</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+                <div class="form-group" >
+                  <div class="form-row">
+                    <div class="col-md-4 " id = "addBox2"  style = "display:none">
+                      <label for="inputDevelopment1"> 연구/개발분야 (직접 입력) </label>
+                      <input class="form-control" id="inputDevelopment1" name="developmentSelect1" type="text">
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group mt-4">
+                  <label for="inputProjectFile"> 주제 발표 자료 업로드 &nbsp&nbsp </label><label style=" color: red"> * 파일명 - '회사명_멘토이름.ppt' 으로 업로드 해주세요. / (추가 개설) 파일을 선택하지 않으면 기존의 파일이 업로드됩니다.</label>
+                  <div class="form-row">
+                    <div class="col-md-10">
+                      <input class="form-control" name="inputProjectFile" id="inputProjectFile" type="file" >
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="btn btn-primary btn-block" onclick="abilityDownload2('<%= PjSettingInfo[3][0].topic_sgst_apdx %>');" href="javascript:void(0)">  양식 다운
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <div class = "form-group mt-4">
+                <div class="form-row">
+                  <div class = "col-md-3">
+                    <label style="float: right; color: red"> '멘토 (선택 안 함)' 선택 시 기존의 멘토로 적용</label>
+                  </div>
+                  <div class = "col-md-2">
+                    <select class="form-control" id="inputmentor" name="inputmentor">
+                      <option value = "0">------ 멘토 (선택 안 함) -----</option>
+                      <% for(var i = 0; i < PjSettingInfo[4].length; i++) {%>
+                          <option value = "<%=PjSettingInfo[4][i].mentor_id%>"><%=PjSettingInfo[4][i].company_name%> - <%=PjSettingInfo[4][i].mentor_name%> -<%=PjSettingInfo[4][i].mentor_id%></option>
+                           <% } %>
+                    </select>
+                  </div>
+                  <div class = "col-md-2">
+                    <input  type="submit" class="btn btn-primary btn-block" name = "MakeProject" value="추가 개설"  />
+                  </div>
+              </form>
+
+
+              <div class = "col-md-2">
+                <div class="btn btn-danger" name = "CancelEdit" onclick="CheckCancel()"> 취소 </div>
+              </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <script type="text/javascript">
+    function abilityDownload2(fullPath) {
+        var downloadPath = fullPath.substring(7);
+        location.href = "/fileDownload/" + downloadPath + "/want";
+      }
+    function abilityDownload(fullPath) {
+        var downloadPath = fullPath.substring(7);
+        location.href = "/fileDownload/" + downloadPath;
+      }
+
+      function inputDevType() {
+        var selectType = document.getElementById("inputDevelopment");
+        var selectedValue = selectType.options[selectType.selectedIndex].value;
+        var show2  = document.getElementById("addBox2");
+
+        if (selectedValue == "기타" ){
+            show2.style.display= '';
+        }else{
+          show2.style.display= "none";
+        }
+      }
+
+
+      function chkword(obj, maxByte) {
+
+        var strValue = obj.value;
+        var strLen = strValue.length;
+        var totalByte = 0;
+        var len = 0;
+        var oneChar = "";
+        var str2 = "";
+
+        for (var i = 0; i < strLen; i++) {
+            oneChar = strValue.charAt(i);
+            if (escape(oneChar).length > 4) {
+                totalByte += 2;
+            } else {
+                totalByte++;
+            }
+
+            // 입력한 문자 길이보다 넘치면 잘라내기 위해 저장
+            if (totalByte <= maxByte) {
+                len = i + 1;
+            }
+        }
+
+        // 넘어가는 글자는 자른다.
+        if (totalByte > maxByte) {
+            alert((maxByte/2) + "자를 초과 입력 할 수 없습니다.");
+            str2 = strValue.substr(0, len);
+            obj.value = str2;
+            chkword(obj, 4000);
+        }
+    }
+
+    function CheckForm(){
+        var _inputPjName = document.getElementById("inputPjName").value;
+        var _prj_outline = document.getElementById("prj_outline").value;
+
+        var _prj_bckgrd = document.getElementById("prj_bckgrd").value;
+        var _prj_ncst = document.getElementById("prj_ncst").value;
+        var _prj_pri_tech = document.getElementById("prj_pri_tech").value;
+
+        var _prj_goal = document.getElementById("prj_goal").value;
+        var _prj_content = document.getElementById("prj_content").value;
+        var _prj_exp_eff = document.getElementById("prj_exp_eff").value;
+
+        var _inputKeyword1 = document.getElementById("inputKeyword1").value;
+        var _inputKeyword2 = document.getElementById("inputKeyword2").value;
+        var _inputKeyword3 = document.getElementById("inputKeyword3").value;
+
+        var _inputDevelopment = document.getElementById("inputDevelopment").value;
+        var _inputDevelopment1 = document.getElementById("inputDevelopment1").value;
+
+        var _Term = document.getElementById("Term").value;
+
+        var _internship_yn = document.getElementById("internship_yn").value;
+        var _inputProjectFile =document.getElementById("inputProjectFile").value;
+
+        if (_inputPjName==""){
+          alert("과제명을 입력하세요.");
+          document.getElementById("inputPjName").focus();
+          return false;
+        }
+
+        if (_prj_outline.length ==''){
+          alert("프로젝트 개요를 입력하세요. ");
+          document.getElementById("prj_outline").focus();
+          return false;
+        }
+
+        if (_prj_bckgrd.length < 50){
+          alert("추진배경을 50자 이상 입력하세요. ( " + _prj_bckgrd.length  +" / 50 자 )");
+          document.getElementById("prj_bckgrd").focus();
+          return false;
+        }
+
+        if (_prj_ncst.length < 50){
+          alert("추진배경을 50자 이상 입력하세요. ( " + _prj_ncst.length  +" / 50 자 )");
+          document.getElementById("prj_ncst").focus();
+          return false;
+        }
+
+        if (_prj_pri_tech.length < 50){
+          alert("추진배경을 50자 이상 입력하세요. ( " + _prj_pri_tech.length  +" / 50 자 )");
+          document.getElementById("prj_pri_tech").focus();
+          return false;
+        }
+
+        if (_prj_goal.length < 50){
+          alert("개발 목표를 50자 이상 입력하세요. ( " + _prj_goal.length  +" / 50 자 )");
+          document.getElementById("prj_goal").focus();
+          return false;
+        }
+
+        if (_prj_content.length < 50){
+          alert("개발 내용을 50자 이상 입력하세요. ( " + _prj_content.length  +" / 50 자 )");
+          document.getElementById("prj_content").focus();
+          return false;
+        }
+
+        if (_prj_exp_eff.length < 50){
+          alert("기대 효과를 50자 이상 입력하세요. ( " + _prj_exp_eff.length  +" / 50 자 )");
+          document.getElementById("prj_exp_eff").focus();
+          return false;
+        }
+
+        if ((_inputKeyword1=='') && (_inputKeyword2=='') && (_inputKeyword3=='')){
+          alert("적어도 하나의 키워드를 입력하세요.");
+          document.getElementById("inputKeyword1").focus();
+          return false;
+        }
+
+        if (_inputDevelopment=="없음"){
+          alert("연구 / 개발 분야를 선택하세요.");
+          document.getElementById("inputDevelopment").focus();
+          return false;
+        }
+        if ((_inputDevelopment=="기타")&& (_inputDevelopment1=='')){
+          alert("연구 / 개발 분야를 입력하세요.");
+          document.getElementById("inputDevelopment1").focus();
+          return false;
+        }
+
+
+        if (_Term =="0"){
+          alert("분류를 선택하세요.");
+          document.getElementById("Term").focus();
+          return false;
+        }
+
+        if (_internship_yn =="2"){
+          alert("현장실습 수용 여부를 선택하세요.");
+          document.getElementById("internship_yn").focus();
+          return false;
+        }
+
+        if (confirm("'"+_inputPjName+"' 프로젝트를 추가 개설하시겠습니까? ") == true ) {
+          return true ;
+        }else{
+          return false;
+        }
+
+
+
+    }
+
+      function CheckCancel(){
+        var check = "추가 개설을 취소하시겠습니까 ?";
+        if (confirm(check)==true){
+          history.back();
+        }else{
+          return false;
+        }
+      }
+
+
+    </script>
+  </body>
+</html>

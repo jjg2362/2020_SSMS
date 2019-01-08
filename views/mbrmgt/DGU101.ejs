@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark sidenav-toggled" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <h6>회원관리 > 회원 가입</h6>
+        <hr>
+
+        <div class="card card-register mx-auto mt-5 mb-5">
+          <div class="card-body">
+            <!-- 회원가입 폼 -->
+            <form id="registerForm">
+              <div class="form-group">
+                <label for="usertype"> 타입 </label> <label style="float: right; color: red"> * : 필수입력사항 </label>
+                <div class="form-row">
+                  <div class="col-md-2">
+                    <input style="margin-right: 2%;" type="radio" value="student" name="registerType" onclick="changeType()" checked="checked">학생
+                  </div>
+                  <div class="col-md-2">
+                    <input style="margin-right: 2%;" type="radio" value="mentor" name="registerType" onclick="changeType()">멘토
+                  </div>
+                  <div class="col-md-2">
+                    <input style="margin-right: 2%;" type="radio" value="instructor" name="registerType" onclick="changeType()">교수
+                  </div>
+                  <div class="col-md-2">
+                    <input style="margin-right: 2%;" type="radio" value="assistant" name="registerType" onclick="changeType()">조교
+                  </div>
+                  <!-- <div class="col-md-2">
+                    <input style="margin-right: 2%;" type="radio" value="outsider" name="registerType" onclick="changeType()">일반
+                  </div> -->
+                </div>
+              </div>
+
+              <div id="addIdBox">
+                <div class="form-group">
+                  <label for="inputID"> 학번 </label> <label style="color: red"> * (ex - 2018123456)</label>
+                  <!-- 아이디 입력 -->
+                  <input class="form-control" name="registerId" id="inputID" type="text" onkeydown="return onlyNumberStdID(event)" placeholder="학번" maxlength="10">
+                </div>
+
+                <div class="form-group">
+                  <label for="selectGrage"> 학년 </label>
+                  <select class="form-control" name="registerGrade" id="selectGrage">
+                    <option value="1"> 1 </option>
+                    <option value="2"> 2 </option>
+                    <option value="3"> 3 </option>
+                    <option value="4"> 4 </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputName"> 이름 </label> <label style="color: red"> * </label>
+                <!-- 아이디 입력 -->
+                <input class="form-control" name="registerName" id="inputName" type="text" placeholder="이름" maxlength="15">
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-6">
+                    <label for="inputPassword"> Password </label> <label style="color: red"> * </label>
+                    <!-- 패스워드 입력1 -->
+                    <input class="form-control" name="registerPwd" id="inputPassword" type="password" placeholder="비밀번호(6자 이상)" maxlength="20">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="confirmPassword"> Password </label> <label style="color: red"> * </label>
+                    <!-- 패스워드 입력2 -->
+                    <input class="form-control" id="confirmPassword" type="password" placeholder="비밀번호 확인" maxlength="20">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputEmail"> Email </label> <label style="color: red"> * (이메일 인증을 진행합니다. 정확한 메일 주소를 입력해 주세요) </label>
+                <input class="form-control" name="registerEmail" id="inputEmail" type="text" placeholder="이메일" maxlength="30">
+              </div>
+
+              <div class="form-group">
+                <label for="inputTel"> 연락처 </label> <label style="color: red"> * </label>
+                <input class="form-control" name="registerTel" id="inputTel" type="text" placeholder="휴대폰 번호" maxlength="15" style="ime-mode: disabled;">
+              </div>
+
+              <div id="addBox">
+                <div class="form-group">
+                  <label for="selectDepartment"> 학과 </label>
+                  <select class="form-control" name="registerDepartment" id="selectDepartment" onChange="changeMajor()">
+                    <option value="컴퓨터공학전공"> 컴퓨터공학전공 </option>
+                    <option value="정보통신공학전공"> 정보통신공학전공 </option>
+                    <option value="멀티미디어공학과"> 멀티미디어공학과 </option>
+                    <option value="융합소프트웨어"> 융합소프트웨어 </option>
+                    <option value="5"> 기타 </option>
+                  </select>
+
+                  <div id="addMajorBox" style="margin-top: 2%;">
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="form-group">
+                <label for="inputPrivateCheck"> 개인정보 동의 </label> <label style="color: red"> * </label>
+                <textarea id="agText" class="form-control" rows="6" readonly="readonly" style="background-color:transparent;"><%= ag.join %></textarea>
+                <input style=";" type="checkbox" name="registerPrivateCheck" id="inputPrivateCheck" value="true"> 약관에 동의합니다
+              </div>
+
+              <p style="color: #ff0000"> &nbsp </p>
+
+              <input id="registerButton" type="submit" class="btn btn-primary btn-block" value="회원가입">
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal1" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+            <button id="myModalClose1" type="button" class="close" data-dismiss="modal">×</button>
+          </div>
+          <div class="modal-body" style="">
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="order-md-1" style="padding-right: 15px;">
+                    <label for="inCompany"> 회사명 </label>
+                    <input class="form-control" name="searchCompany" id="inCompany" onkeydown="return noEnterKey(event)" type="text" placeholder="Enter Company">
+                  </div>
+
+                  <div class="order-md-2" style="padding-left: 15px;">
+                    <label for="buttonCompany"> &nbsp </label>
+                    <input class="btn btn-primary btn-block" id="buttonCompany" type="button" value="검색/추가" onclick="findCpany();">
+                  </div>
+                </div>
+              </div>
+
+            <div class="form-group">
+              <table class="table" id="companyTable">
+                <thead>
+                  <tr>
+                    <th> 사업자번호 </th>
+                    <th> 회사명 </th>
+                    <th> 선택 </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td colspan="3" style="text-align: center;">
+                      없음
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal2" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+            <button id="myModalClose2" type="button" class="close" data-dismiss="modal">×</button>
+          </div>
+          <div class="modal-body" style="">
+            <form id="createCompanyForm" name="createCompanyForm" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-6" style="padding-right: 15px;">
+                    <label for="insertCompany"> 회사명 </label>
+                    <input class="form-control" name="insertCompany" id="insertCompany" type="text" placeholder="Enter Company">
+                  </div>
+
+                  <div class="col-md-6" style="">
+                    <label for="insertCompanyNum"> 사업자번호 </label>
+                    <input class="form-control" name="insertCompanyNum" id="insertCompanyNum" type="text" placeholder="Enter CompanyNum">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="order-md-3" style="">
+                  <label for="inputCompany"> 사업자등록증 </label>
+                  <input class="form-control" name="registerBusinessFile" id="inputBusinessFile" type="file">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <input class="btn btn-primary btn-block" id="buttonCreateCpany" type="button" value="추가" onclick="createCpany();">
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <!-- select change function -->
+    <script type="text/javascript">
+
+      function noEnterKey(e) {
+        if(e.keyCode == 13) {
+          return false;
+        }
+      }
+
+      function onlyNumberStdID(event){
+        event = event || window.event;
+        var keyID = (event.which) ? event.which : event.keyCode;
+        var selectedValue = $("input[type=radio][name=registerType]:checked").val();
+        if (selectedValue=="student"){
+          if ( (keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 )
+            return;
+          else
+            return false;
+        }
+
+      }
+
+      function onlyNumber(event){
+        event = event || window.event;
+        var keyID = (event.which) ? event.which : event.keyCode;
+
+        if ( (keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 )
+          return;
+        else
+          return false;
+      }
+
+      function removeChar(event) {
+        event = event || window.event;
+        var keyID = (event.which) ? event.which : event.keyCode;
+
+        if ( keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 )
+          return;
+        else
+          event.target.value = event.target.value.replace(/[^0-9]/g, "");
+      }
+
+      function validationCheck() {
+        var selectedValue = $("input[type=radio][name=registerType]:checked").val();
+        var id = $("#inputID").val();
+        var name = $("#inputName").val();
+        var pw1 = $("#inputPassword").val();
+        var pw2 = $("#confirmPassword").val();
+        var email = $("#inputEmail").val();
+        var tel = $("#inputTel").val();
+        var cn = $("#inputCompany").val();
+
+        var pattern = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        if(id == "") {
+          if(selectedValue == "student") {
+            alert('학번을 입력해 주세요');
+          } else {
+            alert('아이디를 입력해 주세요');
+          }
+          return false;
+        }
+        if(selectedValue == "student" && id.length <10) {
+          alert('학번을 정확히 입력해 주세요');
+          document.getElementById("inputID").focus();
+          return false;
+        }
+
+        if(name == "") {
+          alert('이름을 입력해 주세요');
+          return false;
+        }
+
+        if(pw1 == "" || pw1.length < 6) {
+          alert('비밀번호를 정확히 입력해 주세요\n(비밀번호는 6자 이상입니다)');
+          return false;
+        }
+
+        if(pw1 != pw2) {
+          alert('비밀번호가 일치하지 않습니다');
+          return false;
+        }
+
+        if(email == "" || !pattern.test(email)) {
+          alert('메일 주소를 정확히 입력해 주세요');
+          return false;
+        }
+
+        if(cn == "") {
+          alert("회사명을 입력해 주세요");
+
+          return false;
+        }
+
+        if(!$("#inputPrivateCheck").is(":checked")) {
+          alert("개인정보 동의에 체크해 주새요.");
+
+          return false;
+        }
+
+        return true;
+      }
+
+      $(document).ready(function() {
+
+
+        $("#inputTel").on({
+          "keydown keypress": onlyNumber,
+          "keyup": removeChar
+        });
+
+        $("#registerButton").on('click', function(event) {
+          event.preventDefault();
+
+          if(validationCheck()) {
+            $.ajax({
+              url: "/mbrmgt/DGU101",
+              type: "post",
+              cache : false,
+              data: $("#registerForm").serialize(),
+              success: function(result) {
+                if(result == "dupId") {
+                  alert("이미 아이디가 있습니다.");
+                } else {
+                  alert("회원가입이 완료되었습니다.");
+                  location.href = "/mbrmgt/DGU101/complete";
+                }
+              }
+            });
+          }
+        });
+      });
+
+
+      function changeMajor() {
+        var selectedMajor = document.getElementById("selectDepartment");
+        var selectedValue = selectedMajor.options[selectedMajor.selectedIndex].value;
+
+        var addMajorBox = document.getElementById('addMajorBox');
+        var addMajor = "";
+
+        if(selectedValue == "융합소프트웨어" || selectedValue == "5") {
+          addMajor += '<div class="form-group">';
+          addMajor +=  '<input class="form-control" name="registerAddDepartment" id="inputAddDepartment" type="text" placeholder="Enter AddDepartment">';
+          addMajor += '</div>';
+
+          addMajorBox.innerHTML = addMajor;
+        } else {
+          addMajor = "";
+
+          addMajorBox.innerHTML = addMajor;
+        }
+      }
+
+      function findCompany() {
+        $("#myModal1").modal();
+      }
+
+      function findCpany() {
+        var name = document.getElementById('inCompany').value;
+
+        $.ajax({
+          url: '/mbrmgt/findCompany',
+          type: 'post',
+          data: {
+            'company_name': name
+          },
+          success: function(result) {
+            if(result.length != 0) {
+              $('#companyTable > tbody').children().remove();
+              var str = "";
+
+              for(var i in result) {
+                var bcn = result[i].business_certif_num;
+                var cn = result[i].company_name;
+
+                str += "<tr>";
+                str += "<td>" + bcn + "</td>";
+                str += "<td>" + cn + "</td>";
+                str += "<td> <input class='btn btn-dark' name='' id='' type='button' value='+' onclick=selectCompany('" + bcn + "','" + cn + "')> </td>";
+                str += "</tr>";
+              }
+
+              $("#companyTable > tbody:last").append(str);
+            } else {
+              $('#companyTable > tbody').children().remove();
+              $("#companyTable > tbody:last").append("<tr><td colspan='3' style='text-align: center;'> 없음 </td></tr>");
+            }
+          }
+        });
+      }
+
+      function selectCompany(bcn, cn) {
+        document.getElementById('inputCompanyNum').value = bcn;
+        document.getElementById('inputCompany').value = cn;
+
+        $("#myModalClose1").click();
+      }
+
+      function createCompany() {
+        $("#myModal2").modal();
+      }
+
+      function createCpany() {
+        var name = document.getElementById('insertCompany').value;
+        var number = document.getElementById('insertCompanyNum').value;
+
+        var formData = new FormData(document.getElementById('createCompanyForm'));
+
+        $.ajax({
+          url: '/mbrmgt/createCompany',
+          type: 'post',
+          processData: false,
+          contentType: false,
+          data: formData,
+          success: function(result) {
+            if(result == "s1") {
+              alert('회사가 등록되었습니다.');
+
+              document.getElementById('inputCompanyNum').value = number;
+              document.getElementById('inputCompany').value = name;
+
+              $("#myModalClose2").click();
+            } else {
+              alert('not success');
+            }
+          }
+        });
+      }
+
+      function changeType() {
+        var selectedValue = $("input[type=radio][name=registerType]:checked").val();
+
+        var show = document.getElementById("addBox");
+        var showId = document.getElementById("addIdBox");
+
+        var add = "";
+        var addId = "";
+
+        switch(selectedValue) {
+          //멘티
+          case "student":
+            addId += '<div class="form-group">';
+            addId +=  '<label for="inputID"> 학번 </label> <label style="color: red"> * (ex - 2018123456)</label>';
+            addId +=  '<input class="form-control" name="registerId" id="inputID" type="text" onkeydown="return onlyNumberStdID(event)" placeholder="학번" maxlength="10">';
+            addId += '</div>';
+
+            addId += '<div class="form-group">';
+            addId +=   '<label for="selectGrage"> 학년 </label>';
+            addId +=   '<select class="form-control" name="registerGrade" id="selectGrage">';
+            addId +=     '<option value="1"> 1 </option>';
+            addId +=     '<option value="2"> 2 </option>';
+            addId +=     '<option value="3"> 3 </option>';
+            addId +=     '<option value="4"> 4 </option>';
+            addId +=   '</select>';
+            addId += '</div>';
+
+            add += '<div class="form-group">';
+            add +=   '<label for="selectDepartment"> 학과 </label>';
+            add +=   '<select class="form-control" name="registerDepartment" id="selectDepartment" onChange="changeMajor()">';
+            add +=     '<option value="컴퓨터공학전공"> 컴퓨터공학전공 </option>';
+            add +=     '<option value="정보통신공학전공"> 정보통신공학전공 </option>';
+            add +=     '<option value="멀티미디어공학과"> 멀티미디어공학과 </option>';
+            add +=     '<option value="융합소프트웨어"> 융합소프트웨어 </option>';
+            add +=     '<option value="5"> 기타 </option>';
+            add +=   '</select>';
+
+            add +=   '<div id="addMajorBox" style="margin-top: 2%;">';
+            add +=   '</div>';
+            add += '</div>';
+            break;
+
+          //외부인, 조교
+          case "outsider":
+          case "assistant":
+            addId += '<div class="form-group">';
+            addId +=  '<label for="inputID"> 아이디 </label> <label style="color: red"> * </label>';
+            addId +=  '<input class="form-control" name="registerId" id="inputID" type="text" placeholder="아이디" maxlength="20">';
+            addId += '</div>';
+            break;
+
+          //멘토
+          case "mentor":
+            addId += '<div class="form-group">';
+            addId +=  '<label for="inputID"> 아이디 </label> <label style="color: red"> * </label>';
+            addId +=  '<input class="form-control" name="registerId" id="inputID" type="text" placeholder="아이디" maxlength="20">';
+            addId += '</div>';
+
+            add += '<div class="form-group">';
+            add +=   '<div class="form-row">';
+            add +=     '<div class="col-md-4">';
+            add +=       '<label for="inputCompanyNum"> 사업자번호 </label>';
+            add +=       '<input class="form-control" name="registerCompanyNum" id="inputCompanyNum" type="text" readonly="readonly" style="background-color:transparent;">';
+            add +=     '</div>';
+            add +=     '<div class="col-md-4">';
+            add +=       '<label for="inputCompany"> 회사명 </label> <label style="color: red"> * </label>';
+            add +=       '<input class="form-control" name="registerCompany" id="inputCompany" type="text" readonly="readonly" style="background-color:transparent;">';
+            add +=     '</div>';
+            add +=     '<div class="col-md-2">';
+            add +=       '<label for="buttonCompany"> &nbsp </label>';
+            add +=       '<input class="btn btn-primary btn-block" id="buttonCompany" type="button" value="검색" onclick="findCompany();">';
+            add +=     '</div>';
+            add +=     '<div class="col-md-2">';
+            add +=       '<label for="buttonCreateCompany"> &nbsp </label>';
+            add +=       '<input class="btn btn-primary btn-block" id="buttonCreateCompany" type="button" value="추가" onclick="createCompany();">';
+            add +=     '</div>';
+            add +=   '</div>';
+            add += '</div>';
+
+            add += '<div class="form-group">';
+            add +=   '<label for="selectBF"> 업무분야 </label>';
+            add +=   '<select class="form-control" name="registerBusinessField" id="selectBF">';
+
+            <% for(var i in bf) { %>
+              var value = '<%= bf[i].code_nm %>';
+              var name = '<%= bf[i].code_nm %>';
+              add +=     '<option value=' + value + '>' + name + '</option>';
+            <% } %>
+
+            add +=   '</select>';
+            add += '</div>';
+
+            add += '<div class="form-group">';
+            add +=   '<label for="selectJobType"> 기업 </label>';
+            add +=   '<select class="form-control" name="registerJobType" id="selectJobType">';
+
+            <% for(var i in jt) { %>
+              var value = '<%= jt[i].code_nm %>';
+              var name = '<%= jt[i].code_nm %>';
+              add +=     '<option value=' + value + '>' + name + '</option>';
+            <% } %>
+
+            add +=   '</select>';
+            add += '</div>';
+
+            add += '<div class="form-group">';
+            add +=  '<label for="inputJobPosition"> 직급 </label>';
+            add +=  '<input class="form-control" name="registerJobPosition" id="inputJobPosition" type="text" placeholder="직급">';
+            add += '</div>';
+
+            add += '<div class="form-group">';
+            add +=  '<label for="inputJobDept"> 부서 </label>';
+            add +=  '<input class="form-control" name="registerJobDept" id="inputJobDept" type="text" placeholder="부서">';
+            add += '</div>';
+
+            break;
+
+          //교수
+          case "instructor":
+            addId += '<div class="form-group">';
+            addId +=  '<label for="inputID"> 아이디 </label> <label style="color: red"> * </label>';
+            addId +=  '<input class="form-control" name="registerId" id="inputID" type="text" placeholder="아이디"  maxlength="20">';
+            addId += '</div>';
+
+            add += '<div class="form-group">';
+            add +=   '<label for="selectDepartment"> 학과 </label>';
+            add +=   '<select class="form-control" name="registerDepartment" id="selectDepartment" onChange="changeMajor()">';
+            add +=     '<option value="컴퓨터공학전공"> 컴퓨터공학전공 </option>';
+            add +=     '<option value="정보통신공학전공"> 정보통신공학전공 </option>';
+            add +=     '<option value="멀티미디어공학과"> 멀티미디어공학과 </option>';
+            add +=     '<option value="융합소프트웨어"> 융합소프트웨어 </option>';
+            add +=     '<option value="5"> 기타 </option>';
+            add +=   '</select>';
+
+            add +=   '<div id="addMajorBox" style="margin-top: 2%;">';
+            add +=   '</div>';
+            add += '</div>';
+            break;
+        }
+
+        show.innerHTML = add;
+        showId.innerHTML = addId;
+      }
+    </script>
+  </body>
+</html>

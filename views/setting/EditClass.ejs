@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+  </head>
+
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    </style>
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>설정 > 개설 과목 관리 > 수정</h6>
+        </div>
+        <hr class="mt-2">
+         <div class="card mx-auto mt-5 mb-5">
+          <div class="card-body">
+            <div class ="form-row">
+              <h5> 개설 과목 수정 </h5>
+            </div>
+
+            <form action="/setting/EditClass" method="post" id="setting" onsubmit="return CheckForm();" />
+            <input type = "hidden" value ="<%=ClassInfo[0][0].class_num%>" name ="ClassNum" id = "ClassNum" />
+            <input type = "hidden" value ="<%=ClassInfo[0][0].settings_id%>" name ="SettingID" id = "SettingID" />
+
+            <div class="table-responsive" id="ProjectInfo">
+            <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+              <div class="row">
+                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                  <thead>
+                    <tr role="row">
+                      <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width:20%;">
+                        <center><%=ClassInfo[0][0].prj_year%> - <%=ClassInfo[0][0].prj_semes%> - <%=ClassInfo[0][0].term_chk%></center>
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center><%=ClassInfo[0][0].class_num%></center></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center><%=ClassInfo[0][0].class_name%></center></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center><%=ClassInfo[0][0].major%> - <%=ClassInfo[0][0].inst_name%></center></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center><%=ClassInfo[0][0].assis_id%> - <%=ClassInfo[0][0].assis_name%></center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- 멘토링 일정 추가 -->
+
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+           </div>
+            <div class="table-responsive" >
+            <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+              <div class="row">
+                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                  <thead>
+                    <tr role="row">
+                      <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width:20%;"><center>분류</center></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>학수번호</center></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과목명</center></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>교수</center></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>조교</center></th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <tr role="row" class="odd">
+                        <td class="">
+                          <select class="form-control" id="Settings_id" name="Settings_id" >
+                            <option value = "0">-- 분류 --</option>
+                            <% for(var i = 0; i < ClassInfo[1].length; i++) {%>
+                              <option value = "<%=ClassInfo[1][i].settings_id%>"><%=ClassInfo[1][i].prj_year%>-<%=ClassInfo[1][i].prj_semes%>-<%=ClassInfo[1][i].term_chk%></option>
+                              <% } %>
+                            </select>
+                          </td>
+
+                        <td class="">
+                          <input class="form-control"'+' name="class_num" id="class_num" type="text" value = "<%=ClassInfo[0][0].class_num%>" > </td>
+
+                        <td class="">
+                          <input class="form-control"'+' name="class_name" id="class_name" type="text" value = "<%=ClassInfo[0][0].class_name%>"></td>
+
+                        <td class="">
+                          <select class="form-control" id="inst_id" name="inst_id" >
+                            <option value = "0">-- 교수 --</option>
+                            <% for(var i = 0; i < ClassInfo[2].length; i++) {%>
+                              <option value = "<%=ClassInfo[2][i].inst_id%>"><%=ClassInfo[2][i].major%>-<%=ClassInfo[2][i].inst_name%></option>
+                            <% } %>
+                            </select>
+                          </td>
+
+                        <td class="">
+                          <select class="form-control" id="assis_id" name="assis_id" >
+                            <option value = "0">-- 조교 --</option>
+                            <% for(var i = 0; i < ClassInfo[3].length; i++) {%>
+                              <option value = "<%=ClassInfo[3][i].assis_id%>"><%=ClassInfo[3][i].assis_id%>-<%=ClassInfo[3][i].assis_name%></option>
+                            <% } %>
+                          </select>
+                        </td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class = "form-group mt-4">
+                <div class="form-row">
+                  <div class = "col-md-4">
+                    <label> </label>
+                  </div>
+
+                  <div class = "col-md-2">
+                    <center> <input type ="submit" class="btn btn-primary btn-block" name = "MakeProject" value="개설과목 수정"  /> </center>
+                  </div>
+                </form>
+
+                  <div class = "col-md-2">
+                    <center> <div class="btn btn-danger" name = "MakeProject" value="취소" onclick="CheckCancel();">취소</div> </center>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <script type="text/javascript">
+    function CheckForm(){
+        var _Settings_id = document.getElementById("Settings_id").value;
+        var _class_num = document.getElementById("class_num").value;
+        var _class_name = document.getElementById("class_name").value;
+        var _inst_id = document.getElementById("inst_id").value;
+        var _assis_id = document.getElementById("assis_id").value;
+
+
+        if (_Settings_id=='0'){
+          alert("분류를 선택하세요.");
+          document.getElementById("Settings_id").focus();
+          return false;
+        }
+
+        if (_class_num==""){
+          alert("학수번호를 입력하세요.");
+          document.getElementById("class_num").focus();
+          return false;
+        }
+
+        if (_class_name==""){
+          alert("과목명을 입력하세요..");
+          document.getElementById("class_name").focus();
+          return false;
+        }
+
+        if (_inst_id =='0'){
+          alert("담당 교수를 선택하세요.");
+          document.getElementById("inst_id").focus();
+          return false;
+        }
+
+        if (_assis_id =='0'){
+          alert("담당 조교를 선택하세요.");
+          document.getElementById("assis_id").focus();
+          return false;
+        }
+
+
+        if (confirm("개설 과목 정보를 수정하시겠습니까? ") == true ) {
+          return true ;
+        }else{
+          return false;
+        }
+    }
+    function CheckCancel(){
+
+        if (confirm("개설 과목 정보를 수정을 취소하시겠습니까? ") == true ) {
+          history.back();
+        }else{
+          return false;
+        }
+    }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>과거 자료 관리 > 과거 자료 조회 > <%=PJList[5][0].prj_name%></h6>
+        </div>
+        <hr class="mt-2">
+
+        <div class="card  mb-3 pt-3 pl-3 pr-3">
+          <div class="card-body">
+            <h5>  <%= PJList[5][0].prj_name %>  </h5>
+            <hr class="mt-2">
+        <div class="card-columns">
+          <div class="card-body">
+            <div class="card mb-3">
+              <div class="card-body row">
+                <div class="col-sm-12">
+                  <h5 class="card-title mb-1">프로젝트 정보</h5>
+                  <hr class="mt-2">
+                  <p class="card-text small">
+                    <div>
+                      <p style="width: 100%; color: #6c757d;">프로젝트 개요</p>
+                      <p style="width: 100%;"> <%= PJList[5][0].prj_outline %> </p>
+                      <br>
+
+                      <p style="width: 100%; color: #6c757d;">왜 이 프로젝트를 개발하려고 하는가?</p>
+                      <p style="width: 100%;"> <%= PJList[5][0].prj_bckgrd %> </p>
+                      <br>
+
+                      <p style="width: 100%; color: #6c757d;">응용 분야를 포함하여 산업, 기술 등의 동향</p>
+                      <p style="width: 100%;"> <%= PJList[5][0].prj_ncst %> </p>
+                      <br>
+
+                      <p style="width: 100%; color: #6c757d;">필요성 혹은 기존 유사 시스템이 있다면 문제점 제시</p>
+                      <p style="width: 100%;"> <%= PJList[5][0].prj_pri_tech %> </p>
+                      <br>
+
+                      <p style="width: 100%; color: #6c757d;">개발 목표 - 개발하고자 하는 시스템의 목표</p>
+                      <p style="width: 100%;"> <%= PJList[5][0].prj_goal %> </p>
+                      <br>
+
+                      <p style="width: 100%; color: #6c757d;">개발 내용 - 구성과 기능, 특징 등</p>
+                      <p style="width: 100%;"> <%= PJList[5][0].prj_content %> </p>
+                      <br>
+
+                      <p style="width: 100%; color: #6c757d;">기대효과 - 이 시스템이 개발되면 누구에게 어떤 도움을 줄 수 있는가?</p>
+                      <p style="width: 100%;"> <%= PJList[5][0].prj_exp_eff %> </p>
+                      <br>
+
+                      <p style="width: 100%; color: #6c757d;">키워드  </p>
+                      <p style="width: 100%;"><%= PJList[5][0].keyword1 %> / <%= PJList[5][0].keyword2 %> /  <%= PJList[5][0].keyword3 %> </p>
+                      <br>
+
+                      <p style="width: 100%; color: #6c757d;">연구 / 개발분야</p>
+                      <p style="width: 100%;"><%= PJList[5][0].prj_dev_field %></p>
+                      <br>
+
+                      <p style="width: 100%; color: #6c757d;">현장실습 수용 여부</p>
+                      <% if (PJList[5][0].internship_yn=="0"){ %>
+                        <p style="width: 100%;">불가능</p>
+                      <%} else if (PJList[5][0].internship_yn=="4") { %>
+                        <p style="width: 100%;">가능 (4주, 1개월)</p>
+                      <%} else if (PJList[5][0].internship_yn=="8") { %>
+                        <p style="width: 100%;">가능 (8주, 2개월)</p>
+                      <% } %>
+                      <br>
+
+                      <p style="width: 100%; color: #6c757d;">주제 제안 파일 </p>
+                      <p style="width: 50%;"></p>
+                          <div class="btn btn-primary btn-link" style="width: 100%" onclick="abilityDownload2('<%= PJList[5][0].appendix %>');" href="javascript:void(0)" > 주제 제안 자료 다운 </div>
+                      <br>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <div class="card mb-3">
+                <div class="card-body row">
+                  <div class="col-sm-12">
+                    <h5 class="card-title mb-1">멘토 정보</h5>
+                    <hr class="mt-2">
+                    <p class="card-text small">
+                        <p style="width: 100%; color: #6c757d;">멘토 이름</p>
+                        <p style="width: 100%;"><%= PJList[5][0].mentor_name %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">회사명</p>
+                        <p style="width: 100%;"><%= PJList[5][0].company_name %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">업무분야</p>
+                        <p style="width: 100%;"><%= PJList[5][0].business_field %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">부서/직급</p>
+                        <p style="width: 100%;"><%= PJList[5][0].job_dept %>/<%= PJList[5][0].job_position %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">주요개발분야</p>
+                        <p style="width: 100%;"><%= PJList[5][0].research_field %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">이메일 주소</p>
+                        <p style="width: 100%;"><%= PJList[5][0].email_ad %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">전화번호</p>
+                        <% var phone = PJList[5][0].phone_num.substring(0,11) %>
+                        <p style="width: 100%;"><%= phone %></p>
+                        <br>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="mt-2">
+        <h4><center>팀 원</center></h4>
+        <hr>
+
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>팀 명</th>
+                <th>학번</th>
+                <th>팀장</th>
+                <th>이름</th>
+                <th>전공</th>
+                <th>이메일</th>
+                <th>전화번호</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i = 0; i < PJList[0].length; i++) { %>
+                   <tr>
+                     <td><%= PJList[0][i].team_name %></td>
+
+                     <td>
+                       <% if(!(PJList[0][i].std_resume) || PJList[0][i].std_resume =='undefined' ) { %>
+                           <%= PJList[0][i].std_id %>
+                       <% } else { %>
+                         <a onclick="abilityDownload2('<%= PJList[0][i].std_resume %>');" href="javascript:void(0)">
+                           <%= PJList[0][i].std_id %>
+                         </a>
+
+                       <% } %>
+                     </td>
+                     <% if (PJList[0][i].std_id == PJList[0][i].leader_id) {%>
+                       <td> O </td>
+                     <% }else { %>
+                       <td>  </td>
+                     <%}%>
+                     <td><%= PJList[0][i].std_name %></td>
+                     <td><%= PJList[0][i].major %></td>
+                     <td><%= PJList[0][i].email_ad %></td>
+                     <td><%= PJList[0][i].phone_num %></td>
+
+                   </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <hr class="mt-2">
+        <h4><center>진도 점검표</center></h4>
+        <hr>
+
+        <div class="table-responsive">
+          <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+            <div class="row">
+              <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+               <thead>
+                 <tr role="row">
+                   <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending" style="width:10%;"><center>멘토링 날짜</center></th>
+                   <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>학생 보고서</center></th>
+                   <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>멘토 보고서</center></th>
+                   <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>작성 멘토</center></th>
+
+                 </tr>
+               </thead>
+               <%if(PJList[1].length!=0) { %>
+               <tbody>
+                 <input type = "hidden" value ="<%=PJList[1][0].prj_id%> " name ="PJId" id = "PJId" />
+                 <input type = "hidden" value ="<%=PJList[1][0].team_id%> " name ="TEAMId" id = "TEAMId" />
+                 <input type = "hidden" value ="<%=PJList[1][0].mentor_id%> " name ="MENTORId" id = "MENTORId" />
+                 <% for(var i = 0; i < PJList[1].length; i++) {%>
+                   <tr role="row" class="odd" >
+                     <td class="sorting_1"><center><%= moment(PJList[1][i].meeting_date).format('YYYY-MM-DD') %></center></td>
+                     <td>
+
+                       <div class = "form-row">
+                         <div class = "col-md-12">
+                           <% var dd1 = PJList[1][i].ment_report_std.split('/') %>
+                           <% var dd2 = dd1[2].length %>
+                           <% var dd3 = dd1[2].substr(14,dd2) %>
+                           <center><a onclick="abilityDownload2('<%= PJList[1][i].ment_report_std %>');" href="javascript:void(0)">
+                             <%= dd3 %>
+                           </a></center>
+                         </div>
+                       </div>
+
+                     </td>
+                     <td>
+                       <%if(PJList[1][i].ment_report_mtr!=''&&PJList[1][i].ment_report_mtr!=null) { %>
+                         <% var i1 = PJList[1][i].ment_report_mtr.split('/') %>
+                         <% var i2 = i1[2].length %>
+                         <% var i3 = i1[2].substr(14,i2) %>
+                         <center><a onclick="abilityDownload2('<%= PJList[1][i].ment_report_mtr %>');" href="javascript:void(0)">
+                           <%= i3 %>
+                         </a></center>
+                       <% } %>
+                     </td>
+                     <td><center><%=PJList[1][i].mentor_id%></center></td>
+                   </tr>
+                 <% } %>
+               </tbody>
+              <% } %>
+             </table>
+           </div>
+          </div>
+        </div>
+
+        <hr class="mt-2">
+        <h4><center>최종 보고서</center></h4>
+        <hr>
+
+        <% if(PJList[4][0]) { %>
+          <% if(PJList[4][0].fin_report == null) { %>
+
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-12">
+                    <h4>최종보고서</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h7>제출정보가 없습니다.</h7>
+              </div>
+            </div>
+          <% } else { %>
+          <div class="card card-register mx-auto mt-5 mb-5">
+            <div class="card-header">
+              <div class = "form-row">
+                <div class = "col-md-12">
+                  <h4>최종보고서</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <!-- 보고서 목록 -->
+                <div class = "form-row">
+                  <div class="col-md-4">
+                  </div>
+                  <div class="col-md-8">
+                    <% var id1 = PJList[4][0].fin_report.split('/') %>
+                    <% var id2 = id1[2].length %>
+                    <% var id3 = id1[2].substr(14,id2) %>
+                    <a onclick="abilityDownload2('<%= PJList[4][0].fin_report %>');" href="javascript:void(0)">
+                      <%= id3 %>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+
+        <% if(PJList[4][0].product1 == null) { %>
+          <div class="card card-register mx-auto mt-5 mb-5">
+            <div class="card-header">
+              <h4>사용자메뉴얼 및 소스파일</h4>
+            </div>
+            <div class="card-body">
+              <h7>제출정보가 없습니다.</h7>
+            </div>
+          </div>
+        <% } else { %>
+          <div class="card card-register mx-auto mt-5 mb-5">
+            <div class="card-header">
+              <h4>사용자메뉴얼 및 소스파일</h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <!-- 보고서 목록 -->
+                <div class = "form-row">
+                  <div class="col-md-4\">
+                  </div>
+                  <div class="col-md-8">
+                    <% var id4 = PJList[4][0].product1.split('/') %>
+                    <% var id5 = id4[2].length %>
+                    <% var id6 = id4[2].substr(14,id5) %>
+                    <a onclick="abilityDownload2('<%= PJList[4][0].product1 %>');" href="javascript:void(0)">
+                      <%= id6 %>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+        <% if(PJList[4][0].demo_vid == null) { %>
+          <div class="card card-register mx-auto mt-5 mb-5">
+            <div class="card-header">
+              <h4>시연 동영상</h4>
+            </div>
+            <div class="card-body">
+              <h7>제출정보가 없습니다.</h7>
+            </div>
+          </div>
+        <% } else { %>
+          <div class="card card-register mx-auto mt-5 mb-5">
+            <div class="card-header"><h4>시연 동영상</h4></div>
+            <div class="card-body">
+              <div class="form-group">
+                <div class = "form-row">
+                  <div class="col-md-4\">
+                  </div>
+                  <div class="col-md-8">
+                    <% var id7 = PJList[4][0].demo_vid.split('/') %>
+                    <% var id8 = id7[2].length %>
+                    <% var id9 = id7[2].substr(14,id8) %>
+                    <a onclick="abilityDownload2('<%= PJList[4][0].demo_vid %>');" href="javascript:void(0)">
+                      <%= id9 %>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+
+        <div class="card card-register mx-auto mt-5 mb-5">
+          <div class="card-header">
+            <div class = "form-row">
+              <div class = "col-md-12">
+                <h4>실적등록</h4>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <% if(PJList[4][0].patent_doc == null||PJList[4][0].patent_doc == '') { %>
+              <form action="/pjmng/DGU521/PostPatent" method="post" enctype="multipart/form-data">
+                <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class = "col-md-10">
+                      <!-- 파일업로드 -->
+                      <label>특허 등록</label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            <% } else { %>
+              <form action="/pjmng/DGU521/DeletePatent" method="post" enctype="multipart/form-data">
+                <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class = "col-md-10">
+                      <!-- 파일업로드 -->
+                      <label>특허 등록</label>
+                    </div>
+                  </div>
+                  <div class = "form-row">
+                    <div class="col-md-12">
+                      <% var id10 = PJList[4][0].patent_doc.split('/') %>
+                      <% var id11 = id10[2].length %>
+                      <% var id12 = id10[2].substr(14,id11) %>
+                      <center><a onclick="abilityDownload2('<%= PJList[4][0].patent_doc %>');" href="javascript:void(0)">
+                        <%= id12 %>
+                      </a></center>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            <% } %>
+            <% if(PJList[4][0].prg_regis == null||PJList[4][0].prg_regis == '') { %>
+              <form action="/pjmng/DGU521/PostProgram" method="post" enctype="multipart/form-data">
+                <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class = "col-md-10">
+                      <!-- 파일업로드 -->
+                      <label>프로그램 등록</label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            <% } else { %>
+              <form action="/pjmng/DGU521/DeleteProgram" method="post" enctype="multipart/form-data">
+                <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class = "col-md-10">
+                      <!-- 파일업로드 -->
+                      <label>프로그램 등록</label>
+                    </div>
+                  </div>
+                  <div class = "form-row">
+                    <div class="col-md-12">
+                      <% var id13 = PJList[4][0].prg_regis.split('/') %>
+                      <% var id14 = id13[2].length %>
+                      <% var id15 = id13[2].substr(14,id14) %>
+                      <center><a onclick="abilityDownload2('<%= PJList[4][0].prg_regis %>');" href="javascript:void(0)">
+                        <%= id15 %>
+                      </a></center>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            <% } %>
+
+            <% if(PJList[4][0].thesis_file == null||PJList[4][0].thesis_file == '') { %>
+              <form action="/pjmng/DGU521/PostThesis" method="post" enctype="multipart/form-data">
+                <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class = "col-md-10">
+                      <!-- 파일업로드 -->
+                      <label>논문 등록</label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            <% } else { %>
+              <form action="/pjmng/DGU521/DeleteThesis" method="post" enctype="multipart/form-data">
+                <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class = "col-md-10">
+                      <label>논문 등록</label>
+                    </div>
+                  </div>
+                  <div class = "form-row">
+                    <div class="col-md-12">
+                      <% var id16 = PJList[4][0].thesis_file.split('/') %>
+                      <% var id17 = id16[2].length %>
+                      <% var id18 = id16[2].substr(14,id17) %>
+                      <center><a onclick="abilityDownload2('<%= PJList[4][0].thesis_file %>');" href="javascript:void(0)">
+                        <%= id18 %>
+                      </a></center>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            <% } %>
+              <div class="form-group">
+                <div class="form-row">
+                  <div class = "col-md-12">
+                    <label>기타</label>
+                  </div>
+                </div>
+                <% if(PJList[4][0].other1 == null||PJList[4][0].other1 == '') { %>
+                  <form action="/pjmng/DGU521/PostOther1" method="post" enctype="multipart/form-data">
+                    <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                  </form>
+                <% } else { %>
+                  <form action="/pjmng/DGU521/DeleteOther1" method="post" enctype="multipart/form-data">
+                    <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                    <div class = "form-row">
+                      <div class="col-md-12">
+                        <center><a onclick="abilityDownload2('<%= PJList[4][0].other1 %>');" href="javascript:void(0)">
+                          <%= PJList[4][0].other1 %>
+                        </a></center>
+                      </div>
+                    </div>
+                  </form>
+                <% } %>
+                <% if(PJList[4][0].other2 == null||PJList[4][0].other2 == '') { %>
+                  <form action="/pjmng/DGU521/PostOther2" method="post" enctype="multipart/form-data">
+                    <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                  </form>
+                <% } else { %>
+                  <form action="/pjmng/DGU521/DeleteOther2" method="post" enctype="multipart/form-data">
+                    <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                    <div class = "form-row">
+                      <div class="col-md-12">
+                        <% var id22 = PJList[4][0].other2.split('/') %>
+                        <% var id23 = id22[2].length %>
+                        <% var id24 = id22[2].substr(14,id23) %>
+                        <center><a onclick="abilityDownload2('<%= PJList[4][0].other2 %>');" href="javascript:void(0)">
+                          <%= id24 %>
+                        </a></center>
+                      </div>
+                    </div>
+                  </form>
+                <% } %>
+                <% if(PJList[4][0].other3 == null||PJList[4][0].other3 == '') { %>
+                  <form action="/pjmng/DGU521/PostOther3" method="post" enctype="multipart/form-data">
+                    <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                  </form>
+                <% } else { %>
+                  <form action="/pjmng/DGU521/DeleteOther3" method="post" enctype="multipart/form-data">
+                    <input type = "hidden" value ="<%=PJList[4][0].prj_id%> " name ="PJId" id = "PJId" />
+                    <div class = "form-row">
+                      <div class="col-md-12">
+                        <% var id25 = PJList[4][0].other3.split('/') %>
+                        <% var id26 = id25[2].length %>
+                        <% var id27 = id25[2].substr(14,id26) %>
+                        <center><a onclick="abilityDownload2('<%= PJList[4][0].other3 %>');" href="javascript:void(0)">
+                          <%= id27 %>
+                        </a></center>
+                      </div>
+                    </div>
+                  </form>
+                <% } %>
+              <% } %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <script type="text/javascript">
+
+    function abilityDownload2(fullPath) {
+      var downloadPath = fullPath.substring(7);
+      location.href = "/fileDownload/" + downloadPath + "/want";
+    }
+
+    $(document).ready(function () {
+        $('input[name=_selected_all_]').on('change', function(){
+          $('input[name=_selected_]').prop('checked', this.checked);
+        });
+
+        var arr = $('input[name=_selected_]:checked').serializeArray().map(function(item) { return item.value });
+
+        $("#btnTransfer").on('click', function () {
+
+        });
+
+    });
+
+    </script>
+  </body>
+</html>
+

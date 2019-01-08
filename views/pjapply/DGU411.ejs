@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>프로젝트 관리 > 프로젝트 목록 </h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card  mb-3 pt-3 pl-3 pr-3">
+         <div class="card-body">
+           <h5> 프로젝트 지원목록 </h5>
+           <%if(TeamPJList[1].length==0) { %>
+             <div class = "form-row">
+               <div class="col-md-4">
+               </div>
+               <div class="col-md-4">
+                 <h6>먼저 팀을 구성해주세요.</h6>
+               </div>
+               <div class="col-md-4">
+               </div>
+             </div>
+           <%} else { %>
+             <% for(var i = 0; i < TeamPJList[1].length; i++)  { %>
+               <div class="card  mx-auto mt-5 mb-5">
+                 <div class="card-header">
+                   <div class = "form-row">
+                     <div class = "col-md-10">
+                       <h4><%=TeamPJList[1][i].team_name%></h4>
+                     </div>
+
+                   </div>
+                 </div>
+                 <div class="card-body">
+                   <div class="table-responsive mt-3" id="SearchAll" >
+                    <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                      <div class="row">
+                        <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                          <thead>
+                            <tr role="row">
+                              <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 5%;"><center>순위</center></th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 50%;"><center>프로젝트 주제</center></th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 25px;"><center>연구분야</center></th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20px;"><center>키워드</center></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                             <% for(var j = 0; j < TeamPJList[0].length; j++)  { %>
+                               <% if (TeamPJList[0][j].prj_id == TeamPJList[1][i].project1){ %>
+                                <tr role="row" class="odd" >
+                                 <td class="sorting_1"><center>1</center></td>
+                                 <td><a href="/pjapply/cancel/<%= TeamPJList[0][j].prj_id %>/<%= TeamPJList[1][i].team_id %>"><center> <%= TeamPJList[0][j].prj_name %> </center></a></td>
+                                 <td><center><%= TeamPJList[0][j].prj_dev_field %></center></td>
+                                 <td><center><%= TeamPJList[0][j].keyword1 %> / <%= TeamPJList[0][j].keyword2 %> / <%= TeamPJList[0][j].keyword3 %></center></td>
+                               </tr>
+                               <% }}%>
+                           <% for(var j = 0; j < TeamPJList[0].length; j++)  { %>
+                             <% if (TeamPJList[0][j].prj_id == TeamPJList[1][i].project2){ %>
+                               <tr role="row" class="odd" >
+                                 <td class="sorting_1"><center>2</center></td>
+                                 <td><center><a href="/pjapply/cancel/<%= TeamPJList[0][j].prj_id %>/<%= TeamPJList[1][i].team_id %>">  <%= TeamPJList[0][j].prj_name %> </a></center></center></td>
+                                 <td><center><%= TeamPJList[0][j].prj_dev_field %></center></td>
+                                 <td><center><%= TeamPJList[0][j].keyword1 %> / <%= TeamPJList[0][j].keyword2 %> / <%= TeamPJList[0][j].keyword3 %></center></td>
+                               </tr>
+                             <% }}%>
+                             <% for(var j = 0; j < TeamPJList[0].length; j++)  { %>
+                               <% if (TeamPJList[0][j].prj_id == TeamPJList[1][i].project3){ %>
+                                <tr role="row" class="odd" >
+                                 <td class="sorting_1"><center>3</center></td>
+                                 <td><center><a href="/pjapply/cancel/<%= TeamPJList[0][j].prj_id %>/<%= TeamPJList[1][i].team_id %>"> <%= TeamPJList[0][j].prj_name %> </a></center></td>
+                                 <td><center><%= TeamPJList[0][j].prj_dev_field %></center></td>
+                                 <td><center><%= TeamPJList[0][j].keyword1 %> / <%= TeamPJList[0][j].keyword2 %> / <%= TeamPJList[0][j].keyword3 %></center></td>
+                                </tr>
+                             <% }}%>
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                 </div>
+               </div>
+             <% }} %>
+        </div>
+      </div>
+
+
+
+
+      </div>
+    </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+  </body>
+</html>

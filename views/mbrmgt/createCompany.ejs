@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+  </head>
+
+  <body style="overflow: hidden;">
+    <form id="createCompanyForm" name="createCompanyForm" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <div class="form-row">
+          <div class="order-md-1" style="padding-right: 15px; padding-left: 15px;">
+            <label for="insertCompany"> 회사명 </label>
+            <input class="form-control" name="insertCompany" id="insertCompany" type="text" placeholder="Enter Company">
+          </div>
+
+          <div class="order-md-2" style="padding-right: 15px; padding-left: 15px;">
+            <label for="insertCompanyNum"> 사업자번호 </label>
+            <input class="form-control" name="insertCompanyNum" id="insertCompanyNum" type="text" placeholder="Enter CompanyNum">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="order-md-3" style="padding-right: 15px; padding-left: 15px;">
+          <label for="inputCompany"> 사업자등록증 </label>
+          <input class="form-control" name="registerBusinessFile" id="inputBusinessFile" type="file">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input class="btn btn-primary btn-block" id="buttonCreateCompany" type="button" value="추가" onclick="createCompany();">
+      </div>
+    </form>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <script>
+      function createCompany() {
+        var name = document.getElementById('insertCompany').value;
+        var number = document.getElementById('insertCompanyNum').value;
+
+        var formData = new FormData(document.getElementById('createCompanyForm'));
+
+        $.ajax({
+          url: '/mbrmgt/createCompany',
+          type: 'post',
+          processData: false,
+          contentType: false,
+          data: formData,
+          success: function(result) {
+            if(result == "s1") {
+              alert('회사가 등록되었습니다.');
+
+              var parentWindow = window.parent.opener;
+
+              parentWindow.document.getElementById('inputCompanyNum').value = number;
+              parentWindow.document.getElementById('inputCompany').value = name;
+
+              window.parent.close();
+            } else {
+              alert('not success');
+            }
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

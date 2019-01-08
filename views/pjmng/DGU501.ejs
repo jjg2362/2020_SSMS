@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>프로젝트 운영 > 내 프로젝트</h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card  mb-1 pt-1 pl-1 pr-1">
+         <div class="card-body">
+          <h5>  <%= pjInfo[0][0].prj_name %>  </h5>
+          <hr class="mt-1">
+            <div class="card-columns">
+              <div class="card-body">
+                <div class="card mb-3">
+                  <div class="card-body row">
+                    <div class="col-sm-12">
+                      <h5 class="card-title mb-1">프로젝트 정보</h5>
+                      <hr class="mt-2">
+                      <p class="card-text small">
+                        <div>
+                        <p style="width: 100%; color: #6c757d;">프로젝트 개요</p>
+                        <p style="width: 100%;"> <%= pjInfo[0][0].prj_outline %> </p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">왜 이 프로젝트를 개발하려고 하는가?</p>
+                        <p style="width: 100%;"> <%= pjInfo[0][0].prj_bckgrd %> </p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">응용 분야를 포함하여 산업, 기술 등의 동향</p>
+                        <p style="width: 100%;"> <%= pjInfo[0][0].prj_ncst %> </p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">필요성 혹은 기존 유사 시스템이 있다면 문제점 제시</p>
+                        <p style="width: 100%;"> <%= pjInfo[0][0].prj_pri_tech %> </p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">개발 목표 - 개발하고자 하는 시스템의 목표</p>
+                        <p style="width: 100%;"> <%= pjInfo[0][0].prj_goal %> </p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">개발 내용 - 구성과 기능, 특징 등</p>
+                        <p style="width: 100%;"> <%= pjInfo[0][0].prj_content %> </p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">기대효과 - 이 시스템이 개발되면 누구에게 어떤 도움을 줄 수 있는가?</p>
+                        <p style="width: 100%;"> <%= pjInfo[0][0].prj_exp_eff %> </p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">키워드  </p>
+                        <p style="width: 100%;"><%= pjInfo[0][0].keyword1 %> / <%= pjInfo[0][0].keyword2 %> /  <%= pjInfo[0][0].keyword3 %> </p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">연구 / 개발분야</p>
+                        <p style="width: 100%;"><%= pjInfo[0][0].prj_dev_field %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">현장실습 수용 여부</p>
+                        <% if (pjInfo[0][0].internship_yn=="0"){ %>
+                          <p style="width: 100%;">불가능</p>
+                        <%} else if (pjInfo[0][0].internship_yn=="4") { %>
+                          <p style="width: 100%;">가능 (4주, 1개월)</p>
+                        <%} else if (pjInfo[0][0].internship_yn=="8") { %>
+                          <p style="width: 100%;">가능 (8주, 2개월)</p>
+                        <% } %>
+                        <br>
+                        <% if(userInfo.userType == 'student' || userInfo.userType =='mentor') { %>
+                        <p style="width: 100%; color: #6c757d;">주제 제안 파일 </p>
+                        <p style="width: 50%;"></p>
+                            <div class="btn btn-primary btn-link" style="width: 100%" onclick="abilityDownload2('<%= pjInfo[0][0].appendix %>');" > 주제 제안 자료 다운 </div>
+                        <br>
+                        <%} %>
+                      </div>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card mb-3">
+                <div class="card-body row">
+                  <div class="col-sm-12">
+                    <% if(pjInfo[1].length==0) { %>
+                      <% if(userInfo.userType == 'student' && pjInfo[0][0].leader_id == userInfo.userId) { %>
+                        <div class = "form-row">
+                          <div class = "col-md-9">
+                            <h5>수행계획서 등록</h5>
+                          </div>
+                          <div class = "col-md-2">
+                            <a onclick="abilityDownload2('<%= pjInfo[2][0].prj_plan_apdx %>');" href="javascript:void(0)">
+                              <input class="form-control" type = "button" value="양식다운"/>
+                            </a>
+                          </div>
+                        </div>
+                        <hr class="mt-1">
+                        <form action="/pjmng/DGU501/file/PostReport" onsubmit="return CheckForm();" method="post" enctype="multipart/form-data">
+                          <input type = "hidden" value ="<%=pjInfo[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                          <input type = "hidden" value ="<%=pjInfo[0][0].team_id%> " name ="TEAMId" id = "TEAMId" />
+                          <input type = "hidden" value ="<%=pjInfo[0][0].mentor_id%> " name ="MENTORId" id = "MENTORId" />
+                          <div class="form-row">
+                            <div class = "col-md-10">
+                              <!-- 파일업로드 -->
+                              <input class="form-control" name="ProjectPlanFile" id="ProjectPlanFile" type="file" >
+                            </div>
+                            <div class = "col-md-2">
+                              <input class="btn btn-link btn-primary" name="ReportSubmission" id="SubmitPlanReport" type="submit" value="제출">
+                            </div>
+                          </div>
+                        </form>
+                      <% } else { %>
+                        <div class = "form-row">
+                          <div class = "col-md-12">
+                            <h5>수행계획서</h5>
+                          </div>
+                        </div>
+                        <hr class="mt-1">
+                        <form action="/pjmng/DGU501/file/PostReport" method="post" enctype="multipart/form-data">
+                          <div class="form-row">
+                            <h7>제출정보가 없습니다.</h7>
+                          </div>
+                      <% } %>
+
+                    <% } else { %>
+                      <div class = "form-row">
+                        <div class = "col-md-10">
+                          <h5>프로젝트 수행계획서</h5>
+                        </div>
+                        <div class = "col-md-2">
+                        </div>
+                      </div>
+                      <hr class="mt-2">
+                      <% if(userInfo.userType == 'student' && pjInfo[0][0].leader_id == userInfo.userId) { %>
+                        <div class="form-group">
+                          <!-- 보고서 목록 -->
+                          <form action="/pjmng/DGU501/file/DeleteReport"  onsubmit="return CheckForm2();" method="post"  enctype="multipart/form-data">
+                            <div class = "form-row">
+                              <div class="col-md-10">
+                                  <input type = "hidden" value ="<%=pjInfo[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                                  <input type = "hidden" value ="<%=pjInfo[0][0].team_id%> " name ="TEAMId" id = "TEAMId" />
+                                  <input type = "hidden" value ="<%=pjInfo[0][0].mentor_id%> " name ="MENTORId" id = "MENTORId" />
+
+                                  <% var d1 = pjInfo[1][0].prj_plan_report.split('/') %>
+                                  <% var d2 = d1[2].length %>
+                                  <% var d3 = d1[2].substr(14,d2) %>
+                                  <% console.log(pjInfo[1][0].prj_plan_report);%>;
+                                  <a onclick="abilityDownload2('<%= pjInfo[1][0].prj_plan_report %>');" href="javascript:void(0)">
+                                    <%= d3 %>
+                                  </a>
+                              </div>
+                              <div class="col-md-2">
+                                <input class="form-control" name="ReportDeletion" id="submitReportDeletion" type="submit" value="삭제">
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      <% } else { %>
+                        <div class="form-group">
+                          <!-- 보고서 목록 -->
+                          <div class = "form-row">
+                            <div class="col-md-12">
+                              <% var d4 = pjInfo[1][0].prj_plan_report.split('/') %>
+                              <% var d5 = d4[2].length %>
+                              <% var d6 = d4[2].substr(14,d5) %>
+                              <a onclick="abilityDownload2('<%= pjInfo[1][0].prj_plan_report %>');" href="javascript:void(0)">
+                                <%= d6 %>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      <% } %>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+              <div class="card mb-3">
+                <div class="card-body row">
+                  <div class="col-sm-12">
+                    <h5 class="card-title mb-1">멘토 정보</h5>
+                    <hr class="mt-2">
+                    <p class="card-text small">
+                        <p style="width: 100%; color: #6c757d;">멘토 이름</p>
+                        <p style="width: 100%;"><%= pjInfo[0][0].mentor_name %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">회사명</p>
+                        <p style="width: 100%;"><%= pjInfo[0][0].company_name %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">업무분야</p>
+                        <p style="width: 100%;"><%= pjInfo[0][0].business_field %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">부서/직급</p>
+                        <p style="width: 100%;"><%= pjInfo[0][0].job_dept %>/<%= pjInfo[0][0].job_position %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">주요개발분야</p>
+                        <p style="width: 100%;"><%= pjInfo[0][0].research_field %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">이메일 주소</p>
+                        <p style="width: 100%;"><%= pjInfo[0][0].email_ad %></p>
+                        <br>
+
+                        <p style="width: 100%; color: #6c757d;">전화번호</p>
+                        <% var phone = pjInfo[0][0].phone_num.substring(0,7) %>
+                        <p style="width: 100%;"><%= phone %>****</p>
+                        <br>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+    <script type="text/javascript">
+      function abilityDownload2(fullPath) {
+        var downloadPath = fullPath.substring(7);
+        location.href = "/fileDownload/" + downloadPath + "/want";
+      }
+      function CheckForm(){
+          var _appendix = document.getElementById("ProjectPlanFile").value;
+
+          if (_appendix ==''){
+            alert("파일을 선택해주세요.");
+            document.getElementById("ProjectPlanFile").focus();
+            return false;
+          }
+
+          if (confirm("보고서를 제출하시겠습니까? ") == true ) {
+            return true ;
+          }else{
+            return false;
+          }
+
+      }
+      function CheckForm2(){
+
+          if (confirm("보고서를 삭제하시겠습니까? ") == true ) {
+            return true ;
+          }else{
+            return false;
+          }
+
+      }
+    </script>
+  </body>
+</html>

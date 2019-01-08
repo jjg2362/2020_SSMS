@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin.css" rel="stylesheet">
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <h6>팀 관리 > 팀 생성 </h6>
+        <hr>
+
+        <div class="card card-register mx-auto mt-5 mb-5">
+          <div class="card-header">팀 생성</div>
+          <div class="card-body">
+            <div class="form-group">
+              <form id="teamCreateForm">
+                <div class="form-row">
+                  <div class="col-md-4">
+                    <label for="selectTeamCreateType"> 팀 타입 </label>
+                    <select class="form-control" name="teamCreateType" id="selectTeamCreateType">
+                      <option value="1" selected> 캡스톤 디자인 </option>
+                      <option value="2"> 기업사회맞춤 </option>
+                      <option value="3"> 다학제 캡스톤 디자인</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="inputTeamName"> 팀명 </label>
+                    <input class="form-control" name="teamName" id="inputTeamName" type="text" placeholder="팀 이름">
+                  </div>
+
+                  <div class="col-md-2">
+                    <label for="teamCreateButton"> &nbsp; </label>
+                    <input class="form-control" id="teamCreateButton" type="submit" value="생성">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+          <div class="card card-register mx-auto mt-5 mb-5">
+            <div class="card-header">팀 목록</div>
+            <div class="card-body">
+
+              <% if(myTeamName[0].length == 0 && myTeamName[1].length == 0 && myTeamName[2].length == 0) { %>
+                <div class="form-group" style="text-align: center;">
+                  생성된 팀이 없습니다
+                </div>
+              <% } else { %>
+                <% if(myTeamName[0].length != 0) { %>
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class="col-md-4">
+                        <label for=""> 팀명 </label>
+                        <p class="form-text" id="">
+                          <%= myTeamName[0][0].team_name %>
+                        </p>
+                      </div>
+                      <div class="col-md-5">
+                        <label for=""> 팀 타입 </label>
+                        <p class="form-text" id="">
+                          캡스톤 디자인
+                        </p>
+                      </div>
+                      <div class="col-md-3">
+                        <label for=""> &nbsp; </label>
+                        <input class="form-control" type="button" onclick="location.href='/teammgt/DGU251'" value="팀원 초대하기">
+                      </div>
+                    </div>
+                  </div>
+                <% } %>
+
+                <% if(myTeamName[1].length != 0) { %>
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class="col-md-4">
+                        <label for=""> 팀명 </label>
+                        <p class="form-text" id="">
+                          <%= myTeamName[1][0].team_name %>
+                        </p>
+                      </div>
+                      <div class="col-md-5">
+                        <label for=""> 팀 타입 </label>
+                        <p class="form-text" id="">
+                          기업사회맞춤
+                        </p>
+                      </div>
+                      <div class="col-md-3">
+                        <label for=""> &nbsp; </label>
+                        <input class="form-control" type="button" onclick="location.href='/teammgt/DGU251'" value="팀원 초대하기">
+                      </div>
+                    </div>
+                  </div>
+                <% } %>
+                  <% if(myTeamName[2].length != 0) { %>
+                    <div class="form-group">
+                      <div class="form-row">
+                        <div class="col-md-4">
+                          <label for=""> 팀명 </label>
+                          <p class="form-text" id="">
+                            <%= myTeamName[2][0].team_name %>
+                          </p>
+                        </div>
+                        <div class="col-md-5">
+                          <label for=""> 팀 타입 </label>
+                          <p class="form-text" id="">
+                            다학제 캡스톤 디자인
+                          </p>
+                        </div>
+                        <div class="col-md-3">
+                          <label for=""> &nbsp; </label>
+                          <input class="form-control" type="button" onclick="location.href='/teammgt/DGU251'" value="팀원 초대하기">
+                        </div>
+                      </div>
+                    </div>
+                  <% } %>
+              <% } %>
+            </div>
+          </div>
+
+      </div>
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../js/sb-admin.min.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        //팀 생성
+        $("#teamCreateButton").on('click', function(event) {
+          event.preventDefault();
+
+          if($("#inputTeamName").val() == "") {
+            alert("팀 이름을 입력해 주세요.");
+            return false;
+          }
+
+          if(!confirm('팀 생성 하시겠습니까?')) {
+            return false;
+          }
+
+          $.ajax({
+            url: "/teammgt/DGU201/team/create",
+            type: "post",
+            cache: false,
+            data: $("#teamCreateForm").serialize(),
+
+            success: function(result) {
+              if(result == "dupTeam") {
+                alert("팀을 생성할 수 없습니다.");
+              } else if(result == "dupTeamName") {
+                alert("동일한 팀명이 있습니다.\n팀을 생성할 수 없습니다.");
+              } else if(result == "teamNameError") {
+                alert("해당 팀명은 불가능 합니다.");
+              } else {
+                alert("팀이 생성되었습니다.");
+                location.reload();
+              }
+            }
+          });
+        });
+
+
+      });
+    </script>
+  </body>
+</html>

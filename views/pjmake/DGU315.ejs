@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Page level plugin CSS-->
+    <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>프로젝트 관리 > 프로젝트 - 멘토 매칭</h6>
+        </div>
+        <hr>
+
+        <div class="card card-register mx-auto mb-3 pt-3 pl-3 pr-3">
+         <div class="card-body">
+           <div class ="form-row">
+             <h5> 프로젝트 - 멘토 매칭 </h5>
+           </div>
+           <form action="/pjmake/DGU315/pjmentor" method="post" onsubmit="return CheckForm();" />
+
+             <!-- 팀-프로젝트 매칭 -->
+             <div class="form-group mt-4">
+               <div class="form-row">
+                 <div class ="col-md-4">
+                   <label>프로젝트 </label>
+                 </div>
+                 <div class = "col-md-4">
+                   <label>멘토 </label>
+                 </div>
+
+               </div>
+
+               <!-- 팀-프로젝트-교과목 선택 -->
+               <div class="form-row">
+
+                 <div class="col-md-4 ">
+                   <select class="form-control" id="ProjectID" name="ProjectID">
+                     <option value = "없음">-- 프로젝트 --</option>
+                     <% for(var i = 0; i < PjMentor[0].length; i++) {%>
+                         <option value = "<%=PjMentor[0][i].prj_id%>"><%=PjMentor[0][i].prj_name%> - <%=PjMentor[0][i].company_name%> - <%=PjMentor[0][i].mentor_name%></option>
+                          <% } %>
+                   </select>
+                 </div>
+
+                 <div class="col-md-6 ">
+                   <select class="form-control" id="MentorID" name="MentorID">
+                     <option value = "없음">---- 멘토 ----</option>
+                     <% for(var i = 0; i < PjMentor[1].length; i++) {%>
+                         <option value = "<%=PjMentor[1][i].mentor_id%>"><%=PjMentor[1][i].company_name%> - <%=PjMentor[1][i].mentor_name%></option>
+                          <% } %>
+                   </select>
+                 </div>
+
+                 <div class = "col-md-2 ">
+                   <input  type="submit" class="btn btn-primary btn-link" name = "MakeProject" value="완료" />
+                 </div>
+               </div>
+             </div>
+            </form>
+
+       </div>
+     </div>
+     <!-- <div class="card card-register mx-auto mb-3 pt-3 pl-3 pr-3">
+      <div class="card-body">
+        <div class ="form-row">
+          <h5> 등록 결과 </h5>
+        </div>
+
+          팀-프로젝트 매칭
+          <div class="form-group mt-4">
+            <div class="form-row">
+              <div class ="col-md-4">
+                <label>프로젝트</label>
+              </div>
+              <div class = "col-md-4">
+                <label>멘토</label>
+              </div>
+            </div>
+            <hr>
+
+          </div>
+          </div>
+    </div> -->
+  </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for this page-->
+    <script src="/js/sb-admin-datatables.min.js"></script>
+    <script type="text/javascript">
+      function CheckDelete(){
+          if (confirm("팀 - 프로젝트를 삭제하시겠습니까? ") == true ) {
+              return true ;
+          }else{
+              return false;
+          }
+      }
+      function CheckForm(){
+          var _ProjectID = document.getElementById("ProjectID").value;
+          var _MentorID = document.getElementById("MentorID").value;
+
+
+          if (_ProjectID=="없음"){
+            alert("프로젝트를 선택하세요.");
+            document.getElementById("ProjectID").focus();
+            return false;
+          }
+
+          if (_MentorID =="없음"){
+            alert("멘토 선택하세요. ");
+            document.getElementById("MentorID").focus();
+            return false;
+          }
+
+          if (confirm("프로젝트 - 멘토를 매칭 수정하시겠습니까? ") == true ) {
+            return true ;
+          }else{
+            return false;
+          }
+      }
+
+    </script>
+  </body>
+</html>

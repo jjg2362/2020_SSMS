@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+  </head>
+
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    </style>
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>프로젝트 개설 > 계획서 작성 (2) > 멘토링 계획 작성 </h6>
+        </div>
+        <hr class="mt-2">
+         <div class="card  mb-3 pt-3 pl-3 pr-3">
+          <div class="card-body">
+            <h2> 멘토링 일정 입력 </h2>
+
+
+            <form action="/pjmake/DGU302" method="post" onsubmit="return Check();">
+              <div class="table-responsive" id="ProjectInfo">
+              <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                <div class="row">
+                  <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                    <thead>
+                      <tr role="row">
+                        <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 5%;" ><%=PJList[0].prj_id%></th>
+                        <input type = "hidden" value ="<%=PJList[0].prj_id%> " name ="PJId" id = "PJId" />
+                        <input type = "hidden" value ="0" name ="mentoringnum" id = "mentoringnum" />
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 45%;"><%=PJList[0].prj_name%></th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20%;"><%=moment(PJList[0].start_date).format('YYYY-MM-DD')%> ~ <%=moment(PJList[0].cls_date).format('YYYY-MM-DD')%> </th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 15%;">멘토링 일정 추가</th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 15%;">
+                          <div class="form-row">
+                            <div class="col-md-6">
+                              <a href="javascript:add_mentoring_schd();">
+                                <center><div class="form-control"> + </div> </center>
+                              </a>
+                            </div>
+                            <div class="col-md-6">
+                              <a href="javascript:del_mentoring_schd();">
+                                <center><div class="form-control"> - </div> </center>
+                              </a>
+                            </div>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- 멘토링 일정 추가 -->
+
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+             </div>
+
+              <div class="table-responsive" >
+              <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                <div class="row">
+                  <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                    <thead>
+                      <tr role="row">
+                        <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width:5%;"></th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;">멘토링 일정</th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 60%;">멘토링 내용</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" class="odd"  name = "AddBox1" id="AddBox1" >
+                        </tr>
+                        <tr role="row" class="odd"  name = "AddBox2" id="AddBox2" >
+                        </tr>
+                        <tr role="row" class="odd"  name = "AddBox3" id="AddBox3" >
+                        </tr>
+                        <tr role="row" class="odd"  name = "AddBox4" id="AddBox4" >
+                        </tr>
+                        <tr role="row" class="odd"  name = "AddBox5" id="AddBox5" >
+                        </tr>
+                        <tr role="row" class="odd"  name = "AddBox6" id="AddBox6" >
+                        </tr>
+                        <tr role="row" class="odd"  name = "AddBox7" id="AddBox7" >
+                        </tr>
+                        <tr role="row" class="odd"  name = "AddBox8" id="AddBox8" >
+                        </tr>
+                        <tr role="row" class="odd"  name = "AddBox9" id="AddBox9" >
+                        </tr>
+                        <tr role="row" class="odd"  name = "AddBox10" id="AddBox10" >
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class = "form-group mt-4">
+                  <div class="form-row">
+                    <div class = "col-md-4">
+                      <label> </label>
+                    </div>
+
+                    <div class = "col-md-4">
+                      <center> <input type ="submit" class="btn btn-primary btn-block" name = "MakeProject" value="완료"  /> </center>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+             </div>
+           </form>
+        </div>
+      </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <script type="text/javascript">
+
+    var index = 0;
+
+      function add_mentoring_schd(){
+        index +=1 ;
+        var addbox = "AddBox"+index;
+        var show = document.getElementById(addbox);
+        var add = "";
+        if (index >10){
+          alert("한 번에 최대 10과목 입력 가능합니다.");
+          return
+        }
+        else{
+          id_date = "MentoringDate"+ (index);
+          id_detail = "MentoringDetail"+ (index);
+
+          add += '<td class="sorting_1">'+index+'</td>';
+          add += '<td class="">'+'<input class="form-control"'+' name='+id_date+' id='+id_date+ ' type="date">'+ '</td> ';
+          add += '<td class="">'+'<input class="form-control"'+' name='+id_detail+' id='+id_detail+ ' type="text" placeholder="Mentoring Detail">'+'</td>';
+
+
+          show.innerHTML = add ;
+          document.getElementById("mentoringnum").value = index;
+
+        }
+      }
+
+      function del_mentoring_schd(){
+        var addboxIndex = "AddBox"+index;
+        var show = document.getElementById(addboxIndex);
+
+
+        if (index > 0){
+          show.innerHTML = "";
+          index -=1;
+          document.getElementById("mentoringnum").value = index;
+        }else{
+          alert("더 이상 삭제할 수 없습니다.");
+        }
+      }
+
+      function Check(){
+        if(index < 3){
+          alert("최소 3번의 멘토링을 진행해야 합니다.");
+          return false;
+        }
+
+        for (var i =1; i<=index ; i++){
+          var id_date = "MentoringDate"+ i;
+          var id_detail = "MentoringDetail"+ i;
+
+          date_value = document.getElementById(id_date).value;
+          detail_value = document.getElementById(id_detail).value;
+          if(date_value==''){
+            alert(i+" - 멘토링 일정을 입력해주세요.");
+            document.getElementById(id_date).focus;
+            return false;
+          }
+          if (detail_value=''){
+            alert(i + " - 멘토링 상세 내용을 입력해주세요.");
+            document.getElementById(id_detail).focus;
+            return false;
+          }
+        }
+
+
+
+
+        if(confirm("멘토링 정보를 등록하시겠습니까?") == true){
+          return true;
+        }else{
+          return false;
+        }
+      }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "local": {
+    "host": "211.253.26.117",
+    "user": "dev",
+    "password": "newyork123",
+    "port": "3314",
+    "database": "smartdongguk"
+  },
+  "server": {
+    "host": "localhost",
+    "user": "dev",
+    "password": "newyork123",
+    "port": "3314",
+    "database": "smartdongguk"
+  },
+  "real": {
+    "host": "localhost",
+    "user": "dev",
+    "password": "newyork123",
+    "port": "3314",
+    "database": "smartdongguk"
+  }
+}

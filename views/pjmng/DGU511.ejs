@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+          <div class="mb-0 mt-4">
+            <h6>프로젝트 운영 > 프로젝트 점검 > <%=mtrInfo[1][0].team_name%></h6>
+          </div>
+          <hr class="mt-2">
+          <div class="card mb-2 mt-2 pt-1 pl-3 pr-3">
+            <div class="card-body">
+              <div class = "form-row">
+                <div class = "col-md-11">
+                  <h4>진도점검표</h4>
+                  <h7>*멘토링은 최대 <%=mtrInfo[1][0].mentoring_limit%>회 가능합니다.</h7>
+                </div>
+
+              <% if(userInfo.userType == 'student') { %>
+                  <div class = "col-md-1">
+                    <% if(mtrInfo[1][0].leader_id == userInfo.userId) { %>
+                      <% if(mtrInfo[2].length==0||mtrInfo[2][0].prj_plan_report ==''||mtrInfo[2][0].prj_plan_report==null) { %>
+                        <a onclick="javascript:btn()">
+                          <center><div class="form-control"> 추가 </div> </center>
+                        </a>
+                      <% } else{ %>
+                        <a href="/pjmng/DGU513/<%=mtrInfo[1][0].prj_id%>">
+                          <center><div class="form-control"> 추가 </div> </center>
+                        </a>
+                      <% } %>
+
+                    <% } %>
+                  </div>
+                </div>
+                <hr class="mt-2">
+                <div class="table-responsive">
+                  <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                    <div class="row">
+                      <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                       <thead>
+                         <tr role="row">
+                           <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending" style="width:10%;"><center>멘토링 날짜</center></th>
+                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>학생 보고서</center></th>
+                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>멘토 보고서</center></th>
+                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>작성 멘토</center></th>
+                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>확인</center></th>
+
+                         </tr>
+                       </thead>
+                       <%if(mtrInfo[0].length!=0) { %>
+                       <tbody>
+                         <input type = "hidden" value ="<%=mtrInfo[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                         <input type = "hidden" value ="<%=mtrInfo[0][0].team_id%> " name ="TEAMId" id = "TEAMId" />
+                         <input type = "hidden" value ="<%=mtrInfo[0][0].mentor_id%> " name ="MENTORId" id = "MENTORId" />
+                         <% for(var i = 0; i < mtrInfo[0].length; i++) {%>
+                           <tr role="row" class="odd" >
+                             <td class="sorting_1"><center><%= moment(mtrInfo[0][i].meeting_date).format('YYYY-MM-DD') %></center></td>
+                             <td>
+                               <% if(mtrInfo[1][0].leader_id == userInfo.userId) { %>
+                                 <div class = "form-row">
+                                   <div class ="col-md-2"></div>
+                                   <div class = "col-md-8"><center>
+                                     <% var d1 = mtrInfo[0][i].ment_report_std.split('/') %>
+                                     <% var d2 = d1[2].length %>
+                                     <% var d3 = d1[2].substr(14,d2) %>
+                                     <a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_std %>');" href="javascript:void(0)">
+                                       <%= d3 %>
+                                     </a>
+                                     </center>
+                                   </div>
+                                   <div class = "col-md-2">
+                                     <% var id1 = "/pjmng/delete/DeleteReport"+(i+1) %>
+                                     <% var id2 = "MTDt"+(i+1) %>
+                                     <form action="<%=id1%>" method="post">
+                                       <input type = "hidden" value ="<%=mtrInfo[0][0].prj_id%>" name ="PJId" id = "PJId" />
+                                       <input type = "hidden" value ="<%= moment(mtrInfo[0][i].meeting_date).format('YYYY-MM-DD') %>" name ="<%=id2%>" id = "<%=id2%>" />
+                                       <input class="btn btn-link btn-primary" name="FileDeletion"+"<%=i+1%>" id="submitDeletion" type="submit" value="삭제"/>
+                                     </form>
+                                   </div>
+                                 </div>
+                               <% } else { %>
+                                 <div class = "form-row">
+                                   <div class = "col-md-12">
+                                     <% var dd1 = mtrInfo[0][i].ment_report_std.split('/') %>
+                                     <% var dd2 = dd1[2].length %>
+                                     <% var dd3 = dd1[2].substr(14,dd2) %>
+                                     <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_std %>');" href="javascript:void(0)">
+                                       <%= dd3 %>
+                                     </a></center>
+                                   </div>
+                                 </div>
+                               <% } %>
+                             </td>
+                             <td>
+                               <%if(mtrInfo[0][i].ment_report_mtr!=''&&mtrInfo[0][i].ment_report_mtr!=null) { %>
+                                 <% var i1 = mtrInfo[0][i].ment_report_mtr.split('/') %>
+                                 <% var i2 = i1[2].length %>
+                                 <% var i3 = i1[2].substr(14,i2) %>
+                                 <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_mtr %>');" href="javascript:void(0)">
+                                   <%= i3 %>
+                                 </a></center>
+                               <% } %>
+                             </td>
+                             <td><center><%=mtrInfo[0][i].mentor_id%></center></td>
+                           <% if(mtrInfo[0][i].chk_yn == 0) { %>
+                               <td><center>미확인</center></td>
+                             <% } else{ %>
+                               <td><center>확인됨</center></td>
+                             <% } %>
+                           </tr>
+                         <% } %>
+                       </tbody>
+                      <% } %>
+                     </table>
+                   </div>
+                  </div>
+                </div>
+              <% } else if(userInfo.userType == 'mentor'){ %>
+                <div class = "col-md-1">
+
+                </div>
+              </div>
+              <hr class="mt-2">
+              <h7>(멘토보고서 작성법) 학생보고서를 받아 검토 후 "멘토링 진행 (멘토 작성 부분)" 을 추가 작성후 제출합니다.</h7>
+              <div class="table-responsive">
+                <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                  <div class="row">
+                    <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                     <thead>
+                       <tr role="row">
+                         <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending" style="width:10%;"><center>멘토링 날짜</center></th>
+                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>학생 보고서</center></th>
+                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>멘토 보고서</center></th>
+                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>작성 멘토</center></th>
+                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>확인여부</center></th>
+                       </tr>
+                     </thead>
+                     <%if(mtrInfo[0].length!=0) { %>
+                     <tbody>
+                       <input type = "hidden" value ="<%=mtrInfo[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                       <input type = "hidden" value ="<%=mtrInfo[0][0].team_id%> " name ="TEAMId" id = "TEAMId" />
+                       <input type = "hidden" value ="<%=mtrInfo[0][0].mentor_id%> " name ="MENTORId" id = "MENTORId" />
+                       <% for(var i = 0; i < mtrInfo[0].length; i++) {%>
+                         <tr role="row" class="odd" >
+                           <td class="sorting_1"><center><%= moment(mtrInfo[0][i].meeting_date).format('YYYY-MM-DD') %></center></td>
+                           <td>
+                             <div class = "form-row">
+                               <div class = "col-md-12">
+                                 <% var ddd1 = mtrInfo[0][i].ment_report_std.split('/') %>
+                                 <% var ddd2 = ddd1[2].length %>
+                                 <% var ddd3 = ddd1[2].substr(14,ddd2) %>
+                                 <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_std %>');" href="javascript:void(0)">
+                                   <%= ddd3 %>
+                                 </a></center>
+                               </div>
+                             </div>
+                           </td>
+                           <td>
+                             <% if(mtrInfo[0][i].ment_report_mtr == null||mtrInfo[0][i].ment_report_mtr == '') { %>
+                               <% var rt1 = "/pjmng/add/AddReport"+(i+1) %>
+                               <% var rt2 = "MTDt"+(i+1) %>
+                               <% var rt3 = "appendix"+(i+1) %>
+
+                               <form action="<%=rt1%>" method="post" enctype="multipart/form-data">
+                                 <input type = "hidden" value ="<%=mtrInfo[0][0].prj_id%>" name ="PJId" id = "PJId" />
+                                 <input type = "hidden" value ="<%= moment(mtrInfo[0][i].meeting_date).format('YYYY-MM-DD') %>" name ="<%=rt2%>" id = "<%=rt2%>" />
+                                 <div class = "form-row">
+                                   <div class = "col-md-10">
+                                     <input class="form-control" name="<%=rt3%>" id="<%=rt3%>" type="file" >
+                                   </div>
+                                   <div class = "col-md-2">
+                                     <input class="form-control" name="FileSubmission"+"<%=i+1%>" id="submitFile" type="submit" value="등록"/>
+                                   </div>
+                                 </div>
+                               </form>
+                             <% } else{ %>
+                               <div class = "form-row">
+                                 <div class="col-md-2"></div>
+                                 <div class = "col-md-8">
+                                   <% var dddd1 = mtrInfo[0][i].ment_report_mtr.split('/') %>
+                                   <% var dddd2 = dddd1[2].length %>
+                                   <% var dddd3 = dddd1[2].substr(14,dddd2) %>
+                                   <center>
+                                   <a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_mtr %>');" href="javascript:void(0)">
+                                     <%= dddd3 %>
+                                   </a></center>
+                                 </div>
+                                 <div class = "col-md-2">
+                                   <% var id1 = "/pjmng/delete/DeleteReport"+(i+1) %>
+                                   <% var id2 = "MTDt"+(i+1) %>
+                                   <form action="<%=id1%>" method="post">
+                                     <input type = "hidden" value ="<%=mtrInfo[0][0].prj_id%>" name ="PJId" id = "PJId" />
+                                     <input type = "hidden" value ="<%= moment(mtrInfo[0][i].meeting_date).format('YYYY-MM-DD') %>" name ="<%=id2%>" id = "<%=id2%>" />
+                                     <input class="form-control" name="FileDeletion"+"<%=i+1%>" id="submitDeletion" type="submit" value="삭제"/>
+                                   </form>
+                                 </div>
+                               </div>
+                             <% } %>
+                           </td>
+                           <td><center><%=mtrInfo[0][i].mentor_id%></center></td>
+                         <% if(mtrInfo[0][i].chk_yn == 0) { %>
+                             <td><center>미확인</center></td>
+                           <% } else{ %>
+                             <td><center>확인됨</center></td>
+                           <% } %>
+                         </tr>
+                       <% } %>
+                     </tbody>
+                    <% } %>
+                   </table>
+                 </div>
+                </div>
+              </div>
+              <% } else if(userInfo.userType == 'admin'){ %>
+                  <div class = "col-md-1">
+                  </div>
+                </div>
+                <hr class="mt-2">
+                <div class="table-responsive">
+                <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                  <div class="row">
+                    <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                     <thead>
+                       <tr role="row">
+                         <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending" style="width:10%;"><center>멘토링 날짜</center></th>
+                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>학생 보고서</center></th>
+                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>멘토 보고서</center></th>
+                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>작성 멘토</center></th>
+                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>확인여부</center></th>
+                       </tr>
+                     </thead>
+                     <%if(mtrInfo[0].length!=0) { %>
+                     <tbody>
+                       <input type = "hidden" value ="<%=mtrInfo[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                       <input type = "hidden" value ="<%=mtrInfo[0][0].team_id%> " name ="TEAMId" id = "TEAMId" />
+                       <input type = "hidden" value ="<%=mtrInfo[0][0].mentor_id%> " name ="MENTORId" id = "MENTORId" />
+                       <% for(var i = 0; i < mtrInfo[0].length; i++) {%>
+                         <tr role="row" class="odd" >
+                           <td class="sorting_1"><center><%= moment(mtrInfo[0][i].meeting_date).format('YYYY-MM-DD') %></center></td>
+                           <td>
+                             <div class = "form-row">
+                               <div class = "col-md-12">
+                                 <%if(mtrInfo[0][i].ment_report_std!=''&&mtrInfo[0][i].ment_report_std!=null) { %>
+                                   <% var ddddd1 = mtrInfo[0][i].ment_report_std.split('/') %>
+                                   <% var ddddd2 = ddddd1[2].length %>
+                                   <% var ddddd3 = ddddd1[2].substr(14,ddddd2) %>
+                                   <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_std %>');" href="javascript:void(0)">
+                                     <%= ddddd3 %>
+                                   </center></a>
+                                 <% } %>
+                               </div>
+                             </div>
+                           </td>
+                           <td>
+                             <div class = "form-row">
+                               <div class = "col-md-12">
+                                 <%if(mtrInfo[0][i].ment_report_mtr!=''&&mtrInfo[0][i].ment_report_mtr!=null) { %>
+                                   <% var dddddd1 = mtrInfo[0][i].ment_report_mtr.split('/') %>
+                                   <% var dddddd2 = dddddd1[2].length %>
+                                   <% var dddddd3 = dddddd1[2].substr(14,dddddd2) %>
+                                   <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_mtr %>');" href="javascript:void(0)">
+                                     <%= dddddd3 %>
+                                   </center></a>
+                                 <% } %>
+                               </div>
+                             </div>
+                           </td>
+                           <td><center><%=mtrInfo[0][i].mentor_id%></center></td>
+                           <% if(mtrInfo[0][i].chk_yn == 0) { %>
+                             <td>
+                               <% var chk1 = "/pjmng/makechk/confirmchk"+(i+1) %>
+                               <% var chk2 = "MTDt"+(i+1) %>
+                               <form action="<%=chk1%>" method="post">
+                                 <input type = "hidden" value ="<%=mtrInfo[0][0].prj_id%>" name ="PJId" id = "PJId" />
+                                 <input type = "hidden" value ="<%= moment(mtrInfo[0][i].meeting_date).format('YYYY-MM-DD') %>" name ="<%=chk2%>" id = "<%=chk2%>" />
+                                 <center><input class="btn btn-link btn-primary" name="FileDeletion"+"<%=i+1%>" id="submitDeletion" type="submit" value="미확인"/></center>
+                               </form>
+                             </td>
+                           <% } else{ %>
+                             <td>
+                               <% var ccl1 = "/pjmng/makechk/cancelchk"+(i+1) %>
+                               <% var ccl2 = "MTDt"+(i+1) %>
+                               <form action="<%=ccl1%>" method="post">
+                                 <input type = "hidden" value ="<%=mtrInfo[0][0].prj_id%>" name ="PJId" id = "PJId" />
+                                 <input type = "hidden" value ="<%= moment(mtrInfo[0][i].meeting_date).format('YYYY-MM-DD') %>" name ="<%=ccl2%>" id = "<%=ccl2%>" />
+                                 <center><input class="btn btn-link btn-primary" name="FileDeletion"+"<%=i+1%>" id="submitDeletion" type="submit" value="확인됨"/></center>
+                               </form>
+                             </td>
+                           <% } %>
+                         </tr>
+                       <% } %>
+                     </tbody>
+                    <% } %>
+                   </table>
+                 </div>
+                </div>
+                </div>
+              <% } else{ %>
+                  <div class = "col-md-1">
+                  </div>
+                </div>
+                <hr class="mt-2">
+                <div class="table-responsive">
+                  <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                    <div class="row">
+                      <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                       <thead>
+                         <tr role="row">
+                           <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending" style="width:10%;"><center>멘토링 날짜</center></th>
+                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>학생 보고서</center></th>
+                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>멘토 보고서</center></th>
+                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>확인여부</center></th>
+                         </tr>
+                       </thead>
+                       <%if(mtrInfo[0].length!=0) { %>
+                       <tbody>
+                         <input type = "hidden" value ="<%=mtrInfo[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                         <input type = "hidden" value ="<%=mtrInfo[0][0].team_id%> " name ="TEAMId" id = "TEAMId" />
+                         <input type = "hidden" value ="<%=mtrInfo[0][0].mentor_id%> " name ="MENTORId" id = "MENTORId" />
+                         <% for(var i = 0; i < mtrInfo[0].length; i++) {%>
+                           <tr role="row" class="odd" >
+                             <td class="sorting_1"><center><%= moment(mtrInfo[0][i].meeting_date).format('YYYY-MM-DD') %></center></td>
+                             <td>
+                               <div class = "form-row">
+                                 <div class = "col-md-12">
+                                   <%if(mtrInfo[0][i].ment_report_std!=''&&mtrInfo[0][i].ment_report_std!=null) { %>
+                                     <% var dddddd4 = mtrInfo[0][i].ment_report_std.split('/') %>
+                                     <% var dddddd5 = dddddd4[2].length %>
+                                     <% var dddddd6 = dddddd4[2].substr(14,dddddd5) %>
+                                     <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_std %>');" href="javascript:void(0)">
+                                       <%= dddddd6 %>
+                                     </center></a>
+                                   <% } %>
+                                 </div>
+                               </div>
+                             </td>
+                             <td>
+                               <div class = "form-row">
+                                 <div class = "col-md-12">
+                                   <%if(mtrInfo[0][i].ment_report_mtr!=''&&mtrInfo[0][i].ment_report_mtr!=null) { %>
+                                     <% var dddddd7 = mtrInfo[0][i].ment_report_mtr.split('/') %>
+                                     <% var dddddd8 = dddddd7[2].length %>
+                                     <% var dddddd9 = dddddd7[2].substr(14,dddddd8) %>
+                                     <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_mtr %>');" href="javascript:void(0)">
+                                       <%= dddddd9 %>
+                                     </center></a>
+                                   <% } %>
+                                 </div>
+                               </div>
+                             </td>
+                             <% if(mtrInfo[0][i].chk_yn == 0) { %>
+                               <td><center>미확인</center></td>
+                             <% } else{ %>
+                               <td><center>진행중</center></td>
+                             <% } %>
+                           </tr>
+                         <% } %>
+                       </tbody>
+                      <% } %>
+                     </table>
+                   </div>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script type="text/javascript">
+      function abilityDownload2(fullPath) {
+        var downloadPath = fullPath.substring(7);
+        location.href = "/fileDownload/" + downloadPath + "/want";
+      }
+    </script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+    <script type="text/javascript">
+
+    var index = 0;
+
+      function Check(){
+
+        for (var i =1; i<=index ; i++){
+          var id_date = "MentoringDate"+ i;
+          var id_report = "MentoringReport"+ i;
+
+          date_value = document.getElementById(id_date).value;
+          detail_value = document.getElementById(id_report).value;
+          if(date_value==''){
+            alert(i+" - 멘토링 일정을 입력해주세요.");
+            document.getElementById(id_date).focus;
+            return false;
+          }
+          if (detail_value=''){
+            alert(i + " - 멘토링 상세 내용을 입력해주세요.");
+            document.getElementById(id_report).focus;
+            return false;
+          }
+        }
+        if(confirm("멘토링 보고서를 등록하시겠습니까?") == true){
+          return true;
+        }else{
+          return false;
+        }
+      }
+
+
+      function btn(){
+          alert('수행계획서를 등록해주세요. \n(프로젝트 운용 - 내프로젝트 - 프로젝트 페이지 - 수행계획서 등록) ');
+      }
+
+
+
+    </script>
+  </body>
+</html>

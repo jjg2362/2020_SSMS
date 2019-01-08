@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+  </head>
+
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>프로젝트 운영 > 결과물 등록 > <%=FinalLists[0][0].team_name%></h6>
+        </div>
+        <hr class="mt-2">
+        <% if((userInfo.userType == 'student' && FinalLists[0][0].leader_id == userInfo.userId)||userInfo.userType == 'mentor') { %>
+          <% if(FinalLists[0][0].fin_report == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-10">
+                    <h4>최종보고서 등록</h4>
+                  </div>
+                  <div class = "col-md-2">
+                    <a onclick="abilityDownload2('<%= FinalLists[1][0].fin_report_apdx %>');" href="javascript:void(0)">
+                      <input class="form-control" type = "button" value="양식다운"/>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <form action="/pjmng/DGU521/PostReport" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <!-- 파일업로드 -->
+                    <input class="form-control" name="FinalReportFile" id="inputFinalReportFile" type="file" >
+                  </div>
+                  <div class="form-group">
+                    <a onclick="this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';" href="javascript:void(0)">
+                    정보이용동의약관
+                    </a><div style="DISPLAY: none">
+                      <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].fin_agmt%></textarea>
+                    </div>
+                    <input style=";" type="checkbox" name="RegisterReportCheck" id="UseReportCheck" value="true"/> 약관에 동의합니다
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" name="ReportSubmission" id="SubmitFinalReport" type="submit" value="제출">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-10">
+                    <h4>최종보고서 수정/삭제</h4>
+                  </div>
+                  <div class = "col-md-2">
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <form action="/pjmng/DGU521/DeleteReport" method="post"  enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <!-- 보고서 목록 -->
+                    <div class = "form-row">
+                      <div class="col-md-4\">
+                      </div>
+                      <div class="col-md-8">
+                        <% var id1 = FinalLists[0][0].fin_report.split('/') %>
+                        <% var id2 = id1[2].length %>
+                        <% var id3 = id1[2].substr(14,id2) %>
+                        <a onclick="abilityDownload2('<%= FinalLists[0][0].fin_report %>');" href="javascript:void(0)">
+                          <%= id3 %>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="ReportDeletion" id="submitReportDeletion" type="submit" value="삭제">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } %>
+          <% if(FinalLists[0][0].product1 == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-10">
+                    <h4>사용자메뉴얼 및 소스파일 등록</h4>
+                  </div>
+                  <div class = "col-md-2">
+                    <a onclick="abilityDownload2('<%= FinalLists[1][0].user_manual %>');" href="javascript:void(0)">
+                      <input class="form-control" type = "button" value="양식다운"/>
+                    </a>
+                  </div>
+                </div>
+                <h7>사용자메뉴얼 및 소스파일 업로드시 압축 파일(zip)로 묶어서 올리세요! </h7>
+              </div>
+              <div class="card-body">
+                <form action="/pjmng/DGU521/PostProduct" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+
+                  <div class="form-group">
+                    <!-- 파일업로드 -->
+                    <input class="form-control" name="ProductFile" id="inputProductFile" type="file" >
+                  </div>
+                  <div class="form-group">
+                    <a onclick="this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';" href="javascript:void(0)">
+                    정보이용동의약관
+                    </a><div style="DISPLAY: none">
+                      <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].manual_agmt%></textarea>
+                    </div>
+                    <input style=";" type="checkbox" name="RegisterProductCheck" id="UseProductCheck" value="true"/> 약관에 동의합니다
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" name="ProductSubmission" id="SubmitProductFile" type="submit" value="제출">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header"><h4>파일 수정/삭제</h4></div>
+              <div class="card-body">
+                <form action="/pjmng/DGU521/DeleteProductFile" method="post"  enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <!-- 보고서 목록 -->
+                    <div class = "form-row">
+                      <div class="col-md-4\">
+                      </div>
+                      <div class="col-md-8">
+                        <% var id4 = FinalLists[0][0].product1.split('/') %>
+                        <% var id5 = id4[2].length %>
+                        <% var id6 = id4[2].substr(14,id5) %>
+                        <a onclick="abilityDownload2('<%= FinalLists[0][0].product1 %>');" href="javascript:void(0)">
+                          <%= id6 %>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="ProductFileDeletion" id="submitProductDeletion" type="submit" value="삭제">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } %>
+          <% if(FinalLists[0][0].demo_vid == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <h4>시연 동영상</h4>
+              </div>
+              <div class="card-body">
+                <form action="/pjmng/DGU521/PostVideo" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <!-- 파일업로드 -->
+                    <input class="form-control" name="VideoFile" id="inputVideoFile" type="file" >
+                  </div>
+                  <div class="form-group">
+                    <a onclick="this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';" href="javascript:void(0)">
+                    정보이용동의약관
+                    </a><div style="DISPLAY: none">
+                      <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].demo_agmt%></textarea>
+                    </div>
+                    <input style=";" type="checkbox" name="RegisterVideoCheck" id="UseVideoCheck" value="true"/> 약관에 동의합니다
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" name="VideoSubmission" id="SubmitVideoFile" type="submit" value="제출">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header"><h4>시연 동영상</h4></div>
+              <div class="card-body">
+
+                <form action="/pjmng/DGU521/DeleteVideo" method="post"  enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <!-- 보고서 목록 -->
+                    <div class = "form-row">
+                      <div class="col-md-4\">
+                      </div>
+                      <div class="col-md-8">
+                        <% var id7 = FinalLists[0][0].demo_vid.split('/') %>
+                        <% var id8 = id7[2].length %>
+                        <% var id9 = id7[2].substr(14,id8) %>
+                        <a onclick="abilityDownload2('<%= FinalLists[0][0].demo_vid %>');" href="javascript:void(0)">
+                          <%= id9 %>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="VideoFileDeletion" id="submitVideoDeletion" type="submit" value="삭제">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } %>
+          <div class="card card-register mx-auto mt-5 mb-5">
+            <div class="card-header">
+              <div class = "form-row">
+                <div class = "col-md-12">
+                  <h4>실적등록</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <% if(FinalLists[0][0].patent_doc == null||FinalLists[0][0].patent_doc == '') { %>
+                <form action="/pjmng/DGU521/PostPatent" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <!-- 파일업로드 -->
+                        <label>특허 등록</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class = "col-md-8">
+                        <!-- 파일업로드 -->
+                        <input class="form-control" name="PatentFile" id="inputPatentFile" type="file" >
+                      </div>
+                      <div class = "col-md-2">
+                        <a onclick="abilityDownload2('<%= FinalLists[1][0].patent_doc_apdx %>');" href="javascript:void(0)">
+                          <input class="form-control" type = "button" value="양식다운"/>
+                        </a>
+                      </div>
+                      <div class = "col-md-2">
+                        <input class="form-control" name="PatentSubmission" id="SubmitPatentFile" type="submit" value="저장">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <a onclick="this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';" href="javascript:void(0)">
+                    정보이용동의약관
+                    </a><div style="DISPLAY: none">
+                      <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].patent_agmt%></textarea>
+                    </div>
+                    <input style=";" type="checkbox" name="RegisterPatentCheck" id="UsePatentCheck" value="true"/> 약관에 동의합니다
+                  </div>
+                </form>
+              <% } else { %>
+                <form action="/pjmng/DGU521/DeletePatent" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <!-- 파일업로드 -->
+                        <label>특허 등록</label>
+                      </div>
+                    </div>
+                    <div class = "form-row">
+                      <div class="col-md-10">
+                        <% var id10 = FinalLists[0][0].patent_doc.split('/') %>
+                        <% var id11 = id10[2].length %>
+                        <% var id12 = id10[2].substr(14,id11) %>
+                        <center><a onclick="abilityDownload2('<%= FinalLists[0][0].patent_doc %>');" href="javascript:void(0)">
+                          <%= id12 %>
+                        </a></center>
+                      </div>
+                      <div class="col-md-2">
+                        <input class="form-control" name="PatentFileDeletion" id="submitPatentDeletion" type="submit" value="삭제">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <% } %>
+              <% if(FinalLists[0][0].prg_regis == null||FinalLists[0][0].prg_regis == '') { %>
+                <form action="/pjmng/DGU521/PostProgram" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <!-- 파일업로드 -->
+                        <label>프로그램 등록</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class = "col-md-8">
+                        <!-- 파일업로드 -->
+                        <input class="form-control" name="ProgramFile" id="inputProgramFile" type="file" >
+                      </div>
+                      <div class = "col-md-2">
+                        <a onclick="abilityDownload2('<%= FinalLists[1][0].prg_regis_apdx %>');" href="javascript:void(0)">
+                          <input class="form-control" type = "button" value="양식다운"/>
+                        </a>
+                      </div>
+                      <div class = "col-md-2">
+                        <input class="form-control" name="ProgramSubmission" id="SubmitProgramFile" type="submit" value="저장">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <a onclick="this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';" href="javascript:void(0)">
+                    정보이용동의약관
+                    </a><div style="DISPLAY: none">
+                      <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].prg_agmt%></textarea>
+                    </div>
+                    <input style=";" type="checkbox" name="RegisterProgramCheck" id="UseProgramCheck" value="true"/> 약관에 동의합니다
+                  </div>
+                </form>
+              <% } else { %>
+                <form action="/pjmng/DGU521/DeleteProgram" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <!-- 파일업로드 -->
+                        <label>프로그램 등록</label>
+                      </div>
+                    </div>
+                    <div class = "form-row">
+                      <div class="col-md-10">
+                        <% var id13 = FinalLists[0][0].prg_regis.split('/') %>
+                        <% var id14 = id13[2].length %>
+                        <% var id15 = id13[2].substr(14,id14) %>
+                        <center><a onclick="abilityDownload2('<%= FinalLists[0][0].prg_regis %>');" href="javascript:void(0)">
+                          <%= id15 %>
+                        </a></center>
+                      </div>
+                      <div class="col-md-2">
+                        <input class="form-control" name="ProgramFileDeletion" id="submitProgramDeletion" type="submit" value="삭제">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <% } %>
+
+              <% if(FinalLists[0][0].thesis_file == null||FinalLists[0][0].thesis_file == '') { %>
+                <form action="/pjmng/DGU521/PostThesis" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <!-- 파일업로드 -->
+                        <label>논문 등록</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <!-- 파일업로드 -->
+                        <input class="form-control" name="ThesisFile" id="inputThesisFile" type="file" >
+                      </div>
+                      <div class = "col-md-2">
+                        <input class="form-control" name="ThesisSubmission" id="SubmitThesisFile" type="submit" value="저장">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <a onclick="this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';" href="javascript:void(0)">
+                    정보이용동의약관
+                    </a><div style="DISPLAY: none">
+                      <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].thesis_agmt%></textarea>
+                    </div>
+                    <input style=";" type="checkbox" name="RegisterThesisCheck" id="UseThesisCheck" value="true"/> 약관에 동의합니다
+                  </div>
+                </form>
+              <% } else { %>
+                <form action="/pjmng/DGU521/DeleteThesis" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <label>논문 등록</label>
+                      </div>
+                    </div>
+                    <div class = "form-row">
+                      <div class="col-md-10">
+                        <% var id16 = FinalLists[0][0].thesis_file.split('/') %>
+                        <% var id17 = id16[2].length %>
+                        <% var id18 = id16[2].substr(14,id17) %>
+                        <center><a onclick="abilityDownload2('<%= FinalLists[0][0].thesis_file %>');" href="javascript:void(0)">
+                          <%= id18 %>
+                        </a></center>
+                      </div>
+                      <div class="col-md-2">
+                        <input class="form-control" name="ThesisFileDeletion" id="submitThesisDeletion" type="submit" value="삭제">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <% } %>
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class = "col-md-12">
+                      <label>기타</label>
+                    </div>
+                  </div>
+                  <% if(FinalLists[0][0].other1 == null||FinalLists[0][0].other1 == '') { %>
+                    <form action="/pjmng/DGU521/PostOther1" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                      <div class="form-row">
+                        <div class = "col-md-10">
+                          <!-- 파일업로드 -->
+                          <input class="form-control" name="Other1File" id="inputOther1File" type="file" >
+                        </div>
+                        <div class = "col-md-2">
+                          <input class="form-control" name="Other1Submission" id="SubmitOther1File" type="submit" value="저장">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <a onclick="this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';" href="javascript:void(0)">
+                        정보이용동의약관
+                        </a><div style="DISPLAY: none">
+                          <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].ect_agmt%></textarea>
+                        </div>
+                        <input style=";" type="checkbox" name="RegisterOther1Check" id="UseOther1Check" value="true"/> 약관에 동의합니다
+                      </div>
+                    </form>
+                  <% } else { %>
+                    <form action="/pjmng/DGU521/DeleteOther1" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                      <div class = "form-row">
+                        <div class="col-md-10">
+                          <% var id19 = FinalLists[0][0].other1.split('/') %>
+                          <% var id20 = id19[2].length %>
+                          <% var id21 = id19[2].substr(14,id20) %>
+                          <center><a onclick="abilityDownload2('<%= FinalLists[0][0].other1 %>');" href="javascript:void(0)">
+                            <%= id21 %>
+                          </a></center>
+                        </div>
+                        <div class="col-md-2">
+                          <input class="form-control" name="Other1FileDeletion" id="submitOther1Deletion" type="submit" value="삭제">
+                        </div>
+                      </div>
+                    </form>
+                  <% } %>
+                  <% if(FinalLists[0][0].other2 == null||FinalLists[0][0].other2 == '') { %>
+                    <form action="/pjmng/DGU521/PostOther2" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                      <div class="form-row">
+                        <div class = "col-md-10">
+                          <!-- 파일업로드 -->
+                          <input class="form-control" name="Other2File" id="inputOther2File" type="file" >
+                        </div>
+                        <div class = "col-md-2">
+                          <input class="form-control" name="Other2Submission" id="SubmitOther2File" type="submit" value="저장">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <a onclick="this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';" href="javascript:void(0)">
+                        정보이용동의약관
+                        </a><div style="DISPLAY: none">
+                          <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].ect_agmt%></textarea>
+                        </div>
+                        <input style=";" type="checkbox" name="RegisterOther2Check" id="UseOther2Check" value="true"/> 약관에 동의합니다
+                      </div>
+                    </form>
+                  <% } else { %>
+                    <form action="/pjmng/DGU521/DeleteOther2" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                      <div class = "form-row">
+                        <div class="col-md-10">
+                          <% var id22 = FinalLists[0][0].other2.split('/') %>
+                          <% var id23 = id22[2].length %>
+                          <% var id24 = id22[2].substr(14,id23) %>
+                          <center><a onclick="abilityDownload2('<%= FinalLists[0][0].other2 %>');" href="javascript:void(0)">
+                            <%= id24 %>
+                          </a></center>
+                        </div>
+                        <div class="col-md-2">
+                          <input class="form-control" name="Other2FileDeletion" id="submitOther2Deletion" type="submit" value="삭제">
+                        </div>
+                      </div>
+                    </form>
+                  <% } %>
+                  <% if(FinalLists[0][0].other3 == null||FinalLists[0][0].other3 == '') { %>
+                    <form action="/pjmng/DGU521/PostOther3" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                      <div class="form-row">
+                        <div class = "col-md-10">
+                          <!-- 파일업로드 -->
+                          <input class="form-control" name="Other3File" id="inputOther3File" type="file" >
+                        </div>
+                        <div class = "col-md-2">
+                          <input class="form-control" name="Other3Submission" id="SubmitOther3File" type="submit" value="저장">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <a onclick="this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';" href="javascript:void(0)">
+                        정보이용동의약관
+                        </a><div style="DISPLAY: none">
+                          <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].ect_agmt%></textarea>
+                        </div>
+                        <input style=";" type="checkbox" name="RegisterOther3Check" id="UseOther3Check" value="true"/> 약관에 동의합니다
+                      </div>
+                    </form>
+                  <% } else { %>
+                    <form action="/pjmng/DGU521/DeleteOther3" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                      <div class = "form-row">
+                        <div class="col-md-10">
+                          <% var id25 = FinalLists[0][0].other3.split('/') %>
+                          <% var id26 = id25[2].length %>
+                          <% var id27 = id25[2].substr(14,id26) %>
+                          <center><a onclick="abilityDownload2('<%= FinalLists[0][0].other3 %>');" href="javascript:void(0)">
+                            <%= id27 %>
+                          </a></center>
+                        </div>
+                        <div class="col-md-2">
+                          <input class="form-control" name="Other3FileDeletion" id="submitOther3Deletion" type="submit" value="삭제">
+                        </div>
+                      </div>
+                    </form>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+        <%} else { %>
+          <% if(FinalLists[0][0].fin_report == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-12">
+                    <h4>최종보고서</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h7>제출정보가 없습니다.</h7>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-12">
+                    <h4>최종보고서</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <!-- 보고서 목록 -->
+                  <div class = "form-row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8">
+                      <% var id1 = FinalLists[0][0].fin_report.split('/') %>
+                      <% var id2 = id1[2].length %>
+                      <% var id3 = id1[2].substr(14,id2) %>
+                      <a onclick="abilityDownload2('<%= FinalLists[0][0].fin_report %>');" href="javascript:void(0)">
+                        <%= id3 %>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+          <% if(FinalLists[0][0].product1 == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <h4>사용자메뉴얼 및 소스파일</h4>
+              </div>
+              <div class="card-body">
+                <h7>제출정보가 없습니다.</h7>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <h4>사용자메뉴얼 및 소스파일</h4>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <!-- 보고서 목록 -->
+                  <div class = "form-row">
+                    <div class="col-md-4\">
+                    </div>
+                    <div class="col-md-8">
+                      <% var id4 = FinalLists[0][0].product1.split('/') %>
+                      <% var id5 = id4[2].length %>
+                      <% var id6 = id4[2].substr(14,id5) %>
+                      <a onclick="abilityDownload2('<%= FinalLists[0][0].product1 %>');" href="javascript:void(0)">
+                        <%= id6 %>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+          <% if(FinalLists[0][0].demo_vid == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <h4>시연 동영상</h4>
+              </div>
+              <div class="card-body">
+                <h7>제출정보가 없습니다.</h7>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header"><h4>시연 동영상</h4></div>
+              <div class="card-body">
+                <div class="form-group">
+                  <div class = "form-row">
+                    <div class="col-md-4\">
+                    </div>
+                    <div class="col-md-8">
+                      <% var id7 = FinalLists[0][0].demo_vid.split('/') %>
+                      <% var id8 = id7[2].length %>
+                      <% var id9 = id7[2].substr(14,id8) %>
+                      <a onclick="abilityDownload2('<%= FinalLists[0][0].demo_vid %>');" href="javascript:void(0)">
+                        <%= id9 %>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+          <div class="card card-register mx-auto mt-5 mb-5">
+            <div class="card-header">
+              <div class = "form-row">
+                <div class = "col-md-12">
+                  <h4>실적등록</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <% if(FinalLists[0][0].patent_doc == null||FinalLists[0][0].patent_doc == '') { %>
+                <form action="/pjmng/DGU521/PostPatent" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <!-- 파일업로드 -->
+                        <label>특허 등록</label>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <% } else { %>
+                <form action="/pjmng/DGU521/DeletePatent" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <!-- 파일업로드 -->
+                        <label>특허 등록</label>
+                      </div>
+                    </div>
+                    <div class = "form-row">
+                      <div class="col-md-12">
+                        <% var id10 = FinalLists[0][0].patent_doc.split('/') %>
+                        <% var id11 = id10[2].length %>
+                        <% var id12 = id10[2].substr(14,id11) %>
+                        <center><a onclick="abilityDownload2('<%= FinalLists[0][0].patent_doc %>');" href="javascript:void(0)">
+                          <%= id12 %>
+                        </a></center>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <% } %>
+              <% if(FinalLists[0][0].prg_regis == null||FinalLists[0][0].prg_regis == '') { %>
+                <form action="/pjmng/DGU521/PostProgram" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <!-- 파일업로드 -->
+                        <label>프로그램 등록</label>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <% } else { %>
+                <form action="/pjmng/DGU521/DeleteProgram" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <!-- 파일업로드 -->
+                        <label>프로그램 등록</label>
+                      </div>
+                    </div>
+                    <div class = "form-row">
+                      <div class="col-md-12">
+                        <% var id13 = FinalLists[0][0].prg_regis.split('/') %>
+                        <% var id14 = id13[2].length %>
+                        <% var id15 = id13[2].substr(14,id14) %>
+                        <center><a onclick="abilityDownload2('<%= FinalLists[0][0].prg_regis %>');" href="javascript:void(0)">
+                          <%= id15 %>
+                        </a></center>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <% } %>
+
+              <% if(FinalLists[0][0].thesis_file == null||FinalLists[0][0].thesis_file == '') { %>
+                <form action="/pjmng/DGU521/PostThesis" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <!-- 파일업로드 -->
+                        <label>논문 등록</label>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <% } else { %>
+                <form action="/pjmng/DGU521/DeleteThesis" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class = "col-md-10">
+                        <label>논문 등록</label>
+                      </div>
+                    </div>
+                    <div class = "form-row">
+                      <div class="col-md-12">
+                        <% var id16 = FinalLists[0][0].thesis_file.split('/') %>
+                        <% var id17 = id16[2].length %>
+                        <% var id18 = id16[2].substr(14,id17) %>
+                        <center><a onclick="abilityDownload2('<%= FinalLists[0][0].thesis_file %>');" href="javascript:void(0)">
+                          <%= id18 %>
+                        </a></center>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <% } %>
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class = "col-md-12">
+                      <label>기타</label>
+                    </div>
+                  </div>
+                  <% if(FinalLists[0][0].other1 == null||FinalLists[0][0].other1 == '') { %>
+                    <form action="/pjmng/DGU521/PostOther1" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                    </form>
+                  <% } else { %>
+                    <form action="/pjmng/DGU521/DeleteOther1" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                      <div class = "form-row">
+                        <div class="col-md-12">
+                          <center><a onclick="abilityDownload2('<%= FinalLists[0][0].other1 %>');" href="javascript:void(0)">
+                            <%= FinalLists[0][0].other1 %>
+                          </a></center>
+                        </div>
+                      </div>
+                    </form>
+                  <% } %>
+                  <% if(FinalLists[0][0].other2 == null||FinalLists[0][0].other2 == '') { %>
+                    <form action="/pjmng/DGU521/PostOther2" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                    </form>
+                  <% } else { %>
+                    <form action="/pjmng/DGU521/DeleteOther2" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                      <div class = "form-row">
+                        <div class="col-md-12">
+                          <% var id22 = FinalLists[0][0].other2.split('/') %>
+                          <% var id23 = id22[2].length %>
+                          <% var id24 = id22[2].substr(14,id23) %>
+                          <center><a onclick="abilityDownload2('<%= FinalLists[0][0].other2 %>');" href="javascript:void(0)">
+                            <%= id24 %>
+                          </a></center>
+                        </div>
+                      </div>
+                    </form>
+                  <% } %>
+                  <% if(FinalLists[0][0].other3 == null||FinalLists[0][0].other3 == '') { %>
+                    <form action="/pjmng/DGU521/PostOther3" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                    </form>
+                  <% } else { %>
+                    <form action="/pjmng/DGU521/DeleteOther3" method="post" enctype="multipart/form-data">
+                      <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                      <div class = "form-row">
+                        <div class="col-md-12">
+                          <% var id25 = FinalLists[0][0].other3.split('/') %>
+                          <% var id26 = id25[2].length %>
+                          <% var id27 = id25[2].substr(14,id26) %>
+                          <center><a onclick="abilityDownload2('<%= FinalLists[0][0].other3 %>');" href="javascript:void(0)">
+                            <%= id27 %>
+                          </a></center>
+                        </div>
+                      </div>
+                    </form>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+        <% } %>
+
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script type="text/javascript">
+      function abilityDownload2(fullPath) {
+        var downloadPath = fullPath.substring(7);
+        location.href = "/fileDownload/" + downloadPath + "/want";
+      }
+    </script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+  </body>
+</html>
+

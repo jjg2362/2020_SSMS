@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Page level plugin CSS-->
+    <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>프로젝트 관리 > 프로젝트 지원 > <%= PjMentorInfo[0][0].prj_name %> </h6>
+        </div>
+        <hr class="mt-2">
+        <form action="/pjapply/DGU402" method="post" onsubmit = "return ApplyConfirm();" >
+          <input type="hidden" value = "<%= PjMentorInfo[0][0].prj_name %>" name ="projectName" id ="projectName" />
+          <input type="hidden" value = "<%= PjMentorInfo[0][0].prj_id %>" name ="projectID" id ="projectID" />
+          <input type="hidden" value = "<%= PjMentorInfo[0][0].prj_id %>" name ="input_Choice" id ="input_Choice" />
+<!-- ***팀, 1 2 3 지망 -->
+
+
+          <div class="card  mb-3 pt-3 pl-3 pr-3">
+           <div class="card-body">
+            <h5>  <%= PjMentorInfo[0][0].prj_name %>  </h5>
+            <hr class="mt-2">
+            <div class="card-columns">
+              <div class="card-body">
+                <div class="card mb-3">
+                  <div class="card-body row">
+                    <div class="col-sm-12">
+                      <h5 class="card-title mb-1">프로젝트 정보</h5>
+                      <hr class="mt-2">
+                      <p class="card-text small">
+                        <div>
+                          <p style="width: 100%; color: #6c757d;">프로젝트 개요</p>
+                          <p style="width: 100%;"> <%= PjMentorInfo[0][0].prj_outline %> </p>
+                          <br>
+
+                          <p style="width: 100%; color: #6c757d;">왜 이 프로젝트를 개발하려고 하는가?</p>
+                          <p style="width: 100%;"> <%= PjMentorInfo[0][0].prj_bckgrd %></p>
+                          <br>
+
+                          <p style="width: 100%; color: #6c757d;">응용 분야를 포함하여 산업, 기술 등의 동향</p>
+                          <p style="width: 100%;"> <%= PjMentorInfo[0][0].prj_ncst %> </p>
+                          <br>
+
+                          <p style="width: 100%; color: #6c757d;">필요성 혹은 기존 유사 시스템이 있다면 문제점 제시</p>
+                          <p style="width: 100%;"> <%= PjMentorInfo[0][0].prj_pri_tech %> </p>
+                          <br>
+
+                          <p style="width: 100%; color: #6c757d;">개발 목표 - 개발하고자 하는 시스템의 목표</p>
+                          <p style="width: 100%;"> <%= PjMentorInfo[0][0].prj_goal %> </p>
+                          <br>
+
+                          <p style="width: 100%; color: #6c757d;">개발 내용 - 구성과 기능, 특징 등</p>
+                          <p style="width: 100%;"> <%= PjMentorInfo[0][0].prj_content %> </p>
+                          <br>
+
+                          <p style="width: 100%; color: #6c757d;">기대효과 - 이 시스템이 개발되면 누구에게 어떤 도움을 줄 수 있는가?</p>
+                          <p style="width: 100%;"> <%= PjMentorInfo[0][0].prj_exp_eff %> </p>
+                          <br>
+
+                          <p style="width: 100%; color: #6c757d;">키워드  </p>
+                          <p style="width: 100%;"><%= PjMentorInfo[0][0].keyword1 %> / <%= PjMentorInfo[0][0].keyword2 %> /  <%= PjMentorInfo[0][0].keyword3 %> </p>
+                          <br>
+
+                          <p style="width: 100%; color: #6c757d;">연구 / 개발분야</p>
+                          <p style="width: 100%;"><%= PjMentorInfo[0][0].prj_dev_field %></p>
+                          <br>
+
+                          <p style="width: 100%; color: #6c757d;">현장실습 수용 여부</p>
+                          <% if (PjMentorInfo[0][0].internship_yn=="0"){ %>
+                            <p style="width: 100%;">불가능</p>
+                          <%} else if (PjMentorInfo[0][0].internship_yn=="4") { %>
+                            <p style="width: 100%;">가능 (4주, 1개월)</p>
+                          <%} else if (PjMentorInfo[0][0].internship_yn=="8") { %>
+                            <p style="width: 100%;">가능 (8주, 2개월)</p>
+                          <% } %>
+                          <br>
+
+                          <p style="width: 100%; color: #6c757d;">주제 제안 파일 </p>
+                          <p style="width: 50%;"></p>
+                              <div class="btn btn-primary btn-link" style="width: 100%" onclick="abilityDownload2('<%= PjMentorInfo[0][0].appendix %>');" href="javascript:void(0)" > 주제 제안 자료 다운 </div>
+                          <br>
+                        </div>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <div class="card mb-3">
+                    <div class="card-body row">
+                      <div class="col-sm-12">
+                        <h5 class="card-title mb-1">멘토 정보</h5>
+                        <hr class="mt-2">
+                        <p class="card-text small">
+                            <p style="width: 100%; color: #6c757d;">멘토 이름</p>
+                            <p style="width: 100%;"><%= PjMentorInfo[1][0].mentor_name %></p>
+                            <br>
+
+                            <p style="width: 100%; color: #6c757d;">회사명</p>
+                            <p style="width: 100%;"><%= PjMentorInfo[1][0].company_name %></p>
+                            <br>
+
+                            <p style="width: 100%; color: #6c757d;">업무분야</p>
+                            <p style="width: 100%;"><%= PjMentorInfo[1][0].business_field %></p>
+                            <br>
+
+                            <p style="width: 100%; color: #6c757d;">부서/직급</p>
+                            <p style="width: 100%;"><%= PjMentorInfo[1][0].job_dept %>/<%= PjMentorInfo[1][0].job_position %></p>
+                            <br>
+
+                            <p style="width: 100%; color: #6c757d;">주요개발분야</p>
+                            <p style="width: 100%;"><%= PjMentorInfo[1][0].research_field %></p>
+                            <br>
+
+                            <p style="width: 100%; color: #6c757d;">이메일 주소</p>
+                            <p style="width: 100%;"><%= PjMentorInfo[1][0].email_ad %></p>
+                            <br>
+
+                            <p style="width: 100%; color: #6c757d;">전화번호</p>
+                            <% var phone = PjMentorInfo[1][0].phone_num.substring(0,7) %>
+                            <p style="width: 100%;"><%= phone %>****</p>
+                            <br>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+    <!-- ***지원버튼 -->
+
+
+
+              <% if((PjMentorInfo[2].length >0) &&(moment(curDate).format('YYYY-MM-DD') <= moment(PjMentorInfo[0][0].prj_aply_cls_date).format('YYYY-MM-DD'))){ %>
+                <div class = "form-group mt-4">
+                    <div class="form-row">
+                      <div class="col-md-3">
+                        <label></label>
+                      </div>
+                        <div class = "col-md-2">
+                          <select class="form-control" id="TeamID" name="TeamID"  onchange="Choice();">
+                            <option value = "0">-- 팀 --</option>
+                            <% for (var i=0; i< PjMentorInfo[2].length ; i++ ) { %>
+
+                            <option value = "<%= PjMentorInfo[2][i].team_id %>"><%= PjMentorInfo[2][i].team_name%></option>
+                            <%}%>
+                          </select>
+                        </div>
+                      <% for (var i=0; i< PjMentorInfo[2].length ; i++ ) { %>
+                        <% var id = "Select"+ PjMentorInfo[2][i].team_id %>
+                        <% var inputChoice = "inputChoice"+ PjMentorInfo[2][i].team_id %>
+                        <div class = "col-md-2" id= "<%= id %>" style = "display:none">
+                            <select class="form-control" id="<%= inputChoice %>" name="<%= inputChoice %>"  >
+                              <option value = "0">순위</option>
+                              <% if (PjMentorInfo[2][i].project1 == null) { %>
+                              <option value = "1">1 순위</option>
+                              <% }  if (PjMentorInfo[2][i].project2 == null) {%>
+                              <option value = "2">2 순위</option>
+                              <% }  if (PjMentorInfo[2][i].project3 == null) {%>
+                              <option value = "3">3 순위</option>
+                              <% }%>
+                            </select>
+                          </div>
+                          <% }%>
+                      <div class = "col-md-1">
+                        <center> <input type="submit" class="btn btn-primary btn-block" name = "MakeProject" value="지원하기" /> </center>
+                      </div>
+                    </div>
+                  </div>
+            <% }%>
+
+
+
+          </div>
+        </div>
+      </form>
+      </div>
+
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for this page-->
+    <script src="/js/sb-admin-datatables.min.js"></script>
+
+    <script type="text/javascript">
+    function abilityDownload2(fullPath) {
+        var downloadPath = fullPath.substring(7);
+        location.href = "/fileDownload/" + downloadPath + "/want";
+      }
+    function abilityDownload(fullPath) {
+      var downloadPath = fullPath.substring(7);
+      location.href = "/fileDownload/" + downloadPath;
+    }
+
+    function Choice(){
+
+      var _TeamID = document.getElementById("TeamID").value;
+
+
+        if("0" == _TeamID){
+          var Name =  "Select" +'<%= PjMentorInfo[2][0].team_id%>';
+          var show  = document.getElementById(Name);
+
+          var Name2 = "Select" +'<%= PjMentorInfo[2][1].team_id%>';
+          var show2  = document.getElementById(Name2);
+
+          show.style.display= "none";
+          show2.style.display="none";
+
+        }else if (<%=PjMentorInfo[2][0].team_id%> == _TeamID){
+          var Name = "Select"+_TeamID;
+          var show  = document.getElementById(Name);
+
+          var Name2 = "Select" +'<%= PjMentorInfo[2][1].team_id%>';
+          var show2  = document.getElementById(Name2);
+
+          show.style.display= '';
+          show2.style.display="none";
+
+        }else if (<%=PjMentorInfo[2][1].team_id%> == _TeamID){
+
+          var Name = "Select"+_TeamID;
+          var show  = document.getElementById(Name);
+
+          var Name2 = "Select" +'<%= PjMentorInfo[2][0].team_id%>';
+          var show2  = document.getElementById(Name2);
+
+          show.style.display= '';
+          show2.style.display="none";
+        }
+
+
+    }
+    function ApplyConfirm(){
+      var _projectName = document.getElementById("projectName").value;
+      var _projectID = document.getElementById("projectID").value;
+      var _TeamID = document.getElementById("TeamID").value;
+
+      if(_TeamID =="0"){
+        alert("팀을 선택하세요.");
+        return false;
+      }else{
+        var inputChoice = "inputChoice"+_TeamID;
+        var _inputChoice = document.getElementById(inputChoice).value;
+      }
+
+      if(_inputChoice=="0"){
+        alert ("지원 순위를 선택하세요.");
+        return false;
+      }
+
+      var teamid=[];
+      var resume=[];
+      <% for (var i=0; i< PjMentorInfo[3].length ; i++ ) { %>
+          teamid.push('<%= PjMentorInfo[3][i].team_id%>');
+          resume.push('<%= PjMentorInfo[3][i].std_resume%>')
+      <%  } %>
+
+      var len = <%= PjMentorInfo[3].length %> ;
+
+      for (var j=0; j< len ; j++ ){
+        if(teamid[j]==_TeamID && resume[j]==''){
+          alert("모든 팀원 '개인역량표' 업로드 후 지원 가능합니다. ");
+         return false;
+       }
+      }
+
+      var check = "' "+_projectName +" ' \n' " + _inputChoice +" ' 순위 " ;
+      check += "지원하시겠습니까?" ;
+
+      var pc_list0 = ['<%= PjMentorInfo[2][0].project1%>' , '<%= PjMentorInfo[2][0].project2%>', '<%= PjMentorInfo[2][0].project3%>'] ;
+      var pc_list1 = ['<%= PjMentorInfo[2][1].project1%>' , '<%= PjMentorInfo[2][1].project2%>', '<%= PjMentorInfo[2][1].project3%>'] ;
+      var pc_list = [pc_list0, pc_list1];
+
+      if (_TeamID == <%=PjMentorInfo[2][0].team_id%>){
+        for (pjid in pc_list0){
+          if (pc_list0[pjid] == _projectID){
+            alert("이미 지원한 프로젝트 입니다.");
+            return false;
+          }
+        }
+        if(confirm(check) ==true ){
+           document.getElementById("input_Choice").value = _inputChoice ;
+           return true;
+        }else{
+          return false;
+        }
+      }else if (_TeamID == <%=PjMentorInfo[2][1].team_id%>){
+        for (pjid in pc_list1){
+          if (pc_list1[pjid] == _projectID){
+            alert("이미 지원한 프로젝트 입니다.");
+            return false;
+          }
+        }
+        if(confirm(check) ==true ){
+           document.getElementById("input_Choice").value = _inputChoice ;
+           return true;
+        }else{
+          return false;
+        }
+      }
+    }
+
+    </script>
+  </body>
+</html>
