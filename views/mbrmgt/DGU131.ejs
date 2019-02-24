@@ -255,6 +255,9 @@
               , datatype:  'table'
               , returnUri: true
           });
+
+          let selectedValue = $("input[type=radio][name=sType]:checked").val();
+
           if(selectedValue=='0'){
             var name = <%=moment(curDate).format('YYYYMMDD') %>+"_학생(전체).xls";
             $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
