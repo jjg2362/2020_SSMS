@@ -30,7 +30,7 @@
     <!-- 네비게이션 바 불러오기 -->
     <% include ../navBar.ejs %>
 
-    </style>
+    <!-- </style> -->
     <!-- 메인 -->
     <div class="content-wrapper">
       <!-- 메인 내용 -->
@@ -401,7 +401,6 @@
         var _selectTeam = document.getElementById("selectTeam").value;
         var _selectMentor =document.getElementById("selectMentor").value;
 
-
         if (_inputPjName==""){
           alert("과제명을 입력하세요.");
           document.getElementById("inputPjName").focus();
@@ -480,13 +479,14 @@
           return false;
         }
 
-        if (_selectTeam=="0" || _selectMentor=="0" ){
-          alert("팀 또는 멘토 선택을 해주세요.");
-          if(_selectTeam==""){
-            document.getElementById("selectTeam").focus();
-          } else{
-            document.getElementById("selectMentor").focus();
-          }
+        if (selectMentor=="0" ){
+          alert("멘토 선택을 해주세요.");
+          document.getElementById("selectMentor").focus();
+          /*if(_selectTeam==""){*/
+            /*document.getElementById("selectTeam").focus();*/
+          /*} else{*/
+            /*document.getElementById("selectMentor").focus();*/
+          /*}*/
 
           return false;
         }
