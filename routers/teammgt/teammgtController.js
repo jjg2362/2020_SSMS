@@ -24,7 +24,11 @@ exports.getTeam = (req, res) => {
   query += "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 2 and team_yn = 1 and use_yn = 1);";
   query += "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 3 and team_yn = 1 and use_yn = 1);";
 
-  // console.log(query);
+  query += "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk from admin_settings as s  " ;
+  query += "where use_yn = 1 order by s.settings_id desc ;";
+
+  console.log("지우자 getTeam:")
+  console.log(query);
   mysqlPool.pool.getConnection((err, connection) => {
     if(err) { //throw err;
       console.error('getConnection err : ' + err);
@@ -40,8 +44,8 @@ exports.getTeam = (req, res) => {
       }
 
       //use results and fields
-      //   console.log(results);
-      res.render('teammgt/DGU201', {myTeamName: results, userInfo: req.session.userInfo});
+      console.log(results);
+      res.render('teammgt/DGU201', {myTeamName: results, userInfo: req.session.userInfo, teamType: results[3]});
     });
   });
 };
@@ -304,6 +308,33 @@ exports.getMyTeam = (req, res) => {
       logger.putLog(req);
   }
 
+  // var query = "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 0 and class_type = 1);";
+  // query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 0 and class_type = 2);";
+  // query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 0 and class_type = 3);";
+  //
+  //
+  // query += "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 1);";
+  // query += "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 2);";
+  // query += "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 3);";
+  //
+  //
+  // query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 1);";
+  // query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 2);";
+  // query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 3);"
+  //
+  // query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 1 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.ses$
+  // query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 2 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.ses$
+  // query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 3 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.ses$
+  //
+  // query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 1 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 1) and std_id <> leader_id and team_yn = 1);";
+  // query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 2 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 2) and std_id <> leader_id and team_yn = 1);";
+  //
+  //
+  // query += "select std_resume from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 1 and std_resume is not null;";
+  // query += "select std_resume from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 2 and std_resume is not null;";
+  // query += "select std_resume from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 3 and std_resume is not null;";
+  // query += "select prj_aply_apdx from apdx_file_info where use_yn = 1";
+
   var query = "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 0 and class_type = 1);";
   query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 0 and class_type = 2);";
   query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 0 and class_type = 3);";
@@ -316,12 +347,11 @@ exports.getMyTeam = (req, res) => {
 
   query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 1);";
   query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 2);";
-  query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 3);"
+  query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 3);";
 
-  query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 1 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.ses$
-  query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 2 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.ses$
-  query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 3 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.ses$
-
+  query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 1 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 1) and std_id <> leader_id and team_yn = 1);";
+  query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 2 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 2) and std_id <> leader_id and team_yn = 1);";
+  query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 3 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 3) and std_id <> leader_id and team_yn = 1);";
 
   query += "select std_resume from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 1 and std_resume is not null;";
   query += "select std_resume from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 2 and std_resume is not null;";
@@ -343,8 +373,8 @@ exports.getMyTeam = (req, res) => {
         return;
       }
       //use results and fields
-      // console.log('get My Team Info');
-      // console.log(results);
+      console.log('get My Team Info');
+      console.log(results);
       res.render('teammgt/DGU211', {myTeamInfo: results, userInfo: req.session.userInfo});
     });
   });
