@@ -40,9 +40,13 @@
                   <div class="col-md-4">
                     <label for="selectTeamCreateType"> 팀 타입 </label>
                     <select class="form-control" name="teamCreateType" id="selectTeamCreateType">
-                      <option value="1" selected> 캡스톤 디자인 </option>
-                      <option value="2"> 기업사회맞춤 </option>
-                      <option value="3"> 다학제 캡스톤 디자인</option>
+                      <!-- 현재 사용하는 admin_settings에 따라 설정을 바꿔준다. -->
+                      <% for(var i = 0; i < teamType.length; i++) {%>
+                      <option value = "<%=teamType[i].settings_id%>"><%=teamType[i].prj_year%>-<%=teamType[i].prj_semes%>-<%=teamType[i].term_chk%></option>
+                      <% } %>
+                      <!--<option value="1" selected> 캡스톤 디자인 </option>-->
+                      <!--<option value="2"> 기업사회맞춤 </option>-->
+                      <!--<option value="3"> 다학제 캡스톤 디자인</option>-->
                     </select>
                   </div>
 
@@ -70,11 +74,34 @@
             <div class="card-header">팀 목록</div>
             <div class="card-body">
 
-              <% if(myTeamName[0].length == 0 && myTeamName[1].length == 0 && myTeamName[2].length == 0) { %>
+              <% if(myTeamList.length == 0 && (myTeamName[0].length == 0 && myTeamName[1].length == 0 && myTeamName[2].length == 0)) { %>
                 <div class="form-group" style="text-align: center;">
                   생성된 팀이 없습니다
                 </div>
               <% } else { %>
+                <% for(var i = 0; i < myTeamList.length; i++) { %>
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class="col-md-4">
+                        <label for=""> 팀명 </label>
+                        <p class="form-text" id="">
+                          <%= myTeamList[i].team_name %>
+                        </p>
+                      </div>
+                      <div class="col-md-5">
+                        <label for=""> 팀 타입 </label>
+                        <p class="form-text" id="">
+                          <%= myTeamList[i].prj_year.toString() + '-' + myTeamList[i].prj_semes + '-' + myTeamList[i].term_chk %>
+                        </p>
+                      </div>
+                      <div class="col-md-3">
+                        <label for=""> &nbsp; </label>
+                        <input class="form-control" type="button" onclick="location.href='/teammgt/DGU251'" value="팀원 초대하기">
+                      </div>
+                    </div>
+                  </div>
+                <% } %>
+
                 <% if(myTeamName[0].length != 0) { %>
                   <div class="form-group">
                     <div class="form-row">

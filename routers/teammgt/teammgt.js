@@ -25,6 +25,11 @@ router.route('/DGU251/search')
 router.route('/DGU251/member/stdAdd')
   .post(controller.postTeamAdd);
 
+// 인호의 코드 수정
+router.route('/DGU251/member/myInvitation')
+    .get(controller.getMemberOfMyInvitation)
+
+
 //
 router.route('/DGU211')
   .get(controller.getMyTeam)

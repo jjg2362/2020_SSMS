@@ -23,9 +23,13 @@ exports.getTeam = (req, res) => {
   var query = "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 1 and team_yn = 1 and use_yn = 1);";
   query += "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 2 and team_yn = 1 and use_yn = 1);";
   query += "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 3 and team_yn = 1 and use_yn = 1);";
-
+  // results[3]: 현재 활성화된 팀 타입 목록
   query += "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk from admin_settings as s  " ;
   query += "where use_yn = 1 order by s.settings_id desc ;";
+  // results[4]: 학생이 소속한 팀의 팀 이름, 팀 타입 번호, 프로젝트 연도, 학기, 팀 타입
+  query += "select team_name, team.settings_id, prj_year, prj_semes, term_chk from team, admin_settings ";
+  query += "where team_id in (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and use_yn = 1) ";
+  query += "and team.settings_id = admin_settings.settings_id;";
 
   console.log("지우자 getTeam:")
   console.log(query);
@@ -45,7 +49,7 @@ exports.getTeam = (req, res) => {
 
       //use results and fields
       console.log(results);
-      res.render('teammgt/DGU201', {myTeamName: results, userInfo: req.session.userInfo, teamType: results[3]});
+      res.render('teammgt/DGU201', {myTeamName: results, userInfo: req.session.userInfo, teamType: results[3], myTeamList: results[4]});
     });
   });
 };
@@ -76,6 +80,9 @@ exports.postTeamCreate = (req, res) => {
         return;
       }
 
+      // console.log("지우자 postTeamCreate:");
+      // console.log(checkResults)
+
       if(checkResults[0].length > 0) {
         connection.release();
         console.log('team creation failed.');
@@ -85,7 +92,7 @@ exports.postTeamCreate = (req, res) => {
         console.log('team creation failed.');
         res.send('dupTeamName');
       } else {
-        var query = "insert into team(team_name, leader_id) values('" + req.body.teamName + "', '" + req.session.userInfo.userId + "');";
+        var query = "insert into team(team_name, leader_id, settings_id) values('" + req.body.teamName + "', '" + req.session.userInfo.userId + "', '" + req.body.teamCreateType + "');";
         query += "insert into std_team_info(std_id, team_id, leader_id, team_yn, class_type, use_yn) values('" + req.session.userInfo.userId + "', LAST_INSERT_ID(), '" + req.session.userInfo.userId + "', 1, " + req.body.teamCreateType + ", 1);";
         query += "insert into project_cart(team_id) values(LAST_INSERT_ID());";
 
@@ -181,6 +188,10 @@ exports.getTeamMember = (req, res) => {
   query += "select std_id, std_name, major from student where std_id in (select std_id from std_team_info where leader_id = '" + req.session.userInfo.userId + "' and class_type='2' and team_yn = 0) and std_id <> '" + req.session.userInfo.userId + "';";
   query += "select std_id, std_name, major from student where std_id in (select std_id from std_team_info where leader_id = '" + req.session.userInfo.userId + "' and class_type='3' and team_yn = 0) and std_id <> '" + req.session.userInfo.userId + "';";
 
+  // results[16]: 현재 활성화된 팀 타입 목록
+  query += "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk from admin_settings as s  " ;
+  query += "where use_yn = 1 order by s.settings_id desc ;";
+
   mysqlPool.pool.getConnection((err, connection) => {
     if(err) { //throw err;
       console.error('getConnection err : ' + err);
@@ -197,7 +208,7 @@ exports.getTeamMember = (req, res) => {
 
       // console.log(results);
       //use results and fields
-      res.render('teammgt/DGU251', {myTeamLeader: results, userInfo: req.session.userInfo});
+      res.render('teammgt/DGU251', {myTeamLeader: results, userInfo: req.session.userInfo, teamType: results[5]});
     });
   });
 };
@@ -274,7 +285,9 @@ exports.postTeamAdd = (req, res) => {
       logger.putLog(req);
   }
 
-  var query = "insert into std_team_info(std_id, team_id, leader_id, team_yn, class_type, use_yn) values('" + req.body.stdId + "', (select b.team_id from (select team_id from std_team_info as a where a.std_id = '" + req.session.userInfo.userId + "' and a.class_type = " + req.body.addType + ") as b), '" + req.session.userIn$
+  var query = "insert into std_team_info(std_id, team_id, leader_id, team_yn, class_type, use_yn) values('" + req.body.stdId + "', (select b.team_id from (select team_id from std_team_info as a where a.std_id = '" + req.session.userInfo.userId + "' and a.class_type = " + req.body.addType + ") as b), '" + req.session.userInfo.userId + "', 0, " + req.body.addType + ", 1);";
+  //var query = "insert into std_team_info(std_id, team_id, leader_id, team_yn, class_type, use_yn) values('" + req.body.stdId + "', (select b.team_id from (select team_id from std_team_info as a where a.std_id = '" + req.session.userInfo.userId + "' and a.class_type = " + req.body.addType + ") as b), '" + req.session.userInfo.userId + "', 0, " + req.body.addType + ", 1);";
+
 
   mysqlPool.pool.getConnection((err, connection) => {
     if(err) { //throw err;
@@ -296,6 +309,42 @@ exports.postTeamAdd = (req, res) => {
   });
 };
 
+// 내가 초대한 학생 정보 가져오는 API, class_type을 필요로
+exports.getMemberOfMyInvitation = (req, res) => {
+  //session check
+  if(!req.session.userId) {
+    console.log('do not have a session.');
+    res.redirect('/');
+    return;
+  }else{
+    logger.putLog(req);
+  }
+
+  var query = "select std_id, std_name, major from student ";
+     query += "where std_id in (select std_id from std_team_info where leader_id = '" + req.session.userInfo.userId + "' and class_type='" + req.query.classType + "' and team_yn = 0) ";
+     query += "and std_id <>  '" + req.session.userInfo.userId + "' ;";
+
+  mysqlPool.pool.getConnection((err, connection) => {
+    if(err) { //throw err;
+      console.error('getConnection err : ' + err);
+      return;
+
+    }
+    connection.query(query, (error, results, fields) => {
+      connection.release();
+
+      if(error) { //throw error;
+        console.error('query error : ' + error);
+        return;
+      }
+
+      // console.log(results);
+      //use results and fields
+      //res.render('teammgt/DGU251', {myTeamLeader: results, userInfo: req.session.userInfo, teamType: results[5]});
+      res.send(results)
+    });
+  });
+};
 
 //
 exports.getMyTeam = (req, res) => {
@@ -327,7 +376,7 @@ exports.getMyTeam = (req, res) => {
   // query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 3 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.ses$
   //
   // query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 1 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 1) and std_id <> leader_id and team_yn = 1);";
-  // query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 2 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 2) and std_id <> leader_id and team_yn = 1);";
+  // query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id =std_team_info.std_id and std_team_info.class_type = 2 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 2) and std_id <> leader_id and team_yn = 1);";
   //
   //
   // query += "select std_resume from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 1 and std_resume is not null;";
@@ -335,28 +384,34 @@ exports.getMyTeam = (req, res) => {
   // query += "select std_resume from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 3 and std_resume is not null;";
   // query += "select prj_aply_apdx from apdx_file_info where use_yn = 1";
 
+  // results[0]~[2]: 현재 사용자를 초대한 팀 리더의 정보
   var query = "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 0 and class_type = 1);";
   query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 0 and class_type = 2);";
   query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 0 and class_type = 3);";
 
-
+  // results[3]~[5]: 나의팀(팀명)
   query += "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 1);";
   query += "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 2);";
   query += "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 3);";
 
-
+  // results[6]~[8]: 나의팀(팀장)
   query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 1);";
   query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 2);";
   query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 3);";
-
+  // results[9]~[11]: 나의팀(팀)
   query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 1 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 1) and std_id <> leader_id and team_yn = 1);";
   query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 2 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 2) and std_id <> leader_id and team_yn = 1);";
   query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = 3 where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + req.session.userInfo.userId + "' and team_yn = 1 and class_type = 3) and std_id <> leader_id and team_yn = 1);";
-
+  // results[12]~[14]
   query += "select std_resume from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 1 and std_resume is not null;";
   query += "select std_resume from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 2 and std_resume is not null;";
   query += "select std_resume from std_team_info where std_id = '" + req.session.userInfo.userId + "' and class_type = 3 and std_resume is not null;";
-  query += "select prj_aply_apdx from apdx_file_info where use_yn = 1";
+  // results[15]
+  query += "select prj_aply_apdx from apdx_file_info where use_yn = 1;";
+
+  // results[16]: 현재 활성화된 팀 타입 목록
+  query += "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk from admin_settings as s  " ;
+  query += "where use_yn = 1 order by s.settings_id desc ;";
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
@@ -375,7 +430,9 @@ exports.getMyTeam = (req, res) => {
       //use results and fields
       console.log('get My Team Info');
       console.log(results);
-      res.render('teammgt/DGU211', {myTeamInfo: results, userInfo: req.session.userInfo});
+      console.log('팀 타입 목록');
+      console.log(results[16]);
+      res.render('teammgt/DGU211', {myTeamInfo: results, userInfo: req.session.userInfo, teamType: results[16]});
     });
   });
 };

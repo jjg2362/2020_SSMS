@@ -45,7 +45,11 @@
 
                   <div class="col-md-4">
                     <select class="form-control" name="teamSearchType" id="selectTeamSearchType">
-                      <option value="1" selected> 캡스톤 디자인 </option>
+                      <!-- 현재 사용하는 admin_settings에 따라 설정을 바꿔준다. -->
+                      <% for(var i = 0; i < teamType.length; i++) {%>
+                      <option value = "<%=teamType[i].settings_id%>"><%=teamType[i].prj_year%>-<%=teamType[i].prj_semes%>-<%=teamType[i].term_chk%></option>
+                      <% } %>
+                      <option value="1"> 캡스톤 디자인 </option>
                       <option value="2"> 기업사회맞춤 </option>
                       <option value="3"> 다학제 캡스톤 디자인</option>
                     </select>
@@ -89,7 +93,11 @@
 
             <div class="form-group">
               <select class="form-control" name="teamInType" id="selectTeamInType">
-                <option value="1" selected> 캡스톤 디자인 </option>
+                <!-- 현재 사용하는 admin_settings에 따라 설정을 바꿔준다. -->
+                <% for(var i = 0; i < teamType.length; i++) {%>
+                <option value = "<%=teamType[i].settings_id%>"><%=teamType[i].prj_year%>-<%=teamType[i].prj_semes%>-<%=teamType[i].term_chk%></option>
+                <% } %>
+                <option value="1"> 캡스톤 디자인 </option>
                 <option value="2"> 기업사회맞춤 </option>
                 <option value="3"> 다학제 캡스톤 디자인</option>
               </select>
@@ -152,6 +160,7 @@
       $(document).ready(function() {
 
         var url = window.location.search;
+        console.log("url:", url)
         if(url == "?param=1") {
           $("#selectTeamSearchType").val("1").prop("selected", true);
           $("#selectTeamInType").val("1").prop("selected", true);
@@ -159,6 +168,9 @@
           $("#selectTeamSearchType").val("2").prop("selected", true);
           $("#selectTeamInType").val("2").prop("selected", true);
         }
+
+        // console.log("selected value:", $("#selectTeamSearchType option:selected").val());
+        getMemberOfMyInvitation()
 
         //팀원 찾기
         $("#stdSearchBustton").on('click', function(event) {
@@ -275,76 +287,50 @@
           });
         });
 
-        //팀 초대 리스트 변경 이벤트
+        //팀 초대 리스트 변경 이벤트 new
         $("#selectTeamInType").on('change', function(event) {
-          if(url == "?param=1") {
-            $("#selectTeamInType").val("1").prop("selected", true);
-            return false;
-          } else if(url == "?param=2") {
-            $("#selectTeamInType").val("2").prop("selected", true);
-            return false;
-          } else if(url == "?param=3") {
-              $("#selectTeamInType").val("3").prop("selected", true);
-              return false;
-          }
 
-          var type = $("#selectTeamInType option:selected").val();
-          var str = "";
+          getMemberOfMyInvitation()
 
-          if(type == "1") {
-            <% if(myTeamLeader[2].length == 0) { %>
-              str += "<tr>";
-              str += "<td colspan='4' style='text-align: center;'> 없음 </td>";
-              str += "</tr>";
-            <% } else { %>
-              <% for(var i in myTeamLeader[2]) { %>
-                str += "<tr>";
-                str += "<td>" + '<%= myTeamLeader[2][i].std_id %>' + "</td>";
-                str += "<td>" + '<%= myTeamLeader[2][i].std_name %>' + "</td>";
-                str += "<td>" + '<%= myTeamLeader[2][i].major %>' + "</td>";
-                str += "<td> 초대중 </td>";
-                str += "</tr>";
-              <% } %>
-            <% } %>
-          } else if(type == "2") {
-            <% if(myTeamLeader[3].length == 0) { %>
-              str += "<tr>";
-              str += "<td colspan='4' style='text-align: center;'> 없음 </td>";
-              str += "</tr>";
-            <% } else { %>
-              <% for(var i in myTeamLeader[3]) { %>
-                str += "<tr>";
-                str += "<td>" + '<%= myTeamLeader[3][i].std_id %>' + "</td>";
-                str += "<td>" + '<%= myTeamLeader[3][i].std_name %>' + "</td>";
-                str += "<td>" + '<%= myTeamLeader[3][i].major %>' + "</td>";
-                str += "<td> 초대중 </td>";
-                str += "</tr>";
-              <% } %>
-            <% } %>
-          } else if(type == "3") {
-            <% if(myTeamLeader[4].length == 0) { %>
-              str += "<tr>";
-              str += "<td colspan='4' style='text-align: center;'> 없음 </td>";
-              str += "</tr>";
-            <% } else { %>
-            <% for(var i in myTeamLeader[4]) { %>
-              str += "<tr>";
-              str += "<td>" + '<%= myTeamLeader[4][i].std_id %>' + "</td>";
-              str += "<td>" + '<%= myTeamLeader[4][i].std_name %>' + "</td>";
-              str += "<td>" + '<%= myTeamLeader[4][i].major %>' + "</td>";
-              str += "<td> 초대중 </td>";
-              str += "</tr>";
-            <% } %>
-            <% } %>
-          }
-
-
-
-          $("#stdInTable > tbody").empty();
-          $("#stdInTable > tbody:last").append(str);
         });
-
       });
+
+
+
+      function getMemberOfMyInvitation() {
+        $.ajax({
+          url: "/teammgt/DGU251/member/myInvitation",
+          type: "get",
+          cache: false,
+          data: { classType: $("#selectTeamInType option:selected").val() },
+          success: function(result) {
+            console.log(result)
+            console.log(result.length)
+
+            //location.reload();
+
+            var str = "";
+            if(result.length == 0) {
+              str += "<tr>";
+              str += "<td colspan='4' style='text-align: center;'> 없음 </td>";
+              str += "</tr>";
+            } else {
+              for(let i in result) {
+                console.log("student:", result[i])
+                str += "<tr>";
+                str += "<td>" + result[i].std_id + "</td>";
+                str += "<td>" + result[i].std_name + "</td>";
+                str += "<td>" + result[i].major  + "</td>";
+                str += "<td> 초대중 </td>";
+                str += "</tr>";
+              }
+            }
+
+            $("#stdInTable > tbody").empty();
+            $("#stdInTable > tbody:last").append(str);
+          }
+        });
+      }
     </script>
   </body>
 </html>

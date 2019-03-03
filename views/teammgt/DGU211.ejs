@@ -37,7 +37,11 @@
             <div class="form-group">
               <label for="selectTeamInvitedType"> 팀 타입 </label>
               <select class="form-control" name="teamInvitedType" id="selectTeamInvitedType">
-                <option value="1" selected> 캡스톤 디자인 </option>
+                <!-- 현재 사용하는 admin_settings에 따라 설정을 바꿔준다. -->
+                <% for(var i = 0; i < teamType.length; i++) {%>
+                <option value = "<%=teamType[i].settings_id%>"><%=teamType[i].prj_year%>-<%=teamType[i].prj_semes%>-<%=teamType[i].term_chk%></option>
+                <% } %>
+                <option value="1"> 캡스톤 디자인 </option>
                 <option value="2"> 기업사회맞춤 </option>
                 <option value="3"> 다학제 캡스톤 디자인 </option>
               </select>
@@ -84,7 +88,11 @@
             <div class="form-group">
               <label for="selectMyTeamType"> 팀 타입 </label>
               <select class="form-control" name="myTeamType" id="selectMyTeamType">
-                <option value="1" selected> 캡스톤 디자인 </option>
+                <!-- 현재 사용하는 admin_settings에 따라 설정을 바꿔준다. -->
+                <% for(var i = 0; i < teamType.length; i++) {%>
+                <option value = "<%=teamType[i].settings_id%>"><%=teamType[i].prj_year%>-<%=teamType[i].prj_semes%>-<%=teamType[i].term_chk%></option>
+                <% } %>
+                <option value="1"> 캡스톤 디자인 </option>
                 <option value="2"> 기업사회맞춤 </option>
                 <option value="3"> 다학제 캡스톤 디자인 </option>
               </select>
@@ -177,7 +185,11 @@
               <div class="form-group">
                 <label for="selectpfType"> 팀 타입 </label>
                 <select class="form-control" name="pfType" id="selectpfType">
-                  <option value="1" selected> 캡스톤 디자인 </option>
+                  <!-- 현재 사용하는 admin_settings에 따라 설정을 바꿔준다. -->
+                  <% for(var i = 0; i < teamType.length; i++) {%>
+                  <option value = "<%=teamType[i].settings_id%>"><%=teamType[i].prj_year%>-<%=teamType[i].prj_semes%>-<%=teamType[i].term_chk%></option>
+                  <% } %>
+                  <option value="1"> 캡스톤 디자인 </option>
                   <option value="2"> 기업사회맞춤 </option>
                   <option value="3"> 다학제 캡스톤 디자인 </option>
                 </select>
@@ -222,7 +234,11 @@
                 <!-- 팀명 입력 -->
                 <label for="selectTeamDeleteType"> 팀 타입 </label>
                 <select class="form-control" name="teamDeleteType" id="selectTeamDeleteType">
-                  <option value="1" selected> 캡스톤 디자인 </option>
+                  <!-- 현재 사용하는 admin_settings에 따라 설정을 바꿔준다. -->
+                  <% for(var i = 0; i < teamType.length; i++) {%>
+                  <option value = "<%=teamType[i].settings_id%>"><%=teamType[i].prj_year%>-<%=teamType[i].prj_semes%>-<%=teamType[i].term_chk%></option>
+                  <% } %>
+                  <option value="1"> 캡스톤 디자인 </option>
                   <option value="2"> 기업사회맞춤 </option>
                   <option value="3"> 다학제 캡스톤 디자인 </option>
                 </select>
@@ -348,7 +364,7 @@
         $("#upload_click").on('click', function() {
           var inputFile = document.getElementById("inputPersonalCompetenceFile").value;
           if(inputFile == ''){
-            alert("파일을 선택해주세요.");
+            alert("파일을 선택해주세요. 테스트링");
           }
 
         });
