@@ -577,7 +577,152 @@ exports.postTeamOut = (req, res) => {
   });
 };
 
+// DGU211(나의 팀): 선택한 팀 타입에 대해 현재 사용자를 초대한 학생들(리더)의 정보
+exports.getMyInvitation = (req, res) => {
+  if(!req.session.userId) {
+    console.log('do not have a session.');
+    res.redirect('/');
+    return;
+  }else{
+    logger.putLog(req);
+  }
 
+  mysqlPool.pool.getConnection((err, connection) => {
+    if(err) { //throw err;
+      console.error('getConnection err : ' + err);
+      return;
+    }
+
+    let userId = req.session.userInfo.userId;
+    var query = "select std_id, std_name, major from student where std_id in (select leader_id from std_team_info where std_id = '" + userId + "' and team_yn = 0 and class_type='" + req.query.classType + "');";
+
+    connection.query(query, (error, results, fields) => {
+      connection.release();
+
+      if(error) { //throw error;
+        console.error('query error : ' + error);
+        return;
+      }
+
+      console.log('DGU211(나의 팀): 현재 사용자를 초대한 학생들(리더)의 정보');
+      console.log(results)
+
+      res.send(results);
+    });
+  });
+};
+
+// DGU211(나의 팀): 현재 사용자의 나의 팀 정보(팀명, 팀장, 팀원)
+exports.getMyTeamInfo = (req, res) => {
+  if(!req.session.userId) {
+    console.log('do not have a session.');
+    res.redirect('/');
+    return;
+  }else{
+    logger.putLog(req);
+  }
+
+  mysqlPool.pool.getConnection((err, connection) => {
+    if(err) { //throw err;
+      console.error('getConnection err : ' + err);
+      return;
+    }
+
+    let userId = req.session.userInfo.userId;
+    let classType = req.query.classType;
+
+    var query = "";
+    /* 팀명 */
+    query += "select team_name from team where team_id = (select team_id from std_team_info where std_id = '" + userId + "' and team_yn = 1 and class_type = '" + classType  + "');";
+    /* 팀장 */
+    query += "select std_id, std_name, major from student where std_id = (select leader_id from std_team_info where std_id = '" + userId + "' and team_yn = 1 and class_type = '" + classType  + "');";
+    /* 팀원 */
+    query += "select student.std_id, std_name, major, std_team_info.std_resume from student left join std_team_info on student.std_id = std_team_info.std_id and std_team_info.class_type = '" + classType  + "' where student.std_id in (select std_id from std_team_info where team_id = (select team_id from std_team_info where std_id = '" + userId + "' and team_yn = 1 and class_type = '" + classType  + "') and std_id <> leader_id and team_yn = 1);";
+
+    connection.query(query, (error, results, fields) => {
+      connection.release();
+
+      if(error) { //throw error;
+        console.error('query error : ' + error);
+        return;
+      }
+
+      console.log('DGU211(나의 팀): 현재 사용자의 나의 팀 정보(팀명, 팀장, 팀원)');
+      console.log(results);
+
+      res.send(results);
+    });
+  });
+};
+
+// DGU211(나의 팀): 현재 사용자의 개인역량표
+exports.getMyResume = (req, res) => {
+  if(!req.session.userId) {
+    console.log('do not have a session.');
+    res.redirect('/');
+    return;
+  }else{
+    logger.putLog(req);
+  }
+
+  mysqlPool.pool.getConnection((err, connection) => {
+    if(err) { //throw err;
+      console.error('getConnection err : ' + err);
+      return;
+    }
+
+    let userId = req.session.userInfo.userId;
+    let classType = req.query.classType;
+    var query = "select std_resume from std_team_info where std_id = '" + userId + "' and class_type = '" + classType + "' and std_resume is not null;";
+
+    connection.query(query, (error, results, fields) => {
+      connection.release();
+
+      if(error) { //throw error;
+        console.error('query error : ' + error);
+        return;
+      }
+
+      console.log('DGU211(나의 팀): 현재 사용자의 개인역량표');
+      console.log(results);
+
+      res.send(results);
+    });
+  });
+};
+
+// DGU211(나의 팀): 현재 사용자의 팀 이름(팀 탈퇴에서 쓰임)
+exports.getMyTeamName = (req, res) => {
+  if(!req.session.userId) {
+    console.log('do not have a session.');
+    res.redirect('/');
+    return;
+  }else{
+    logger.putLog(req);
+  }
+
+  mysqlPool.pool.getConnection((err, connection) => {
+    if(err) { //throw err;
+      console.error('getConnection err : ' + err);
+      return;
+    }
+
+    var query = "";
+
+    connection.query(query, (error, results, fields) => {
+      connection.release();
+
+      if(error) { //throw error;
+        console.error('query error : ' + error);
+        return;
+      }
+
+      console.log('out success');
+
+      res.send('outOk');
+    });
+  });
+};
 
 //show Team Select page
 exports.getTeamSelectPj = (req, res) => {

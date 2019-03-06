@@ -292,259 +292,39 @@
       }
       $(document).ready(function() {
 
-        //초대 현황 팀 탕비 선택 이벤트
-        $("#selectTeamInvitedType").on('change', function(event) {
-          var str = "";
-          var selectedType = $("#selectTeamInvitedType option:selected").val();
+        //페이지 초기화 코드
+        getMyInvitation();
+        getMyTeam();
+        getMyResume();
+        getMyTeamToDelete();
 
-          if(selectedType == "1") {
-            <% if(myTeamInfo[0].length == 0) { %>
-              str += "<tr>";
-                str += "<td colspan='4' style='text-align: center'> 이미 팀이 있거나 팀 신청이 없습니다. </td>";
-              str += "</tr>";
-            <% } else { %>
-              <% for(var i = 0; i < myTeamInfo[0].length; i++) { %>
-                str += "<tr>";
-                str +=  "<td>" + '<%= myTeamInfo[0][i].std_id %>' + "</td>";
-                str +=  "<td>" + '<%= myTeamInfo[0][i].std_name %>' + "</td>"
-                str +=  "<td>" + '<%= myTeamInfo[0][i].major %>' + "</td>"
-                str +=  "<td>";
-                str +=    "<input id='teamAccept' type='button' class='btn btn-dark' value='O' data-id='<%= myTeamInfo[0][i].std_id %>'>"
-                str +=    "&nbsp;"
-                str +=    "<input id='teamReject' type='button' class='btn btn-dark' value='X' data-id='<%= myTeamInfo[0][i].std_id %>'>"
-                str +=  "</td>";
-                str += "</tr>";
-              <% } %>
-            <% } %>
-          } else if(selectedType == "2") {
-            <% if(myTeamInfo[1].length == 0) { %>
-              str += "<tr>";
-                str += "<td colspan='4' style='text-align: center'> 이미 팀이 있거나 팀 신청이 없습니다. </td>";
-              str += "</tr>";
-            <% } else { %>
-              <% for(var i = 0; i < myTeamInfo[1].length; i++) { %>
-                str += "<tr>";
-                str +=  "<td>" + '<%= myTeamInfo[1][i].std_id %>' + "</td>";
-                str +=  "<td>" + '<%= myTeamInfo[1][i].std_name %>' + "</td>"
-                str +=  "<td>" + '<%= myTeamInfo[1][i].major %>' + "</td>"
-                str +=  "<td>";
-                str +=    "<input id='teamAccept' type='button' class='btn btn-dark' value='O' data-id='<%= myTeamInfo[1][i].std_id %>'>"
-                str +=    "&nbsp;"
-                str +=    "<input id='teamReject' type='button' class='btn btn-dark' value='X' data-id='<%= myTeamInfo[1][i].std_id %>'>"
-                str +=  "</td>";
-                str += "</tr>";
-              <% } %>
-            <% } %>
-          } else if(selectedType == "3") {
-            <% if(myTeamInfo[2].length == 0) { %>
-              str += "<tr>";
-              str += "<td colspan='4' style='text-align: center'> 이미 팀이 있거나 팀 신청이 없습니다. </td>";
-              str += "</tr>";
-            <% } else { %>
-            <% for(var i = 0; i < myTeamInfo[2].length; i++) { %>
-              str += "<tr>";
-              str +=  "<td>" + '<%= myTeamInfo[2][i].std_id %>' + "</td>";
-              str +=  "<td>" + '<%= myTeamInfo[2][i].std_name %>' + "</td>"
-              str +=  "<td>" + '<%= myTeamInfo[2][i].major %>' + "</td>"
-              str +=  "<td>";
-              str +=    "<input id='teamAccept' type='button' class='btn btn-dark' value='O' data-id='<%= myTeamInfo[2][i].std_id %>'>"
-              str +=    "&nbsp;"
-              str +=    "<input id='teamReject' type='button' class='btn btn-dark' value='X' data-id='<%= myTeamInfo[2][i].std_id %>'>"
-              str +=  "</td>";
-              str += "</tr>";
-            <% } %>
-            <% } %>
-          }
-
-          $("#invitedTable > tbody").empty();
-          $("#invitedTable > tbody:last").append(str);
+        // 초대 현황 팀 탕비 선택 이벤트
+        $("#selectTeamInvitedType").on('change', function() {
+          getMyInvitation();
         });
 
+        // 나의 팀 타입 변경시 이벤트
+        $("#selectMyTeamType").on('change', function() {
+          getMyTeam();
+        });
 
+        // 개인 역량표 팀 타입 변경시 이벤트
+        $("#selectpfType").on('change', function() {
+          getMyResume();
+        });
+
+        // 팀 탈퇴 팀 타입 변경 이벤트
+        $("#selectTeamDeleteType").on('change', function() {
+          getMyTeamToDelete();
+        });
+
+        // 역량표 업로드 버튼 클릭했을 때
         $("#upload_click").on('click', function() {
           var inputFile = document.getElementById("inputPersonalCompetenceFile").value;
           if(inputFile == ''){
-            alert("파일을 선택해주세요. 테스트링");
+            alert("파일을 선택해주세요.");
           }
-
         });
-
-
-        //나의 팀 타입 변경시 이벤트
-        $("#selectMyTeamType").on('change', function(event) {
-          var selectedType = $("#selectMyTeamType option:selected").val();
-          var nameStr = "";
-          var leaderStr = "";
-          var memberStr = "";
-
-          if(selectedType == "1") {
-            <% if(myTeamInfo[3].length == 0) { %>
-              nameStr = "없음";
-            <% } else { %>
-              nameStr = '<%= myTeamInfo[3][0].team_name %>';
-            <% } %>
-
-            <% if(myTeamInfo[6].length == 0) { %>
-              leaderStr += "<tr>";
-              leaderStr +=  "<td colspan='3' style='text-align: center;'> 없음 </td>";
-              leaderStr += "</tr>";
-            <% } else { %>
-              leaderStr += "<tr>";
-              leaderStr +=  "<td>" + '<%= myTeamInfo[6][0].std_id %>' + "</td>";
-              leaderStr +=  "<td>" + '<%= myTeamInfo[6][0].std_name %>' + "</td>";
-              leaderStr +=  "<td>" + '<%= myTeamInfo[6][0].major %>' + "</td>";
-              leaderStr += "</tr>";
-            <% } %>
-
-            <% if(myTeamInfo[9].length == 0) { %>
-              memberStr += "<tr>";
-              memberStr += "<td colspan='4' style='text-align: center;'> 없음 </td>";
-              memberStr += "</tr>";
-            <% } else { %>
-              <% for(var i = 0; i < myTeamInfo[9].length; i++) { %>
-                memberStr += "<tr>";
-                memberStr += "<td>" + '<%= myTeamInfo[9][i].std_id %>' + "</td>";
-                memberStr += "<td>" + '<%= myTeamInfo[9][i].std_name %>' + "</td>";
-                memberStr += "<td>" + '<%= myTeamInfo[9][i].major %>' + "</td>";
-                <% if(myTeamInfo[9][i].std_resume != null) { %>
-                  memberStr += "<td>O</td>";
-                <% } else { %>
-                  memberStr += "<td>X</td>";
-                <% } %>
-                memberStr += "<td> <input id='teamOutButton' class='btn btn-dark' type='button' value='-' data-id='<%= myTeamInfo[9][i].std_id %>' data-lid='<%= myTeamInfo[6][0].std_id %>'> </td>";
-                memberStr += "</tr>";
-              <% } %>
-            <% } %>
-          } else if(selectedType == "2") {
-            <% if(myTeamInfo[4].length == 0) { %>
-              nameStr = "없음";
-            <% } else { %>
-              nameStr = '<%= myTeamInfo[4][0].team_name %>';
-            <% } %>
-
-            <% if(myTeamInfo[7].length == 0) { %>
-              leaderStr += "<tr>";
-              leaderStr +=  "<td colspan='3' style='text-align: center;'> 없음 </td>";
-              leaderStr += "</tr>";
-            <% } else { %>
-              leaderStr += "<tr>";
-              leaderStr +=  "<td>" + '<%= myTeamInfo[7][0].std_id %>' + "</td>";
-              leaderStr +=  "<td>" + '<%= myTeamInfo[7][0].std_name %>' + "</td>";
-              leaderStr +=  "<td>" + '<%= myTeamInfo[7][0].major %>' + "</td>";
-              leaderStr += "</tr>";
-            <% } %>
-
-            <% if(myTeamInfo[10].length == 0) { %>
-              memberStr += "<tr>";
-              memberStr += "<td colspan='4' style='text-align: center;'> 없음 </td>";
-              memberStr += "</tr>";
-            <% } else { %>
-              <% for(var i = 0; i < myTeamInfo[10].length; i++) { %>
-                memberStr += "<tr>";
-                memberStr += "<td>" + '<%= myTeamInfo[10][i].std_id %>' + "</td>";
-                memberStr += "<td>" + '<%= myTeamInfo[10][i].std_name %>' + "</td>";
-                memberStr += "<td>" + '<%= myTeamInfo[10][i].major %>' + "</td>";
-                <% if(myTeamInfo[10][i].std_resume != null) { %>
-                  memberStr += "<td>O</td>";
-                <% } else { %>
-                  memberStr += "<td>X</td>";
-                <% } %>
-                memberStr += "<td> <input id='teamOutButton' class='btn btn-dark' type='button' value='-' data-id='<%= myTeamInfo[10][i].std_id %>' data-lid='<%= myTeamInfo[7][0].std_id %>'> </td>";
-                memberStr += "</tr>";
-              <% } %>
-            <% } %>
-          } else if(selectedType == "3") {
-            <% if(myTeamInfo[5].length == 0) { %>
-              nameStr = "없음";
-            <% } else { %>
-              nameStr = '<%= myTeamInfo[5][0].team_name %>';
-            <% } %>
-
-            <% if(myTeamInfo[8].length == 0) { %>
-              leaderStr += "<tr>";
-              leaderStr +=  "<td colspan='3' style='text-align: center;'> 없음 </td>";
-              leaderStr += "</tr>";
-            <% } else { %>
-              leaderStr += "<tr>";
-              leaderStr +=  "<td>" + '<%= myTeamInfo[8][0].std_id %>' + "</td>";
-              leaderStr +=  "<td>" + '<%= myTeamInfo[8][0].std_name %>' + "</td>";
-              leaderStr +=  "<td>" + '<%= myTeamInfo[8][0].major %>' + "</td>";
-              leaderStr += "</tr>";
-            <% } %>
-
-            <% if(myTeamInfo[11].length == 0) { %>
-              memberStr += "<tr>";
-              memberStr += "<td colspan='4' style='text-align: center;'> 없음 </td>";
-              memberStr += "</tr>";
-            <% } else { %>
-            <% for(var i = 0; i < myTeamInfo[11].length; i++) { %>
-              memberStr += "<tr>";
-              memberStr += "<td>" + '<%= myTeamInfo[11][i].std_id %>' + "</td>";
-              memberStr += "<td>" + '<%= myTeamInfo[11][i].std_name %>' + "</td>";
-              memberStr += "<td>" + '<%= myTeamInfo[11][i].major %>' + "</td>";
-            <% if(myTeamInfo[11][i].std_resume != null) { %>
-              memberStr += "<td>O</td>";
-            <% } else { %>
-              memberStr += "<td>X</td>";
-            <% } %>
-              memberStr += "<td> <input id='teamOutButton' class='btn btn-dark' type='button' value='-' data-id='<%= myTeamInfo[11][i].std_id %>' data-lid='<%= myTeamInfo[8][0].std_id %>'> </td>";
-              memberStr += "</tr>";
-            <% } %>
-            <% } %>
-          }
-
-          $("#myTeamName").text(nameStr);
-
-          $("#leaderTable > tbody").empty();
-          $("#leaderTable > tbody:last").append(leaderStr);
-
-          $("#memberTable > tbody").empty();
-          $("#memberTable > tbody:last").append(memberStr);
-        });
-
-
-        $("#selectpfType").on('change', function(event) {
-          var selectedType = $("#selectpfType option:selected").val();
-          var resumeStr = "";
-          if(selectedType == "1") {
-            <% if(myTeamInfo[12].length == 0||myTeamInfo[12][0].std_resume=="undefined") { %>
-              resumeStr += "파일: 없음 ";
-            <% } else if(myTeamInfo[12].length > 0) { %>
-              resumeStr += "<% var d1 = myTeamInfo[12][0].std_resume.split('/') %>";
-              resumeStr += "<% var d2 = d1[2].length %>";
-              resumeStr += "<% var d3 = d1[2].substr(14,d2) %>";
-              resumeStr += "파일: "+"<a onclick='abilityDownload2(<%= myTeamInfo[12][0].std_resume %>)'; href='javascript:void(0)'>";
-              resumeStr += "<%= d3 %>";
-              resumeStr += "</a>";
-            <% } %>
-          } else if(selectedType == "2") {
-            <% if(myTeamInfo[13].length == 0||myTeamInfo[13][0].std_resume=="undefined") { %>
-              resumeStr += "파일: 없음 ";
-            <% } else if(myTeamInfo[13].length > 0) { %>
-              resumeStr += "<% var d1 = myTeamInfo[13][0].std_resume.split('/') %>";
-              resumeStr += "<% var d2 = d1[2].length %>";
-              resumeStr += "<% var d3 = d1[2].substr(14,d2) %>";
-              resumeStr += "파일: "+"<a onclick='abilityDownload2(<%= myTeamInfo[13][0].std_resume %>)'; href='javascript:void(0)'>";
-              resumeStr += "<%= d3 %>";
-              resumeStr += "</a>";
-            <% } %>
-          } else if(selectedType == "3") {
-            <% if(myTeamInfo[14].length == 0||myTeamInfo[14][0].std_resume=="undefined") { %>
-              resumeStr += "파일: 없음 ";
-            <% } else if(myTeamInfo[14].length > 0) { %>
-              resumeStr += "<% var d1 = myTeamInfo[14][0].std_resume.split('/') %>";
-              resumeStr += "<% var d2 = d1[2].length %>";
-              resumeStr += "<% var d3 = d1[2].substr(14,d2) %>";
-              resumeStr += "파일: "+"<a onclick='abilityDownload2(<%= myTeamInfo[14][0].std_resume %>)'; href='javascript:void(0)'>";
-              resumeStr += "<%= d3 %>";
-              resumeStr += "</a>";
-            <% } %>
-          }
-          $("#fileview").empty();
-          $("#fileview").html(resumeStr);
-        });
-
-
 
         //팀 수락시
         $(document).on('click', '#teamAccept', function(event) {
@@ -593,7 +373,6 @@
 
         });
 
-
         //추방
         $(document).on('click', '#teamOutButton', function(event) {
           if(!confirm("삭제 하시겠습니까?")) {
@@ -624,8 +403,6 @@
 
 
         });
-
-
 
         //팀 탈퇴
         $("#teamDeleteButton").on('click', function(event) {
@@ -671,36 +448,156 @@
           });
         });
 
-        //팀 탈퇴 팀 타입 변경 이벤트
-        $("#selectTeamDeleteType").on('change', function(event) {
-          var str = "";
-          var selectedType = $("#selectTeamDeleteType option:selected").val();
-
-          if(selectedType == "1") {
-            <% if(myTeamInfo[3].length == 0) { %>
-              str = "없음";
-            <% } else { %>
-              str = '<%= myTeamInfo[3][0].team_name %>';
-            <% } %>
-          } else if(selectedType == "2") {
-            <% if(myTeamInfo[4].length == 0) { %>
-              str = "없음";
-            <% } else { %>
-              str = '<%= myTeamInfo[4][0].team_name %>';
-            <% } %>
-          } else if(selectedType == "3") {
-            <% if(myTeamInfo[5].length == 0) { %>
-              str = "없음";
-            <% } else { %>
-              str = '<%= myTeamInfo[5][0].team_name %>';
-            <% } %>
-          }
-
-          $("#showTeamName").text(str);
-        });
-
-
       });
+
+      // 선택한 팀 타입에 대해 현재 사용자를 초대한 학생들(리더)의 정보
+      function getMyInvitation() {
+        let classType = $("#selectTeamInvitedType option:selected").val()
+        $.ajax({
+          url: "/teammgt/DGU211/my-invitation",
+          type: "get",
+          cache: false,
+          data: { classType: classType },
+          success: function(result) {
+            var str = "";
+            if(result.length === 0) {
+              str += "<tr>";
+              str += "<td colspan='4' style='text-align: center'> 이미 팀이 있거나 팀 신청이 없습니다. </td>";
+              str += "</tr>";
+            }
+            else {
+              for(var i = 0; i < result.length; i++) {
+                str += "<tr>";
+                str +=  "<td>" + result[i].std_id + "</td>";
+                str +=  "<td>" + result[i].std_name + "</td>"
+                str +=  "<td>" + result[i].major + "</td>"
+                str +=  "<td>";
+                str +=    "<input id='teamAccept' type='button' class='btn btn-dark' value='O' data-id='" + result[i].std_id + "'>"
+                str +=    "&nbsp;"
+                str +=    "<input id='teamReject' type='button' class='btn btn-dark' value='X' data-id='" + result[i].std_id + "'>"
+                str +=  "</td>";
+                str += "</tr>";
+              }
+            }
+
+            $("#invitedTable > tbody").empty();
+            $("#invitedTable > tbody:last").append(str);
+          }
+        });
+      }
+
+      // 현재 사용자의 나의 팀 정보(팀명, 팀장, 팀원)
+      function getMyTeam() {
+        let classType = $("#selectMyTeamType option:selected").val();
+        $.ajax({
+          url: "/teammgt/DGU211/my-team/",
+          type: "get",
+          cache: false,
+          data: { classType: classType },
+          success: function(result) {
+            var nameStr = "";
+            var leaderStr = "";
+            var memberStr = "";
+            if(result[0].length === 0) {
+              nameStr = "없음";
+            } else {
+              nameStr = result[0][0].team_name;
+            }
+
+            if(result[1].length === 0) {
+              leaderStr += "<tr>";
+              leaderStr +=  "<td colspan='3' style='text-align: center;'> 없음 </td>";
+              leaderStr += "</tr>";
+            } else {
+              leaderStr += "<tr>";
+              leaderStr +=  "<td>" + result[1][0].std_id + "</td>";
+              leaderStr +=  "<td>" + result[1][0].std_name + "</td>";
+              leaderStr +=  "<td>" + result[1][0].major + "</td>";
+              leaderStr += "</tr>";
+            }
+
+            if(result[2].length === 0) {
+              memberStr += "<tr>";
+              memberStr += "<td colspan='4' style='text-align: center;'> 없음 </td>";
+              memberStr += "</tr>";
+            } else {
+              for(var i = 0; i < result[2].length; i++) {
+                memberStr += "<tr>";
+                memberStr += "<td>" + result[2][i].std_id + "</td>";
+                memberStr += "<td>" + result[2][i].std_name + "</td>";
+                memberStr += "<td>" + result[2][i].major + "</td>";
+                if(result[2][i].std_resume != null) {
+                  memberStr += "<td>O</td>";
+                } else {
+                  memberStr += "<td>X</td>";
+                }
+                memberStr += "<td> <input id='teamOutButton' class='btn btn-dark' type='button' value='-' data-id='" + result[2][i].std_id %> + "' data-lid='" + result[2][0].std_id + "'> </td>";
+                memberStr += "</tr>";
+              }
+            }
+
+
+            $("#myTeamName").text(nameStr);
+
+            $("#leaderTable > tbody").empty();
+            $("#leaderTable > tbody:last").append(leaderStr);
+
+            $("#memberTable > tbody").empty();
+            $("#memberTable > tbody:last").append(memberStr);
+          }
+        });
+      }
+
+      // DGU211(나의 팀): 현재 사용자의 개인역량표
+      function getMyResume() {
+        let classType = $("#selectpfType option:selected").val();
+
+        $.ajax({
+          url: "/teammgt/DGU211/my-resume/",
+          type: "get",
+          cache: false,
+          data: { classType: classType },
+          success: function(result) {
+            var resumeStr = "";
+            if(result.length === 0 || result[0].std_resume === "undefined") {
+              resumeStr += "파일: 없음 ";
+            } else if(result.length > 0) {
+              var d1 = result[0].std_resume.split('/');
+              var d2 = d1[2].length;
+              var d3 = d1[2].substr(14,d2);
+              // resumeStr += d1;
+              // resumeStr += d2;
+              // resumeStr += d3;
+              resumeStr += "파일: " + "<a onclick='abilityDownload2(`" + result[0].std_resume + "`)'; href='javascript:void(0)'>";
+              resumeStr += d3;
+              resumeStr += "</a>";
+            }
+
+            $("#fileview").empty();
+            $("#fileview").html(resumeStr);
+          }
+        });
+      }
+
+      function getMyTeamToDelete() {
+        let classType = $("#selectTeamDeleteType option:selected").val();
+        $.ajax({
+          url: "/teammgt/DGU211/my-team/",
+          type: "get",
+          cache: false,
+          data: { classType: classType },
+          success: function(result) {
+            var nameStr = "";
+            if(result[0].length === 0) {
+              nameStr = "없음";
+            } else {
+              nameStr = result[0][0].team_name;
+            }
+
+            $("#showTeamName").text(nameStr);
+          }
+        });
+      }
     </script>
   </body>
 </html>

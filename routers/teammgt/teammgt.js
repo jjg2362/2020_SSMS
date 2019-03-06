@@ -43,8 +43,21 @@ router.route('/DGU211/invite/:type')
 router.route('/DGU211/teamOut')
   .post(controller.postTeamOut);
 
+// 현재 사용자를 초대한 학생들의 정보
+router.route('/DGU211/my-invitation')
+    .get(controller.getMyInvitation);
 
+// 현재 사용자의 나의 팀 정보(팀명, 팀장, 팀원)
+router.route('/DGU211/my-team/')
+    .get(controller.getMyTeamInfo);
 
+// 현재 사용자의 개인역량표
+router.route('/DGU211/my-resume/')
+    .get(controller.getMyResume);
+
+// 현재 사용자의 팀 이름(팀 탈퇴에서 쓰임)
+router.route('/DGU211/my-team/:settings-id')
+    .get(controller.getMyTeamName);
 
 
 //show Team Select page
