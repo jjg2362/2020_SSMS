@@ -622,7 +622,8 @@ exports.getClassListPage = (req, res) => {
     //use connection
     var query = "select s.prj_year, s.prj_semes, s.term_chk, c.class_num, c.class_name, i.major, i.inst_name ";
     query += " from class_info as c, instructor as i, admin_settings as s "
-    query += "where c.inst_id = i.inst_id and c.settings_id = s.settings_id ; ";
+    query += "where c.inst_id = i.inst_id and c.settings_id = s.settings_id "
+    query += "and (prj_year = DATE_FORMAT(now(), '%Y') or (prj_year = DATE_FORMAT(now(), '%Y')-1 and prj_semes = \"2학기\" and term_chk like \"%장%\")) ; ";
 
     connection.query(query, null, (error, results, fields) => {
       connection.release();
@@ -656,7 +657,8 @@ exports.getAddClassPage = (req, res) => {
     }
     //use connection
     var query1 = "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk from admin_settings as s ";
-    query1 += " order by settings_id desc; "
+      query1 += "where (s.prj_year = DATE_FORMAT(now(), '%Y') or (s.prj_year = DATE_FORMAT(now(), '%Y')-1 and s.prj_semes = \"2학기\" and s.term_chk like \"%장%\")) ";
+      query1 += " order by settings_id desc; "
 
     query1 += "select i.inst_id, i.inst_name, i.major from instructor as i ";
     query1 += " order by major desc ; ";
@@ -691,7 +693,7 @@ exports.postAddClassPage = (req, res) => {
 
     var query ="";
 
-    for (var i=1; i<=Class_num; i++){
+    for (var i=0; i<=Class_num; i++){
       if (i==1){
         var settings_id= req.body.settings_id1;
         var class_num = req.body.class_num1;
@@ -746,12 +748,12 @@ exports.postAddClassPage = (req, res) => {
         var class_name = req.body.class_name9;
         var inst_id = req.body.inst_id9;
         var assis_id = req.body.assis_id9;
-      } else if (i==10){
-        var settings_id= req.body.settings_id10;
-        var class_num = req.body.class_num10;
-        var class_name = req.body.class_name10;
-        var inst_id = req.body.inst_id10;
-        var assis_id = req.body.assis_id10;
+      } else if (i==0){
+        var settings_id= req.body.settings_id0;
+        var class_num = req.body.class_num0;
+        var class_name = req.body.class_name0;
+        var inst_id = req.body.inst_id0;
+        var assis_id = req.body.assis_id0;
       }
 
       query += "insert into class_info (settings_id, class_num, class_name, inst_id, assis_id,  registrant, regis_date, amender, amend_date) ";

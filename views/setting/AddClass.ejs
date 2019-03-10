@@ -30,7 +30,6 @@
     <!-- 네비게이션 바 불러오기 -->
     <% include ../navBar.ejs %>
 
-    </style>
     <!-- 메인 -->
     <div class="content-wrapper">
       <!-- 메인 내용 -->
@@ -95,6 +94,30 @@
                     </tr>
                   </thead>
                   <tbody>
+                      <tr role="row" class="odd"  name = "AddBox0" id="AddBox0" >
+                        <td class="sorting_1">1</td>
+                        <td class=""> <select class="form-control" id='settings_id0' name='settings_id0' >
+                            <option value = "0">-- 분류 --</option>
+                             <% for(var i = 0; i < SettingInstList[0].length; i++) {%>
+                            <option value = "<%=SettingInstList[0][i].settings_id%>"><%=SettingInstList[0][i].prj_year%>-<%=SettingInstList[0][i].prj_semes%>-<%=SettingInstList[0][i].term_chk%></option>
+                              <% } %> </select> </td>
+
+                        <td class=""> <input class="form-control" name='class_num0' id='class_num0' type="text"></td>
+
+                        <td class=""> <input class="form-control" name='class_name0' id='class_name0' type="text" ></td>
+
+                        <td class=""> <select class="form-control" id='inst_id0' name='inst_id0' >
+                            <option value = "0">-- 교수 --</option>
+                             <% for(var i = 0; i < SettingInstList[1].length; i++) {%>
+                            <option value = "<%=SettingInstList[1][i].inst_id%>"><%=SettingInstList[1][i].major%>-<%=SettingInstList[1][i].inst_name%></option>
+                             <% } %> </select> </td>
+
+                        <td class=""> <select class="form-control" id='assis_id0' name='assis_id0' >
+                            <option value = "0">-- 조교 --</option>
+                             <% for(var i = 0; i < SettingInstList[2].length; i++) {%>
+                            <option value = "<%=SettingInstList[2][i].assis_id%>"><%=SettingInstList[2][i].assis_id%>-<%=SettingInstList[2][i].assis_name%></option>
+                            <% } %> </select> </td>
+                      </tr>
                       <tr role="row" class="odd"  name = "AddBox1" id="AddBox1" >
                       </tr>
                       <tr role="row" class="odd"  name = "AddBox2" id="AddBox2" >
@@ -113,8 +136,6 @@
                       </tr>
                       <tr role="row" class="odd"  name = "AddBox9" id="AddBox9" >
                       </tr>
-                      <tr role="row" class="odd"  name = "AddBox10" id="AddBox10" >
-                      </tr>
                   </tbody>
                 </table>
               </div>
@@ -123,7 +144,6 @@
                   <div class = "col-md-4">
                     <label> </label>
                   </div>
-
                   <div class = "col-md-4">
                     <center> <input type ="submit" class="btn btn-primary btn-block" name = "MakeProject" value="개설과목 등록"  /> </center>
                   </div>
@@ -161,125 +181,122 @@
 
     <script type="text/javascript">
 
-        var index = 0;
-        var DelCheck =0;
-          function add_class(){
-            index +=1 ;
-            var addbox = "AddBox"+index;
-            var show = document.getElementById(addbox);
-            var add = "";
-            if (index >10){
-              alert("한 번에 최대 10과목 입력 가능합니다.");
-              return
-            }
-            else{
-              id_Settings_id = "settings_id"+ (index);
-              id_class_num = "class_num"+ (index);
-              id_class_name = "class_name"+ (index);
-              id_inst_id = "inst_id"+ (index);
-              id_assis_id = "assis_id"+ (index);
+      var index = 0;
+      var DelCheck =0;
+      function add_class(){
+        index +=1 ;
+        var addbox = "AddBox"+index;
+        var show = document.getElementById(addbox);
+        var add = "";
+        if (index >10){
+          alert("한 번에 최대 10과목 입력 가능합니다.");
+          return
+        }
+        else{
+          id_Settings_id = "settings_id"+ (index);
+          id_class_num = "class_num"+ (index);
+          id_class_name = "class_name"+ (index);
+          id_inst_id = "inst_id"+ (index);
+          id_assis_id = "assis_id"+ (index);
 
-              add += '<td class="sorting_1">'+index+'</td>';
+          add += '<td class="sorting_1">'+(index+1)+'</td>';
 
-              add += '<td class=""> <select class="form-control" id='+id_Settings_id+' name='+id_Settings_id+' >';
-              add += '<option value = "0">-- 분류 --</option> '
-              add += ' <% for(var i = 0; i < SettingInstList[0].length; i++) {%> ';
-              add += '<option value = "<%=SettingInstList[0][i].settings_id%>"><%=SettingInstList[0][i].prj_year%>-<%=SettingInstList[0][i].prj_semes%>-<%=SettingInstList[0][i].term_chk%></option> ';
-              add +='  <% } %> </select> </td>';
+          add += '<td class=""> <select class="form-control" id='+id_Settings_id+' name='+id_Settings_id+' >';
+          add += '<option value = "0">-- 분류 --</option> '
+          add += ' <% for(var i = 0; i < SettingInstList[0].length; i++) {%> ';
+          add += '<option value = "<%=SettingInstList[0][i].settings_id%>"><%=SettingInstList[0][i].prj_year%>-<%=SettingInstList[0][i].prj_semes%>-<%=SettingInstList[0][i].term_chk%></option> ';
+          add +='  <% } %> </select> </td>';
 
-              add += '<td class="">'+'<input class="form-control"'+' name='+id_class_num+' id='+id_class_num+ ' type="text">'+ '</td> ';
+          add += '<td class="">'+'<input class="form-control"'+' name='+id_class_num+' id='+id_class_num+ ' type="text">'+ '</td> ';
 
-              add += '<td class="">'+'<input class="form-control"'+' name='+id_class_name+' id='+id_class_name+ ' type="text" >'+'</td>';
+          add += '<td class="">'+'<input class="form-control"'+' name='+id_class_name+' id='+id_class_name+ ' type="text" >'+'</td>';
 
-              add += '<td class=""> <select class="form-control" id='+id_inst_id+' name='+id_inst_id+' >';
-              add += '<option value = "0">-- 교수 --</option> '
-              add += ' <% for(var i = 0; i < SettingInstList[1].length; i++) {%> ';
-              add += '<option value = "<%=SettingInstList[1][i].inst_id%>"><%=SettingInstList[1][i].major%>-<%=SettingInstList[1][i].inst_name%></option> ';
-              add +='  <% } %> </select> </td>';
+          add += '<td class=""> <select class="form-control" id='+id_inst_id+' name='+id_inst_id+' >';
+          add += '<option value = "0">-- 교수 --</option> '
+          add += ' <% for(var i = 0; i < SettingInstList[1].length; i++) {%> ';
+          add += '<option value = "<%=SettingInstList[1][i].inst_id%>"><%=SettingInstList[1][i].major%>-<%=SettingInstList[1][i].inst_name%></option> ';
+          add +='  <% } %> </select> </td>';
 
-              add += '<td class=""> <select class="form-control" id='+id_assis_id+' name='+id_assis_id+' >';
-              add += '<option value = "0">-- 조교 --</option> '
-              add += ' <% for(var i = 0; i < SettingInstList[2].length; i++) {%> ';
-              add += '<option value = "<%=SettingInstList[2][i].assis_id%>"><%=SettingInstList[2][i].assis_id%>-<%=SettingInstList[2][i].assis_name%></option> ';
-              add +='  <% } %> </select> </td>';
-              show.innerHTML = add ;
-              document.getElementById("Classnum").value = index;
-            }
+          add += '<td class=""> <select class="form-control" id='+id_assis_id+' name='+id_assis_id+' >';
+          add += '<option value = "0">-- 조교 --</option> '
+          add += ' <% for(var i = 0; i < SettingInstList[2].length; i++) {%> ';
+          add += '<option value = "<%=SettingInstList[2][i].assis_id%>"><%=SettingInstList[2][i].assis_id%>-<%=SettingInstList[2][i].assis_name%></option> ';
+          add +='  <% } %> </select> </td>';
+          show.innerHTML = add ;
+          document.getElementById("Classnum").value = index;
+        }
+      }
+      function del_class(){
+        var addboxIndex = "AddBox"+index;
+        var show = document.getElementById(addboxIndex);
+
+        if(DelCheck==0 && confirm("가장 하단의 항목부터 삭제됩니다.")==true){
+          DelCheck += 1;
+          if (index > 0){
+            show.innerHTML = "";
+            index -=1;
+            document.getElementById("Classnum").value = index;
+          }else{
+            alert("더 이상 삭제할 수 없습니다.");
           }
-
-          function del_class(){
-            var addboxIndex = "AddBox"+index;
-            var show = document.getElementById(addboxIndex);
-
-            if(DelCheck==0 && confirm("가장 하단의 항목부터 삭제됩니다.")==true){
-              DelCheck += 1;
-              if (index > 0){
-                show.innerHTML = "";
-                index -=1;
-                document.getElementById("Classnum").value = index;
-              }else{
-                alert("더 이상 삭제할 수 없습니다.");
-              }
-            }else{
-              if (index > 0){
-                show.innerHTML = "";
-                index -=1;
-                document.getElementById("Classnum").value = index;
-              }else{
-                alert("더 이상 삭제할 수 없습니다.");
-              }
-            }
-
+        }else{
+          if (index > 0){
+            show.innerHTML = "";
+            index -=1;
+            document.getElementById("Classnum").value = index;
+          }else{
+            alert("더 이상 삭제할 수 없습니다.");
           }
+        }
+      }
 
-          function CheckForm(){
+      function CheckForm(){
+        for (var i =0; i<=index ; i++){
+          var id_Settings_id = "settings_id"+ i;
+          var id_class_num = "class_num"+ i;
+          var id_class_name = "class_name"+ i;
+          var id_inst_id = "inst_id"+ i;
+          var id_assis_id = "assis_id"+ i;
 
+          settings_id_value = document.getElementById(id_Settings_id).value;
+          class_num_value =document.getElementById(id_class_num).value;
+          class_name_value = document.getElementById(id_class_name).value;
+          inst_id_value = document.getElementById(id_inst_id).value;
+          assis_id_value = document.getElementById(id_assis_id).value;
 
-            for (var i =1; i<=index ; i++){
-              var id_Settings_id = "Settings_id"+ i;
-              var id_class_num = "class_num"+ i;
-              var id_class_name = "class_name"+ i;
-              var id_inst_id = "inst_id"+ i;
-
-              settings_id_value = document.getElementById(id_Settings_id).value;
-              class_num_value =document.getElementById(id_class_num).value;
-              class_name_value = document.getElementById(id_class_name).value;
-              inst_id_value = document.getElementById(id_inst_id).value;
-
-              if(settings_id_value=="0"){
-                alert(i+" - 분류를 선택해주세요.");
-                document.getElementById(id_Settings_id).focus;
-                return false;
-              }
-              if (class_num_value=''){
-                alert(i + " - 학수번호를 입력해주세요.");
-                document.getElementById(id_class_num).focus;
-                return false;
-              }
-              if (class_name_value=''){
-                alert(i + " - 과목명을 입력해주세요.");
-                document.getElementById(id_class_name).focus;
-                return false;
-              }
-              if (inst_id_value="0"){
-                alert(i + " - 교수를 선택해주세요.");
-                document.getElementById(id_inst_id).focus;
-                return false;
-              }
-            }
-
-            if(index > 0 ){
-              if(confirm("개설 과목을 등록하시겠습니까?") == true){
-                return true;
-              }else{
-                return false;
-              }
-            }else{
-              alert("최소 한과목 이상 입력해주세요.");
-              return false;
-            }
-
+          if(settings_id_value=="0"){
+            alert((i+1)+"번째 분류를 선택해주세요.");
+            document.getElementById(id_Settings_id).focus;
+            return false;
           }
+          if (class_num_value==''){
+            alert((i+1) + "번째 학수번호를 입력해주세요.");
+            document.getElementById(id_class_num).focus;
+            return false;
+          }
+          if (class_name_value==''){
+            alert((i+1) + "번째 과목명을 입력해주세요.");
+            document.getElementById(id_class_name).focus;
+            return false;
+          }
+          if (inst_id_value=="0"){
+            alert((i+1) + "번째 교수를 선택해주세요.");
+            document.getElementById(id_inst_id).focus;
+            return false;
+          }
+          if (assis_id_value=="0"){
+          alert((i+1) + "번째 조교를 선택해주세요.");
+            document.getElementById(id_assis_id).focus;
+            return false;
+          }
+        }
+
+        if(confirm("개설 과목을 등록하시겠습니까?") == true){
+          return true;
+        }else{
+          return false;
+        }
+      }
 
     </script>
   </body>
