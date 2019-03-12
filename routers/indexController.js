@@ -23,7 +23,7 @@ exports.showIndexPage = (req, res) => {
 
     query += "select p.prj_id, IFNULL(pc1.pj1,0) as pc1, IFNULL(pc2.pj2,0) as pc2, IFNULL(pc3.pj3,0) as pc3, "
     query += "p.prj_name, p.prj_content, p.cls_date, p.start_date, p.keyword1, p.keyword2, p.keyword3, m.mentor_name, m.company_name,team_pj.team_name as team_id,"
-    query += "p.settings_id, CONCAT(ads.prj_semes,\" \", ads.term_chk)as term_chk from project as p "
+    query += "p.settings_id, CONCAT(ads.prj_year,\" \",ads.prj_semes,\" \", ads.term_chk)as term_chk from project as p "
     query += "left outer join admin_settings as ads on p.settings_id = ads.settings_id "
     query += "left outer join mentor as m on p.mentor_id = m.mentor_id and p.use_yn=1 "
     query += "left outer join (select p1.prj_id as prj_id, count(project1) as pj1 from project as p1, project_cart as pjcart "
