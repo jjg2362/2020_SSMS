@@ -384,7 +384,7 @@ exports.getMypage = (req, res) => {
 
   switch (req.session.userInfo.userType) {
     case "student":
-      query += " std_id as '학번', std_name as '이름', phone_num as '전화번호', email_ad as '이메일' from student";
+      query += " std_id as '학번', major as '전공', std_name as '이름', phone_num as '전화번호', email_ad as '이메일' from student";
       query += " where std_id = ?";
       break;
 
@@ -452,7 +452,7 @@ exports.getMypageEdit = (req, res) => {
 
   switch (req.session.userInfo.userType) {
     case "student":
-      query += " std_id as '학번', std_name as '이름', phone_num as '전화번호', email_ad as '이메일' from student";
+      query += " std_id as '학번', major as '전공', std_name as '이름', phone_num as '전화번호', email_ad as '이메일' from student";
       query += " where std_id = ?";
       break;
 
@@ -519,7 +519,8 @@ exports.postMypageEdit = (req, res) => {
   };
 
   var addQuery = "";
-
+  console.log("postMypageEdit");
+  console.log(req.body);
   switch (req.session.userInfo.userType) {
     case "student":
       editUser.std_name = req.body.이름;

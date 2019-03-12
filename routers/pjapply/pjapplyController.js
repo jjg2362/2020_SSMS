@@ -140,13 +140,13 @@ exports.getDetailPj = (req, res) => {
         logger.putLogDetail(req,'lookup project detail success.');
 
         if(results[2].length == 0){
-          res.render('pjapply/DGU402_0', {PjMentorInfo: results,userId: req.session.userId, moment : moment,userInfo: req.session.userInfo,curDate: new Date()});
+          res.render('pjapply/DGU402_0', {PjMentorInfo: results, userId: req.session.userId, moment : moment,userInfo: req.session.userInfo,curDate: new Date()});
         }else if(results[2].length == 1){
-          res.render('pjapply/DGU402_1', {PjMentorInfo: results,userId: req.session.userId, moment : moment,userInfo: req.session.userInfo ,curDate: new Date()});
+          res.render('pjapply/DGU402_1', {PjMentorInfo: results, userId: req.session.userId, moment : moment,userInfo: req.session.userInfo ,curDate: new Date()});
         }else if(results[2].length == 2){
-          res.render('pjapply/DGU402_2', {PjMentorInfo: results,userId: req.session.userId, moment : moment,userInfo: req.session.userInfo ,curDate: new Date()});
+          res.render('pjapply/DGU402_2', {PjMentorInfo: results, userId: req.session.userId, moment : moment,userInfo: req.session.userInfo ,curDate: new Date()});
         }else if(results[2].length == 3){
-          res.render('pjapply/DGU402_3', {PjMentorInfo: results,userId: req.session.userId, moment : moment,userInfo: req.session.userInfo ,curDate: new Date()});
+          res.render('pjapply/DGU402_3', {PjMentorInfo: results, userId: req.session.userId, moment : moment,userInfo: req.session.userInfo ,curDate: new Date()});
         }else{
           res.redirect('/');
         }
