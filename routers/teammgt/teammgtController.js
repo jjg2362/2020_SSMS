@@ -1243,7 +1243,7 @@ exports.getTeamClassInfo = (req, res) => {
       }
 
       //use results and fields
-      res.render('teammgt/DGU261', {TeamClassName: results,userInfo: req.session.userInfo});
+      res.render('teammgt/DGU261', {TeamClassName: results, userInfo: req.session.userInfo});
     });
   });
 };

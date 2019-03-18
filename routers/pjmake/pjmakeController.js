@@ -601,7 +601,7 @@ exports.postEditproject = (req, res) => {
       amend_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
       amender : req.session.userId,
       pre_matching : req.body.preMat
-    }
+    };
 
     var project2 = {
       prj_name: req.body.PjName,
@@ -668,7 +668,7 @@ exports.postEditproject = (req, res) => {
                 console.error('query error : ' + error);
                 return;
             }
-            logger.putLogDetail(req,'Edit Team success.');
+            logger.putLogDetail(req,'Edit Team success. (originTeam)');
 
         });
 
@@ -678,13 +678,13 @@ exports.postEditproject = (req, res) => {
                 console.error('query error : ' + error);
                 return;
             }
-            logger.putLogDetail(req,'Edit Team success.');
+            logger.putLogDetail(req,'Edit Team success. (selectTeam)');
         });
 
 
       }
 
-      if(req.body.selectMentor){
+      if (req.body.selectMentor) {
         connection.query(query, project2, (error, results, fields) => {
 
           if(error) { //throw error;
@@ -692,10 +692,10 @@ exports.postEditproject = (req, res) => {
             return;
           }
           req.session.PJname =  req.body.PjName;
-          logger.putLogDetail(req,'Register success.');
+          logger.putLogDetail(req,'Register success.(selectMentor)');
           res.redirect('DGU311');
         });
-      }else{
+      } else {
         connection.query(query, project, (error, results, fields) => {
           connection.release();
           if(error) { //throw error;
