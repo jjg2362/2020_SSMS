@@ -174,7 +174,6 @@
             data: $("#loginForm").serialize(),
             success: function(result) {
               if(result == 'lgOk') {
-                alert('로그인 되었습니다');
                 location.href = "/";
               } else {
                 $("#validationCheck").text("Login Failed. " + result);

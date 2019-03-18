@@ -116,6 +116,13 @@ body.fixed-nav {
   display: none;
 }
 
+#mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-nolink {
+  position: relative;
+  min-width: 45px;
+  border: none;
+  font-family: 'FontAwesome';
+}
+
 #mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-link {
   position: relative;
   min-width: 45px;
@@ -338,6 +345,10 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   color: #EB9332;
 }
 
+#mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-nolink {
+  color: #ffffff;
+}
+
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item > .nav-link {
   color: #ffffff;
 }
@@ -378,9 +389,15 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   }
 }
 
+
 #mainNav.navbar-light .navbar-collapse .navbar-sidenav .nav-link-collapse:after {
   color: rgba(0, 0, 0, 0.5);
 }
+
+#mainNav.navbar-light .navbar-collapse .navbar-sidenav > .nav-nolink {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 
 #mainNav.navbar-light .navbar-collapse .navbar-sidenav > .nav-item > .nav-link {
   color: rgba(0, 0, 0, 0.5);

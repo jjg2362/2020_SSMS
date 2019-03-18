@@ -30,7 +30,6 @@
     <!-- 네비게이션 바 불러오기 -->
     <% include ../navBar.ejs %>
 
-    </style>
     <!-- 메인 -->
     <div class="content-wrapper">
       <!-- 메인 내용 -->
@@ -46,8 +45,6 @@
             </div>
 
             <form action="/setting/EditClass" method="post" id="setting" onsubmit="return CheckForm();" />
-            <input type = "hidden" value ="<%=ClassInfo[0][0].class_num%>" name ="ClassNum" id = "ClassNum" />
-            <input type = "hidden" value ="<%=ClassInfo[0][0].settings_id%>" name ="SettingID" id = "SettingID" />
 
             <div class="table-responsive" id="ProjectInfo">
             <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
@@ -61,7 +58,13 @@
                       <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center><%=ClassInfo[0][0].class_num%></center></th>
                       <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center><%=ClassInfo[0][0].class_name%></center></th>
                       <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center><%=ClassInfo[0][0].major%> - <%=ClassInfo[0][0].inst_name%></center></th>
-                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center><%=ClassInfo[0][0].assis_id%> - <%=ClassInfo[0][0].assis_name%></center></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;">
+                        <center>
+                          <%if(ClassInfo[0][0].assis_id != 0){%>
+                            <%=ClassInfo[0][0].assis_id%> - <%=ClassInfo[0][0].assis_name%>
+                          <%}%>
+                        </center>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -99,10 +102,10 @@
                           </td>
 
                         <td class="">
-                          <input class="form-control"'+' name="class_num" id="class_num" type="text" value = "<%=ClassInfo[0][0].class_num%>" > </td>
+                          <input class="form-control" name="class_num" id="class_num" type="text" value = "<%=ClassInfo[0][0].class_num%>" > </td>
 
                         <td class="">
-                          <input class="form-control"'+' name="class_name" id="class_name" type="text" value = "<%=ClassInfo[0][0].class_name%>"></td>
+                          <input class="form-control" name="class_name" id="class_name" type="text" value = "<%=ClassInfo[0][0].class_name%>"></td>
 
                         <td class="">
                           <select class="form-control" id="inst_id" name="inst_id" >

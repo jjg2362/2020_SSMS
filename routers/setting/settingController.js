@@ -804,7 +804,7 @@ exports.getEditClass = (req, res) => {
 
       var query = "select s.prj_year, s.prj_semes, s.term_chk, cinfo.class_num, cinfo.class_name,  i.major, i.inst_name, a.assis_id, a.assis_name, cinfo.settings_id " ;
       query += "from class_info as cinfo, admin_settings as s, instructor as i , assistant as a ";
-      query += "where cinfo.class_num = '" + req.params.classnum + "' and cinfo.settings_id = s.settings_id and i.inst_id = cinfo.inst_id and a.assis_id = cinfo.assis_id ;";
+      query += "where cinfo.class_num = '" + req.params.classnum + "' and cinfo.settings_id = s.settings_id and i.inst_id = cinfo.inst_id ;";
 
       query += "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk from admin_settings as s ";
       query += " order by settings_id desc; "
