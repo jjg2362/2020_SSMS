@@ -46,68 +46,35 @@
 
             <form action="/setting/EditClass" method="post" id="setting" onsubmit="return CheckForm();" />
 
-            <div class="table-responsive" id="ProjectInfo">
-            <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-              <div class="row">
-                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                  <thead>
-                    <tr role="row">
-                      <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width:20%;">
-                        <center><%=ClassInfo[0][0].prj_year%> - <%=ClassInfo[0][0].prj_semes%> - <%=ClassInfo[0][0].term_chk%></center>
-                      </th>
-                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center><%=ClassInfo[0][0].class_num%></center></th>
-                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center><%=ClassInfo[0][0].class_name%></center></th>
-                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center><%=ClassInfo[0][0].major%> - <%=ClassInfo[0][0].inst_name%></center></th>
-                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;">
-                        <center>
-                          <%if(ClassInfo[0][0].assis_id != 0){%>
-                            <%=ClassInfo[0][0].assis_id%> - <%=ClassInfo[0][0].assis_name%>
-                          <%}%>
-                        </center>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- 멘토링 일정 추가 -->
-
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
-           </div>
             <div class="table-responsive" >
             <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
               <div class="row">
                 <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                  <thead>
-                    <tr role="row">
-                      <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width:20%;"><center>분류</center></th>
-                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>학수번호</center></th>
-                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과목명</center></th>
-                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>교수</center></th>
-                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>조교</center></th>
-
-                    </tr>
-                  </thead>
                   <tbody>
                       <tr role="row" class="odd">
-                        <td class="">
+                        <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width:20%;"><center>분류</center></th>
+                        <td class="" colspan="2">
                           <select class="form-control" id="Settings_id" name="Settings_id" >
                             <option value = "0">-- 분류 --</option>
-                            <% for(var i = 0; i < ClassInfo[1].length; i++) {%>
-                              <option value = "<%=ClassInfo[1][i].settings_id%>"><%=ClassInfo[1][i].prj_year%>-<%=ClassInfo[1][i].prj_semes%>-<%=ClassInfo[1][i].term_chk%></option>
+                              <% for(var i = 0; i < ClassInfo[1].length; i++) { %>
+                                <option value = "<%=ClassInfo[1][i].settings_id%>"><%=ClassInfo[1][i].prj_year%>-<%=ClassInfo[1][i].prj_semes%>-<%=ClassInfo[1][i].term_chk%></option>
                               <% } %>
                             </select>
                           </td>
-
-                        <td class="">
+                      </tr>
+                      <tr role="row" class="odd">
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>학수번호</center></th>
+                        <td class="" colspan="2">
                           <input class="form-control" name="class_num" id="class_num" type="text" value = "<%=ClassInfo[0][0].class_num%>" > </td>
-
-                        <td class="">
+                      </tr>
+                      <tr role="row" class="odd">
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과목명</center></th>
+                        <td class="" colspan="2">
                           <input class="form-control" name="class_name" id="class_name" type="text" value = "<%=ClassInfo[0][0].class_name%>"></td>
-
-                        <td class="">
+                      </tr>
+                      <tr role="row" class="odd">
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>교수</center></th>
+                        <td class="" colspan="2">
                           <select class="form-control" id="inst_id" name="inst_id" >
                             <option value = "0">-- 교수 --</option>
                             <% for(var i = 0; i < ClassInfo[2].length; i++) {%>
@@ -115,8 +82,10 @@
                             <% } %>
                             </select>
                           </td>
-
-                        <td class="">
+                      </tr>
+                      <tr role="row" class="odd">
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>조교</center></th>
+                        <td class="" colspan="2">
                           <select class="form-control" id="assis_id" name="assis_id" >
                             <option value = "0">-- 조교 --</option>
                             <% for(var i = 0; i < ClassInfo[3].length; i++) {%>
@@ -125,8 +94,30 @@
                           </select>
                         </td>
                       </tr>
+                      <!--<tr role="row" class="odd">-->
+                        <!--<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>권한주기</center></th>-->
+                        <!--<td class="">-->
+                          <!--<select class="form-control" id="inst_id" name="inst_id" >-->
+                            <!--<option value = "0">&#45;&#45; 교수 &#45;&#45;</option>-->
+                            <!--<% for(var i = 0; i < ClassInfo[2].length; i++) {%>-->
+                            <!--<option value = "<%=ClassInfo[2][i].inst_id%>"><%=ClassInfo[2][i].major%>-<%=ClassInfo[2][i].inst_name%></option>-->
+                            <!--<% } %>-->
+                          <!--</select>-->
+                        <!--</td>-->
+                        <!--<td class="">-->
+                          <!--<select class="form-control" id="assis_id" name="assis_id" >-->
+                            <!--<option value = "0">&#45;&#45; 조교 &#45;&#45;</option>-->
+                            <!--<% for(var i = 0; i < ClassInfo[3].length; i++) {%>-->
+                            <!--<option value = "<%=ClassInfo[3][i].assis_id%>"><%=ClassInfo[3][i].assis_id%>-<%=ClassInfo[3][i].assis_name%></option>-->
+                            <!--<% } %>-->
+                          <!--</select>-->
+                        <!--</td>-->
+                      <!--</tr>-->
+
                   </tbody>
                 </table>
+
+
               </div>
               <div class = "form-group mt-4">
                 <div class="form-row">
@@ -137,6 +128,8 @@
                   <div class = "col-md-2">
                     <center> <input type ="submit" class="btn btn-primary btn-block" name = "MakeProject" value="개설과목 수정"  /> </center>
                   </div>
+                  <input type="hidden" id="originSettingsId" name="originSettingsId" value="<%= ClassInformation[0].settings_id %>">
+                  <input type="hidden" id="originClassNum" name="originClassNum" value="<%= ClassInformation[0].class_num %>">
                 </form>
 
                   <div class = "col-md-2">
@@ -174,6 +167,14 @@
     <script src="/js/sb-admin.min.js"></script>
 
     <script type="text/javascript">
+      $(document).ready(function () {
+
+
+
+        $("#Settings_id").val(<%= ClassInformation[0].settings_id %>).prop("selected", true);
+        $("#inst_id").val("<%= ClassInformation[0].inst_id %>").prop("selected", true);
+        $("#assis_id").val("<%= ClassInformation[0].assis_id %>").prop("selected", true);
+      });
     function CheckForm(){
         var _Settings_id = document.getElementById("Settings_id").value;
         var _class_num = document.getElementById("class_num").value;

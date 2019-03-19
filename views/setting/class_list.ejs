@@ -62,7 +62,7 @@
                           <tr role="row" class="odd" >
                             <td class="sorting_1"><%= i+1 %></td>
                             <td><%= ClassList[i].prj_year %>  -  <%= ClassList[i].prj_semes%>  -  <%= ClassList[i].term_chk %></td>
-                            <td><a href="/setting/edit/class/<%= ClassList[i].class_num %>"> <%= ClassList[i].class_num %> </a></td>
+                            <td><a href="/setting/edit/class/<%= ClassList[i].class_num %>/<%= ClassList[i].settings_id %>"> <%= ClassList[i].class_num %> </a></td>
                             <td> <%= ClassList[i].class_name %></td>
                             <td> <%= ClassList[i].major %>  -  <%= ClassList[i].inst_name%></td>
                           </tr>

@@ -45,7 +45,7 @@ router.route('/AddClass')
   .get(controller.getAddClassPage)
   .post(controller.postAddClassPage);
 
-router.route('/edit/class/:classnum')
+router.route('/edit/class/:classnum/:settings_id')
   .get(controller.getEditClass);
 
 router.route('/EditClass')

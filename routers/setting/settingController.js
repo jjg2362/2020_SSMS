@@ -620,7 +620,7 @@ exports.getClassListPage = (req, res) => {
       return;
     }
     //use connection
-    var query = "select s.prj_year, s.prj_semes, s.term_chk, c.class_num, c.class_name, i.major, i.inst_name ";
+    var query = "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk, c.class_num, c.class_name, i.major, i.inst_name ";
     query += " from class_info as c, instructor as i, admin_settings as s "
     query += "where c.inst_id = i.inst_id and c.settings_id = s.settings_id "
     query += "and (prj_year = DATE_FORMAT(now(), '%Y') or (prj_year = DATE_FORMAT(now(), '%Y')-1 and prj_semes = \"2학기\" and term_chk like \"%장%\")) ; ";
@@ -802,17 +802,22 @@ exports.getEditClass = (req, res) => {
         return;
       }
 
-      var query = "select s.prj_year, s.prj_semes, s.term_chk, cinfo.class_num, cinfo.class_name,  i.major, i.inst_name, a.assis_id, a.assis_name, cinfo.settings_id " ;
-      query += "from class_info as cinfo, admin_settings as s, instructor as i , assistant as a ";
-      query += "where cinfo.class_num = '" + req.params.classnum + "' and cinfo.settings_id = s.settings_id and i.inst_id = cinfo.inst_id ;";
+      var query = "Select adse.prj_year, adse.prj_semes, adse.term_chk, c.settings_id, c.class_num, c.class_name, c.inst_id, i.inst_name, i.major, c.assis_id, a.assis_name "
+        query += "From class_info c ";
+        query += "LEFT JOIN admin_settings as adse ON c.settings_id = adse.settings_id ";
+        query += "LEFT JOIN instructor as i ON i.inst_id = c.inst_id ";
+        query += "LEFT JOIN assistant as a ON a.assis_id = c.assis_id ";
+        query += "WHERE c.class_num = '" + req.params.classnum + "' AND c.settings_id = '" + req.params.settings_id +"';";
 
       query += "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk from admin_settings as s ";
-      query += " order by settings_id desc; "
+      query += " order by settings_id desc; ";
 
       query += "select i.inst_id, i.inst_name, i.major from instructor as i ";
       query += " order by major desc ; ";
 
-      query += "select assis_id, assis_name from assistant ;" ;
+      query += "select assis_id, assis_name from assistant ;";
+
+
 
 
 
@@ -828,7 +833,8 @@ exports.getEditClass = (req, res) => {
         //use results and fields
         if(results.length > 0) {
           console.log('lookup project success.');
-          res.render('setting/EditClass', {ClassInfo: results, moment : moment, userInfo: req.session.userInfo});
+          console.log(results);
+          res.render('setting/EditClass', {ClassInfo: results, moment : moment, userInfo: req.session.userInfo, ClassInformation: results[0]});
         } else {
           res.redirect('/');
         }
@@ -855,8 +861,9 @@ exports.postEditClass = (req, res) => {
     assis_id:req.body.assis_id,
     amender:req.session.userInfo.userId,
     amend_date:moment(Date()).format('YYYY-MM-DD hh:mm:ss')
-  }
+  };
 
+    console.log(project);
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
@@ -868,9 +875,9 @@ exports.postEditClass = (req, res) => {
     //use connection
     var query = "update class_info ";
     query += " set ? ";
-    query += " where class_num = '"+req.body.ClassNum +"' and settings_id = '"+req.body.SettingID+"'; " ;
+    query += " where class_num = '" + req.body.originClassNum + "' and settings_id = '" + req.body.originSettingsId + "'; " ;
 
-    // console.log(query);
+    console.log("postEditClass: ", query);
 
     connection.query(query, project, (error, results, fields) => {
       connection.release();
