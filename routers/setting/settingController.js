@@ -863,7 +863,8 @@ exports.postEditClass = (req, res) => {
     amend_date:moment(Date()).format('YYYY-MM-DD hh:mm:ss')
   };
 
-    console.log(project);
+    console.log("project:", project);
+    console.log(req.body);
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
