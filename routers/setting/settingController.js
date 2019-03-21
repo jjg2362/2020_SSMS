@@ -817,8 +817,7 @@ exports.getEditClass = (req, res) => {
 
       query += "select assis_id, assis_name from assistant ;";
 
-
-
+      query += "select sub_user_id from class_inst_authority where class_num = '" + req.params.classnum +"' and settings_id = '" + req.params.settings_id +"';";
 
 
       connection.query(query, (error, results, fields) => {
@@ -833,8 +832,8 @@ exports.getEditClass = (req, res) => {
         //use results and fields
         if(results.length > 0) {
           console.log('lookup project success.');
-          console.log(results);
-          res.render('setting/EditClass', {ClassInfo: results, moment : moment, userInfo: req.session.userInfo, ClassInformation: results[0]});
+          console.log(results[4]);
+          res.render('setting/EditClass', {ClassInfo: results, moment : moment, userInfo: req.session.userInfo, ClassInformation: results[0], ClassSubUserIdList: results[4]});
         } else {
           res.redirect('/');
         }
@@ -863,8 +862,18 @@ exports.postEditClass = (req, res) => {
     amend_date:moment(Date()).format('YYYY-MM-DD hh:mm:ss')
   };
 
-    console.log("project:", project);
-    console.log(req.body);
+    // console.log("project:", project);
+    // console.log(req.body);
+
+    var subUserId = req.body.sub_user_id;
+    if (typeof subUserId === "string") subUserId = [subUserId];
+    var records = [];
+    var arr = [req.body.class_num, req.body.Settings_id, "", req.session.userInfo.userId, moment(Date()).format('YYYY-MM-DD hh:mm:ss')];
+    for (i = 0; i < subUserId.length; i++) {
+        const clone = arr.slice(0);
+        clone[2] = subUserId[i];
+        records.push(clone)
+    }
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
@@ -873,12 +882,25 @@ exports.postEditClass = (req, res) => {
       return;
     }
 
+    var query = "insert into class_inst_authority (class_num, settings_id, sub_user_id, registrant, regis_date) values ?";
+    if (records.length > 0) {
+        connection.query(query, [records], (error, results) => {
+
+            if(error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+
+            //use results and fields
+            console.log('subUser insert success.');
+
+        });
+    }
+
     //use connection
-    var query = "update class_info ";
+    query = "update class_info ";
     query += " set ? ";
     query += " where class_num = '" + req.body.originClassNum + "' and settings_id = '" + req.body.originSettingsId + "'; " ;
-
-    console.log("postEditClass: ", query);
 
     connection.query(query, project, (error, results, fields) => {
       connection.release();
@@ -892,6 +914,41 @@ exports.postEditClass = (req, res) => {
 
     });
   });
+};
+
+exports.deleteSubUser = (req, res) => {
+    //session check
+    if(!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    }else{
+        logger.putLog(req);
+    }
+
+    // console.log(req.body);
+    var query = "delete from class_inst_authority where class_num = '" + req.body.class_num + "' and settings_id = '" + req.body.settings_id + "' and sub_user_id = '" + req.body.sub_user_id + "'";
+
+    mysqlPool.pool.getConnection((err, connection) => {
+        if (err) { //throw err;
+            console.error('getConnection err : ' + err);
+            return;
+        }
+
+        connection.query(query, (error, results, fields) => {
+            connection.release();
+
+            if(error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+            res.send("success");
+
+        });
+    });
+
+
+
 };
 
 exports.getCancelEdit = (req, res) => {

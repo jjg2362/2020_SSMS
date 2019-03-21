@@ -51,6 +51,9 @@ router.route('/edit/class/:classnum/:settings_id')
 router.route('/EditClass')
   .post(controller.postEditClass);
 
+router.route('/subUser')
+    .delete(controller.deleteSubUser);
+
 router.route('/EditClass/cancel')
   .get(controller.getCancelEdit);
 
