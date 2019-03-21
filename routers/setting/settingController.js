@@ -867,6 +867,7 @@ exports.postEditClass = (req, res) => {
 
     var subUserId = req.body.sub_user_id;
     if (typeof subUserId === "string") subUserId = [subUserId];
+    else if (typeof subUserId === "undefined") subUserId = [];
     var records = [];
     var arr = [req.body.class_num, req.body.Settings_id, "", req.session.userInfo.userId, moment(Date()).format('YYYY-MM-DD hh:mm:ss')];
     for (i = 0; i < subUserId.length; i++) {
