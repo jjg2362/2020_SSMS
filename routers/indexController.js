@@ -17,6 +17,7 @@ exports.showIndexPage = (req, res) => {
         logger.putLog(req);
     }
 
+
     //use connection
     var query ="select posting_id, posting_title, post_date from msgbrd_info "
     query +="order by post_date desc limit 11;";
@@ -35,8 +36,6 @@ exports.showIndexPage = (req, res) => {
     query +="left outer join (select t.team_name,t.prj_id from team as t) as team_pj on team_pj.prj_id = p.prj_id where p.use_yn=1 group by p.prj_id order by p.prj_id DESC;"
 
     query +=" select * from main_notice ;";
-
-
 
     connection.query(query, null, (error, results, fields) => {
       connection.release();
