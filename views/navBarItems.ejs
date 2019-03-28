@@ -141,6 +141,11 @@
           <span class="nav-link-text">프로젝트 운영</span>
         </a>
         <ul class="sidenav-second-level collapse" id="accordion5">
+          <% if(userInfo.userType == 'instructor') { %>
+            <li>
+              <a href="/pjmng/DGU500">내 수업</a>
+            </li>
+          <% }%>
           <li>
             <a href="/pjmng/DGU502">내 프로젝트</a>
           </li>

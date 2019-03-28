@@ -50,4 +50,7 @@ router.route('/DGU513')
 router.route('/DGU521/:formType')
   .post(controller.postFinalLists);
 
+router.route('/DGU500')
+    .get(controller.showClassPage);
+
 module.exports = router;
