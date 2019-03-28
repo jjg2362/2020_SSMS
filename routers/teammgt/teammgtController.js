@@ -1224,9 +1224,15 @@ exports.getTeamClassInfo = (req, res) => {
   query += "select cinfo.*, i.major, i.inst_name from class_info as cinfo, instructor as i ";
   query += "where cinfo.use_yn='1'and cinfo.inst_id = i.inst_id; ";
 
-  query += "select t.*, i.major, i.inst_name from team as t , instructor as i, class_info as cinfo ";
-  query += "where t.use_yn ='1' and t.class_num is not null and cinfo.class_num=t.class_num and cinfo.inst_id = i.inst_id  ";
-  query += "order by t.amend_date desc; ";
+  // 잘못된 쿼리... 한 팀당 클래스 하나인데 여러 클래스를 가져온다.
+  // query += "select t.*, i.major, i.inst_name from team as t , instructor as i, class_info as cinfo ";
+  // query += "where t.use_yn ='1' and t.class_num is not null and cinfo.class_num=t.class_num and cinfo.inst_id = i.inst_id  ";
+  // query += "order by t.amend_date desc; ";
+
+  query += "select t.*, i.major, i.inst_name from team as t ";
+  query += "left join class_info as cinfo on t.settings_id = cinfo.settings_id and t.class_num = cinfo.class_num ";
+  query += "left join instructor as i on  cinfo.inst_id = i.inst_id ";
+  query += "where t.use_yn = '1' and t.class_num is not null order by t.amend_date desc;";
 
   mysqlPool.pool.getConnection((err, connection) => {
     if(err) { //throw err;
