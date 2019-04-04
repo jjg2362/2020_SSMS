@@ -238,7 +238,6 @@
     <script type="text/javascript">
 
     $(document).ready(function () {
-      var curTableId = 'dataTable0';
 
       $("table.display").dataTable({
           "iDisplayLength": 300
@@ -252,14 +251,11 @@
       $("#btnExport").on('click', function () {
 
           let selectedValue = $("input[type=radio][name=sType]:checked").val();
-        console.log(selectedValue);
           var uri = $("#dataTable" + selectedValue).excelexportjs({
               containerid: 'dataTable' + selectedValue
               , datatype:  'table'
               , returnUri: true
           });
-
-
 
           if(selectedValue=='0'){
             var name = <%=moment(curDate).format('YYYYMMDD') %>+"_학생(전체).xls";
