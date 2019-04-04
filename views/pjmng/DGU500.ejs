@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <div class="mb-0 mt-4">
+          <h6>프로젝트 운영 > 내 수업 </h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card mx-auto mt-5 mb-5">
+         <div class="card-body">
+           <!-- <h2> 계획서 관리 </h2> -->
+            <div class="table-responsive mt-3" id="SearchAll" >
+
+            <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+              <div class="row">
+                <table class="table table-bordered dataTable ml-3 mr-3" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                  <thead>
+                    <tr role="row">
+                      <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 5%;"></th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 25%;">연도-학기-분류</th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 25%;">학수번호</th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 25%;">과목</th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 25%;">교수</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tbody>
+                      <!-- 프로젝트 조회 -->
+                      <% for(var i = 0; i < ClassList.length; i++) {%>
+
+                          <tr role="row" class="odd" >
+                            <td class="sorting_1"><%= i+1 %></td>
+                            <td><%= ClassList[i].prj_year %>  -  <%= ClassList[i].prj_semes%>  -  <%= ClassList[i].term_chk %></td>
+                            <td><a href="/setting/edit/class/<%= ClassList[i].class_num %>/<%= ClassList[i].settings_id %>"> <%= ClassList[i].class_num %> </a></td>
+                            <td> <%= ClassList[i].class_name %></td>
+                            <td> <%= ClassList[i].major %>  -  <%= ClassList[i].inst_name%></td>
+                          </tr>
+
+                        <% } %>
+                    </tbody>
+                  </tfoot>
+
+                 </table>
+                </div>
+              </div>
+             </div>
+           </div>
+         </div>
+
+
+
+
+      </div>
+    </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+  </body>
+</html>

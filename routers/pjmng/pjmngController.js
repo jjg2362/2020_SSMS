@@ -1475,3 +1475,40 @@ exports.postMentoringReport2 = (req, res) => {
     });
   });
 };
+
+
+exports.showClassPage = (req, res) => {
+  //session check
+  if(!req.session.userId) {
+    console.log('do not have a session.');
+    res.redirect('/');
+    return;
+  }else{
+    logger.putLog(req);
+  }
+
+  //get connection from pool
+  mysqlPool.pool.getConnection((err, connection) => {
+    if(err) { //throw err;
+      console.error('getConnection err : ' + err);
+      return;
+    }
+    //use connection
+    var query = "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk, c.class_num, c.class_name, i.major, i.inst_name ";
+    query += " from class_info as c, instructor as i, admin_settings as s "
+    query += "where c.inst_id = i.inst_id and c.settings_id = s.settings_id and c.inst_id = '"+ req.session.userId+"'"
+    query += " and (prj_year = DATE_FORMAT(now(), '%Y') or (prj_year = DATE_FORMAT(now(), '%Y')-1 and prj_semes = \"2학기\" and term_chk like \"%장%\")) ; ";
+
+    connection.query(query, null, (error, results, fields) => {
+      connection.release();
+
+      if(error) { //throw error;
+        console.error('query error : ' + error);
+        return;
+      }
+
+      //use results and fields
+      res.render('pjmng/DGU500', {ClassList: results, userId: req.session.userId, userType: req.session.userType, userInfo: req.session.userInfo, moment: moment});
+    });
+  });
+};
