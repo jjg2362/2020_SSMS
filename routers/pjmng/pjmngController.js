@@ -31,6 +31,7 @@ exports.getMyproject = (req,res)=>{
     query += " where p.mentor_id = m.mentor_id and p.prj_id = t.prj_id and p.prj_id = '" + req.params.PJId + "';";
     query += " select * from project_plan_report where prj_id = '"+req.params.PJId+"';";
     query += " select prj_plan_apdx from apdx_file_info where use_yn = 1;";
+
     // console.log(query);
     connection.query(query, (error, results, fields) => {
       connection.release();
@@ -51,6 +52,8 @@ exports.getMyproject = (req,res)=>{
   });
 
 };
+
+
 exports.postprjplan = (req,res)=>{
   logger.putLog(req);
   var fileInfo = {
