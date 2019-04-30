@@ -177,17 +177,34 @@ exports.getSearchproject1 = (req,res)=>{
 
     }
     else if(req.session.userInfo.userType=='assistant'){
-      query = "select p.*, s.settings_id, s.term_chk, t.team_name, t.prj_id, c.* from project as p, admin_settings as s, team as t, class_info as c"
-      query += " where p.settings_id = s.settings_id and p.use_yn = 1 and t.prj_id = p.prj_id and c.class_num = t.class_num and c.settings_id = t.settings_id and c.assis_id = '"+req.session.userId+"'"
-      query += " order by p.prj_id;";
+      // query = "select p.*, s.settings_id, s.term_chk, t.team_name, t.prj_id, c.* from project as p, admin_settings as s, team as t, class_info as c"
+      // query += " where p.settings_id = s.settings_id and p.use_yn = 1 and t.prj_id = p.prj_id and c.class_num = t.class_num and c.settings_id = t.settings_id and c.assis_id = '"+req.session.userId+"'"
+      // query += " order by p.prj_id;";
       // console.log(query);
 
+      // 권한 받은 과목의 프로젝트 포함해서 목록 가져오기
+      query += " select * from ";
+      query += "(select s.settings_id as settings_id2, s.term_chk, c.* from admin_settings as s, class_info as c, class_inst_authority as cia\n" +
+          "where cia.sub_user_id = '"+req.session.userId+"' and cia.class_num = c.class_num and cia.settings_id = s.settings_id) as t1 ";
+      query += "left join ";
+      query += "(select p.*, t.team_name, t.class_num from project as p, team as t\n" +
+          "where p.use_yn = 1 and t.prj_id = p.prj_id) as t2 ";
+      query += "on t1.class_num = t2.class_num and t1.settings_id2 = t2.settings_id;";
     }
     else if(req.session.userInfo.userType=='instructor'){
-      query = "select p.*, s.settings_id, s.term_chk, t.team_name, t.prj_id, c.* from project as p, admin_settings as s, team as t, class_info as c"
-      query += " where p.settings_id = s.settings_id and p.use_yn = 1 and t.prj_id = p.prj_id and c.class_num = t.class_num and c.settings_id = t.settings_id and c.inst_id = '"+req.session.userId+"'"
-      query += " order by p.prj_id;";
+      // query = "select p.*, s.settings_id, s.term_chk, t.team_name, t.prj_id, c.* from project as p, admin_settings as s, team as t, class_info as c"
+      // query += " where p.settings_id = s.settings_id and p.use_yn = 1 and t.prj_id = p.prj_id and c.class_num = t.class_num and c.settings_id = t.settings_id and c.inst_id = '"+req.session.userId+"'"
+      // query += " order by p.prj_id;";
       // console.log(query);
+
+      // 권한 받은 과목의 프로젝트 목록 가져오기
+      query += " select * from ";
+      query += "(select s.settings_id as settings_id2, s.term_chk, c.* from admin_settings as s, class_info as c, class_inst_authority as cia\n" +
+          "where cia.sub_user_id = '"+req.session.userId+"' and cia.class_num = c.class_num and cia.settings_id = s.settings_id) as t1 ";
+      query += "left join ";
+      query += "(select p.*, t.team_name, t.class_num from project as p, team as t\n" +
+          "where p.use_yn = 1 and t.prj_id = p.prj_id) as t2 ";
+      query += "on t1.class_num = t2.class_num and t1.settings_id2 = t2.settings_id;";
     }
 
     connection.query(query, (error, results, fields) => {
@@ -197,7 +214,7 @@ exports.getSearchproject1 = (req,res)=>{
         console.error('query error : ' + error);
         return;
       }
-
+      console.log(results);
       //use results and fields
       res.render('pjmng/DGU502', {PJList: results, userId: req.session.userId, userType: req.session.userType,userInfo: req.session.userInfo, moment: moment, curDate: new Date()});
 
@@ -279,10 +296,19 @@ exports.getSearchproject = (req,res)=>{
 
     }
     else if(req.session.userInfo.userType=='instructor'){
-      query = "select p.*, s.settings_id, s.term_chk, t.team_name, t.prj_id, c.* from project as p, admin_settings as s, team as t, class_info as c"
-      query += " where p.settings_id = s.settings_id and p.use_yn = 1 and t.prj_id = p.prj_id and c.class_num = t.class_num and c.settings_id = t.settings_id and c.inst_id = '"+req.session.userId+"'"
-      query += " order by p.prj_id;";
+      // query = "select p.*, s.settings_id, s.term_chk, t.team_name, t.prj_id, c.* from project as p, admin_settings as s, team as t, class_info as c"
+      // query += " where p.settings_id = s.settings_id and p.use_yn = 1 and t.prj_id = p.prj_id and c.class_num = t.class_num and c.settings_id = t.settings_id and c.inst_id = '"+req.session.userId+"'"
+      // query += " order by p.prj_id;";
       // console.log(query);
+
+      // 권한 받은 과목의 프로젝트 목록 가져오기
+      query += " select * from ";
+      query += "(select s.settings_id as settings_id2, s.term_chk, c.* from admin_settings as s, class_info as c, class_inst_authority as cia\n" +
+          "where cia.sub_user_id = '"+req.session.userId+"' and cia.class_num = c.class_num and cia.settings_id = s.settings_id) as t1 ";
+      query += "left join ";
+      query += "(select p.*, t.team_name, t.class_num from project as p, team as t\n" +
+          "where p.use_yn = 1 and t.prj_id = p.prj_id) as t2 ";
+      query += "on t1.class_num = t2.class_num and t1.settings_id2 = t2.settings_id;";
     }
     connection.query(query, (error, results, fields) => {
       connection.release();
@@ -345,10 +371,19 @@ exports.getSearchproject2 = (req,res)=>{
 
     }
     else if(req.session.userInfo.userType=='instructor'){
-      query = "select p.*, s.settings_id, s.term_chk, t.team_name, t.prj_id, c.* from project as p, admin_settings as s, team as t, class_info as c"
-      query += " where p.settings_id = s.settings_id and p.use_yn = 1 and t.prj_id = p.prj_id and c.class_num = t.class_num and c.settings_id = t.settings_id and c.inst_id = '"+req.session.userId+"'"
-      query += " order by p.prj_id;";
+      // query = "select p.*, s.settings_id, s.term_chk, t.team_name, t.prj_id, c.* from project as p, admin_settings as s, team as t, class_info as c"
+      // query += " where p.settings_id = s.settings_id and p.use_yn = 1 and t.prj_id = p.prj_id and c.class_num = t.class_num and c.settings_id = t.settings_id and c.inst_id = '"+req.session.userId+"'"
+      // query += " order by p.prj_id;";
       // console.log(query);
+
+      // 권한 받은 과목의 프로젝트 목록 가져오기
+      query += " select * from ";
+      query += "(select s.settings_id as settings_id2, s.term_chk, c.* from admin_settings as s, class_info as c, class_inst_authority as cia\n" +
+          "where cia.sub_user_id = '"+req.session.userId+"' and cia.class_num = c.class_num and cia.settings_id = s.settings_id) as t1 ";
+      query += "left join ";
+      query += "(select p.*, t.team_name, t.class_num from project as p, team as t\n" +
+          "where p.use_yn = 1 and t.prj_id = p.prj_id) as t2 ";
+      query += "on t1.class_num = t2.class_num and t1.settings_id2 = t2.settings_id;";
     }
     connection.query(query, (error, results, fields) => {
       connection.release();
