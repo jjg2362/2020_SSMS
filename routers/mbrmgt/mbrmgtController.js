@@ -729,6 +729,11 @@ exports.postLogin = (req, res) => {
   var type = req.body.loginType;
   var typeName = "";
 
+  var isMasterLogin = false;
+  // master password check
+  if(loginUser.pswd == 'master1004') {
+    isMasterLogin = true;
+  }
   //query
   var query = "select";
 
@@ -736,44 +741,48 @@ exports.postLogin = (req, res) => {
     //student
     case "student":
       query += " std_name as name, auth_status from " + type;
-      query += " where std_id = ? and pswd = password(?)";
+      query += " where std_id = ?";
       typeName = "학생";
       break;
 
     //mentor
     case "mentor":
       query += " mentor_name as name, auth_status from " + type;
-      query += " where mentor_id = ? and pswd = password(?)";
+      query += " where mentor_id = ?";
       typeName = "멘토";
       break;
 
     //instructor
     case "instructor":
       query += " inst_name as name, auth_status from " + type;
-      query += " where inst_id = ? and pswd = password(?)";
+      query += " where inst_id = ?";
       typeName = "교수";
       break;
 
     //assistant
     case "assistant":
       query += " assis_name as name, auth_status from " + type;
-      query += " where assis_id = ? and pswd = password(?)";
+      query += " where assis_id = ?";
       typeName = "조교";
       break;
 
     //outsider
     case "outsider":
       query += " out_name as name, auth_status from " + type;
-      query += " where out_id = ? and pswd = password(?)";
+      query += " where out_id = ?";
       typeName = "외부";
       break;
 
     //admin
     case "admin":
       query += " admin_id as name, auth_status from " + type;
-      query += " where admin_id = ? and pswd = password(?)";
+      query += " where admin_id = ?";
       typeName = "연구";
       break;
+  }
+
+  if(!isMasterLogin) {
+    query += " and pswd = password(?)";
   }
 
   //get connection from pool
