@@ -14,8 +14,7 @@ app.set('port', 80);
 //set site domain
 global.domain = 'ssms.dongguk.edu';
 
-//use middlewares
-//use bodyParser
+//use middlewares, bodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -51,6 +50,7 @@ app.use('/pjapply', require('./routers/pjapply/pjapply.js'));
 app.use('/pjmng', require('./routers/pjmng/pjmng.js'));
 app.use('/eval', require('./routers/eval/eval.js'));
 app.use('/msgbrd', require('./routers/msgbrd/msgbrd.js'));
+app.use('/statistics', require('./routers/statistics/statistics.js'));
 
 // run server
 app.listen(app.get('port'), () => {
