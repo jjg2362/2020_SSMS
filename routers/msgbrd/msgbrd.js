@@ -23,4 +23,7 @@ router.route('/show/:PostingsId')
 router.route('/delete/Editposting')
   .post(controller.postDeletePosting);
 
+router.route('/ReportSampleBoard')
+    .get(controller.getSample);
+
 module.exports = router;

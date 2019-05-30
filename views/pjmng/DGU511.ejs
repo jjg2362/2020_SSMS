@@ -47,18 +47,9 @@
 
               <% if(userInfo.userType == 'student') { %>
                   <div class = "col-md-1">
-                    <% if(mtrInfo[1][0].leader_id == userInfo.userId) { %>
-                      <% if(mtrInfo[2].length==0||mtrInfo[2][0].prj_plan_report ==''||mtrInfo[2][0].prj_plan_report==null) { %>
-                        <a onclick="javascript:btn()">
+                  <a href="/pjmng/DGU513/<%=mtrInfo[1][0].prj_id%>">
                           <center><div class="form-control"> 추가 </div> </center>
                         </a>
-                      <% } else{ %>
-                        <a href="/pjmng/DGU513/<%=mtrInfo[1][0].prj_id%>">
-                          <center><div class="form-control"> 추가 </div> </center>
-                        </a>
-                      <% } %>
-
-                    <% } %>
                   </div>
                 </div>
                 <hr class="mt-2">

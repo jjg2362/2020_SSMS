@@ -250,13 +250,12 @@
 
       $("#btnExport").on('click', function () {
 
-          var uri = $("#dataTable0").excelexportjs({
-              containerid: "dataTable0"
+          let selectedValue = $("input[type=radio][name=sType]:checked").val();
+          var uri = $("#dataTable" + selectedValue).excelexportjs({
+              containerid: 'dataTable' + selectedValue
               , datatype:  'table'
               , returnUri: true
           });
-
-          let selectedValue = $("input[type=radio][name=sType]:checked").val();
 
           if(selectedValue=='0'){
             var name = <%=moment(curDate).format('YYYYMMDD') %>+"_학생(전체).xls";
