@@ -27,6 +27,14 @@ module.exports = () => {
       port     : dbconfigJson.real.port,
       database : dbconfigJson.real.database,
       multipleStatements: true
+    },
+    backup: {
+      host     : dbconfigJson.backup.host,
+      user     : dbconfigJson.backup.user,
+      password : dbconfigJson.backup.password,
+      port     : dbconfigJson.backup.port,
+      database : dbconfigJson.backup.database,
+      multipleStatements: true
     }
   };
 };

@@ -19,5 +19,12 @@
     "password": "newyork123",
     "port": "3314",
     "database": "smartdongguk"
+  },
+  "backup": {
+    "host": "211.254.214.211",
+    "user": "dev",
+    "password": "newyork123",
+    "port": "3314",
+    "database": "smartdongguk"
   }
 }
