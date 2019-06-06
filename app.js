@@ -54,5 +54,5 @@ app.use('/msgbrd', require('./routers/msgbrd/msgbrd.js'));
 
 // run server
 app.listen(app.get('port'), () => {
-  console.log('app listening on port ' + app.get('port'));
+  console.log('app listening on port test cicd ' + app.get('port'));
 });
