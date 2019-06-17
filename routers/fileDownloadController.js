@@ -16,10 +16,21 @@ exports.getFileDownload = (req, res) => {
 
 //file download
 exports.getFileDownloadWant = (req, res) => {
-  var fileFolder = req.params.fileFolder;
-  var fileName = req.params.fileName;
+    var fileFolder = req.params.fileFolder;
+    var fileName = req.params.fileName;
 
-  res.download('public/' + '/' + fileFolder + '/' + fileName, fileName.substring(14));
+    res.download('public/' + '/' + fileFolder + '/' + fileName, fileName.substring(14));
+};
+
+exports.getFileDownloadWantTest = (req, res) => {
+    let firstFolder = req.params.firstFolder;
+    var fileFolder = req.params.fileFolder;
+    var fileName = req.params.fileName;
+    let fullPath = firstFolder + '/' + fileFolder + '/' + fileName;
+    if(firstFolder === 'ssmsdata')
+        fullPath = '/' + fullPath;
+
+    res.download(fullPath, fileName.substring(14));
 };
 
 exports.getFileDownloadTransferedFile = (req, res) => {

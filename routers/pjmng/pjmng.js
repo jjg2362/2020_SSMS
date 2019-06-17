@@ -48,7 +48,8 @@ router.route('/DGU513')
   .post(controller.postMentoringReport2);
 
 router.route('/DGU521/:formType')
-  .post(controller.postFinalLists);
+  .post(controller.postFinalLists)
+    .delete(controller.deleteFinalLists);
 
 router.route('/DGU500')
     .get(controller.showClassPage);

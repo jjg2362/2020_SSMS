@@ -1193,11 +1193,14 @@ exports.postFinalReport = (req, res) => {
     //get connection from pool
 
 };
+exports.deleteFinalLists = (req, res) => {
+
+};
 exports.postFinalLists = (req,res)=>{
   logger.putLog(req);
 
   var fileInfo = {
-    path: 'public/FinalProductFile/',
+    path: '/ssmsdata/FinalProductFile/',
     namePrefix: 'FINAL_',
     viewNames: ['FinalReportFile','ProductFile','VideoFile','PatentFile','ProgramFile','ThesisFile','Other1File','Other2File','Other3File']
   };
@@ -1287,6 +1290,7 @@ exports.postFinalLists = (req,res)=>{
       query += "update final_product";
       query += " set prg_regis = null and prg_regis_agrmt = null";
       query += " where prj_id = '" + req.body.PJId + "'";
+
     }
     if(req.params.formType == 'PostThesis') {
       console.log('submit Thesis File: ' + req.files['ThesisFile'][0].path + ', id: ' + req.session.userId);
@@ -1406,6 +1410,8 @@ exports.postFinalLists = (req,res)=>{
     });
   });
 };
+
+
 exports.getMentoringReport2 = (req, res) => {
 
   if(!req.session.userId) {
