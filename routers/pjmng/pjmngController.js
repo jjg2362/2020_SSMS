@@ -1459,7 +1459,8 @@ exports.postMentoringReport2 = (req, res) => {
   logger.putLog(req);
 
   var fileInfo = {
-    path: 'public/mentoringReport/',
+    // path: 'public/mentoringReport/',
+    path: '/ssmsdata/mentoringReport/',
     namePrefix: 'MTR',
     viewNames: ['appendix']
   };
