@@ -31,6 +31,7 @@ exports.getMyproject = (req,res)=>{
     query += " where p.mentor_id = m.mentor_id and p.prj_id = t.prj_id and p.prj_id = '" + req.params.PJId + "';";
     query += " select * from project_plan_report where prj_id = '"+req.params.PJId+"';";
     query += " select prj_plan_apdx from apdx_file_info where use_yn = 1;";
+
     // console.log(query);
     connection.query(query, (error, results, fields) => {
       connection.release();
@@ -51,6 +52,8 @@ exports.getMyproject = (req,res)=>{
   });
 
 };
+
+
 exports.postprjplan = (req,res)=>{
   logger.putLog(req);
   var fileInfo = {
@@ -1190,11 +1193,14 @@ exports.postFinalReport = (req, res) => {
     //get connection from pool
 
 };
+exports.deleteFinalLists = (req, res) => {
+
+};
 exports.postFinalLists = (req,res)=>{
   logger.putLog(req);
 
   var fileInfo = {
-    path: 'public/FinalProductFile/',
+    path: '/ssmsdata/FinalProductFile/',
     namePrefix: 'FINAL_',
     viewNames: ['FinalReportFile','ProductFile','VideoFile','PatentFile','ProgramFile','ThesisFile','Other1File','Other2File','Other3File']
   };
@@ -1284,6 +1290,7 @@ exports.postFinalLists = (req,res)=>{
       query += "update final_product";
       query += " set prg_regis = null and prg_regis_agrmt = null";
       query += " where prj_id = '" + req.body.PJId + "'";
+
     }
     if(req.params.formType == 'PostThesis') {
       console.log('submit Thesis File: ' + req.files['ThesisFile'][0].path + ', id: ' + req.session.userId);
@@ -1403,6 +1410,8 @@ exports.postFinalLists = (req,res)=>{
     });
   });
 };
+
+
 exports.getMentoringReport2 = (req, res) => {
 
   if(!req.session.userId) {
@@ -1450,7 +1459,8 @@ exports.postMentoringReport2 = (req, res) => {
   logger.putLog(req);
 
   var fileInfo = {
-    path: 'public/mentoringReport/',
+    // path: 'public/mentoringReport/',
+    path: '/ssmsdata/mentoringReport/',
     namePrefix: 'MTR',
     viewNames: ['appendix']
   };

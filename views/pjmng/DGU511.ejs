@@ -47,18 +47,9 @@
 
               <% if(userInfo.userType == 'student') { %>
                   <div class = "col-md-1">
-                    <% if(mtrInfo[1][0].leader_id == userInfo.userId) { %>
-                      <% if(mtrInfo[2].length==0||mtrInfo[2][0].prj_plan_report ==''||mtrInfo[2][0].prj_plan_report==null) { %>
-                        <a onclick="javascript:btn()">
+                  <a href="/pjmng/DGU513/<%=mtrInfo[1][0].prj_id%>">
                           <center><div class="form-control"> 추가 </div> </center>
                         </a>
-                      <% } else{ %>
-                        <a href="/pjmng/DGU513/<%=mtrInfo[1][0].prj_id%>">
-                          <center><div class="form-control"> 추가 </div> </center>
-                        </a>
-                      <% } %>
-
-                    <% } %>
                   </div>
                 </div>
                 <hr class="mt-2">
@@ -90,8 +81,8 @@
                                    <div class ="col-md-2"></div>
                                    <div class = "col-md-8"><center>
                                      <% var d1 = mtrInfo[0][i].ment_report_std.split('/') %>
-                                     <% var d2 = d1[2].length %>
-                                     <% var d3 = d1[2].substr(14,d2) %>
+                                     <% var d2 = d1[d1.length - 1].length %>
+                                     <% var d3 = d1[d1.length - 1].substr(14,d2) %>
                                      <a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_std %>');" href="javascript:void(0)">
                                        <%= d3 %>
                                      </a>
@@ -111,8 +102,8 @@
                                  <div class = "form-row">
                                    <div class = "col-md-12">
                                      <% var dd1 = mtrInfo[0][i].ment_report_std.split('/') %>
-                                     <% var dd2 = dd1[2].length %>
-                                     <% var dd3 = dd1[2].substr(14,dd2) %>
+                                     <% var dd2 = dd1[dd1.length - 1].length %>
+                                     <% var dd3 = dd1[dd1.length - 1].substr(14,dd2) %>
                                      <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_std %>');" href="javascript:void(0)">
                                        <%= dd3 %>
                                      </a></center>
@@ -123,8 +114,8 @@
                              <td>
                                <%if(mtrInfo[0][i].ment_report_mtr!=''&&mtrInfo[0][i].ment_report_mtr!=null) { %>
                                  <% var i1 = mtrInfo[0][i].ment_report_mtr.split('/') %>
-                                 <% var i2 = i1[2].length %>
-                                 <% var i3 = i1[2].substr(14,i2) %>
+                                 <% var i2 = i1[i1.length - 1].length %>
+                                 <% var i3 = i1[i1.length - 1].substr(14,i2) %>
                                  <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_mtr %>');" href="javascript:void(0)">
                                    <%= i3 %>
                                  </a></center>
@@ -176,8 +167,8 @@
                              <div class = "form-row">
                                <div class = "col-md-12">
                                  <% var ddd1 = mtrInfo[0][i].ment_report_std.split('/') %>
-                                 <% var ddd2 = ddd1[2].length %>
-                                 <% var ddd3 = ddd1[2].substr(14,ddd2) %>
+                                 <% var ddd2 = ddd1[ddd1.length - 1].length %>
+                                 <% var ddd3 = ddd1[ddd1.length - 1].substr(14,ddd2) %>
                                  <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_std %>');" href="javascript:void(0)">
                                    <%= ddd3 %>
                                  </a></center>
@@ -207,8 +198,8 @@
                                  <div class="col-md-2"></div>
                                  <div class = "col-md-8">
                                    <% var dddd1 = mtrInfo[0][i].ment_report_mtr.split('/') %>
-                                   <% var dddd2 = dddd1[2].length %>
-                                   <% var dddd3 = dddd1[2].substr(14,dddd2) %>
+                                   <% var dddd2 = dddd1[dddd1.length - 1].length %>
+                                   <% var dddd3 = dddd1[dddd1.length - 1].substr(14,dddd2) %>
                                    <center>
                                    <a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_mtr %>');" href="javascript:void(0)">
                                      <%= dddd3 %>
@@ -271,8 +262,8 @@
                                <div class = "col-md-12">
                                  <%if(mtrInfo[0][i].ment_report_std!=''&&mtrInfo[0][i].ment_report_std!=null) { %>
                                    <% var ddddd1 = mtrInfo[0][i].ment_report_std.split('/') %>
-                                   <% var ddddd2 = ddddd1[2].length %>
-                                   <% var ddddd3 = ddddd1[2].substr(14,ddddd2) %>
+                                   <% var ddddd2 = ddddd1[ddddd1.length - 1].length %>
+                                   <% var ddddd3 = ddddd1[ddddd1.length - 1].substr(14,ddddd2) %>
                                    <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_std %>');" href="javascript:void(0)">
                                      <%= ddddd3 %>
                                    </center></a>
@@ -285,8 +276,8 @@
                                <div class = "col-md-12">
                                  <%if(mtrInfo[0][i].ment_report_mtr!=''&&mtrInfo[0][i].ment_report_mtr!=null) { %>
                                    <% var dddddd1 = mtrInfo[0][i].ment_report_mtr.split('/') %>
-                                   <% var dddddd2 = dddddd1[2].length %>
-                                   <% var dddddd3 = dddddd1[2].substr(14,dddddd2) %>
+                                   <% var dddddd2 = dddddd1[dddddd1.length - 1].length %>
+                                   <% var dddddd3 = dddddd1[dddddd1.length - 1].substr(14,dddddd2) %>
                                    <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_mtr %>');" href="javascript:void(0)">
                                      <%= dddddd3 %>
                                    </center></a>
@@ -354,8 +345,8 @@
                                  <div class = "col-md-12">
                                    <%if(mtrInfo[0][i].ment_report_std!=''&&mtrInfo[0][i].ment_report_std!=null) { %>
                                      <% var dddddd4 = mtrInfo[0][i].ment_report_std.split('/') %>
-                                     <% var dddddd5 = dddddd4[2].length %>
-                                     <% var dddddd6 = dddddd4[2].substr(14,dddddd5) %>
+                                     <% var dddddd5 = dddddd4[dddddd4.length - 1].length %>
+                                     <% var dddddd6 = dddddd4[dddddd4.length - 1].substr(14,dddddd5) %>
                                      <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_std %>');" href="javascript:void(0)">
                                        <%= dddddd6 %>
                                      </center></a>
@@ -368,8 +359,8 @@
                                  <div class = "col-md-12">
                                    <%if(mtrInfo[0][i].ment_report_mtr!=''&&mtrInfo[0][i].ment_report_mtr!=null) { %>
                                      <% var dddddd7 = mtrInfo[0][i].ment_report_mtr.split('/') %>
-                                     <% var dddddd8 = dddddd7[2].length %>
-                                     <% var dddddd9 = dddddd7[2].substr(14,dddddd8) %>
+                                     <% var dddddd8 = dddddd7[dddddd7.length - 1].length %>
+                                     <% var dddddd9 = dddddd7[dddddd7.length - 1].substr(14,dddddd8) %>
                                      <center><a onclick="abilityDownload2('<%= mtrInfo[0][i].ment_report_mtr %>');" href="javascript:void(0)">
                                        <%= dddddd9 %>
                                      </center></a>
@@ -405,9 +396,21 @@
 
     <!-- Bootstrap core JavaScript-->
     <script type="text/javascript">
+      // function abilityDownload2(fullPath) {
+      //   var downloadPath = fullPath.substring(7);
+      //   location.href = "/fileDownload/" + downloadPath + "/want";
+      // }
+
       function abilityDownload2(fullPath) {
-        var downloadPath = fullPath.substring(7);
-        location.href = "/fileDownload/" + downloadPath + "/want";
+
+        let arr = fullPath.split('/');
+        let firstFolder = arr[arr.length - 3];
+        let folderName = arr[arr.length - 2];
+        let fileName = arr[arr.length - 1];
+        let downloadPath = firstFolder + '/' + folderName + '/' + fileName;
+
+        location.href = "/fileDownload/" + downloadPath + "/test";
+
       }
     </script>
     <script src="/vendor/jquery/jquery.min.js"></script>

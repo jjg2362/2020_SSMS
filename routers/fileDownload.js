@@ -8,10 +8,12 @@ router.route('/:fileFolder/:fileName')
   .get(controller.getFileDownload);
 
 
-
 //file download
 router.route('/:fileFolder/:fileName/want')
   .get(controller.getFileDownloadWant);
+
+router.route('/:firstFolder/:fileFolder/:fileName/test')
+    .get(controller.getFileDownloadWantTest);
 
 router.route('/:fileFolder/:fileName/transfer')
     .get(controller.getFileDownloadTransferedFile);

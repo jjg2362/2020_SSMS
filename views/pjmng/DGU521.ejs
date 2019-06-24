@@ -89,8 +89,8 @@
                       </div>
                       <div class="col-md-8">
                         <% var id1 = FinalLists[0][0].fin_report.split('/') %>
-                        <% var id2 = id1[2].length %>
-                        <% var id3 = id1[2].substr(14,id2) %>
+                        <% var id2 = id1[id1.length - 1].length %>
+                        <% var id3 = id1[id1.length - 1].substr(14,id2) %>
                         <a onclick="abilityDownload2('<%= FinalLists[0][0].fin_report %>');" href="javascript:void(0)">
                           <%= id3 %>
                         </a>
@@ -155,8 +155,8 @@
                       </div>
                       <div class="col-md-8">
                         <% var id4 = FinalLists[0][0].product1.split('/') %>
-                        <% var id5 = id4[2].length %>
-                        <% var id6 = id4[2].substr(14,id5) %>
+                        <% var id5 = id4[id4.length - 1].length %>
+                        <% var id6 = id4[id4.length - 1].substr(14,id5) %>
                         <a onclick="abilityDownload2('<%= FinalLists[0][0].product1 %>');" href="javascript:void(0)">
                           <%= id6 %>
                         </a>
@@ -211,8 +211,8 @@
                       </div>
                       <div class="col-md-8">
                         <% var id7 = FinalLists[0][0].demo_vid.split('/') %>
-                        <% var id8 = id7[2].length %>
-                        <% var id9 = id7[2].substr(14,id8) %>
+                        <% var id8 = id7[id7.length - 1].length %>
+                        <% var id9 = id7[id7.length - 1].substr(14,id8) %>
                         <a onclick="abilityDownload2('<%= FinalLists[0][0].demo_vid %>');" href="javascript:void(0)">
                           <%= id9 %>
                         </a>
@@ -283,8 +283,8 @@
                     <div class = "form-row">
                       <div class="col-md-10">
                         <% var id10 = FinalLists[0][0].patent_doc.split('/') %>
-                        <% var id11 = id10[2].length %>
-                        <% var id12 = id10[2].substr(14,id11) %>
+                        <% var id11 = id10[id10.length - 1].length %>
+                        <% var id12 = id10[id10.length - 1].substr(14,id11) %>
                         <center><a onclick="abilityDownload2('<%= FinalLists[0][0].patent_doc %>');" href="javascript:void(0)">
                           <%= id12 %>
                         </a></center>
@@ -343,8 +343,8 @@
                     <div class = "form-row">
                       <div class="col-md-10">
                         <% var id13 = FinalLists[0][0].prg_regis.split('/') %>
-                        <% var id14 = id13[2].length %>
-                        <% var id15 = id13[2].substr(14,id14) %>
+                        <% var id14 = id13[id13.length-1].length %>
+                        <% var id15 = id13[id13.length-1].substr(14,id14) %>
                         <center><a onclick="abilityDownload2('<%= FinalLists[0][0].prg_regis %>');" href="javascript:void(0)">
                           <%= id15 %>
                         </a></center>
@@ -398,8 +398,8 @@
                     <div class = "form-row">
                       <div class="col-md-10">
                         <% var id16 = FinalLists[0][0].thesis_file.split('/') %>
-                        <% var id17 = id16[2].length %>
-                        <% var id18 = id16[2].substr(14,id17) %>
+                        <% var id17 = id16[id16.length - 1].length %>
+                        <% var id18 = id16[id16.length - 1].substr(14,id17) %>
                         <center><a onclick="abilityDownload2('<%= FinalLists[0][0].thesis_file %>');" href="javascript:void(0)">
                           <%= id18 %>
                         </a></center>
@@ -444,8 +444,8 @@
                       <div class = "form-row">
                         <div class="col-md-10">
                           <% var id19 = FinalLists[0][0].other1.split('/') %>
-                          <% var id20 = id19[2].length %>
-                          <% var id21 = id19[2].substr(14,id20) %>
+                          <% var id20 = id19[id19.length - 1].length %>
+                          <% var id21 = id19[id19.length - 1].substr(14,id20) %>
                           <center><a onclick="abilityDownload2('<%= FinalLists[0][0].other1 %>');" href="javascript:void(0)">
                             <%= id21 %>
                           </a></center>
@@ -483,8 +483,8 @@
                       <div class = "form-row">
                         <div class="col-md-10">
                           <% var id22 = FinalLists[0][0].other2.split('/') %>
-                          <% var id23 = id22[2].length %>
-                          <% var id24 = id22[2].substr(14,id23) %>
+                          <% var id23 = id22[id22.length - 1].length %>
+                          <% var id24 = id22[id22.length - 1].substr(14,id23) %>
                           <center><a onclick="abilityDownload2('<%= FinalLists[0][0].other2 %>');" href="javascript:void(0)">
                             <%= id24 %>
                           </a></center>
@@ -522,8 +522,8 @@
                       <div class = "form-row">
                         <div class="col-md-10">
                           <% var id25 = FinalLists[0][0].other3.split('/') %>
-                          <% var id26 = id25[2].length %>
-                          <% var id27 = id25[2].substr(14,id26) %>
+                          <% var id26 = id25[id25.length - 1].length %>
+                          <% var id27 = id25[id25.length - 1].substr(14,id26) %>
                           <center><a onclick="abilityDownload2('<%= FinalLists[0][0].other3 %>');" href="javascript:void(0)">
                             <%= id27 %>
                           </a></center>
@@ -568,8 +568,8 @@
                     </div>
                     <div class="col-md-8">
                       <% var id1 = FinalLists[0][0].fin_report.split('/') %>
-                      <% var id2 = id1[2].length %>
-                      <% var id3 = id1[2].substr(14,id2) %>
+                      <% var id2 = id1[id1.length - 1].length %>
+                      <% var id3 = id1[id1.length - 1].substr(14,id2) %>
                       <a onclick="abilityDownload2('<%= FinalLists[0][0].fin_report %>');" href="javascript:void(0)">
                         <%= id3 %>
                       </a>
@@ -601,8 +601,8 @@
                     </div>
                     <div class="col-md-8">
                       <% var id4 = FinalLists[0][0].product1.split('/') %>
-                      <% var id5 = id4[2].length %>
-                      <% var id6 = id4[2].substr(14,id5) %>
+                      <% var id5 = id4[id4.length - 1].length %>
+                      <% var id6 = id4[id4.length - 1].substr(14,id5) %>
                       <a onclick="abilityDownload2('<%= FinalLists[0][0].product1 %>');" href="javascript:void(0)">
                         <%= id6 %>
                       </a>
@@ -631,8 +631,8 @@
                     </div>
                     <div class="col-md-8">
                       <% var id7 = FinalLists[0][0].demo_vid.split('/') %>
-                      <% var id8 = id7[2].length %>
-                      <% var id9 = id7[2].substr(14,id8) %>
+                      <% var id8 = id7[id7.length - 1].length %>
+                      <% var id9 = id7[id7.length - 1].substr(14,id8) %>
                       <a onclick="abilityDownload2('<%= FinalLists[0][0].demo_vid %>');" href="javascript:void(0)">
                         <%= id9 %>
                       </a>
@@ -676,8 +676,8 @@
                     <div class = "form-row">
                       <div class="col-md-12">
                         <% var id10 = FinalLists[0][0].patent_doc.split('/') %>
-                        <% var id11 = id10[2].length %>
-                        <% var id12 = id10[2].substr(14,id11) %>
+                        <% var id11 = id10[id10.length - 1].length %>
+                        <% var id12 = id10[id10.length - 1].substr(14,id11) %>
                         <center><a onclick="abilityDownload2('<%= FinalLists[0][0].patent_doc %>');" href="javascript:void(0)">
                           <%= id12 %>
                         </a></center>
@@ -711,8 +711,8 @@
                     <div class = "form-row">
                       <div class="col-md-12">
                         <% var id13 = FinalLists[0][0].prg_regis.split('/') %>
-                        <% var id14 = id13[2].length %>
-                        <% var id15 = id13[2].substr(14,id14) %>
+                        <% var id14 = id13[id13.length - 1].length %>
+                        <% var id15 = id13[id13.length - 1].substr(14,id14) %>
                         <center><a onclick="abilityDownload2('<%= FinalLists[0][0].prg_regis %>');" href="javascript:void(0)">
                           <%= id15 %>
                         </a></center>
@@ -746,8 +746,8 @@
                     <div class = "form-row">
                       <div class="col-md-12">
                         <% var id16 = FinalLists[0][0].thesis_file.split('/') %>
-                        <% var id17 = id16[2].length %>
-                        <% var id18 = id16[2].substr(14,id17) %>
+                        <% var id17 = id16[id16.length - 1].length %>
+                        <% var id18 = id16[id16.length - 1].substr(14,id17) %>
                         <center><a onclick="abilityDownload2('<%= FinalLists[0][0].thesis_file %>');" href="javascript:void(0)">
                           <%= id18 %>
                         </a></center>
@@ -788,8 +788,8 @@
                       <div class = "form-row">
                         <div class="col-md-12">
                           <% var id22 = FinalLists[0][0].other2.split('/') %>
-                          <% var id23 = id22[2].length %>
-                          <% var id24 = id22[2].substr(14,id23) %>
+                          <% var id23 = id22[id22.length - 1].length %>
+                          <% var id24 = id22[id22.length - 1].substr(14,id23) %>
                           <center><a onclick="abilityDownload2('<%= FinalLists[0][0].other2 %>');" href="javascript:void(0)">
                             <%= id24 %>
                           </a></center>
@@ -807,8 +807,8 @@
                       <div class = "form-row">
                         <div class="col-md-12">
                           <% var id25 = FinalLists[0][0].other3.split('/') %>
-                          <% var id26 = id25[2].length %>
-                          <% var id27 = id25[2].substr(14,id26) %>
+                          <% var id26 = id25[id25.length - 1].length %>
+                          <% var id27 = id25[id25.length - 1].substr(14,id26) %>
                           <center><a onclick="abilityDownload2('<%= FinalLists[0][0].other3 %>');" href="javascript:void(0)">
                             <%= id27 %>
                           </a></center>
@@ -833,9 +833,21 @@
 
     <!-- Bootstrap core JavaScript-->
     <script type="text/javascript">
+      // function abilityDownload2(fullPath) {
+      //     var downloadPath = fullPath.substring(7);
+      //     location.href = "/fileDownload/" + downloadPath + "/want";
+      // }
+
       function abilityDownload2(fullPath) {
-        var downloadPath = fullPath.substring(7);
-        location.href = "/fileDownload/" + downloadPath + "/want";
+
+          let arr = fullPath.split('/');
+          let firstFolder = arr[arr.length - 3];
+          let folderName = arr[arr.length - 2];
+          let fileName = arr[arr.length - 1];
+          let downloadPath = firstFolder + '/' + folderName + '/' + fileName;
+
+          location.href = "/fileDownload/" + downloadPath + "/test";
+
       }
     </script>
     <script src="/vendor/jquery/jquery.min.js"></script>

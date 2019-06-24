@@ -46,7 +46,7 @@ app.use('/pj', require('./routers/pj/pj.js'));
 app.use('/mbrmgt', require('./routers/mbrmgt/mbrmgt.js'));
 app.use('/teammgt', require('./routers/teammgt/teammgt.js'));
 app.use('/pjmake', require('./routers/pjmake/pjmake.js'));
-app.use('/pjapply', require('./routers/pjapply/pjapply.js'));
+app.use('/pjapply', require('./routers/pjapply/pjapply.js'))
 app.use('/pjmng', require('./routers/pjmng/pjmng.js'));
 app.use('/eval', require('./routers/eval/eval.js'));
 app.use('/msgbrd', require('./routers/msgbrd/msgbrd.js'));
@@ -54,5 +54,5 @@ app.use('/statistics', require('./routers/statistics/statistics.js'));
 
 // run server
 app.listen(app.get('port'), () => {
-  console.log('app listening on port ' + app.get('port'));
+  console.log('app listening on port test cicd 2' + app.get('port'));
 });
