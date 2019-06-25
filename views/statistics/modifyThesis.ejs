@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css"/>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+</head>
+
+
+<!-- 메인 페이지 -->
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- 네비게이션 바 불러오기 -->
+<% include ../navBar.ejs %>
+
+<!-- 메인 -->
+<div class="content-wrapper">
+    <!-- 메인 내용 -->
+    <div class="container-fluid">
+        <div class="mb-0 mt-4">
+            <h6>통계 > 논문 실적 수정/삭제</h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card mx-auto mt-5 mb-5">
+            <div class="card-body">
+                <div class="form-row">
+                    <h5> 논문 정보 </h5>
+                </div>
+
+                <form action="/statistics/thesis" method="post" id="setting" onsubmit="return CheckForm();" enctype="multipart/form-data">
+                <!--<input type="hidden" id="form-method" name="_method" value="put" />-->
+                <div class="table-responsive">
+                    <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                        <div class="row">
+                            <% include thesisTable.ejs %>
+                        </div>
+                        <div class="form-group mt-4">
+                            <div class="form-row">
+                                <div class="col-md-4">
+                                    <label> </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div style="text-align: center;">
+                                        <input type="submit" class="btn btn-primary" value="수정" onclick="changeFormMethod('PUT');" style="width: 80%;"/>
+                                        <input type="submit" class="btn btn-danger" value="삭제" onclick="changeFormMethod('DELETE');"/></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- include footer -->
+    <% include ../footer.html %>
+
+    <!-- 맨위로 가기 버튼 -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin.min.js"></script>
+
+<script type="text/javascript">
+    function htmlDecode(input){
+        var e = document.createElement('div');
+        e.innerHTML = input;
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+    }
+
+    $(document).ready(function () {
+        let thesisData = JSON.parse(htmlDecode("<%= JSON.stringify(thesis) %>"));
+
+        Object.keys(thesisData).map((key) => {
+            $('#'+key).val(thesisData[key]);
+        });
+
+        if (thesisData["file_path"]) {
+            console.log("file exist");
+            const filePath = thesisData["file_path"];
+            const arr = filePath.split('/');
+            const fileName = filePath.split('/')[arr.length - 1];
+            const aTag = "<a id='thesisFileDownload' href='javascript:void(0)'>" + fileName + "</a>"
+            $('#inputThesisFile').before(aTag);
+            $('#thesisFileDownload').click(function(){ abilityDownload2(filePath); })
+        }
+
+    });
+
+    function CheckForm(type){
+        const journal_category = document.getElementById("journal_category").value;
+
+
+        if (journal_category===""){
+            alert("모든 내용 필수 입력사항입니다.");
+            document.getElementById("journal_category").focus();
+            return false;
+        }
+
+        return confirm("논문 실적을 수정/삭제 하시겠습니까? ");
+    }
+
+    function changeFormMethod(method) {
+        const url='/statistics/thesis?_method=' + method;
+        $('#setting').attr('action', url);
+    }
+
+    function abilityDownload2(fullPath) {
+
+        let arr = fullPath.split('/');
+        let firstFolder = arr[arr.length - 3];
+        let folderName = arr[arr.length - 2];
+        let fileName = arr[arr.length - 1];
+        let downloadPath = firstFolder + '/' + folderName + '/' + fileName;
+
+        location.href = "/fileDownload/" + downloadPath + "/test";
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<input type="hidden" name="thesis_id" id="thesis_id" />
+<table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
+       role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+    <tbody>
+    <tr role="row" class="odd" name="AddBox0" id="AddBox0">
+        <th class=""><label>학술지 구분</label></th>
+        <td>
+            <div>
+                <select class="form-control" id="journal_category" name="journal_category">
+                    <option value=""></option>
+                    <option value="국제전문학술(SCI급)">국제전문학술(SCI급)</option>
+                    <option value="국제일반학술">국제일반학술</option>
+                    <option value="국내전문학술지(KCI급)">국내전문학술지(KCI급)</option>
+                    <option value="국내일반학술지">국내일반학술지</option>
+                </select>
+            </div>
+        </td>
+        <th class=""><label>한국연구재단등재구분</label></th>
+        <td>
+            <div>
+                <select class="form-control" id="register_category" name="register_category">
+                    <option value=""></option>
+                    <option value="등재">등재</option>
+                    <option value="등재후보">등재후보</option>
+                    <option value="등재(후보)">등재(후보)</option>
+                </select>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th class=""><label>게재년</label></th>
+        <td class=""><input class="form-control" name='published_year' id='published_year'
+                            type="text"></td>
+        <th class=""><label>게재월</label></th>
+        <td class=""><input class="form-control" name='published_month' id='published_month'
+                            type="text"></td>
+    </tr>
+    <tr>
+        <th class=""><label>게재권/집</label></th>
+        <td class=""><input class="form-control" name='published_book' id='published_book'
+                            type="text"></td>
+        <th class=""><label>게재호</label></th>
+        <td class=""><input class="form-control" name='published_issue' id='published_issue'
+                            type="text"></td>
+    </tr>
+    <tr>
+        <th class=""><label>페이지</label></th>
+        <td class=""><input class="form-control" name='published_page' id='published_page'
+                            type="text" placeholder="ex) 100~101"></td>
+        <th class=""><label>학술지명</label></th>
+        <td class=""><input class="form-control" name='journal_name' id='journal_name'
+                            type="text"></td>
+    </tr>
+    <tr>
+        <th class=""><label>발행처명</label></th>
+        <td colspan="3" class=""><input class="form-control" name='issuing_place' id='issuing_place' type="text"></td>
+    </tr>
+    <tr>
+        <th class=""><label>논문제목(원어)</label></th>
+        <td colspan="3" class=""><input class="form-control" name='thesis_title_eng' id='thesis_title_eng' type="text"></td>
+    </tr>
+    <tr>
+        <th class=""><label>논문제목(타언어)</label></th>
+        <td colspan="3" class=""><input class="form-control" name='thesis_title_oth' id='thesis_title_oth' type="text"></td>
+    </tr>
+    <tr>
+        <th class=""><label>연구분야</label></th>
+        <td class=""><input class="form-control" name='research_field' id='research_field'
+                            type="text"></td>
+        <th class=""><label>발행국가</label></th>
+        <td class=""><input class="form-control" name='issuing_country' id='issuing_country'
+                            type="text"></td>
+    </tr>
+    <tr>
+        <th class=""><label>논문언어</label></th>
+        <td class=""><input class="form-control" name='thesis_language' id='thesis_language'
+                            type="text"></td>
+        <th class=""><label>ISSN번호</label></th>
+        <td class=""><input class="form-control" name='issn_number' id='issn_number'
+                            type="text"></td>
+    </tr>
+    <tr>
+        <th class=""><label>전체저자수</label></th>
+        <td class=""><input class="form-control" name='author_number' id='author_number'
+                            type="text"></td>
+        <th class=""><label>관련프로젝트</label></th>
+        <td class=""><input class="form-control" name='prj_id' id='prj_id'
+                            type="text"></td>
+    </tr>
+    <tr>
+        <th class=""><label>IRB번호</label></th>
+        <td colspan="3" class=""><input class="form-control" name='irb_number' id='irb_number' type="text"></td>
+    </tr>
+    <tr>
+        <th class=""><label>참여자</label></th>
+        <td colspan="3" class=""><input class="form-control" name='author' id='author' type="text" placeholder="ex) 홍길동,김철수,이영희"></td>
+    </tr>
+    <tr>
+        <th class=""><label>지도교수</label></th>
+        <td colspan="3" class=""><input class="form-control" name='teaching_professor' id='teaching_professor' type="text"></td>
+    </tr>
+    <tr>
+        <th><label>논문파일등록</label></th>
+        <td colspan="3"><input class="form-control" name="inputThesisFile" id="inputThesisFile" type="file" ></td>
+    </tr>
+
+    </tbody>
+</table>

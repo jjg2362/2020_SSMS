@@ -26,7 +26,7 @@ exports.getAddTuplePage = (req, res) => {
         logger.putLog(req);
     }
 
-    res.render('statistics/AddTuple', {
+    res.render('statistics/AddThesis', {
         userId: req.session.userId,
         userType: req.session.userType,
         userInfo: req.session.userInfo,
@@ -34,7 +34,7 @@ exports.getAddTuplePage = (req, res) => {
     });
 };
 
-exports.postAddTuplePage = (req, res) => {
+exports.postAddThesis = (req, res) => {
     //session check
     if (!req.session.userId) {
         console.log('do not have a session.');
@@ -44,82 +44,61 @@ exports.postAddTuplePage = (req, res) => {
         logger.putLog(req);
     }
 
-    var Class_num = req.body.Classnum;
+    const thesis_info = Object.keys(req.body)
+        .filter(key => req.body[key] !== "")
+        .reduce((obj, key) => {
+            obj[key] = req.body[key];
+            return obj;
+        }, {});
 
-    var query = "";
+    thesis_info.regis_date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
 
-    for (var i = 0; i <= Class_num; i++) {
-        if (i == 1) {
-            var settings_id = req.body.settings_id1;
-            var class_num = req.body.class_num1;
-            var class_name = req.body.class_name1;
-            var inst_id = req.body.inst_id1;
-            var assis_id = req.body.assis_id1;
-        } else if (i == 2) {
-            var settings_id = req.body.settings_id2;
-            var class_num = req.body.class_num2;
-            var class_name = req.body.class_name2;
-            var inst_id = req.body.inst_id2;
-            var assis_id = req.body.assis_id2;
-        } else if (i == 3) {
-            var settings_id = req.body.settings_id3;
-            var class_num = req.body.class_num3;
-            var class_name = req.body.class_name3;
-            var inst_id = req.body.inst_id3;
-            var assis_id = req.body.assis_id3;
-        } else if (i == 4) {
-            var settings_id = req.body.settings_id4;
-            var class_num = req.body.class_num4;
-            var class_name = req.body.class_name4;
-            var inst_id = req.body.inst_id4;
-            var assis_id = req.body.assis_id4;
-        } else if (i == 5) {
-            var settings_id = req.body.settings_id5;
-            var class_num = req.body.class_num5;
-            var class_name = req.body.class_name5;
-            var inst_id = req.body.inst_id5;
-            var assis_id = req.body.assis_id5;
-        } else if (i == 6) {
-            var settings_id = req.body.settings_id6;
-            var class_num = req.body.class_num6;
-            var class_name = req.body.class_name6;
-            var inst_id = req.body.inst_id6;
-            var assis_id = req.body.assis_id6;
-        } else if (i == 7) {
-            var settings_id = req.body.settings_id7;
-            var class_num = req.body.class_num7;
-            var class_name = req.body.class_name7;
-            var inst_id = req.body.inst_id7;
-            var assis_id = req.body.assis_id7;
-        } else if (i == 8) {
-            var settings_id = req.body.settings_id8;
-            var class_num = req.body.class_num8;
-            var class_name = req.body.class_name8;
-            var inst_id = req.body.inst_id8;
-            var assis_id = req.body.assis_id8;
-        } else if (i == 9) {
-            var settings_id = req.body.settings_id9;
-            var class_num = req.body.class_num9;
-            var class_name = req.body.class_name9;
-            var inst_id = req.body.inst_id9;
-            var assis_id = req.body.assis_id9;
-        } else if (i == 0) {
-            var settings_id = req.body.settings_id0;
-            var class_num = req.body.class_num0;
-            var class_name = req.body.class_name0;
-            var inst_id = req.body.inst_id0;
-            var assis_id = req.body.assis_id0;
-        }
-
-        query += "insert into class_info (settings_id, class_num, class_name, inst_id, assis_id,  registrant, regis_date, amender, amend_date) ";
-        query += "values ('" + settings_id + "', '" + class_num + "','" + class_name + "', '" + inst_id + "','" + assis_id + "','";
-        query += req.session.userId + "', '" + moment(Date()).format('YYYY-MM-DD hh:mm:ss') + "', '" + req.session.userId + "', '" + moment(Date()).format('YYYY-MM-DD hh:mm:ss') + "'); ";
-
+    if (req.file) {
+        thesis_info.file_path = req.file.path;
+        console.log("inputThesisFile upload success." + req.file.path);
     }
+
+    let query = 'insert into Thesis set ?';
+
     //get connection from pool
     mysqlPool.pool.getConnection((err, connection) => {
         if (err) { //throw err;
             console.error('getConnection err : ' + err);
+            connection.release();
+            return;
+        }
+
+        connection.query(query, thesis_info, (error, results, fields) => {
+            connection.release();
+
+            if (error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+
+            console.log('Thesis Register success.');
+            res.redirect('thesisList');
+        });
+    });
+
+};
+
+exports.getThesisList = (req, res) => {
+    //session check
+    if (!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    } else {
+        logger.putLog(req);
+    }
+
+    const query = 'select * from Thesis';
+
+    mysqlPool.pool.getConnection((err, connection) => {
+        if (err) { //throw err;
+            console.error('getConnection err : ' + err);
+            connection.release();
             return;
         }
 
@@ -131,10 +110,135 @@ exports.postAddTuplePage = (req, res) => {
                 return;
             }
 
-            console.log('ClassInfo Register success.');
-            res.redirect('class_list');
-
+            console.log('Thesis list get success.');
+            res.render('statistics/thesisList', {
+                userId: req.session.userId,
+                userType: req.session.userType,
+                userInfo: req.session.userInfo,
+                moment: moment,
+                thesisList: results
+            });
         });
     });
 };
 
+exports.getThesis = (req, res) => {
+    //session check
+    if (!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    } else {
+        logger.putLog(req);
+    }
+
+    const thesisId = req.params.id;
+    const query = 'select * from Thesis where thesis_id=' + thesisId;
+
+    mysqlPool.pool.getConnection((err, connection) => {
+        if (err) { //throw err;
+            console.error('getConnection err : ' + err);
+            connection.release();
+            return;
+        }
+
+        connection.query(query, (error, results, fields) => {
+            connection.release();
+
+            if (error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+
+            console.log('Thesis get success.');
+            res.render('statistics/modifyThesis', {
+                userId: req.session.userId,
+                userType: req.session.userType,
+                userInfo: req.session.userInfo,
+                moment: moment,
+                thesis: results[0]
+            });
+        });
+    });
+};
+
+exports.modifyThesis = (req, res) => {
+//session check
+    if (!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    } else {
+        logger.putLog(req);
+    }
+
+    const thesis_info = Object.keys(req.body)
+        .filter(key => req.body[key] !== "")
+        .reduce((obj, key) => {
+            obj[key] = req.body[key];
+            return obj;
+        }, {});
+
+    thesis_info.ammend_date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
+
+    if (req.file) {
+        thesis_info.file_path = req.file.path;
+        console.log("inputThesisFile upload success." + req.file.path);
+    }
+
+    let query = 'update Thesis set ? where thesis_id=' + thesis_info["thesis_id"];
+
+    //get connection from pool
+    mysqlPool.pool.getConnection((err, connection) => {
+        if (err) { //throw err;
+            console.error('getConnection err : ' + err);
+            connection.release();
+            return;
+        }
+
+        connection.query(query, thesis_info, (error, results, fields) => {
+            connection.release();
+
+            if (error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+
+            console.log('Thesis modify success.');
+            res.redirect('thesis/' + thesis_info["thesis_id"]);
+        });
+    });
+};
+
+exports.deleteThesis = (req, res) => {
+    if (!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    } else {
+        logger.putLog(req);
+    }
+
+    const thesisId = req.body.thesis_id;
+    const query = 'delete from Thesis where thesis_id=' + thesisId;
+
+    mysqlPool.pool.getConnection((err, connection) => {
+        if (err) { //throw err;
+            console.error('getConnection err : ' + err);
+            connection.release();
+            return;
+        }
+
+        connection.query(query, (error, results, fields) => {
+            connection.release();
+
+            if (error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+
+            console.log('Thesis get success.');
+            res.redirect('thesisList');
+        });
+    });
+};

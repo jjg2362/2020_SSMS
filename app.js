@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var cookieParser   = require('cookie-parser');
 var session = require('express-session');
 var sessionconfig = require('./config/sessionconfig.js');
+var methodOverride = require('method-override');
 //var dbconfig = require('../../config/dbconfig.js');
 //var MySQLStore = require('express-mysql-session')(session);
 
@@ -20,6 +21,8 @@ app.use(bodyParser.json());
 
 //use cookieParser
 app.use(cookieParser());
+// to use custom put. delete
+app.use(methodOverride('_method'));
 
 //set session time
 var time = 1000 * 60 * 100;;
