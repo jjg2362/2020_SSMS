@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="../public/css/datepicker3.css" />
+    <script type="text/javascript" src="../public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="../public/js/bootstrap-datepicker.kr.js"></script>
+</head>
+
+
+<!-- 메인 페이지 -->
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- 네비게이션 바 불러오기 -->
+<% include ../navBar.ejs %>
+
+<!-- 메인 -->
+<div class="content-wrapper">
+    <!-- 메인 내용 -->
+    <div class="container-fluid">
+        <div class="mb-0 mt-4">
+            <h6>팜 개설 > 계획서 작성</h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card  mb-3 pt-3 pl-3 pr-3">
+            <div class="card-body">
+                <div class ="form-row">
+                    <h5> 계획서 작성 &nbsp </h5><label style="float: right; color: red"> * 모든 항목 필수 입력 </label>
+                </div>
+                <form action="/parm/PARM101" method="post" id="parmmake" onsubmit="return CheckForm();" >
+                    <!-- 프로젝트 이름 입력 -->
+                    <div class="form-group mt-4 mb-4">
+                        <label for="inputPjName"> 팜 명 </label>
+                        <input class="form-control" name="parmname" id="parmname" type="text" placeholder="Project Name">
+                    </div>
+                    <!-- 프로젝트 개요 입력 -->
+                    <div class="form-group mt-4 mb-4">
+                        <label for="prj_outline"> 팜 개요 </label>
+                        <input class="form-control" name="parmoutline" id="parmoutline" type="text" placeholder="Parm Outline"  onkeyup = "chkword(this, 200)">
+                    </div>
+
+                    <!-- 프로젝트 추진배경 입력 -->
+
+                    <fieldset class="scheduler-border mb-3">
+                        <legend class="scheduler-border">팜 생성 배경</legend>
+                        <div class="form-group mt-4">
+                            <label for="inputTopic"> 왜 이 팜을 생성하려고 하는가?   (50자 이상 150자 미만 입력)</label>
+                            <textarea class="form-control" name="parmbckgrd" id="parmbckgrd" type="text"  rows = "3" onkeyup = "chkword(this, 300)"></textarea>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <label for="inputDetail"> 응용 분야를 포함하여 산업, 기술 등의 동향을 기술   (50자 이상 150자 미만 입력) </label>
+                            <textarea class="form-control" name="parmncst" id="parmncst" type="text" rows = "3" onkeyup = "chkword(this, 300)"></textarea>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <label for="inputDetail"> 기대효과 - 이 팜이 생성되면 발생하는 효과는 무엇인가? (경제적 측면, 사회적 측면 등)   (50자 이상 150자 미만 입력) </label>
+                            <textarea class="form-control" name="parmexpeff" id="parmexpeff" type="text"  rows = "3" onkeyup = "chkword(this, 500)"></textarea>
+                        </div>
+
+                        </legend>
+                    </fieldset>
+
+                    <!-- 프로젝트 카테고리 입력-->
+                    <div class="form-group mt-4">
+                        <label for="inputCategory"> 키워드 (Keyword) </label>
+                        <div class="form-row">
+                            <div class ="col-md-4">
+                                <input class="form-control" name="keyword1" id="keyword1" type="text" placeholder="Keyword 1">
+                            </div>
+                            <div class ="col-md-4">
+                                <input class="form-control" name="keyword2" id="keyword2" type="text" placeholder="Keyword 2">
+                            </div>
+                            <div class ="col-md-4">
+                                <input class="form-control" name="keyword3" id="keyword3" type="text" placeholder="Keyword 3">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 연구/개발 분야 선택 -->
+                    <div class="form-group mt-4">
+                        <div class="form-row">
+                            <div class ="col-md-4">
+                                <label>연구 분야 </label>
+                            </div>
+                            <div class = "col-md-4">
+                                <label>담당 교수 선택</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+
+
+                            <!-- 연구/ 개발분야 선택 -->
+                            <div class="col-md-4 ">
+                                <select class="form-control" id="development" name="development" onchange="inputDevType()">
+                                    <option value = "없음">--- 연구 / 개발분야 ---</option>
+                                    <% for(var i = 0; i < CodeTermList[0].length; i++) {%>
+                                    <option value = "<%=CodeTermList[0][i].code_nm%>"><%=CodeTermList[0][i].code_nm%></option>
+                                    <% } %>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <select class="form-control" id="instructor" name="instructor" >
+                                    <option value = "0">--- 교  수 ---</option>
+                                    <% for(var i = 0; i < CodeTermList[1].length; i++) {%>
+                                    <option value = "<%=CodeTermList[1][i].inst_id%>"><%=CodeTermList[1][i].major%> -- <%=CodeTermList[1][i].inst_name%> -- <%=CodeTermList[1][i].inst_id%></option>
+                                    <% } %>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class = "form-group mt-4">
+                        <div class="form-row">
+                            <div class = "col-md-4">
+                                <label> </label>
+                            </div>
+                            <div class = "col-md-4">
+                                <input  type="submit" class="btn btn-primary btn-block" name = "MakeParm" value="프로젝트 개설" />
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- include footer -->
+    <% include ../footer.html %>
+
+    <!-- 맨위로 가기 버튼 -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin.min.js"></script>
+
+<script type="text/javascript">
+    function inputDevType() {
+        var selectType = document.getElementById("development");
+        var selectedValue = selectType.options[selectType.selectedIndex].value;
+        var show2  = document.getElementById("addBox2");
+
+        if (selectedValue == "기타" ){
+            show2.style.display= '';
+        }else{
+            show2.style.display= "none";
+        }
+    }
+
+
+    function chkword(obj, maxByte) {
+
+        var strValue = obj.value;
+        var strLen = strValue.length;
+        var totalByte = 0;
+        var len = 0;
+        var oneChar = "";
+        var str2 = "";
+
+        for (var i = 0; i < strLen; i++) {
+            oneChar = strValue.charAt(i);
+            if (escape(oneChar).length > 4) {
+                totalByte += 2;
+            } else {
+                totalByte++;
+            }
+
+            // 입력한 문자 길이보다 넘치면 잘라내기 위해 저장
+            if (totalByte <= maxByte) {
+                len = i + 1;
+            }
+        }
+
+        // 넘어가는 글자는 자른다.
+        if (totalByte > maxByte) {
+            alert((maxByte/2) + "자를 초과 입력 할 수 없습니다.");
+            str2 = strValue.substr(0, len);
+            obj.value = str2;
+            chkword(obj, 4000);
+        }
+    }
+
+    function CheckForm(){
+
+        var _parmname = document.getElementById("parmname").value;
+        var _parmoutline = document.getElementById("parmoutline").value;
+
+        var _parmbckgrd = document.getElementById("parmbckgrd").value;
+        var _parmncst = document.getElementById("parmncst").value;
+        var _parmexpeff = document.getElementById("parmexpeff").value;
+
+        var _keyword1 = document.getElementById("keyword1").value;
+        var _keyword2 = document.getElementById("keyword2").value;
+        var _keyword3 = document.getElementById("keyword3").value;
+
+        var _development = document.getElementById("development").value;
+
+        var _instructor =document.getElementById("instructor").value;
+
+
+
+
+        if (_parmname==""){
+            alert("팜명을 입력하세요.");
+            document.getElementById("parmname").focus();
+            return false;
+        }
+
+        if (_parmoutline.length ==''){
+            alert("개요를 입력하세요. ");
+            document.getElementById("parmoutline").focus();
+            return false;
+        }
+
+        if (_parmbckgrd.length < 50){
+            alert("추진배경을 50자 이상 입력하세요. ( " + _parmbckgrd.length  +" / 50 자 )");
+            document.getElementById("parmbckgrd").focus();
+            return false;
+        }
+
+        if (_parmncst.length < 50){
+            alert("추진배경을 50자 이상 입력하세요. ( " + _parmncst.length  +" / 50 자 )");
+            document.getElementById("parmncst").focus();
+            return false;
+        }
+
+        if (_parmexpeff.length < 50){
+            alert("기대 효과를 50자 이상 입력하세요. ( " + _parmexpeff.length  +" / 50 자 )");
+            document.getElementById("parmexpeff").focus();
+            return false;
+        }
+
+        if ((_keyword1=='') && (_keyword2=='') && (_keyword3=='')){
+            alert("적어도 하나의 키워드를 입력하세요.");
+            document.getElementById("keyword1").focus();
+            return false;
+        }
+
+        if (_instructor=="0"){
+            alert("교수를 선택하세요.");
+            document.getElementById("instructor").focus();
+            return false;
+        }
+        if (_development=="없음"){
+            alert("연구 / 개발 분야를 선택하세요.");
+            document.getElementById("development").focus();
+            return false;
+        }
+        if ((_development=="기타")&& (_development=='')){
+            alert("연구 / 개발 분야를 입력하세요.");
+            document.getElementById("development").focus();
+            return false;
+        }
+
+
+        if (confirm("'"+_parmname+"' 팜을 개설하시겠습니까? ") == true ) {
+            return true ;
+        }else{
+            return false;
+        }
+
+
+
+
+    }
+
+</script>
+</body>
+</html>
