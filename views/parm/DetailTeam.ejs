@@ -120,7 +120,7 @@
                                             </div>
                                             <%}%>
                                             <div class = "col-md-2">
-                                                <center> <div class="btn btn-danger" name = "MakeProject" value="취소" onclick="CheckCancel();">취소</div> </center>
+                                                <center> <a href ="/parm/PARMMAIN?parm_id=<%=ClassInfo[0].parm_id%>" class="btn btn-danger">취소</a> </center>
                                             </div>
 
                                         </div>
@@ -179,9 +179,6 @@
 
 
 <script type="text/javascript">
-    function CheckCancel(){
-        window.location.href = "/parm/PARMMAIN"
-    }
 
 
     $(document).ready(function () {
