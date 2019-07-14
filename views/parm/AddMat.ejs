@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+</head>
+
+
+<!-- 메인 페이지 -->
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- 네비게이션 바 불러오기 -->
+<% include ../navBar.ejs %>
+
+<!-- 메인 -->
+<div class="content-wrapper">
+    <!-- 메인 내용 -->
+    <div class="container-fluid">
+        <div class="mb-0 mt-4">
+            <h6> 팜 관리 > 수정</h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card mx-auto mt-5 mb-5">
+            <div class="card-body">
+                <div class ="form-row">
+                    <h5> 팜 수정 </h5>
+                </div>
+
+
+                <form action="/parm/settingTeam" method="post" id="setting" onsubmit="return CheckForm();" />
+
+                <div class="table-responsive" >
+                    <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                        <div class="row">
+                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                <tbody id="dataTableTBody">
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>팀명</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="team_name" id="team_name" type="text" value = "<%=ClassInfo[0][0].team_name%>"></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>팀 주제</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="team_sub" id="team_sub" type="text" value = "<%=ClassInfo[0][0].team_sub%>"></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>생성 배경</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="team_bckgrd" id="team_bckgrd" type="text" value = "<%=ClassInfo[0][0].team_bckgrd%>"></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>동향 기술</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="team_ncst" id="team_ncst" type="text" value = "<%=ClassInfo[0][0].team_ncst%>"></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>keyword1</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="team_cate" id="team_cate" type="text" value = "<%=ClassInfo[0][0].team_cate%>"></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>keyword2</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="team_cate2" id="team_cate2" type="text" value = "<%=ClassInfo[0][0].team_cate2%>"></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>keyword3</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="team_cate3" id="team_cate3" type="text" value = "<%=ClassInfo[0][0].team_cate3%>"></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>팀장</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="std_id" id="std_id" type="text" value = "<%=ClassInfo[0][0].std_id%>--<%=ClassInfo[0][0].std_name%>"></td>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class = "form-group mt-4">
+                            <div class="form-row">
+                                <div class = "col-md-4">
+                                    <label> </label>
+                                </div>
+
+                                <div class = "col-md-2">
+                                    <center> <input type ="submit" class="btn btn-primary btn-block" name = "MakeProject" value="팀 등록"  /> </center>
+                                </div>
+                                <input type="hidden" id="originSettingsId" name="originSettingsId" value="<%= ClassInformation[0].settings_id %>">
+                                <input type="hidden" id="originClassNum" name="originClassNum" value="<%= ClassInformation[0].class_num %>">
+
+                                <div class = "col-md-2">
+                                    <center> <div class="btn btn-danger" name = "MakeProject" value="취소" onclick="CheckCancel();">취소</div> </center>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input id="origin_id" name="origin_id" type="hidden" value = "<%=ClassInfo[0][0].parm_id%>" >
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- include footer -->
+    <% include ../footer.html %>
+
+    <!-- 맨위로 가기 버튼 -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin.min.js"></script>
+
+
+<script type="text/javascript">
+
+    function CheckForm(){
+        var _team_name = document.getElementById("team_name").value;
+        var _assis_id = document.getElementById("std_id").value;
+        var _outline = document.getElementById("team_sub").value;
+        var _bckgrd = document.getElementById("team_bckgrd").value;
+        var _ncst = document.getElementById("team_ncst").value;
+        var _key_1 = document.getElementById("team_cate").value;
+        var _key_2 = document.getElementById("team_cate2").value;
+        var _key_3 = document.getElementById("team_cate3").value;
+
+
+
+        if (_team_name==""){
+            alert("팜명을 입력하세요..");
+            document.getElementById("class_name").focus();
+            return false;
+        }
+
+        if (_outline==""){
+            alert("주제를 입력하세요..");
+            document.getElementById("class_name").focus();
+            return false;
+        }
+
+        if (_bckgrd==""){
+            alert("배경환경을 입력하세요..");
+            document.getElementById("class_name").focus();
+            return false;
+        }
+
+        if (_ncst==""){
+            alert("동향 기술을 입력하세요..");
+            document.getElementById("class_name").focus();
+            return false;
+        }
+        if (_assis_id =='0'){
+            alert("담당 팀장을 선택하세요.");
+            document.getElementById("assis_id").focus();
+            return false;
+        }
+
+        if (_key_1 =='0' && _key_2 == '0' && _key_3 == '0'){
+            alert("키워드를 하나 이상 입력하세요");
+            document.getElementById("assis_id").focus();
+            return false;
+        }
+
+
+        if (confirm("팀 정보를 등록하시겠습니까? ") == true ) {
+            return true ;
+        }else{
+            return false;
+        }
+    }
+    function CheckCancel(){
+
+        if (confirm(" 등록을 취소하시겠습니까? ") == true ) {
+            history.back();
+        }else{
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

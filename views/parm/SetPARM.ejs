@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+</head>
+
+
+<!-- 메인 페이지 -->
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- 네비게이션 바 불러오기 -->
+<% include ../navBar.ejs %>
+
+<!-- 메인 -->
+<div class="content-wrapper">
+    <!-- 메인 내용 -->
+    <div class="container-fluid">
+        <div class="mb-0 mt-4">
+            <h6> 팜 관리 > 수정</h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card mx-auto mt-5 mb-5">
+            <div class="card-body">
+                <div class ="form-row">
+                    <h5> 팜 수정 </h5>
+                </div>
+
+
+                <form action="/parm/SetPARM" method="post" id="setting" onsubmit="return CheckForm();" />
+
+                    <div class="table-responsive" >
+                        <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                            <div class="row">
+                                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                    <tbody id="dataTableTBody">
+                                    <tr role="row" class="odd">
+                                        <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width:20%;"><center>분류</center></th>
+                                        <td class="" colspan="2">
+                                            <select class="form-control" id="Settings_id" name="Settings_id" >
+                                                <option value = "0">-- 분류 --</option>
+                                                <% for(var i = 0; i < ClassInfo[1].length; i++) { %>
+                                                <option value = "<%=ClassInfo[1][i].code_nm%>"><%=ClassInfo[1][i].code_nm%></option>
+                                                <% } %>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr role="row" class="odd">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>팜명</center></th>
+                                        <td class="" colspan="2">
+                                            <input class="form-control" name="class_name" id="class_name" type="text" value = "<%=ClassInfo[0][0].parm_name%>"></td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>개요</center></th>
+                                        <td class="" colspan="2">
+                                            <input class="form-control" name="outline" id="outline" type="text" value = "<%=ClassInfo[0][0].parm_outline%>"></td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>생성 배경</center></th>
+                                        <td class="" colspan="2">
+                                            <input class="form-control" name="bckgrd" id="bckgrd" type="text" value = "<%=ClassInfo[0][0].parm_bckgrd%>"></td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>동향 기술</center></th>
+                                        <td class="" colspan="2">
+                                            <input class="form-control" name="ncst" id="ncst" type="text" value = "<%=ClassInfo[0][0].parm_ncst%>"></td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>기대 효과</center></th>
+                                        <td class="" colspan="2">
+                                            <input class="form-control" name="expeff" id="expeff" type="text" value = "<%=ClassInfo[0][0].parm_expeff%>"></td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>keyword1</center></th>
+                                        <td class="" colspan="2">
+                                            <input class="form-control" name="key_1" id="key_1" type="text" value = "<%=ClassInfo[0][0].parm_cate%>"></td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>keyword2</center></th>
+                                        <td class="" colspan="2">
+                                            <input class="form-control" name="key_2" id="key_2" type="text" value = "<%=ClassInfo[0][0].parm_cate2%>"></td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>keyword3</center></th>
+                                        <td class="" colspan="2">
+                                            <input class="form-control" name="key_3" id="key_3" type="text" value = "<%=ClassInfo[0][0].parm_cate3%>"></td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>담당교수</center></th>
+                                        <td class="" colspan="2">
+                                            <input class="form-control" name="inst_id" id="inst_id" type="text" value = "<%=ClassInfo[0][0].parm_prof%>"></td>
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>팜장</center></th>
+                                        <td class="" colspan="2">
+                                            <input class="form-control" name="assis_id" id="assis_id" type="text" value = "<%=ClassInfo[0][0].parm_asst%>"></td>
+
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr role="row" class="odd">
+                                        <th class="sorting" id="authTH" tabindex="0" aria-controls="dataTable" rowspan="5" colspan="1" style="width:20%;"><center>권한주기</center></th>
+                                        <td class="">
+                                            <select class="form-control" id="sub_inst_id_list" >
+                                                <option value = "0">-- 교수 선택 --</option>
+                                                <% for(var i = 0; i < ClassInfo[2].length; i++) {%>
+                                                <option value = "<%=ClassInfo[2][i].inst_id%>"><%=ClassInfo[2][i].major%>-<%=ClassInfo[2][i].inst_id%>-<%=ClassInfo[2][i].inst_name%></option>
+                                                <% } %>
+                                            </select>
+                                        </td>
+                                        <td class="">
+                                            <select class="form-control" id="sub_assis_id_list" >
+                                                <option value = "0">-- 조교 선택 --</option>
+                                                <% for(var i = 0; i < ClassInfo[3].length; i++) {%>
+                                                <option value = "<%=ClassInfo[3][i].assis_id%>"><%=ClassInfo[3][i].assis_id%>-<%=ClassInfo[3][i].assis_name%></option>
+                                                <% } %>
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                    <% for(var i = 0; i < ClassInfo[4].length; i++) { %>
+
+                                        <tr role="row" class="odd" id = "<%= ClassInfo[4][i].sub_user_id %>">
+                                            <td colspan="2">
+                                                <input class="form-control w-100" id="sub_user_id" name="sub_user_id" type="text" value = "<%= ClassInfo[4][i].sub_user_id %>" disabled>
+                                                <div class="btn btn-danger w-100" data-value = "<%= ClassInfo[4][i].sub_user_id %>" onclick="deleteSubUser(this);">-</div>
+                                            </td>
+                                        </tr>
+
+                                    <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class = "form-group mt-4">
+                                <div class="form-row">
+                                    <div class = "col-md-4">
+                                        <label> </label>
+                                    </div>
+
+                                    <div class = "col-md-2">
+                                        <center> <input type ="submit" class="btn btn-primary btn-block" name = "MakeProject" value="개설과목 수정"  /> </center>
+                                    </div>
+                                    <input type="hidden" id="originSettingsId" name="originSettingsId" value="<%= ClassInformation[0].settings_id %>">
+                                    <input type="hidden" id="originClassNum" name="originClassNum" value="<%= ClassInformation[0].class_num %>">
+
+                                    <div class = "col-md-2">
+                                        <center> <div class="btn btn-danger" name = "MakeProject" value="취소" onclick="CheckCancel();">취소</div> </center>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="origin_id" name="origin_id" type="hidden" value = "<%=ClassInfo[0][0].parm_id%>" >
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- include footer -->
+    <% include ../footer.html %>
+
+    <!-- 맨위로 가기 버튼 -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin.min.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var subUserIdListLength = <%= ClassInfo[4].length %>
+        var rowspan = $("#authTH").prop("rowspan");
+        $("#authTH").prop("rowspan", rowspan + subUserIdListLength);
+
+        $("#Settings_id").val(<%= ClassInformation[0].parm_dev %>).prop("selected", true);
+
+        $("#sub_inst_id_list").change(function () {
+            var instName = $("#sub_inst_id_list option:selected").text();
+            var instId = $(this).val();
+
+            $("#sub_inst_id_list").val(0).prop("selected", true);
+
+            authTableRowAppend(instName, instId, "sub_user_id");
+
+        });
+
+        $("#sub_assis_id_list").change(function () {
+            var instName = $("#sub_assis_id_list option:selected").text();
+            var instId = $(this).val();
+
+            $("#sub_assis_id_list").val(0).prop("selected", true);
+
+            authTableRowAppend(instName, instId, "sub_user_id");
+
+        });
+    });
+
+    function authTableRowAppend(name, id, type) {
+        var rowToAdd = '<tr role="row" class="odd" id="' + id + '">';
+        rowToAdd += '<td colspan="2">';
+        rowToAdd += '<input class="form-control w-100" name="class_name" type="text" value = "' + name +'" disabled>';
+        rowToAdd += '<input class="form-control w-100" name="' + type + '" type="hidden" value = "' + id + '">';
+        rowToAdd += '<div class="btn btn-danger w-100" data-value = "' + id + '" onclick="authTableRowDelete(this);">-</div>';
+        rowToAdd += '</td>';
+        rowToAdd += '</tr>';
+
+        var rowspan = $("#authTH").prop("rowspan");
+        $("#authTH").prop("rowspan", rowspan + 1);
+        $("#dataTableTBody").append(rowToAdd);
+
+        // var $from = $("#setting");
+        // $from.append('<input class="form-control" name="sub_inst_id" type="hidden" value = "' + id + '" disabled>');
+        // $('body').append($form);
+    }
+
+    function authTableRowDelete(row) {
+        var dataValue = $(row).attr('data-value');
+        // console.log(dataValue);
+        $("#" + dataValue).remove();
+        var rowspan = $("#authTH").prop("rowspan");
+        $("#authTH").prop("rowspan", rowspan - 1);
+    }
+
+    function deleteSubUser(row) {
+        const originId = $("#origin_id").val();
+        const subUserId = $(row).attr('data-value');
+
+        $.ajax({
+            url: "/parm/subUser",
+            type: "delete",
+            cache: false,
+            data: { parm_id: originId, sub_user_id: subUserId},
+            success: function(result) {
+
+                authTableRowDelete(row);
+            }
+        });
+    }
+
+    function CheckForm(){
+        var _Settings_id = document.getElementById("Settings_id").value;
+        var _class_name = document.getElementById("class_name").value;
+        var _inst_id = document.getElementById("inst_id").value;
+        var _assis_id = document.getElementById("assis_id").value;
+        var _outline = document.getElementById("outline").value;
+        var _bckgrd = document.getElementById("bckgrd").value;
+        var _ncst = document.getElementById("ncst").value;
+        var _expeff = document.getElementById("expeff").value;
+        var _key_1 = document.getElementById("key_1").value;
+        var _key_2 = document.getElementById("key_2").value;
+        var _key_3 = document.getElementById("key_3").value;
+
+
+        if (_Settings_id=='0'){
+            alert("분류를 선택하세요.");
+            document.getElementById("Settings_id").focus();
+            return false;
+        }
+
+        if (_class_name==""){
+            alert("팜명을 입력하세요..");
+            document.getElementById("class_name").focus();
+            return false;
+        }
+
+        if (_outline==""){
+            alert("개요를 입력하세요..");
+            document.getElementById("class_name").focus();
+            return false;
+        }
+
+        if (_bckgrd==""){
+            alert("배경환경을 입력하세요..");
+            document.getElementById("class_name").focus();
+            return false;
+        }
+
+        if (_ncst==""){
+            alert("동향 기술을 입력하세요..");
+            document.getElementById("class_name").focus();
+            return false;
+        }
+
+        if (_expeff==""){
+            alert("기대 효과를 입력하세요..");
+            document.getElementById("class_name").focus();
+            return false;
+        }
+
+        if (_inst_id =='0'){
+            alert("담당 교수를 선택하세요.");
+            document.getElementById("inst_id").focus();
+            return false;
+        }
+
+        if (_assis_id =='0'){
+            alert("담당 팀장을 선택하세요.");
+            document.getElementById("assis_id").focus();
+            return false;
+        }
+
+        if (_key_1 =='0' && _key_2 == '0' && _key_3 == '0'){
+            alert("키워드를 하나 이상 입력하세요");
+            document.getElementById("assis_id").focus();
+            return false;
+        }
+
+
+        if (confirm("개설 과목 정보를 수정하시겠습니까? ") == true ) {
+            return true ;
+        }else{
+            return false;
+        }
+    }
+    function CheckCancel(){
+
+        if (confirm("개설 과목 정보를 수정을 취소하시겠습니까? ") == true ) {
+            history.back();
+        }else{
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
