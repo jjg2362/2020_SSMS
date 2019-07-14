@@ -25,6 +25,14 @@
     <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
     <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+
+    <!-- Pie Chart stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css"/>
+
+    <!-- Pie Chart javascript -->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+
 </head>
 
 <!-- 메인 페이지 -->
@@ -44,41 +52,11 @@
             <div class="card-body">
                 <h4>논문 실적 목록</h4>
                 <hr class="mt-2">
-                <div class="table-responsive" style="text-align:center">
-                    <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-                        <div class="row">
-                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                                <thead>
-                                <tr role="row">
-                                    <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 5%;">번호</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:13%;">게재년</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:45%;">논문명</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:22%;">학술지명</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:15%;">발행처명</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;">저자</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;">지도교수</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <% if(thesisList.length > 0) { %>
-                                    <% for(var i = 0; i < thesisList.length; i++) {%>
-                                        <tr role="row" class="odd" >
-                                            <td class="sorting_1"><%= thesisList[i].thesis_id %></td>
-                                            <td class=""><%=thesisList[i].published_year%>-<%=thesisList[i].published_month%></td>
-                                            <td><a href="/statistics/thesis/<%=thesisList[i].thesis_id %>"> <%= thesisList[i].thesis_title_eng %> </a></td>
-                                            <td><%= thesisList[i].journal_name %></td>
-                                            <td><%= thesisList[i].issuing_place %></td>
-                                            <td><%= thesisList[i].author %></td>
-                                            <td><%= thesisList[i].teaching_professor %></td>
-                                        </tr>
-                                    <% } %>
-                                <% } %>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                
+                <h5>교수별</h5>
+                <div id="chart"></div>
+                <h5>연도별</h5>
+                <div id="chart1"></div>
             </div>
         </div>
 
@@ -112,13 +90,54 @@
 <script src="../js/sb-admin-datatables.min.js"></script>
 
 <script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
-
 <script type="text/javascript">
 
     function abilityDownload2(fullPath) {
         var downloadPath = fullPath.substring(7);
         location.href = "/fileDownload/" + downloadPath + "/want";
     }
+
+    var chart = c3.generate({
+        bindto: "#chart",
+        data: {
+            x : 'x',
+            columns: [
+                ['x', '정진우', '주종화 - 컴퓨터공학과', '홍길동', 'abc', 'www.somesitename5.com', 'www.somesitename6.com'],
+                ['학생수', 90, 100, 140, 200, 100, 400],
+                ['주제수', 90, 100, 140, 200, 100, 400],
+                ['참여 기업수', 90, 100, 140, 200, 100, 400],
+                ['참여 멘토수', 90, 100, 140, 200, 100, 400],
+                ['논문 등재수', 90, 100, 140, 200, 100, 400],
+            ],
+            type: 'bar'
+        },
+        axis: {
+            x: {
+                type: 'category',
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: "#chart1",
+        data: {
+            x : 'x',
+            columns: [
+                ['x', '정진우', '주종화 - 컴퓨터공학과', '홍길동', 'abc', 'www.somesitename5.com', 'www.somesitename6.com'],
+                ['학생수', 90, 100, 140, 200, 100, 400],
+                ['주제수', 90, 100, 140, 200, 100, 400],
+                ['참여 기업수', 90, 100, 140, 200, 100, 400],
+                ['참여 멘토수', 90, 100, 140, 200, 100, 400],
+                ['논문 등재수', 90, 100, 140, 200, 100, 400],
+            ],
+            type: 'bar'
+        },
+        axis: {
+            x: {
+                type: 'category',
+            }
+        }
+    });
 
 </script>
 </body>

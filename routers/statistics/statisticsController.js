@@ -44,21 +44,16 @@ exports.postAddThesis = (req, res) => {
         logger.putLog(req);
     }
 
-    const thesis_info = Object.keys(req.body)
+    const statistic_info = Object.keys(req.body)
         .filter(key => req.body[key] !== "")
         .reduce((obj, key) => {
             obj[key] = req.body[key];
             return obj;
         }, {});
+    console.log(req.body);
+    console.log(statistic_info);
 
-    thesis_info.regis_date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
-
-    if (req.file) {
-        thesis_info.file_path = req.file.path;
-        console.log("inputThesisFile upload success." + req.file.path);
-    }
-
-    let query = 'insert into Thesis set ?';
+    let query = 'insert into statistics set ?';
 
     //get connection from pool
     mysqlPool.pool.getConnection((err, connection) => {
@@ -68,15 +63,19 @@ exports.postAddThesis = (req, res) => {
             return;
         }
 
-        connection.query(query, thesis_info, (error, results, fields) => {
+        connection.query(query, statistic_info, (error, results, fields) => {
             connection.release();
+
+            console.log(query)
+            console.log(results)
+            console.log(fields)
 
             if (error) { //throw error;
                 console.error('query error : ' + error);
                 return;
             }
 
-            console.log('Thesis Register success.');
+            console.log('Statistic Register success.');
             res.redirect('thesisList');
         });
     });
