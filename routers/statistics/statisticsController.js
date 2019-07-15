@@ -92,7 +92,7 @@ exports.getThesisList = (req, res) => {
         logger.putLog(req);
     }
 
-    const query = 'select * from Thesis';
+    const query = 'select * from statistics';
 
     mysqlPool.pool.getConnection((err, connection) => {
         if (err) { //throw err;
@@ -108,14 +108,14 @@ exports.getThesisList = (req, res) => {
                 console.error('query error : ' + error);
                 return;
             }
-
+            console.log(results)
             console.log('Thesis list get success.');
             res.render('statistics/thesisList', {
                 userId: req.session.userId,
                 userType: req.session.userType,
                 userInfo: req.session.userInfo,
                 moment: moment,
-                thesisList: results
+                statistics: results
             });
         });
     });

@@ -54,9 +54,9 @@
                 <hr class="mt-2">
                 
                 <h5>교수별</h5>
-                <div id="chart"></div>
+                <div id="instructorChart"></div>
                 <h5>연도별</h5>
-                <div id="chart1"></div>
+                <div id="yearChart"></div>
             </div>
         </div>
 
@@ -97,17 +97,96 @@
         location.href = "/fileDownload/" + downloadPath + "/want";
     }
 
-    var chart = c3.generate({
-        bindto: "#chart",
+    // 서버에서 넘어온 배열을 저장 후 맵에 저장
+    var statistics = JSON.parse('<%- JSON.stringify(statistics) %>');
+
+    var instructorMap = new Map()
+    var yearMap = new Map()
+    
+    statistics.forEach(element => {
+        console.log(element)
+        
+        var instructor = element.instructor+" - "+element.major;
+
+        if(instructorMap.has(instructor) === true) {
+            console.log("has")
+            var temp = instructorMap.get(instructor)
+            temp.student_num += element.student_num;
+            temp.project_num += element.project_num;
+            temp.company_num += element.company_num;
+            temp.mentor_num += element.mentor_num;
+            temp.thesis_num += element.thesis_num;
+
+            instructorMap.set(instructor, temp);
+        }
+        else {
+            var temp = Object.assign({}, element)
+            instructorMap.set(instructor, temp);
+        }
+
+        var year = element.year;
+
+        if(yearMap.has(year) === true) {
+            console.log("has")
+            var temp = yearMap.get(year)
+            temp.student_num += element.student_num;
+            temp.project_num += element.project_num;
+            temp.company_num += element.company_num;
+            temp.mentor_num += element.mentor_num;
+            temp.thesis_num += element.thesis_num;
+
+            yearMap.set(year, temp);
+        }
+        else {
+            var temp = Object.assign({}, element)
+            yearMap.set(year, temp);
+        }
+        
+    });
+
+    console.log(instructorMap)
+    console.log(yearMap)
+
+    // 교수별 차트
+    var instructorColumn = Array.from(instructorMap.keys())
+    instructorColumn.unshift('x')
+
+    var instructorStudentNum = Array.from(instructorMap.values()).map(function (instructor) {
+        return instructor.student_num;
+    });
+    instructorStudentNum.unshift('참여 학생수')
+
+    var instructorProjecttNum = Array.from(instructorMap.values()).map(function (instructor) {
+        return instructor.project_num;
+    });
+    instructorProjecttNum.unshift('진행 주제수')
+
+    var instructorCompanyNum = Array.from(instructorMap.values()).map(function (instructor) {
+        return instructor.company_num;
+    });
+    instructorCompanyNum.unshift('참여 기업수')
+
+    var instructorMentorNum = Array.from(instructorMap.values()).map(function (instructor) {
+        return instructor.mentor_num;
+    });
+    instructorMentorNum.unshift('참여 멘토수')
+
+    var instructorThesisNum = Array.from(instructorMap.values()).map(function (instructor) {
+        return instructor.thesis_num;
+    });
+    instructorThesisNum.unshift('논문 등재수')
+
+    var instructorChart = c3.generate({
+        bindto: "#instructorChart",
         data: {
             x : 'x',
             columns: [
-                ['x', '정진우', '주종화 - 컴퓨터공학과', '홍길동', 'abc', 'www.somesitename5.com', 'www.somesitename6.com'],
-                ['학생수', 90, 100, 140, 200, 100, 400],
-                ['주제수', 90, 100, 140, 200, 100, 400],
-                ['참여 기업수', 90, 100, 140, 200, 100, 400],
-                ['참여 멘토수', 90, 100, 140, 200, 100, 400],
-                ['논문 등재수', 90, 100, 140, 200, 100, 400],
+                instructorColumn ,
+                instructorStudentNum,
+                instructorProjecttNum,
+                instructorCompanyNum,
+                instructorMentorNum,
+                instructorThesisNum,
             ],
             type: 'bar'
         },
@@ -118,17 +197,46 @@
         }
     });
 
-    var chart = c3.generate({
-        bindto: "#chart1",
+    // 연도별 차트
+    var yearColumn = Array.from(yearMap.keys())
+    yearColumn.unshift('x')
+
+    var yearStudentNum = Array.from(yearMap.values()).map(function (year) {
+        return year.student_num;
+    });
+    yearStudentNum.unshift('참여 학생수')
+
+    var yearProjecttNum = Array.from(yearMap.values()).map(function (year) {
+        return year.project_num;
+    });
+    yearProjecttNum.unshift('진행 주제수')
+
+    var yearCompanyNum = Array.from(yearMap.values()).map(function (year) {
+        return year.company_num;
+    });
+    yearCompanyNum.unshift('참여 기업수')
+
+    var yearMentorNum = Array.from(yearMap.values()).map(function (year) {
+        return year.mentor_num;
+    });
+    yearMentorNum.unshift('참여 멘토수')
+
+    var yearThesisNum = Array.from(yearMap.values()).map(function (year) {
+        return year.thesis_num;
+    });
+    yearThesisNum.unshift('논문 등재수')
+
+    var yearChart = c3.generate({
+        bindto: "#yearChart",
         data: {
             x : 'x',
             columns: [
-                ['x', '정진우', '주종화 - 컴퓨터공학과', '홍길동', 'abc', 'www.somesitename5.com', 'www.somesitename6.com'],
-                ['학생수', 90, 100, 140, 200, 100, 400],
-                ['주제수', 90, 100, 140, 200, 100, 400],
-                ['참여 기업수', 90, 100, 140, 200, 100, 400],
-                ['참여 멘토수', 90, 100, 140, 200, 100, 400],
-                ['논문 등재수', 90, 100, 140, 200, 100, 400],
+                yearColumn ,
+                yearStudentNum,
+                yearProjecttNum,
+                yearCompanyNum,
+                yearMentorNum,
+                yearThesisNum,
             ],
             type: 'bar'
         },

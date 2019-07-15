@@ -52,6 +52,7 @@ app.use('/parm', require('./routers/parm/parm.js'));
 app.use('/pjmng', require('./routers/pjmng/pjmng.js'));
 app.use('/eval', require('./routers/eval/eval.js'));
 app.use('/msgbrd', require('./routers/msgbrd/msgbrd.js'));
+app.use('/statistics', require('./routers/statistics/statistics.js'));
 
 // run server
 app.listen(app.get('port'), () => {
