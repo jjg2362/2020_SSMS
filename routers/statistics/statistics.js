@@ -24,6 +24,9 @@ router.route('/AddThesis')
 router.route('/thesisList')
     .get(controller.getThesisList);
 
+router.route('/thesisListField')
+    .get(controller.getThesisListField);
+
 router.route('/thesis/:id')
     .get(controller.getThesis);
 

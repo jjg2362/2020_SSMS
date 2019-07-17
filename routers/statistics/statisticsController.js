@@ -121,6 +121,53 @@ exports.getThesisList = (req, res) => {
     });
 };
 
+exports.getThesisListField = (req, res) => {
+    //session check
+    if (!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    } else {
+        logger.putLog(req);
+    }
+
+    const year = req.query.year;
+    const field = req.query.field;
+    let fieldStr = field === "instructor" ? "": ", "+field;
+    fieldStr = field === "class_name" ? "": ", "+field;
+
+    const query = `select instructor, major, class_name${fieldStr} from statistics where year=${year}`;
+    console.log(query)
+
+    mysqlPool.pool.getConnection((err, connection) => {
+        if (err) { //throw err;
+            console.error('getConnection err : ' + err);
+            connection.release();
+            return;
+        }
+
+        connection.query(query, (error, results, fields) => {
+            connection.release();
+
+            if (error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+            console.log(results)
+            console.log('Thesis list get success.');
+            res.render('statistics/thesisListField', {
+                userId: req.session.userId,
+                userType: req.session.userType,
+                userInfo: req.session.userInfo,
+                moment: moment,
+                statistics: results,
+                year: year,
+                field: field
+            });
+        });
+    });
+};
+
 exports.getThesis = (req, res) => {
     //session check
     if (!req.session.userId) {

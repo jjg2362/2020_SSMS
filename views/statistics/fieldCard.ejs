@@ -1,0 +1,60 @@
+<div class="card card-register mx-auto mb-3 pt-3 pl-3 pr-3">
+    <div class="card-body">
+        <div class ="form-row">
+            <h5> 항목별 세부 조회 </h5>
+        </div>
+        <form action="/statistics/thesisListField" method="get"/>
+
+            <!-- 팀-교과목 매칭 -->
+            <div class="form-group mt-4">
+            <div class="form-row">
+                <div class ="col-md-4">
+                <label> 연도 </label>
+                </div>
+                <div class = "col-md-4">
+                <label> 세부항목 </label>
+                </div>
+            </div>
+
+            <!-- 팀-프로젝트-교과목 선택 -->
+            <div class="form-row">
+                <div class="col-md-4 ">
+                    <select class="form-control" id="year" name="year">
+                        <option value = "없음">-- 연도 --</option>
+                        <%
+                        var list = JSON.parse(JSON.stringify(statistics));
+                        var years = [];
+                        for(s of list){
+                            if(years.indexOf(s.year) === -1) years.push(s.year);
+                            
+                        }
+                        for(year of years){
+                            console.log(year);
+                        %>
+                        <option value = "<%=year%>"><%=year%></option>
+                        <%}%>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                <select class="form-control" id="field" name="field" >
+                    <option value = "없음">---- 세부항목 ---</option>
+                    <option value = "class_name">수업수</option>
+                    <option value = "student_num">참여학생수</option>
+                    <option value = "instructor">교수수</option>
+                    <option value = "company_num">참여기업수</option>
+                    <option value = "team_num">참여팀수</option>
+                    <option value = "project_num">진행주제수</option>
+                    <option value = "mentoring_num">멘토링진행횟수</option>
+                    <option value = "mentor_num">참여멘토수</option>
+                    <option value = "thesis_num">논문등재수</option>
+                </select>
+                </div>
+                <div class = "col-md-2 ">
+                <input type="submit" class="btn btn-primary btn-link" value=" 조회 " />
+                </div>
+
+            </div>
+            </div>
+        </form>
+    </div>
+</div>
