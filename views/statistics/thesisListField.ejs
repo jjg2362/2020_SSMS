@@ -61,18 +61,20 @@
                     mentoring_num : "멘토링진행수",
                     mentor_num : "참여멘토수",
                     thesis_num : "논문등재수" };
+                    console.log('123')
                     console.log(fields[field])
                     console.log(field)
                 %>
                 <h4> <%=year%>년도 - <%=fields[field]%> </h4>
                 <form action="/statistics/AddThesis" method="post" id="statistics" onsubmit="return CheckForm();">
                     <div class="col-md-2">
-                        <input type="submit" class="btn btn-primary btn-block" value="엑셀파일다운로드"/>
+                        <a id="btnExport" href="#" download="">
+                            <input type="button" class="btn btn-primary btn-block" value="엑셀파일다운로드"/>
+                        </a>
                     </div>
                 </form>
                 <hr class="mt-2">
                 <% include fieldTable.ejs %>
-                
             </div>
         </div>
 
@@ -87,6 +89,9 @@
     <i class="fa fa-angle-up"></i>
 </a>
 </div>
+
+<!-- For Excel Download -->
+<script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
 
 <!-- Bootstrap core JavaScript-->
 <script src="/vendor/jquery/jquery.min.js"></script>
@@ -133,7 +138,20 @@
             return false;
         }
     }
-    
+    $(document).ready(function () {
+        $("#btnExport").on('click', function () {
+            var uri = $("#dataTable").excelexportjs({
+                containerid: "dataTable"
+                , datatype:  'table'
+                , returnUri: true
+            });
+            let year = "<%= year%>"
+            let field = "<%= fields[field]%>"
+            let fileName = year+"년도_"+field+"_통계.xls"
+            $(this).attr('download', fileName).attr('href', uri).attr('target', '_blank');
+
+        });
+    });
 </script>
 </body>
 </html>
