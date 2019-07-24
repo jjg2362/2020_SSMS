@@ -18,10 +18,14 @@ var upload = multer({ storage: storage});
 
 router.route('/AddThesis')
     .get(controller.getAddTuplePage)
-    .post(upload.single('inputThesisFile'), controller.postAddThesis);
+    .post(controller.postAddThesis);
+    // .post(upload.single('inputThesisFile'), controller.postAddThesis);
 
 router.route('/thesisList')
     .get(controller.getThesisList);
+
+router.route('/thesisListField')
+    .get(controller.getThesisListField);
 
 router.route('/thesis/:id')
     .get(controller.getThesis);

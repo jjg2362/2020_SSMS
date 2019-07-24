@@ -25,6 +25,14 @@
     <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
     <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+
+    <!-- Pie Chart stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css"/>
+
+    <!-- Pie Chart javascript -->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+
 </head>
 
 <!-- 메인 페이지 -->
@@ -37,48 +45,20 @@
     <!-- 메인 내용 -->
     <div class="container-fluid">
         <div class="mb-0 mt-4">
-            <h6>통계 > 논문 실적 조회 </h6>
+            <h6>통계 > 실적 조회 </h6>
         </div>
         <hr class="mt-2">
         <div class="card mb-2 mt-2 pt-1 pl-3 pr-3">
             <div class="card-body">
-                <h4>논문 실적 목록</h4>
+                <h4> 연도별 실적 조회 </h4>
                 <hr class="mt-2">
-                <div class="table-responsive" style="text-align:center">
-                    <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-                        <div class="row">
-                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                                <thead>
-                                <tr role="row">
-                                    <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 5%;">번호</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:13%;">게재년</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:45%;">논문명</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:22%;">학술지명</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:15%;">발행처명</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;">저자</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;">지도교수</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <% if(thesisList.length > 0) { %>
-                                    <% for(var i = 0; i < thesisList.length; i++) {%>
-                                        <tr role="row" class="odd" >
-                                            <td class="sorting_1"><%= thesisList[i].thesis_id %></td>
-                                            <td class=""><%=thesisList[i].published_year%>-<%=thesisList[i].published_month%></td>
-                                            <td><a href="/statistics/thesis/<%=thesisList[i].thesis_id %>"> <%= thesisList[i].thesis_title_eng %> </a></td>
-                                            <td><%= thesisList[i].journal_name %></td>
-                                            <td><%= thesisList[i].issuing_place %></td>
-                                            <td><%= thesisList[i].author %></td>
-                                            <td><%= thesisList[i].teaching_professor %></td>
-                                        </tr>
-                                    <% } %>
-                                <% } %>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <% include fieldCard.ejs %>
+                <hr class="mt-2">
+                
+                <!-- <h5>교수별</h5>
+                <div id="instructorChart"></div> -->
+                <h5>연도별</h5>
+                <div id="yearChart"></div>
             </div>
         </div>
 
@@ -112,7 +92,6 @@
 <script src="../js/sb-admin-datatables.min.js"></script>
 
 <script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
-
 <script type="text/javascript">
 
     function abilityDownload2(fullPath) {
@@ -120,6 +99,126 @@
         location.href = "/fileDownload/" + downloadPath + "/want";
     }
 
+    // 서버에서 넘어온 배열을 저장 후 맵에 저장
+    var statistics = JSON.parse('<%- JSON.stringify(statistics) %>');
+
+    const years = statistics.reduce((acc, cur) => {
+        if(acc.indexOf(cur.year) === -1) acc.push(cur.year);
+        return acc;
+    }, [])
+
+    let yearClassNum = ['개설 수업수'];
+    let yearStudentNum = ['참여 학생수'];
+    let yearInstructorNum = ['참여 교수수'];
+    let yearCompanyNum = ['참여 회사수'];
+    let yearTeamNum = ['참여 팀수'];
+    let yearProjectNum = ['진행 프로젝트수'];
+    let yearMentoringNum = ['멘토링 진행수'];
+    let yearMentorNum = ['참여 멘토수'];
+    let yearThesisNum = ['논문등재수'];
+
+    years.forEach(year => {
+        const statistic = statistics.filter(cur => {
+            return cur.year === year ? true : false;
+        })
+
+        yearClassNum.push(statistic.reduce((prev, next) => {
+            if(prev.indexOf(next.class_name) !== -1) prev.push(next.class_name);
+            return prev;
+        }, []).length);
+
+        yearInstructorNum.push(statistic.reduce((prev, next) => {
+            if(prev.indexOf(next.instructor) !== -1) prev.push(next.instructor);
+            return prev;
+        }, []).length);
+
+        yearStudentNum.push(statistic.reduce((prev, next) => {
+            prev += next.student_num;
+            return prev;
+        }, 0));
+        
+        yearCompanyNum.push(statistic.reduce((prev, next) => {
+            prev += next.company_num;
+            return prev;
+        }, 0));
+        
+        yearTeamNum.push(statistic.reduce((prev, next) => {
+            prev += next.team_num;
+            return prev;
+        }, 0));
+        
+        yearProjectNum.push(statistic.reduce((prev, next) => {
+            prev += next.project_num;
+            return prev;
+        }, 0));
+        
+        yearMentoringNum.push(statistic.reduce((prev, next) => {
+            prev += next.mentoring_num;
+            return prev;
+        }, 0));
+        
+        yearMentorNum.push(statistic.reduce((prev, next) => {
+            prev += next.mentor_num;
+            return prev;
+        }, 0));
+        
+        yearThesisNum.push(statistic.reduce((prev, next) => {
+            prev += next.thesis_num;
+            return prev;
+        }, 0));
+        
+    });
+
+    years.unshift('x')
+
+    var yearChart = c3.generate({
+        bindto: "#yearChart",
+        data: {
+            x : 'x',
+            columns: [
+                years ,
+                yearStudentNum,
+                yearMentoringNum,
+                yearCompanyNum,
+                yearMentorNum,
+                yearThesisNum,
+                yearClassNum,
+                yearInstructorNum,
+                yearCompanyNum,
+                yearTeamNum,
+                yearProjectNum,
+                yearThesisNum
+            ],
+            type: 'bar'
+        },
+        axis: {
+            x: {
+                type: 'category',
+            }
+        }
+    });
+
+    function CheckForm(){
+        var _instructor = document.getElementById("instructor").value;
+        // var _student_num = document.getElementById("student_num").value;
+        // var _project_num = document.getElementById("project_num").value;
+        // var _company_num = document.getElementById("company_num").value;
+        // var _mentor_num = document.getElementById("mentor_num").value;
+        // var _thesis_num = document.getElementById("thesis_num").value;
+
+        if (_instructor==""){
+        alert("교수를 입력하세요.");
+        document.getElementById("instructor").focus();
+        return false;
+        }
+
+        if (confirm("실적을 등록하시겠습니까? ") == true ) {
+            return true ;
+        }else{
+            return false;
+        }
+    }
+    
 </script>
 </body>
 </html>

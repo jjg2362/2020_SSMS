@@ -1,0 +1,100 @@
+<%
+let list = JSON.parse(JSON.stringify(statistics));
+let values = []
+let valuesMap = new Map()
+
+for(let obj of list){
+    for(let element in obj) {
+        if(element !== "major" && element !== "instructor" && element !== "class_name") {
+            values.push(obj[element])
+        }
+        else if(field === "class_name" && element === "class_name") {
+            if(valuesMap.has(obj[element]) === false) {
+                valuesMap.set(obj[element], 1)
+            }
+            else {
+                valuesMap.set(obj[element], valuesMap.get(obj[element])+1)
+            }
+        }
+        else if(field === "instructor" && element === "instructor") {
+            if(valuesMap.has(obj[element]) === false) {
+                valuesMap.set(obj[element], 1)
+            }
+            else {
+                valuesMap.set(obj[element], valuesMap.get(obj[element])+1)
+            }
+        }
+    }
+}
+
+console.log(values)
+console.log(valuesMap)
+
+%>
+
+<table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
+       role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+    <thead>
+        <tr role="row">
+            <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 10%;"><center>번호</center></th>
+
+            <!-- 교수수인 경우 -->
+            <%if(field === "instructor") {%>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 45%;"><center>교수</center></th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 40%;"><center>학과</center></th>
+
+            <!-- 수업수인 경우 -->
+            <%} else if(field === "class_name"){ %>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 80%;"><center>수업</center></th>
+
+            <!-- 그외의 경우 -->
+            <%} else { %>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20%;"><center>교수</center></th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 30%;"><center>학과</center></th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 30%;"><center>수업</center></th>
+            <%}%>
+
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 15%;"><center><%= fields[field]%></center></th>
+        </tr>
+    </thead>
+    <tbody>
+    <%if(field === "instructor") {
+        let i = 1
+        valuesMap.forEach((value, key) => {
+    %>
+        <tr role="row" class="odd" >
+            <td class="sorting_1"><center><%= i++ %></center></center></td>
+            <td><center><%= key%></center></td>
+            <td><center><%= value%></center></td>
+        </tr>
+        <%})%>
+    <%} else if(field === "class_name"){ 
+        let i = 1
+        valuesMap.forEach((value, key) => {
+    %>
+        <tr role="row" class="odd" >
+            <td class="sorting_1"><center><%= i++ %></center></center></td>
+            <td><center><%= key%></center></td>
+            <td><center><%= value%></center></td>
+        </tr>
+        <%})%>
+    <%} else { %>
+        <% for(let i = 0; i < values.length; i++) {%>
+            <% 
+            console.log(i)
+            console.log(statistics[i].instructor)
+            console.log(statistics[i].major)
+            console.log(statistics[i].class_name)
+            console.log(values[i])
+            %>
+            <tr role="row" class="odd" >
+                <td class="sorting_1"><center><%= i+1 %></center></center></td>
+                <td><center><%= statistics[i].instructor%></center></td>
+                <td><center><%= statistics[i].major%></center></td>
+                <td><center><%= statistics[i].class_name%></center></td>
+                <td><center><%= values[i]%></center></td>
+            </tr>
+        <% }%>
+    <% }%>
+    </tbody>
+</table>

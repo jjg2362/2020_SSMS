@@ -164,13 +164,24 @@
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="평가">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#accordion6"
                    data-parent="#accordion">
-
                     <span class="nav-link-text">평가</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="accordion6">
                     <li>
                         <a href="/eval/DGU601">만족도조사서</a>
                     </li>
+                </ul>
+            </li>
+        <% } %>
+        <% if(userInfo.userType == 'mentor' || userInfo.userType == 'student') { %>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="평가">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#accordion12"
+                   data-parent="#accordion">
+                    <span class="nav-link-text">팜</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="accordion12">
+                    <li><a href="/parm/JoinParm">팜 가입하기</a></li>
+                    <li><a href="#">내 팜들어가기(개발중)</a></li>
                 </ul>
             </li>
         <% } %>
@@ -181,8 +192,18 @@
                     <span class="nav-link-text"> 통계</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="accordion10">
-                    <li><a href="/statistics/AddThesis">논문 실적 입력</a></li>
-                    <li><a href="/statistics/thesisList">논문 실적 조회</a></li>
+                    <li><a href="/statistics/AddThesis">실적 입력</a></li>
+                    <li><a href="/statistics/thesisList">실적 조회</a></li>
+                </ul>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="팜">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#accordion11"
+                   data-parent="#accordion">
+                    <span class="nav-link-text"> 팜</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="accordion11">
+                    <li><a href="/parm/PARM101">팜 생성</a></li>
+                    <li><a href="/parm/PARM102">팜 자료 조회</a></li>
                 </ul>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="설정">

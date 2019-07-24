@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin.css" rel="stylesheet">
+
+    <!-- Page level plugin CSS-->
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+</head>
+
+<!-- 메인 페이지 -->
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- 네비게이션 바 불러오기 -->
+<% include ../navBar.ejs %>
+
+<!-- 메인 -->
+<div class="content-wrapper">
+    <!-- 메인 내용 -->
+    <div class="container-fluid">
+        <h6>회원관리 > 사용자 조회(User)</h6>
+        <hr>
+        <div class="form-group" style="text-align: center;">
+            <div class="form-row">
+                <div class="col-md-2">
+                    <input style="margin-right: 2%;" type="radio" value="0" name="sType" onclick="changeType()" checked="checked">학생(전체)
+                </div>
+                <div class="col-md-2">
+                    <input style="margin-right: 2%;" type="radio" value="1" name="sType" onclick="changeType()">팀
+                </div>
+                <div class="col-md-2">
+                    <input style="margin-right: 2%;" type="radio" value="2" name="sType" onclick="changeType()">과제
+                </div>
+                <div class="col-md-2">
+                    <input style="margin-right: 2%;" type="radio" value="3" name="sType" onclick="changeType()">가입대기
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <!-- 학생(전체) 테이블 -->
+                <div class="table-responsive" id="div-dataTable0">
+                    <table class="table table-bordered display" id="dataTable0" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <% for(var key = 0; key < allUserInfosFields[0].length; key++) { %>
+                                <% if(allUserInfosFields[0][key].name == '팜') { %>
+                                <%}else{ %>
+                                    <th><%= allUserInfosFields[0][key].name %></th>
+                                <%}%>
+                            <% } %>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(var i = 0; i < allUserInfos[0].length; i++) { %>
+                            <tr>
+                                <% for(var key in allUserInfos[0][i]) { %>
+                                    <% if(key == '수락') { %>
+                                        <td>
+                                            <a href ="/parm/DeleteUser/<%=allUserInfos[0][i].학번%>/<%=allUserInfos[0][i].팜%>" class="btn btn-danger w-100" data-value = "-">-</a>
+                                        </td>
+                                    <% } else if(key == '팜') { %>
+                                        <input type="hidden" id="parm_id" name="parm_id" value="<%=allUserInfos[0][i].팜%>">
+                                    <% } else { %>
+                                        <td><%= allUserInfos[0][i][key] %></td>
+                                    <% } %>
+                                <% } %>
+                            </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- team 테이블 -->
+                <div class="table-responsive" id="div-dataTable1">
+                    <a href ="/parm/AddTeam/<%=parm_id%>" class="btn btn-primary btn-block">팀 추가</a>
+                    <br>
+                    <table class="table table-bordered display" id="dataTable1" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <% for(var key = 0; key < allUserInfosFields[1].length; key++) { %>
+                                <th><%= allUserInfosFields[1][key].name %></th>
+                            <% } %>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(var i = 0; i < allUserInfos[1].length; i++) { %>
+                            <tr>
+                                <% for(var key in allUserInfos[1][i]) { %>
+                                    <% if(key == '팀명') { %>
+                                        <td>
+                                            <a href="/parm/DetailTeam/<%= allUserInfos[1][i].팀번호 %>"> <%= allUserInfos[1][i][key] %></a>
+                                        </td>
+                                      <% } else { %>
+                                            <td><center> <%= allUserInfos[1][i][key] %></center></td>
+                                    <% } %>
+                                <% } %>
+                            </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- mat 테이블 -->
+                <div class="table-responsive" id="div-dataTable2">
+                    <a href ="/parm/AddMet/" class="btn btn-primary btn-block">과제 추가</a><br>
+                    <table class="table table-bordered display" id="dataTable2" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <% for(var key = 0; key < allUserInfosFields[2].length; key++) { %>
+                                <th><%= allUserInfosFields[2][key].name %></th>
+                            <% } %>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(var i = 0; i < allUserInfos[2].length; i++) { %>
+                            <tr>
+                                <% for(var key in allUserInfos[2][i]) { %>
+                                        <td><%= allUserInfos[2][i][key] %></td>
+                                <% } %>
+                            </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <!--가입 대기-->
+                <div class="table-responsive" id="div-dataTable3">
+                    <table class="table table-bordered display" id="dataTable3" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <% for(var key = 0; key < allUserInfosFields[3].length; key++) { %>
+                                <% if(allUserInfosFields[3][key].name == '팜') { %>
+                                <%}else{ %>
+                                    <th><%= allUserInfosFields[3][key].name %></th>
+                                <%}%>
+                            <% } %>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(var i = 0; i < allUserInfos[3].length; i++) { %>
+                            <tr>
+                                <% for(var key in allUserInfos[3][i]) { %>
+                                    <% if(key == '수락') { %>
+                                        <td>
+                                            <a href = "/parm/AddUser/<%=allUserInfos[3][i].학번%>/<%=allUserInfos[3][i].팜%>" class="btn btn-danger w-100" data-value = "+">+</a>
+                                        </td>
+                                    <% } else if(key == '팜') { %>
+                                        <input type="hidden" id="parm_id" name="parm_id" value="<%=allUserInfos[3][i].팜%>">
+                                    <% } else { %>
+                                        <td><%= allUserInfos[3][i][key] %></td>
+                                    <% } %>
+                                <% } %>
+                            </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- include footer -->
+    <% include ../footer.html %>
+
+    <!-- 맨위로 가기 버튼 -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="../js/sb-admin.min.js"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="../vendor/datatables/jquery.dataTables.js"></script>
+<script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+
+<!-- Custom scripts for this page-->
+<script src="../js/sb-admin-datatables.min.js"></script>
+
+
+<script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
+
+<script type="text/javascript">
+
+    function addUser(){
+        window.location.href = "/parm/AddUser?std_id="+ $(allUserInfos[0][0][key].std_id)+"&parm_id="+$(allUserInfos[0][0][key].parm_id);
+    }
+
+    function addMat(){
+        window.location.href = "/parm/AddMat";
+    }
+
+    $(document).ready(function () {
+
+        $("table.display").dataTable({
+            "iDisplayLength": 300
+        });
+
+        $("#div-dataTable0").show();
+        $("#div-dataTable1").hide();
+        $("#div-dataTable2").hide();
+        $("#div-dataTable3").hide();
+        $("#div-dataTable4").hide();
+
+        $("#btnExport").on('click', function () {
+
+            let selectedValue = $("input[type=radio][name=sType]:checked").val();
+            var uri = $("#dataTable" + selectedValue).excelexportjs({
+                containerid: 'dataTable' + selectedValue
+                , datatype:  'table'
+                , returnUri: true
+            });
+
+            if(selectedValue=='0'){
+                var name = <%=moment(curDate).format('YYYYMMDD') %>+"_학생(전체).xls";
+                $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
+            }
+            else if(selectedValue=="1"){
+                var name = <%=moment(curDate).format('YYYYMMDD') %>+"_팀.xls";
+                $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
+            }
+            else if(selectedValue=="2"){
+                var name =<%=moment(curDate).format('YYYYMMDD') %>+"_과제.xls";
+                $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
+            }
+            else if(selectedValue=="3"){
+                var name =<%=moment(curDate).format('YYYYMMDD') %>+"_가입대기.xls";
+                $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
+            }
+
+        });
+    });
+
+
+    function changeType() {
+        let selectedValue = $("input[type=radio][name=sType]:checked").val();
+
+        switch(selectedValue) {
+            case "0":
+                $("#div-dataTable0").show();
+                $("#div-dataTable1").hide();
+                $("#div-dataTable2").hide();
+                $("#div-dataTable3").hide();
+                break;
+            case "1":
+                $("#div-dataTable1").show();
+                $("#div-dataTable0").hide();
+                $("#div-dataTable2").hide();
+                $("#div-dataTable3").hide();
+                break;
+            case "2":
+                $("#div-dataTable2").show();
+                $("#div-dataTable0").hide();
+                $("#div-dataTable1").hide();
+                $("#div-dataTable3").hide();
+                break;
+            case "3":
+                $("#div-dataTable2").hide();
+                $("#div-dataTable0").hide();
+                $("#div-dataTable1").hide();
+                $("#div-dataTable3").show();
+                break;
+        }
+
+    }
+
+</script>
+</body>
+</html>

@@ -3,7 +3,6 @@ var bodyParser = require('body-parser');
 var cookieParser   = require('cookie-parser');
 var session = require('express-session');
 var sessionconfig = require('./config/sessionconfig.js');
-var methodOverride = require('method-override');
 //var dbconfig = require('../../config/dbconfig.js');
 //var MySQLStore = require('express-mysql-session')(session);
 
@@ -15,14 +14,13 @@ app.set('port', 80);
 //set site domain
 global.domain = 'ssms.dongguk.edu';
 
-//use middlewares, bodyParser
+//use middlewares
+//use bodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //use cookieParser
 app.use(cookieParser());
-// to use custom put. delete
-app.use(methodOverride('_method'));
 
 //set session time
 var time = 1000 * 60 * 100;;
@@ -48,8 +46,9 @@ app.use('/fileDownload', require('./routers/fileDownload.js'));
 app.use('/pj', require('./routers/pj/pj.js'));
 app.use('/mbrmgt', require('./routers/mbrmgt/mbrmgt.js'));
 app.use('/teammgt', require('./routers/teammgt/teammgt.js'));
-app.use('/pjmake', require('./routers/pjmake/pjmake.js'));
-app.use('/pjapply', require('./routers/pjapply/pjapply.js'))
+app.use('/pjmake', require('./routers/parm/parm.js'));
+app.use('/pjapply', require('./routers/pjapply/pjapply.js'));
+app.use('/parm', require('./routers/parm/parm.js'));
 app.use('/pjmng', require('./routers/pjmng/pjmng.js'));
 app.use('/eval', require('./routers/eval/eval.js'));
 app.use('/msgbrd', require('./routers/msgbrd/msgbrd.js'));
@@ -59,3 +58,4 @@ app.use('/statistics', require('./routers/statistics/statistics.js'));
 app.listen(app.get('port'), () => {
   console.log('app listening on port test cicd 2' + app.get('port'));
 });
+

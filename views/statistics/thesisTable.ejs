@@ -1,108 +1,106 @@
-<input type="hidden" name="thesis_id" id="thesis_id" />
+
+<input type="hidden" name="statistic_id" id="statistic_id" />
 <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
        role="grid" aria-describedby="dataTable_info" style="width: 100%;">
     <tbody>
     <tr role="row" class="odd" name="AddBox0" id="AddBox0">
-        <th class=""><label>학술지 구분</label></th>
+        <th class=""><label>연도</label></th>
         <td>
             <div>
-                <select class="form-control" id="journal_category" name="journal_category">
-                    <option value=""></option>
-                    <option value="국제전문학술(SCI급)">국제전문학술(SCI급)</option>
-                    <option value="국제일반학술">국제일반학술</option>
-                    <option value="국내전문학술지(KCI급)">국내전문학술지(KCI급)</option>
-                    <option value="국내일반학술지">국내일반학술지</option>
+                <select class="form-control" id="year" name="year">
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
                 </select>
             </div>
         </td>
-        <th class=""><label>한국연구재단등재구분</label></th>
+        <th class=""><label>학기</label></th>
         <td>
             <div>
-                <select class="form-control" id="register_category" name="register_category">
-                    <option value=""></option>
-                    <option value="등재">등재</option>
-                    <option value="등재후보">등재후보</option>
-                    <option value="등재(후보)">등재(후보)</option>
+                <select class="form-control" id="semester" name="semester">
+                    <option value="1학기">1학기</option>
+                    <option value="여름학기">여름학기</option>
+                    <option value="2학기">2학기</option>
+                    <option value="겨울학기">겨울학기</option>
+                </select>
+            </div>
+        </td>
+        <th class=""><label>분류</label></th>
+        <td>
+            <div>
+                <select class="form-control" id="term" name="term">
+                    <option value="전공단기">전공단기</option>
+                    <option value="전공장기">전공장기</option>
                 </select>
             </div>
         </td>
     </tr>
     <tr>
-        <th class=""><label>게재년</label></th>
-        <td class=""><input class="form-control" name='published_year' id='published_year'
+        <th class=""><label>교수</label></th>
+        <td class=""><input class="form-control" name='instructor' id='instructor'
                             type="text"></td>
-        <th class=""><label>게재월</label></th>
-        <td class=""><input class="form-control" name='published_month' id='published_month'
+        <th class=""><label>전공</label></th>
+        <td class=""><input class="form-control" name='major' id='major'
                             type="text"></td>
-    </tr>
-    <tr>
-        <th class=""><label>게재권/집</label></th>
-        <td class=""><input class="form-control" name='published_book' id='published_book'
-                            type="text"></td>
-        <th class=""><label>게재호</label></th>
-        <td class=""><input class="form-control" name='published_issue' id='published_issue'
+        <th class=""><label>수업이름</label></th>
+        <td class=""><input class="form-control" name='class_name' id='class_name'
                             type="text"></td>
     </tr>
     <tr>
-        <th class=""><label>페이지</label></th>
-        <td class=""><input class="form-control" name='published_page' id='published_page'
-                            type="text" placeholder="ex) 100~101"></td>
-        <th class=""><label>학술지명</label></th>
-        <td class=""><input class="form-control" name='journal_name' id='journal_name'
-                            type="text"></td>
+        <th class=""><label>참여 학생수</label></th>
+        <td class=""><input class="form-control" name='student_num' id='student_num'
+                            type="number"></td>
+        <th class=""><label>참여 기업수</label></th>
+        <td class=""><input class="form-control" name='company_num' id='company_num'
+                            type="number"></td>
+        <th class=""><label>참여 팀수</label></th>
+        <td class=""><input class="form-control" name='team_num' id='team_num'
+                            type="number"></td>
     </tr>
     <tr>
-        <th class=""><label>발행처명</label></th>
-        <td colspan="3" class=""><input class="form-control" name='issuing_place' id='issuing_place' type="text"></td>
+        <th class=""><label>진행 주제 수</label></th>
+        <td class="" colspan="2"><input class="form-control" name='project_num' id='project_num'
+                            type="number"></td>
+        <th class=""><label>멘토링 진행 횟수</label></th>
+        <td class="" colspan="2"><input class="form-control" name='mentoring_num' id='mentoring_num'
+                            type="number"></td>
     </tr>
     <tr>
-        <th class=""><label>논문제목(원어)</label></th>
-        <td colspan="3" class=""><input class="form-control" name='thesis_title_eng' id='thesis_title_eng' type="text"></td>
+        <th class=""><label>참여 멘토수</label></th>
+        <td class="" colspan="2"><input class="form-control" name='mentor_num' id='mentor_num'
+                            type="number"></td>
+        <th class=""><label>논문 등재수</label></th>
+        <td class="" colspan="2"><input class="form-control" name='thesis_num' id='thesis_num'
+                            type="number" ></td>
     </tr>
-    <tr>
-        <th class=""><label>논문제목(타언어)</label></th>
-        <td colspan="3" class=""><input class="form-control" name='thesis_title_oth' id='thesis_title_oth' type="text"></td>
-    </tr>
-    <tr>
-        <th class=""><label>연구분야</label></th>
-        <td class=""><input class="form-control" name='research_field' id='research_field'
-                            type="text"></td>
-        <th class=""><label>발행국가</label></th>
-        <td class=""><input class="form-control" name='issuing_country' id='issuing_country'
-                            type="text"></td>
-    </tr>
-    <tr>
-        <th class=""><label>논문언어</label></th>
-        <td class=""><input class="form-control" name='thesis_language' id='thesis_language'
-                            type="text"></td>
-        <th class=""><label>ISSN번호</label></th>
-        <td class=""><input class="form-control" name='issn_number' id='issn_number'
-                            type="text"></td>
-    </tr>
-    <tr>
-        <th class=""><label>전체저자수</label></th>
-        <td class=""><input class="form-control" name='author_number' id='author_number'
-                            type="text"></td>
-        <th class=""><label>관련프로젝트</label></th>
-        <td class=""><input class="form-control" name='prj_id' id='prj_id'
-                            type="text"></td>
-    </tr>
-    <tr>
-        <th class=""><label>IRB번호</label></th>
-        <td colspan="3" class=""><input class="form-control" name='irb_number' id='irb_number' type="text"></td>
-    </tr>
-    <tr>
-        <th class=""><label>참여자</label></th>
-        <td colspan="3" class=""><input class="form-control" name='author' id='author' type="text" placeholder="ex) 홍길동,김철수,이영희"></td>
-    </tr>
-    <tr>
-        <th class=""><label>지도교수</label></th>
-        <td colspan="3" class=""><input class="form-control" name='teaching_professor' id='teaching_professor' type="text"></td>
-    </tr>
-    <tr>
-        <th><label>논문파일등록</label></th>
-        <td colspan="3"><input class="form-control" name="inputThesisFile" id="inputThesisFile" type="file" ></td>
-    </tr>
-
     </tbody>
 </table>
+
+<!-- 진행한 연구/개발분야 체크박스 -->
+<!-- <fieldset class="scheduler-border col-md-12">
+        <legend class="scheduler-border"> &nbsp 진행한 연구/개발분야 &nbsp <label style="float: right; color: red"> * 다중선택 가능 </label></legend>
+    <div class="form-row">
+        <%
+        var checkboxItems = [
+            "웹 프로그래밍",
+            "모바일 프로그래밍",
+            "시스템/네트워크 운영",
+            "데이터베이스 응용",
+            "정보보호 및 보안",
+            "게임, 그래픽스, 영상처리",
+            "응용 소프트웨어 개발",
+            "시스템통합(SI)",
+            "빅데이터",
+            "마케팅",
+            "정보통신시험인증",
+            "정보통신",
+            "기타",
+        ]
+        %>
+        <% for(var i = 0; i < checkboxItems.length; i++) {%>
+        <div class="col-md-3" >
+            <input style="margin-right: 2%;" type="checkbox" name="chk_code" value="<%=checkboxItems[i]%>"><%=checkboxItems[i]%>
+        </div>
+        <% } %>
+    </div>
+</fieldset>
+ -->
