@@ -40,10 +40,10 @@
         <div class="card mx-auto mt-5 mb-5">
             <div class="card-body">
                 <div class ="form-row">
-                    <h5> 과제 생성 </h5>
+                    <h5> 상세 과제 생성 </h5>
                 </div>
 
-                <form action="/parm/AddMat/<%=mat_id%>" method="post" id="setting" enctype="multipart/form-data" onsubmit="return CheckForm();"/>
+                <form action="/parm/SetSubMat/<%=ClassInfo[0].mat_s_id%>" method="post" id="setting" enctype="multipart/form-data" onsubmit="return CheckForm();" />
                 <div class="table-responsive" >
                     <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                         <div class="row">
@@ -52,48 +52,32 @@
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과제 명</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="mat_name" id="mat_name" type="text"></td>
+                                        <input class="form-control" name="s_name" id="s_name" type="text" value="<%=ClassInfo[0].s_name%>"></td>
                                 </tr>
 
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과제 내용</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="mat_comm" id="mat_comm" type="text"></td>
-                                </tr>
-
-
-                                <tr role="row" class="odd">
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>카테고리1</center></th>
-                                    <td class="" colspan="2">
-                                        <input class="form-control" name="mat_cat" id="mat_cat" type="text"></td>
-                                </tr>
-                                <tr role="row" class="odd">
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>카테고리2</center></th>
-                                    <td class="" colspan="2">
-                                        <input class="form-control" name="mat_cat2" id="mat_cat2" type="text"></td>
-                                </tr>
-                                <tr role="row" class="odd">
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>카테고리3</center></th>
-                                    <td class="" colspan="2">
-                                        <input class="form-control" name="mat_cat3" id="mat_cat3" type="text"></td>
+                                        <input class="form-control" name="s_comm" id="s_comm" type="text" value="<%=ClassInfo[0].s_comm%>"></td>
                                 </tr>
 
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>출판물</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="mat_pub" id="mat_pub" type="text"></td>
+                                        <input class="form-control" name="s_pub" id="s_pub" type="text" value="<%=ClassInfo[0].s_pub%>"></td>
                                 </tr>
 
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>URL</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="mat_url" id="mat_url" type="text"></td>
+                                        <input class="form-control" name="s_url" id="s_url" type="text" value="<%=ClassInfo[0].s_url%>"></td>
                                 </tr>
+
 
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>PDF</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="mat_pdf" id="mat_pdf" type="file" ></td>
+                                        <input class="form-control" name="s_pdf" id="s_pdf" type="file" value="<%=ClassInfo[0].s_pdf%>"></td>
                                 </tr>
 
                                 </tbody>
@@ -104,6 +88,7 @@
                                 <div class = "col-md-4">
                                     <label> </label>
                                 </div>
+                                <input  name="parm_id" id="parm_id" type="hidden" value="<%=ClassInfo[0].mat_id%>"></td>
 
                                 <div class = "col-md-2">
                                     <center> <input type ="submit" class="btn btn-primary btn-block" name = "MakeProject" value="과제 등록"  /> </center>
@@ -156,13 +141,14 @@
         var _key_2 = document.getElementById("mat_cat2").value;
         var _key_3 = document.getElementById("mat_cat3").value;
 
-        if (_mat_name == ""){
+
+        if (_mat_name==""){
             alert("과제명을 입력하세요..");
             document.getElementById("mat_name").focus();
             return false;
         }
 
-        if (_key_1 =="" && _key_2 == "" && _key_3 == ""){
+        if (_key_1 =='0' && _key_2 == '0' && _key_3 == '0'){
             alert("카테고리를 하나 이상 입력하세요");
             document.getElementById("mat_cat").focus();
             return false;
@@ -187,13 +173,12 @@
         }
 
 
-        if (confirm("과제를 등록하시겠습니까? ") == true ) {
+        if (confirm("과제를 수정하시겠습니까? ") == true ) {
             return true ;
         }else{
             return false;
         }
     }
-
     function CheckCancel(){
 
         if (confirm("과제을 취소하시겠습니까? ") == true ) {

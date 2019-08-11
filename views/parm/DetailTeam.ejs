@@ -43,17 +43,7 @@
                 <div class ="form-row">
                     <h5> 팀 상세보기 </h5>
                 </div>
-                <div class="form-group" style="text-align: center;">
-                    <div class="form-row">
-                        <div class="col-md-2">
-                            <input style="margin-right: 2%;" type="radio" value="0" name="sType" onclick="changeType()" checked="checked">정보
-                        </div>
-                        <div class="col-md-2">
-                            <input style="margin-right: 2%;" type="radio" value="1" name="sType" onclick="changeType()">학생(전체)
-                        </div>
 
-                    </div>
-                </div>
                 <% if(userInfo.userType == 'admin' && userInfo.userId == 'admin') { %>
                 <%}%>
                 <div class="card mb-3">
@@ -148,6 +138,95 @@
                                 </tbody>
                             </table>
                         </div>
+                        <form action="/parm/AddTeamMem" method="post" id="setting" onsubmit="return CheckForm();" />
+                        <input type = "hidden" value ="0" name ="Classnum" id = "Classnum" />
+                        <div class="table-responsive" id="ProjectInfo">
+                            <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                <div class="row">
+                                    <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 85%;" ></th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 15%;">
+                                                <div class="form-row">
+                                                    <div class="col-md-6">
+                                                        <a href="javascript:add_class();">
+                                                            <center><div class="form-control"> + </div> </center>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <a href="javascript:del_class();">
+                                                            <center><div class="form-control"> - </div> </center>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!-- 멘토링 일정 추가 -->
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive" >
+                            <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                <div class="row">
+                                    <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width:5%;"></th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>팀원 아이디</center></th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>팀원명</center></th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" class="odd"  name = "AddBox0" id="AddBox0" >
+                                            <td class="sorting_1">1</td>
+                                            <td class=""> <input class="form-control" name='std_id0' id='std_id0' type="text"></td>
+
+                                            <td class=""> <input class="form-control" name='std_name0' id='std_name0' type="text" ></td>
+
+                                        </tr>
+                                        <tr role="row" class="odd"  name = "AddBox1" id="AddBox1" >
+                                        </tr>
+                                        <tr role="row" class="odd"  name = "AddBox2" id="AddBox2" >
+                                        </tr>
+                                        <tr role="row" class="odd"  name = "AddBox3" id="AddBox3" >
+                                        </tr>
+                                        <tr role="row" class="odd"  name = "AddBox4" id="AddBox4" >
+                                        </tr>
+                                        <tr role="row" class="odd"  name = "AddBox5" id="AddBox5" >
+                                        </tr>
+                                        <tr role="row" class="odd"  name = "AddBox6" id="AddBox6" >
+                                        </tr>
+                                        <tr role="row" class="odd"  name = "AddBox7" id="AddBox7" >
+                                        </tr>
+                                        <tr role="row" class="odd"  name = "AddBox8" id="AddBox8" >
+                                        </tr>
+                                        <tr role="row" class="odd"  name = "AddBox9" id="AddBox9" >
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class = "form-group mt-4">
+                                    <div class="form-row">
+                                        <div class = "col-md-4">
+                                            <label> </label>
+                                        </div>
+                                        <div class = "col-md-4">
+                                            <center> <input type ="submit" class="btn btn-primary btn-block" name = "MakeProject" value="팀원 등록"  /> </center>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
                     </div>
                 </div>
 
@@ -180,33 +259,55 @@
 
 <script type="text/javascript">
 
-
-    $(document).ready(function () {
-
-        $("table.display").dataTable({
-            "iDisplayLength": 300
-        });
-
-        $("#div-dataTable0").hide();
-        $("#div-dataTable1").show();
-    });
-
-
-    function changeType() {
-        let selectedValue = $("input[type=radio][name=sType]:checked").val();
-
-        switch(selectedValue) {
-            case "0":
-                $("#div-dataTable0").show();
-                $("#div-dataTable1").hide();
-                break;
-            case "1":
-                $("#div-dataTable1").show();
-                $("#div-dataTable0").hide();
-                break;
+    var index = 0;
+    var DelCheck =0;
+    function add_class(){
+        index +=1 ;
+        var addbox = "AddBox"+index;
+        var show = document.getElementById(addbox);
+        var add = "";
+        if (index >10){
+            alert("한 번에 최대 10과목 입력 가능합니다.");
+            return
         }
+        else{
+            id_std_id = "std_id"+ (index);
+            id_std_name = "std_name"+ (index);
 
+            add += '<td class="sorting_1">'+(index+1)+'</td>';
+
+            add += '<td class="">'+'<input class="form-control"'+' name='+id_std_id+' id='+id_std_id+ ' type="text">'+ '</td> ';
+
+            add += '<td class="">'+'<input class="form-control"'+' name='+id_std_name+' id='+id_std_name+ ' type="text" >'+'</td>';
+
+            show.innerHTML = add ;
+            document.getElementById("Classnum").value = index;
+        }
     }
+    function del_class(){
+        var addboxIndex = "AddBox"+index;
+        var show = document.getElementById(addboxIndex);
+
+        if(DelCheck==0 && confirm("가장 하단의 항목부터 삭제됩니다.")==true){
+            DelCheck += 1;
+            if (index > 0){
+                show.innerHTML = "";
+                index -=1;
+                document.getElementById("Classnum").value = index;
+            }else{
+                alert("더 이상 삭제할 수 없습니다.");
+            }
+        }else{
+            if (index > 0){
+                show.innerHTML = "";
+                index -=1;
+                document.getElementById("Classnum").value = index;
+            }else{
+                alert("더 이상 삭제할 수 없습니다.");
+            }
+        }
+    }
+
 </script>
 </body>
 </html>
