@@ -128,7 +128,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% for(var key = 0; key < ClassInfo[2].length; key++) { %>
+                                <% for(var i = 0; i < ClassInfo[2].length; i++) { %>
                                     <tr>
                                         <% for(var key in ClassInfo[2][i]) { %>
                                             <td><center><%= ClassInfo[2][i][key] %></center></td>
@@ -140,6 +140,7 @@
                         </div>
                         <form action="/parm/AddTeamMem" method="post" id="setting" onsubmit="return CheckForm();" />
                         <input type = "hidden" value ="0" name ="Classnum" id = "Classnum" />
+                        <input type = "hidden" value ="<%=ClassInfo[1][0].team_id%>" name ="team_id" id = "team_id" />
                         <div class="table-responsive" id="ProjectInfo">
                             <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                                 <div class="row">
