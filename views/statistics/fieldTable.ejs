@@ -1,34 +1,164 @@
 <%
-let list = JSON.parse(JSON.stringify(statistics));
-let values = []
-let valuesMap = new Map()
+const l = (v) => console.log(v);
 
-for(let obj of list){
-    for(let element in obj) {
-        if(element !== "major" && element !== "instructor" && element !== "class_name") {
-            values.push(obj[element])
-        }
-        else if(field === "class_name" && element === "class_name") {
-            if(valuesMap.has(obj[element]) === false) {
-                valuesMap.set(obj[element], 1)
-            }
-            else {
-                valuesMap.set(obj[element], valuesMap.get(obj[element])+1)
-            }
-        }
-        else if(field === "instructor" && element === "instructor") {
-            if(valuesMap.has(obj[element]) === false) {
-                valuesMap.set(obj[element], 1)
-            }
-            else {
-                valuesMap.set(obj[element], valuesMap.get(obj[element])+1)
-            }
-        }
-    }
+const list = JSON.parse(JSON.stringify(fieldInfo[0]));
+const classNames = JSON.parse(JSON.stringify(fieldInfo[1])).reduce((acc, cur) => {
+    acc[cur.class_num] = cur.class_name;
+    return acc;
+}, {});
+
+const yearList = list.filter((cur) => {
+    return cur.prj_year == year ? true : false
+});
+
+let tableList = [];
+if(field === 'class_name') {
+
+    tableList = yearList.reduce((acc, cur) => {
+        if(cur.inst_name === null) return acc;
+
+        const element = `${cur.inst_name}*${classNames[cur.class_num]}`;
+        if(!acc.includes(element)) acc.push(element);
+        return acc;
+    }, []);
+} else if(field === 'student_num') {
+    let students = JSON.parse(JSON.stringify(fieldInfo[2])).reduce((acc, cur) => {
+        if(cur.class_num === null) return acc;
+        
+        if(acc[cur.class_num] === undefined) acc[cur.class_num] = 1;
+        else acc[cur.class_num] += 1;
+
+        return acc;
+    }, {});
+
+    tableList = yearList.reduce((acc, cur) => {
+        if(cur.inst_name === null) return acc;
+
+        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${students[cur.class_num]}`;
+        if(!acc.includes(element)) acc.push(element);
+        return acc;
+    }, []);
+} else if(field === 'instructor') {
+
+    tableList = yearList.reduce((acc, cur) => {
+        if(cur.inst_name === null) return acc;
+
+        const element = `${cur.inst_name}`;
+        if(!acc.includes(element)) acc.push(element);
+        return acc;
+    }, []);
+} else if(field === 'company_num') {
+
+    let companys = yearList.reduce((acc, cur) => {
+        if(cur.class_num === null) return acc;
+        
+        if(acc[cur.class_num] === undefined) acc[cur.class_num] = [ cur.company_name ];
+        else if(!acc[cur.class_num].includes(cur.company_name)) acc[cur.class_num].push(cur.company_name);
+
+        return acc;
+    }, {});
+
+    tableList = yearList.reduce((acc, cur) => {
+        if(cur.inst_name === null) return acc;
+
+        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${companys[cur.class_num].length}`;
+        if(!acc.includes(element)) acc.push(element);
+        return acc;
+    }, []);
+} else if(field === 'team_num') {
+
+    let teams = yearList.reduce((acc, cur) => {
+        if(cur.class_num === null) return acc;
+        
+        if(acc[cur.class_num] === undefined) acc[cur.class_num] = [ cur.team_name ];
+        else if(!acc[cur.class_num].includes(cur.team_name)) acc[cur.class_num].push(cur.team_name);
+
+        return acc;
+    }, {});
+
+    tableList = yearList.reduce((acc, cur) => {
+        if(cur.inst_name === null) return acc;
+
+        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${teams[cur.class_num].length}`;
+        if(!acc.includes(element)) acc.push(element);
+        return acc;
+    }, []);
+} else if(field === 'project_num') {
+
+    // 팀이랑 프로젝트랑 동일
+    let teams = yearList.reduce((acc, cur) => {
+        if(cur.class_num === null) return acc;
+        
+        if(acc[cur.class_num] === undefined) acc[cur.class_num] = [ cur.team_name ];
+        else if(!acc[cur.class_num].includes(cur.team_name)) acc[cur.class_num].push(cur.team_name);
+
+        return acc;
+    }, {});
+
+    tableList = yearList.reduce((acc, cur) => {
+        if(cur.inst_name === null) return acc;
+
+        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${teams[cur.class_num].length}`;
+        if(!acc.includes(element)) acc.push(element);
+        return acc;
+    }, []);
+} else if(field === 'mentoring_num') {
+
+    let mentoringNums = yearList.reduce((acc, cur) => {
+        if(cur.class_num === null) return acc;
+        if(cur.mentor_cnt === null) return acc;
+        
+        if(acc[cur.class_num] === undefined) acc[cur.class_num] = cur.mentor_cnt;
+        else acc[cur.class_num] += cur.mentor_cnt; 
+
+        return acc;
+    }, {});
+
+    tableList = yearList.reduce((acc, cur) => {
+        if(cur.inst_name === null) return acc;
+
+        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${mentoringNums[cur.class_num]}`;
+        if(!acc.includes(element)) acc.push(element);
+        return acc;
+    }, []);
+} else if(field === 'mentor_num') {
+
+    let mentors = yearList.reduce((acc, cur) => {
+        if(cur.class_num === null) return acc;
+        
+        if(acc[cur.class_num] === undefined) acc[cur.class_num] = [ cur.mentor_name ];
+        else if(!acc[cur.class_num].includes(cur.mentor_name)) acc[cur.class_num].push(cur.mentor_name);
+
+        return acc;
+    }, {});
+
+    tableList = yearList.reduce((acc, cur) => {
+        if(cur.inst_name === null) return acc;
+
+        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${mentors[cur.class_num].length}`;
+        if(!acc.includes(element)) acc.push(element);
+        return acc;
+    }, []);
+} else if(field === 'thesis_num') {
+
+    let thesis = JSON.parse(JSON.stringify(fieldInfo[2])).reduce((acc, cur) => {
+        if(cur.thesis_file === null) return acc;
+        
+        if(acc[cur.class_num] === undefined) acc[cur.class_num] = 1;
+        else acc[cur.class_num] += 1;
+
+        return acc;
+    }, {});
+
+    tableList = yearList.reduce((acc, cur) => {
+        if(cur.inst_name === null) return acc;
+
+        const thesisNum = thesis[cur.class_num] === undefined ? 0 : thesis[cur.class_num];
+        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${thesisNum}`;
+        if(!acc.includes(element)) acc.push(element);
+        return acc;
+    }, []);
 }
-
-console.log(values)
-console.log(valuesMap)
 
 %>
 
@@ -36,65 +166,34 @@ console.log(valuesMap)
        role="grid" aria-describedby="dataTable_info" style="width: 100%;">
     <thead>
         <tr role="row">
+            <!-- 번호 -->
             <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 10%;"><center>번호</center></th>
 
-            <!-- 교수수인 경우 -->
-            <%if(field === "instructor") {%>
             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 45%;"><center>교수</center></th>
-            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 40%;"><center>학과</center></th>
-
-            <!-- 수업수인 경우 -->
-            <%} else if(field === "class_name"){ %>
-            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 80%;"><center>수업</center></th>
-
-            <!-- 그외의 경우 -->
-            <%} else { %>
-            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20%;"><center>교수</center></th>
-            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 30%;"><center>학과</center></th>
-            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 30%;"><center>수업</center></th>
+            <!-- 교수수인 경우 수업 표시 X -->
+            <%if(field !== "instructor") {%>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 45%;"><center>수업</center></th>
             <%}%>
+            
+            <!-- 멘토링 진행 홧수 -->
+            <!-- <%if(field === "mentoring_num") {%>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 45%;"><center>멘토이름</center></th>
+            <%}%> -->
 
+            <%if(field !== "class_name" && field !== "instructor") {%>
             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 15%;"><center><%= fields[field]%></center></th>
+            <%}%>
         </tr>
     </thead>
     <tbody>
-    <%if(field === "instructor") {
-        let i = 1
-        valuesMap.forEach((value, key) => {
-    %>
+        <%for(let i = 0; i < tableList.length; i++) {
+            const values = tableList[i].split('*');%>
         <tr role="row" class="odd" >
-            <td class="sorting_1"><center><%= i++ %></center></center></td>
-            <td><center><%= key%></center></td>
-            <td><center><%= value%></center></td>
+            <td class="sorting_1"><center><%= i+1 %></center></center></td>
+            <%for(let j = 0; j < values.length; j++) {%>
+            <td><center><%= values[j]%></center></td>
+            <%}%>
         </tr>
-        <%})%>
-    <%} else if(field === "class_name"){ 
-        let i = 1
-        valuesMap.forEach((value, key) => {
-    %>
-        <tr role="row" class="odd" >
-            <td class="sorting_1"><center><%= i++ %></center></center></td>
-            <td><center><%= key%></center></td>
-            <td><center><%= value%></center></td>
-        </tr>
-        <%})%>
-    <%} else { %>
-        <% for(let i = 0; i < values.length; i++) {%>
-            <% 
-            console.log(i)
-            console.log(statistics[i].instructor)
-            console.log(statistics[i].major)
-            console.log(statistics[i].class_name)
-            console.log(values[i])
-            %>
-            <tr role="row" class="odd" >
-                <td class="sorting_1"><center><%= i+1 %></center></center></td>
-                <td><center><%= statistics[i].instructor%></center></td>
-                <td><center><%= statistics[i].major%></center></td>
-                <td><center><%= statistics[i].class_name%></center></td>
-                <td><center><%= values[i]%></center></td>
-            </tr>
-        <% }%>
-    <% }%>
+        <%}%>
     </tbody>
 </table>

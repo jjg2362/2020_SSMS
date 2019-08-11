@@ -316,16 +316,7 @@ exports.getAllStatistic = (req, res) => {
         // write query / use connection
         let query = "";
 
-        // 참여학생수
-        // 논문 등재수
-
-        // 진행 프로젝트 수
-        // 참여 팀수
-        // 참여 교수수
-        // 개설 수업수
-        // 참여 회사수
-        // 참여 멘토수
-        // 멘토링 진행수
+        // #1 진행 프로젝트 수 참여 팀수 참여 교수수 개설 수업수 참여 회사수 참여 멘토수 멘토링 진행수
         query += "select distinct p.prj_id, ads.prj_year, ads.prj_semes, ads.term_chk, ads.transfer_date, p.prj_name, p.prj_id, ct_me.cnt as mentor_cnt, t.team_name, ";
         query += "t.class_num, ins.major, ins.inst_name, me.company_name, me.mentor_name, me.phone_num ";
         query += "from admin_settings as ads, project as p ";
@@ -336,6 +327,14 @@ exports.getAllStatistic = (req, res) => {
         query += "where ads.settings_id = p.settings_id and p.use_yn = 0 ";
         query += "order by prj_year desc, prj_semes desc;";
 
+        // #2 논문등재수
+        query += "select thesis_file from final_product;";
+
+        // #3 참여학생수 
+        query += "select distinct ads.prj_year, sti.std_id";
+        query += " from admin_settings as ads, team as t, std_team_info as sti";
+        query += " where t.team_id = sti.team_id and ads.settings_id = t.settings_id and sti.use_yn = 1;";
+
         connection.query(query, (error, results, fields) => {
             connection.release();
 
@@ -344,13 +343,12 @@ exports.getAllStatistic = (req, res) => {
                 return;
             }
 
-            console.log('Thesis get success.');
             res.render('statistics/allStatistic', {statisticInfo: results, userId: req.session.userId, userType: req.session.userType,userInfo: req.session.userInfo, moment: moment, curDate: new Date()});
         });
     });
 };
 
-exports.getStatistic = (req, res) => {
+exports.getStatisticField = (req, res) => {
     // session check
     if (!req.session.userId) {
         console.log('do not have a session.');
@@ -360,7 +358,60 @@ exports.getStatistic = (req, res) => {
         logger.putLog(req);
     }
 
-    
+    const year = req.query.year;
+    const field = req.query.field;
+
+    // write query / use connection
+    let query = "";
+
+    query += "select distinct p.prj_id, ads.prj_year, ads.prj_semes, ads.term_chk, ads.transfer_date, p.prj_name, p.prj_id, ct_me.cnt as mentor_cnt, t.team_name, ";
+    query += "t.class_num, ins.major, ins.inst_name, me.company_name, me.mentor_name, me.phone_num ";
+    query += "from admin_settings as ads, project as p ";
+    query += "left outer join (select count(*) as cnt, mr.prj_id from mentoring_report as mr, project as p1 where mr.prj_id = p1.prj_id group by p1.prj_id) as ct_me on p.prj_id = ct_me.prj_id ";
+    query += "left outer join (select t.team_name, t.class_num, t.prj_id from team as t, project as p2 where t.prj_id = p2.prj_id group by p2.prj_id) as t on p.prj_id = t.prj_id ";
+    query += "left outer join (select ins.inst_name, ins.inst_id, ins.major, ci.class_num from instructor as ins, class_info as ci where ins.inst_id = ci.inst_id) as ins on t.class_num = ins.class_num ";
+    query += "left outer join (select me.mentor_id, me.company_name , me.mentor_name, me.phone_num from mentor as me, project as p3 where p3.mentor_id = me.mentor_id ) as me on p.mentor_id = me.mentor_id ";
+    query += "where ads.settings_id = p.settings_id and p.use_yn = 0 ";
+    query += "order by prj_year desc, prj_semes desc;";
+
+    if(field === 'class_name') {
+        
+        query += "select class_num, class_name from class_info;";
+    } else if(field === 'student_num') {
+
+        query += "select class_num, class_name from class_info;";
+
+        // 참여 학생목록
+        query += "select p.prj_name, t.team_name, t.class_num, t.prj_id, sti.*, st.major, st.email_ad, st.std_name, st.phone_num, ads.prj_year";
+        query += " from project as p, team as t, std_team_info as sti, student as st, admin_settings as ads";
+        query += " where p.use_yn = 0 and t.prj_id = p.prj_id and sti.team_id = t.team_id and st.std_id = sti.std_id and ads.settings_id = p.settings_id";
+        query += " order by p.prj_id;";
+    } else if(field === 'instructor') {
+
+    } else if(field === 'company_num') {
+
+        query += "select class_num, class_name from class_info;";
+    } else if(field === 'team_num') {
+
+        query += "select class_num, class_name from class_info;";
+    } else if(field === 'project_num') {
+
+        query += "select class_num, class_name from class_info;";
+    } else if(field === 'mentoring_num') {
+
+        query += "select class_num, class_name from class_info;";
+    } else if(field === 'mentor_num') {
+
+        query += "select class_num, class_name from class_info;";
+    } else if(field === 'thesis_num') {
+
+        query += "select class_num, class_name from class_info;";
+
+        // 논문등재수
+        query += "select t.class_num, f.thesis_file ";
+        query += "from final_product as f, team as t ";
+        query += "where f.team_id = t.team_id;";
+    }
 
     // get connection from pool
     mysqlPool.pool.getConnection((err, connection) => {
@@ -378,8 +429,11 @@ exports.getStatistic = (req, res) => {
                 return;
             }
 
-            console.log('Thesis get success.');
-            res.redirect('thesisList');
+            res.render('statistics/statisticField', {
+                fieldInfo: results, 
+                year: year,
+                field: field,
+                userId: req.session.userId, userType: req.session.userType,userInfo: req.session.userInfo, moment: moment, curDate: new Date()});
         });
     });
 };

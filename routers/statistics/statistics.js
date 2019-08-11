@@ -41,8 +41,8 @@ router.route('/statistic')
     .get(controller.getAllStatistic)
 
 // all statistics
-router.route('/statistics/:category/:year')
-    .get(controller.getStatistic)
+router.route('/statisticField')
+    .get(controller.getStatisticField);
 
 module.exports = router;
 
