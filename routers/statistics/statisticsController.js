@@ -288,3 +288,98 @@ exports.deleteThesis = (req, res) => {
         });
     });
 };
+
+//
+
+function sessionCheck(req) {
+    if (!req.session.userId) {
+        console.log('do not have a session.');
+        return false;
+    } else {
+        return true;
+    }
+}
+
+exports.getAllStatistic = (req, res) => {
+    // session check
+    if(!sessionCheck(req)) res.redirect('/');
+    else logger.putLog(req);
+
+    // get connection from pool
+    mysqlPool.pool.getConnection((err, connection) => {
+        if (err) { //throw err;
+            console.error('getConnection err : ' + err);
+            connection.release();
+            return;
+        }
+
+        // write query / use connection
+        let query = "";
+
+        // 참여학생수
+        // 논문 등재수
+
+        // 진행 프로젝트 수
+        // 참여 팀수
+        // 참여 교수수
+        // 개설 수업수
+        // 참여 회사수
+        // 참여 멘토수
+        // 멘토링 진행수
+        query += "select distinct p.prj_id, ads.prj_year, ads.prj_semes, ads.term_chk, ads.transfer_date, p.prj_name, p.prj_id, ct_me.cnt as mentor_cnt, t.team_name, ";
+        query += "t.class_num, ins.major, ins.inst_name, me.company_name, me.mentor_name, me.phone_num ";
+        query += "from admin_settings as ads, project as p ";
+        query += "left outer join (select count(*) as cnt, mr.prj_id from mentoring_report as mr, project as p1 where mr.prj_id = p1.prj_id group by p1.prj_id) as ct_me on p.prj_id = ct_me.prj_id ";
+        query += "left outer join (select t.team_name, t.class_num, t.prj_id from team as t, project as p2 where t.prj_id = p2.prj_id group by p2.prj_id) as t on p.prj_id = t.prj_id ";
+        query += "left outer join (select ins.inst_name, ins.inst_id, ins.major, ci.class_num from instructor as ins, class_info as ci where ins.inst_id = ci.inst_id) as ins on t.class_num = ins.class_num ";
+        query += "left outer join (select me.mentor_id, me.company_name , me.mentor_name, me.phone_num from mentor as me, project as p3 where p3.mentor_id = me.mentor_id ) as me on p.mentor_id = me.mentor_id ";
+        query += "where ads.settings_id = p.settings_id and p.use_yn = 0 ";
+        query += "order by prj_year desc, prj_semes desc;";
+
+        connection.query(query, (error, results, fields) => {
+            connection.release();
+
+            if (error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+
+            console.log('Thesis get success.');
+            res.render('statistics/allStatistic', {statisticInfo: results, userId: req.session.userId, userType: req.session.userType,userInfo: req.session.userInfo, moment: moment, curDate: new Date()});
+        });
+    });
+};
+
+exports.getStatistic = (req, res) => {
+    // session check
+    if (!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    } else {
+        logger.putLog(req);
+    }
+
+    
+
+    // get connection from pool
+    mysqlPool.pool.getConnection((err, connection) => {
+        if (err) { //throw err;
+            console.error('getConnection err : ' + err);
+            connection.release();
+            return;
+        }
+
+        connection.query(query, (error, results, fields) => {
+            connection.release();
+
+            if (error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+
+            console.log('Thesis get success.');
+            res.redirect('thesisList');
+        });
+    });
+};

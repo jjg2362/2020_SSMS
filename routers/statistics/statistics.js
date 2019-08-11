@@ -34,5 +34,15 @@ router.route('/thesis')
     .put(upload.single('inputThesisFile'), controller.modifyThesis)
     .delete(upload.single('inputThesisFile'), controller.deleteThesis);
 
+///
+
+// all statistic
+router.route('/statistic')
+    .get(controller.getAllStatistic)
+
+// all statistics
+router.route('/statistics/:category/:year')
+    .get(controller.getStatistic)
+
 module.exports = router;
 

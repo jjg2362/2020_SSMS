@@ -101,7 +101,7 @@
 
     // 서버에서 넘어온 배열을 저장 후 맵에 저장
     var statistics = JSON.parse('<%- JSON.stringify(statistics) %>');
-
+    console.log(statistics)
     const years = statistics.reduce((acc, cur) => {
         if(acc.indexOf(cur.year) === -1) acc.push(cur.year);
         return acc;

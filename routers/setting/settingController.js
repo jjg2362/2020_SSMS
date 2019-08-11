@@ -174,6 +174,7 @@ exports.getPastListPage = (req, res) => {
                 return;
             }
 
+            console.log(results[0])
             //use results and fields
             res.render('setting/DGU901', {PastList: results, userId: req.session.userId, userType: req.session.userType, userInfo: req.session.userInfo, moment: moment});
         });
@@ -259,7 +260,6 @@ exports.getSearchproject1 = (req,res)=>{
         console.error('query error : ' + error);
         return;
       }
-      // console.log(results);
 
       //use results and fields
       res.render('setting/DGU903', {PJList: results, userId: req.session.userId, userType: req.session.userType,userInfo: req.session.userInfo, moment: moment, curDate: new Date()});

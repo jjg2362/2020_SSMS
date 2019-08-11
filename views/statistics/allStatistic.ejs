@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Page level plugin CSS-->
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+
+    <!-- Pie Chart stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css"/>
+
+    <!-- Pie Chart javascript -->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+
+</head>
+
+<!-- 메인 페이지 -->
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- 네비게이션 바 불러오기 -->
+<% include ../navBar.ejs %>
+
+<!-- 메인 -->
+<div class="content-wrapper">
+    <!-- 메인 내용 -->
+    <div class="container-fluid">
+        <div class="mb-0 mt-4">
+            <h6>통계 > 실적 조회 </h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card mb-2 mt-2 pt-1 pl-3 pr-3">
+            <div class="card-body">
+                <h4> 연도별 실적 조회 </h4>
+                <hr class="mt-2">
+                <% include fieldCard.ejs %>
+                <hr class="mt-2">
+                
+                <h5>2019</h5>
+                <div id="yearChart2019"></div>
+
+                <h5>2018</h5>
+                <div id="yearChart2018"></div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<!-- include footer -->
+<% include ../footer.html %>
+
+<!-- 맨위로 가기 버튼 -->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+</a>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin.min.js"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="../vendor/datatables/jquery.dataTables.js"></script>
+<script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+
+<!-- Custom scripts for this page-->
+<script src="../js/sb-admin-datatables.min.js"></script>
+<%
+const l = (v) => console.log(v);
+
+const statistic2019 = {
+    project: [],
+    team: [],
+    instructor: [],
+    class: [],
+    company: [],
+    mentor: [],
+    mentoring: 0,
+}
+
+const statistic2018 = {
+    project: [],
+    team: [],
+    instructor: [],
+    class: [],
+    company: [],
+    mentor: [],
+    mentoring: 0,
+}
+
+const allInfoLength = statisticInfo.length;
+
+for(let i=0; i < statisticInfo.length; i++) {
+    // year
+    const year = JSON.stringify(statisticInfo[i].prj_year)
+    const thisSet = year == 2019 ? statistic2019 : statistic2018
+    
+    // 개설 수업수
+    if(typeof(statisticInfo[i].class_num) === 'string') {
+        if(!thisSet.class.includes(statisticInfo[i].class_num)) {
+            thisSet.class.push(statisticInfo[i].class_num);
+        }
+    }
+    
+    
+
+    // 진행 프로젝트 수
+    // 참여 팀수
+    const project = statisticInfo[i].prj_id;
+    const team = statisticInfo[i].team_name;
+    if(!thisSet.project.includes(project)) {
+        thisSet.project.push(project);
+        thisSet.team.push(team);
+    }
+
+    // 참여 교수수
+    const instructor = statisticInfo[i].inst_name;
+    if(!thisSet.instructor.includes(instructor)) thisSet.instructor.push(instructor);
+
+    // 참여 회사수
+    const company = statisticInfo[i].company_name;
+    if(!thisSet.company.includes(company)) thisSet.company.push(company);
+
+    // 참여 멘토수
+    const mentor = statisticInfo[i].mentor_name;
+    if(!thisSet.mentor.includes(mentor)) thisSet.mentor.push(mentor);
+
+    // 멘토링 진행수
+    const mentoring = statisticInfo[i].mentor_cnt;
+    if(!isNaN(mentoring)) thisSet.mentoring += statisticInfo[i].mentor_cnt;
+}
+%>
+<script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
+<script type="text/javascript">
+    const l = (v) => console.log(v);
+
+    const statistic2019 = JSON.parse('<%- JSON.stringify(statistic2019)%>');
+    const statistic2018 = JSON.parse('<%- JSON.stringify(statistic2018)%>');
+
+    l(statistic2019)
+    l(statistic2018)
+
+    // todo : 참여학생수, 논문등재수
+    const fields = ['x', '진행 프로젝트수', '참여 팀수', '참여 교수수', '개설 수업수', '참여 회사수', '참여 멘토수', '멘토링 진행수'];
+    
+    var yearChart2019 = c3.generate({
+        bindto: "#yearChart2019",
+        data: {
+            x : 'x',
+            columns: [
+                fields,
+                ['2019'].concat([ 
+                    statistic2019.project.length,
+                    statistic2019.team.length,
+                    statistic2019.instructor.length,
+                    statistic2019.class.length,
+                    statistic2019.company.length,
+                    statistic2019.mentor.length,
+                    statistic2019.mentoring
+                ]),
+            ],
+            type: 'bar'
+        },
+        axis: {
+            x: {
+                type: 'category',
+            }
+        }
+    });
+
+    var yearChart2018 = c3.generate({
+        bindto: "#yearChart2018",
+        data: {
+            x : 'x',
+            columns: [
+                fields,
+                ['2018'].concat([ 
+                    statistic2018.project.length,
+                    statistic2018.team.length,
+                    statistic2018.instructor.length,
+                    statistic2018.class.length,
+                    statistic2018.company.length,
+                    statistic2018.mentor.length,
+                    statistic2018.mentoring
+                ]),
+            ],
+            colors: {
+                '2018': '#ff2200',
+            },
+            type: 'bar'
+        },
+        axis: {
+            x: {
+                type: 'category',
+            }
+        }
+    });
+
+    // function CheckForm(){
+    //     var _instructor = document.getElementById("instructor").value;
+    //     // var _student_num = document.getElementById("student_num").value;
+    //     // var _project_num = document.getElementById("project_num").value;
+    //     // var _company_num = document.getElementById("company_num").value;
+    //     // var _mentor_num = document.getElementById("mentor_num").value;
+    //     // var _thesis_num = document.getElementById("thesis_num").value;
+
+    //     if (_instructor==""){
+    //     alert("교수를 입력하세요.");
+    //     document.getElementById("instructor").focus();
+    //     return false;
+    //     }
+
+    //     if (confirm("실적을 등록하시겠습니까? ") == true ) {
+    //         return true ;
+    //     }else{
+    //         return false;
+    //     }
+    // }
+    
+</script>
+</body>
+</html>
