@@ -81,7 +81,7 @@
                                         <% for(var key in PJCodeList[5][i]) { %>
                                             <% if(key == '수락') { %>
                                             <td>
-                                                <a href ="/parm/DeleteUser/<%=PJCodeList[5][i].학번%>/<%=allUserInfos[5][i].팜%>" class="btn btn-danger w-100" data-value = "-">-</a>
+                                                <a href ="/parm/DeleteUser/<%=PJCodeList[5][i].학번%>/<%=PJCodeList[5][i].팜%>" class="btn btn-danger w-100" data-value = "-">-</a>
                                             </td>
                                             <% } else if(key == '팜') { %>
                                             <input type="hidden" id="parm_id" name="parm_id" value="<%=PJCodeList[5][i].팜%>">
@@ -96,7 +96,7 @@
                         </div>
                         <!-- team 테이블 -->
                         <div class="table-responsive" id="div-dataTable5"style="display:none">
-                            <a href ="/parm/AddTeam/<%=PJCodeList[4].parm_id%>" class="btn btn-primary btn-block">팀 추가</a>
+                            <a href ="/parm/AddTeam/<%=PJCodeList[4][0].parm_id%>" class="btn btn-primary btn-block">팀 추가</a>
                             <br>
                             <table class="table table-bordered display" id="dataTable5" width="100%" cellspacing="0">
                                 <thead>
@@ -125,7 +125,7 @@
                         </div>
                         <!-- mat 테이블 -->
                         <div class="table-responsive" id="div-dataTable6"style="display:none">
-                            <a href ="/parm/AddMat/<%=PJCodeList[4].parm_id%>" class="btn btn-primary btn-block">과제 추가</a><br>
+                            <a href ="/parm/AddMat/<%=PJCodeList[4][0].parm_id%>" class="btn btn-primary btn-block">과제 추가</a><br>
                             <table class="table table-bordered display" id="dataTable6" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
@@ -138,13 +138,13 @@
                                 <% for(var i = 0; i < PJCodeList[7].length; i++) { %>
                                     <tr>
                                         <% for(var key in PJCodeList[7][i]) { %>
-                                            <% for(var key in allUserInfos[7][i]) { %>
+                                            <% for(var key in PJCodeList[7][i]) { %>
                                                 <% if(key == '과제이름') { %>
                                                     <td>
-                                                        <a href="/parm/DetailMat/<%= allUserInfos[7][i].과제번호 %>"> <%= allUserInfos[7][i][key] %></a>
+                                                        <a href="/parm/DetailMat/<%= PJCodeList[7][i].과제번호 %>"> <%= PJCodeList[7][i][key] %></a>
                                                     </td>
                                                 <% } else { %>
-                                                    <td><center> <%= allUserInfos[7][i][key] %></center></td>
+                                                    <td><center> <%= PJCodeList[7][i][key] %></center></td>
                                                 <% } %>
                                             <% } %>
                                         <% } %>

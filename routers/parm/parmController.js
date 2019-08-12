@@ -659,10 +659,11 @@ exports.postAddTeam = (req, res) => {
 
   var query = "select parm_id from parm_team as pt where pt.parm_id ='"+req.params.parm_id+"';";
 
+  query += "INSERT INTO parm_team set ? ;";
+
   query += "select pt.team_id, pt.team_name, pt.team_sub, pt.team_bckgrd, pt.team_ncst, pt.team_cate, pt.team_cate2, pt.team_cate3, pt.std_id from parm_team as pt where pt.team_id = (select MAX(team_id) from parm_team);";
   query += "select pts.std_id as '학번', ps.std_name as '이름', ps.std_major as '전공', ps.std_phone as '번호', ps.std_email as '메일' from parm_team_std as pts left outer join parm_std as ps on pts.std_id = ps.std_id where pts.team_id = (select MAX(team_id) from parm_team);";
 
-  query += "INSERT INTO parm_team set ? ;";
 
 
   //get connection from pool
@@ -795,6 +796,7 @@ exports.detailTeam = (req, res) => {
 
     //use connection
     var query = "select parm_id from parm_team as pt where pt.team_id ='"+req.params.team_id+"';";
+    query += "select team_id from parm_team as pt where pt.team_id ='"+req.params.team_id+"';";
     query += "select pt.team_id, pt.team_name, pt.team_sub, pt.team_bckgrd, pt.team_ncst, pt.team_cate, pt.team_cate2, pt.team_cate3, pt.std_id, ps.std_name from parm_team as pt left outer join parm_std as ps on pt.std_id = ps.std_id where pt.team_id ='"+req.params.team_id+"';";
     query += "select pts.std_id as '학번', ps.std_name as '이름', ps.std_major as '전공', ps.std_phone as '번호', ps.std_email as '메일' from parm_team_std as pts left outer join parm_std as ps on pts.std_id = ps.std_id where pts.team_id = '"+req.params.team_id+"';";
 
@@ -1142,7 +1144,7 @@ exports.getAddSubMat = (req, res) => {
   }else{
     logger.putLog(req);
   }
-  res.render('parm/AddSubMat', { userId: req.session.userId, parm_id: req.params.parm_id, userType: req.session.userType, userInfo: req.session.userInfo, moment: moment, curDate: new Date()});
+  res.render('parm/AddSubMat', { userId: req.session.userId, mat_id: req.params.mat_id, userType: req.session.userType, userInfo: req.session.userInfo, moment: moment, curDate: new Date()});
 
 };
 
