@@ -129,20 +129,12 @@
 
 
                                     <tr role="row" class="odd">
-                                        <th class="sorting" id="authTH" tabindex="0" aria-controls="dataTable" rowspan="5" colspan="1" style="width:20%;"><center>권한주기</center></th>
+                                        <th class="sorting" id="authTH" tabindex="0" aria-controls="dataTable" style="width:20%;"><center>권한주기</center></th>
                                         <td class="">
                                             <select class="form-control" id="sub_inst_id_list" >
                                                 <option value = "0">-- 교수 선택 --</option>
                                                 <% for(var i = 0; i < ClassInfo[2].length; i++) {%>
                                                 <option value = "<%=ClassInfo[2][i].inst_id%>"><%=ClassInfo[2][i].major%>-<%=ClassInfo[2][i].inst_id%>-<%=ClassInfo[2][i].inst_name%></option>
-                                                <% } %>
-                                            </select>
-                                        </td>
-                                        <td class="">
-                                            <select class="form-control" id="sub_assis_id_list" >
-                                                <option value = "0">-- 조교 선택 --</option>
-                                                <% for(var i = 0; i < ClassInfo[3].length; i++) {%>
-                                                <option value = "<%=ClassInfo[3][i].assis_id%>"><%=ClassInfo[3][i].assis_id%>-<%=ClassInfo[3][i].assis_name%></option>
                                                 <% } %>
                                             </select>
                                         </td>

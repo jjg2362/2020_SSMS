@@ -55,7 +55,7 @@
         <div class="card mb-3">
             <div class="card-body">
                 <!-- 학생(전체) 테이블 -->
-                <div class="table-responsive" id="div-dataTable0">
+                <div class="table-responsive" id="div-dataTable0" >
                     <table class="table table-bordered display" id="dataTable0" width="100%" cellspacing="0">
                         <thead>
                         <tr>
@@ -87,7 +87,7 @@
                     </table>
                 </div>
                 <!-- team 테이블 -->
-                <div class="table-responsive" id="div-dataTable1">
+                <div class="table-responsive" id="div-dataTable1"style="display:none">
                     <a href ="/parm/AddTeam/<%=parm_id%>" class="btn btn-primary btn-block">팀 추가</a>
                     <br>
                     <table class="table table-bordered display" id="dataTable1" width="100%" cellspacing="0">
@@ -116,7 +116,7 @@
                     </table>
                 </div>
                 <!-- mat 테이블 -->
-                <div class="table-responsive" id="div-dataTable2">
+                <div class="table-responsive" id="div-dataTable2"style="display:none">
                     <a href ="/parm/AddMat/<%=parm_id%>" class="btn btn-primary btn-block">과제 추가</a><br>
                     <table class="table table-bordered display" id="dataTable2" width="100%" cellspacing="0">
                         <thead>
@@ -130,7 +130,13 @@
                         <% for(var i = 0; i < allUserInfos[2].length; i++) { %>
                             <tr>
                                 <% for(var key in allUserInfos[2][i]) { %>
-                                        <td><%= allUserInfos[2][i][key] %></td>
+                                    <% if(key == '과제이름') { %>
+                                        <td>
+                                            <a href="/parm/DetailMat/<%= allUserInfos[2][i].과제번호 %>"> <%= allUserInfos[2][i][key] %></a>
+                                        </td>
+                                    <% } else { %>
+                                        <td><center> <%= allUserInfos[2][i][key] %></center></td>
+                                    <% } %>
                                 <% } %>
                             </tr>
                         <% } %>
@@ -138,7 +144,7 @@
                     </table>
                 </div>
                 <!--가입 대기-->
-                <div class="table-responsive" id="div-dataTable3">
+                <div class="table-responsive" id="div-dataTable3"style="display:none">
                     <table class="table table-bordered display" id="dataTable3" width="100%" cellspacing="0">
                         <thead>
                         <tr>

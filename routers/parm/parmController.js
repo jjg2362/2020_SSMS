@@ -455,7 +455,6 @@ exports.joinUser = (req, res) => {
       console.error('getConnection err : ' + err);
       return;
     }
-    //use connection
 
     var query = "select parm_id, parm_name, parm_prof, parm_cate, parm_cate2, parm_cate3 from parm order by parm_id desc; " ;
     query += "SELECT IFNULL(parm_id,0) AS 'id', perm_yn from parm_std where std_id='"+req.session.userId+"';";
