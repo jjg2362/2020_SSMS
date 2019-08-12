@@ -121,7 +121,7 @@
 
                                     <%}%>
                                     <div class = "col-md-2">
-                                        <center> <div class="btn btn-danger" name = "MakeProject" value="취소" onclick="CheckCancel();">취소</div> </center>
+                                        <center> <div class="btn btn-danger" name = "MakeProject" value="취소" onclick="CheckCancel();">메인</div> </center>
                                     </div>
 
                                     <div class = "col-md-2">
@@ -148,8 +148,9 @@
                     <h5> 상세 과제보기 </h5>
                 </div>
                 <% if(userInfo.userType == 'admin' && userInfo.userId == 'admin'|| userInfo.userId == ClassInfo[2][i].s_registrant || userInfo.userType == 'instructor') { %>
-                <form action="/parm/SetSubMat/<%=ClassInfo[1][0].mat_id%>" method="get" id="setting" onsubmit="return ;" />
+                <form action="/parm/SetSubMat/<%=ClassInfo[2][0].mat_s_id%>" method="get" id="setting" onsubmit="return ;" >
                 <%}%>
+                    <input type="hidden" name="mat_s_id" id="mat_s_id" value="<%=ClassInfo[2][0].mat_s_id%>">
                 <div class="table-responsive" >
                     <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                         <div class="row">

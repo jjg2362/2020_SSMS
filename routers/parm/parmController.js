@@ -895,10 +895,18 @@ exports.getAddMat = (req, res) => {
 exports.postAddMat = (req, res) => {
   logger.putLog(req);
 
+  if(!req.session.userId) {
+    console.log('do not have a session.');
+    res.redirect('/');
+    return;
+  }else{
+    logger.putLog(req);
+  }
+
   var fileInfo = {
     path: 'public/MaterialFile/',
     namePrefix: 'MAT',
-    viewNames: ['MaterialFile']
+    viewNames: ['mat_pdf']
   };
 
   fileUpload(fileInfo).multipartForm(req, res, (err) => {
@@ -906,17 +914,19 @@ exports.postAddMat = (req, res) => {
       logger.putLogDetail(req, 'file upload error : ' + err);
       return;
     }
+
     if (!req.session.userId) {
       console.log('do not have a session.');
       res.redirect('/');
       return;
     }
+
     var math_info = {
       parm_id: parseInt(req.params.parm_id),
       mat_name: req.body.mat_name,
-      mat_cat: req.body.mat_cate,
-      mat_cat2: req.body.mat_cate2,
-      mat_cat3: req.body.mat_cate3,
+      mat_cat: req.body.mat_cat,
+      mat_cat2: req.body.mat_cat2,
+      mat_cat3: req.body.mat_cat3,
       mat_comm: req.body.mat_comm,
       mat_pub: req.body.mat_pub,
       mat_url: req.body.mat_url,
@@ -927,10 +937,12 @@ exports.postAddMat = (req, res) => {
       mat_amdDate: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
       mat_amender: req.session.userId
     };
+
     if (req.files['mat_pdf'] !== undefined) {
       math_info.mat_pdf = req.files['mat_pdf'][0].path;
       logger.putLogDetail(req, "Material file upload success.");
     }
+
     //get connection from pool
     mysqlPool.pool.getConnection((err, connection) => {
       if (err) { //throw err;
@@ -964,7 +976,6 @@ exports.postAddMat = (req, res) => {
         });
       });
     });
-
   });
 };
 
@@ -1016,12 +1027,11 @@ exports.postSetMat = (req, res) => {
     logger.putLog(req);
   }
   logger.putLog(req);
-  logger.putLog(req);
 
   var fileInfo = {
     path: 'public/MaterialFile/',
     namePrefix: 'MAT',
-    viewNames: ['MaterialFile']
+    viewNames: ['mat_pdf']
   };
 
   fileUpload(fileInfo).multipartForm(req, res, (err) => {
@@ -1035,18 +1045,16 @@ exports.postSetMat = (req, res) => {
       return;
     }
     var math_info = {
-      parm_id: parseInt(req.params.parm_id),
+      parm_id: parseInt(req.body.parm_id),
       mat_name: req.body.mat_name,
-      mat_cat: req.body.mat_cate,
-      mat_cat2: req.body.mat_cate2,
-      mat_cat3: req.body.mat_cate3,
+      mat_cat: req.body.mat_cat,
+      mat_cat2: req.body.mat_cat2,
+      mat_cat3: req.body.mat_cat3,
       mat_comm: req.body.mat_comm,
       mat_pub: req.body.mat_pub,
       mat_url: req.body.mat_url,
       mat_pdf: req.body.mat_pdf,
       mat_recom: req.body.mat_recom,
-      mat_regDate: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
-      mat_registrant: req.session.userId,
       mat_amdDate: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
       mat_amender: req.session.userId
     };
@@ -1062,11 +1070,7 @@ exports.postSetMat = (req, res) => {
       }
 
       var query = "update parm_mat set ? where mat_id=" + req.params.mat_id + ";";
-
-      query += "select pm.parm_id, pm.mat_id, pm.mat_name, pm.mat_cat, pm.mat_cat2, pm.mat_cat3, pm.mat_comm, pm.mat_pub, pm.mat_url, pm.mat_pdf, ps.std_name, pm.mat_recom from parm_mat as pm left outer join parm_std as ps on pm.mat_registrant = ps.std_id where pm.mat_id = (select MAX(mat_id) from parm_mat);";
-      query += "select pts.std_id as '학번', ps.std_name as '이름', ps.std_major as '전공', ps.std_phone as '번호', ps.std_email as '메일' from parm_team_std as pts left outer join parm_std as ps on pts.std_id = ps.std_id where pts.team_id = (select MAX(team_id) from parm_team);";
-
-      //use connection
+       //use connection
       connection.query(query, math_info, (error, results, fields) => {
         connection.release();
 
@@ -1076,15 +1080,7 @@ exports.postSetMat = (req, res) => {
         }
 
         logger.putLogDetail(req, 'Material PDF Submitted.');
-        res.render('parm/DetailMat', {
-          ClassInfo: results,
-          allUserInfosFields: fields,
-          userId: req.session.userId,
-          userType: req.session.userType,
-          userInfo: req.session.userInfo,
-          moment: moment,
-          curDate: new Date()
-        });
+        res.redirect('../DetailMat/'+ req.params.mat_id);
       });
     });
 
@@ -1162,7 +1158,7 @@ exports.postAddSubMat = (req, res) => {
   var fileInfo = {
     path: 'public/SubMaterialFile/',
     namePrefix: 'SubMAT',
-    viewNames: ['MaterialFile']
+    viewNames: ['s_pdf']
   };
 
   fileUpload(fileInfo).multipartForm(req, res, (err) => {
@@ -1182,9 +1178,9 @@ exports.postAddSubMat = (req, res) => {
       s_pub: req.body.s_pub,
       s_url: req.body.s_url,
       s_pdf: req.body.s_pdf,
-      s_regDate: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
+      s_regisDate: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
       s_registrant: req.session.userId,
-      s_amdDate: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
+      s_amenDate: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
       s_amender: req.session.userId
     };
     if (req.files['s_pdf'] !== undefined) {
@@ -1200,9 +1196,6 @@ exports.postAddSubMat = (req, res) => {
 
       var query = "insert into parm_mat_std set ? ;";
 
-      query += "select pm.parm_id, pm.mat_id, pm.mat_name, pm.mat_cat, pm.mat_cat2, pm.mat_cat3, pm.mat_comm, pm.mat_pub, pm.mat_url, pm.mat_pdf, ps.std_name, pm.mat_recom from parm_mat as pm left outer join parm_std as ps on pm.mat_registrant = ps.std_id where pm.mat_id = (select MAX(mat_id) from parm_mat);";
-      query += "select pts.std_id as '학번', ps.std_name as '이름', ps.std_major as '전공', ps.std_phone as '번호', ps.std_email as '메일' from parm_team_std as pts left outer join parm_std as ps on pts.std_id = ps.std_id where pts.team_id = (select MAX(team_id) from parm_team);";
-
       //use connection
       connection.query(query, math_info, (error, results, fields) => {
         connection.release();
@@ -1213,15 +1206,7 @@ exports.postAddSubMat = (req, res) => {
         }
 
         logger.putLogDetail(req, 'SubMaterial PDF Submitted.');
-        res.render('parm/DetailMat', {
-          ClassInfo: results,
-          allUserInfosFields: fields,
-          userId: req.session.userId,
-          userType: req.session.userType,
-          userInfo: req.session.userInfo,
-          moment: moment,
-          curDate: new Date()
-        });
+        res.redirect('../DetailMat/'+req.params.mat_id);
       });
     });
   });
@@ -1278,7 +1263,7 @@ exports.postSetSubMat = (req, res) => {
   var fileInfo = {
     path: 'public/SubMaterialFile/',
     namePrefix: 'SubMAT',
-    viewNames: ['MaterialFile']
+    viewNames: ['s_pdf']
   };
 
   fileUpload(fileInfo).multipartForm(req, res, (err) => {
@@ -1292,15 +1277,13 @@ exports.postSetSubMat = (req, res) => {
       return;
     }
     var math_info = {
-      mat_id: parseInt(req.params.mat_id),
+      mat_id: parseInt(req.body.mat_id),
       s_name: req.body.s_name,
       s_comm: req.body.s_comm,
       s_pub: req.body.s_pub,
       s_url: req.body.s_url,
       s_pdf: req.body.s_pdf,
-      s_regDate: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
-      s_registrant: req.session.userId,
-      s_amdDate: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
+      s_amenDate: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
       s_amender: req.session.userId
     };
     if (req.files['s_pdf'] !== undefined) {
@@ -1316,9 +1299,6 @@ exports.postSetSubMat = (req, res) => {
 
       var query = "update parm_mat_std set ? where mat_s_id="+req.params.mat_s_id+";";
 
-      query += "select pm.parm_id, pm.mat_id, pm.mat_name, pm.mat_cat, pm.mat_cat2, pm.mat_cat3, pm.mat_comm, pm.mat_pub, pm.mat_url, pm.mat_pdf, ps.std_name, pm.mat_recom from parm_mat as pm left outer join parm_std as ps on pm.mat_registrant = ps.std_id where pm.mat_id = (select MAX(mat_id) from parm_mat);";
-      query += "select pts.std_id as '학번', ps.std_name as '이름', ps.std_major as '전공', ps.std_phone as '번호', ps.std_email as '메일' from parm_team_std as pts left outer join parm_std as ps on pts.std_id = ps.std_id where pts.team_id = (select MAX(team_id) from parm_team);";
-
       //use connection
       connection.query(query, math_info, (error, results, fields) => {
         connection.release();
@@ -1329,15 +1309,7 @@ exports.postSetSubMat = (req, res) => {
         }
 
         logger.putLogDetail(req, 'SubMaterial PDF Submitted.');
-        res.render('parm/DetailMat', {
-          ClassInfo: results,
-          allUserInfosFields: fields,
-          userId: req.session.userId,
-          userType: req.session.userType,
-          userInfo: req.session.userInfo,
-          moment: moment,
-          curDate: new Date()
-        });
+        res.redirect('../DetailMat/'+req.body.mat_id);
       });
     });
   });
