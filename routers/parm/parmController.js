@@ -603,11 +603,7 @@ exports.deleteUser = (req, res) => {
     }
     //use connection
 
-    var query = "delete from parm_std where std_id = "+req.params.std_id+" and parm_id = "+req.params.parm_id+"; " ;
-    query += "select ps.std_id as '학번', ps.std_name as '이름', ps.std_major as '전공', ps.std_grade as '학년', ps.std_phone as '전화번호', ps.std_email as '메일', ps.perm_yn as '수락' , ps.parm_id as '팜' from parm_std as ps where ps.perm_yn = 1 and ps.parm_id ="+req.params.parm_id+" order by ps.std_id ;";
-    query += "select pt.team_id as '팀번호', pt.team_name as '팀명', ps.std_name as '이름', pt.std_id as '학번' from parm_team as pt left outer join parm_std as ps on pt.std_id = ps.std_id where pt.parm_id ="+req.params.parm_id+" order by pt.team_id ;";
-    query += "select pm.mat_id as '과제번호', pm.mat_name as '과제이름', pm.mat_cat as '분야1', pm.mat_cat2 as '분야2', pm.mat_cat3 as '분야3', pm.mat_recom as '추천인', ps.std_name as '등록인' from parm_mat as pm left outer join parm_std as ps on pm.mat_registrant = ps.std_id where pm.parm_id ="+req.params.parm_id+" order by pm.mat_id ;";
-    query += "select ps.std_id as '학번', ps.std_name as '이름', ps.std_major as '전공', ps.std_grade as '학년', ps.std_phone as '전화번호', ps.std_email as '메일', ps.perm_yn as '수락' , ps.parm_id as '팜' from parm_std as ps where ps.perm_yn = 0 and ps.parm_id ="+req.params.parm_id+" order by ps.std_id ;";
+    var query = "delete from parm_std where std_id = '"+req.params.std_id+"' and parm_id = "+req.params.parm_id+"; " ;
 
 
     connection.query(query, null, (error, results, fields) => {
