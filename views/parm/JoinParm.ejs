@@ -38,7 +38,7 @@
             <h6>팜 > 팜 목록 </h6>
         </div>
         <hr class="mt-2">
-        <%if(PJCodeList[4] != null && userInfo.userType == 'instructor') {%>
+        <%if(PJCodeList[4][0] != null && userInfo.userType == 'instructor') {%>
             <div class="container-fluid">
                 <h6>회원관리 > 사용자 조회(User)</h6>
                 <hr>
@@ -190,7 +190,7 @@
             </div>
 
 
-        <%}else if(PJCodeList[4] == null && userInfo.userType == 'instructor') { %>
+        <%}else if(PJCodeList[4][0] == null && userInfo.userType == 'instructor') { %>
 
             <div class="container-fluid">
 

@@ -147,7 +147,7 @@
                 <div class ="form-row">
                     <h5> 상세 과제보기 </h5>
                 </div>
-                <% if(userInfo.userType == 'admin' && userInfo.userId == 'admin'|| userInfo.userId == ClassInfo[2][i].s_registrant) { %>
+                <% if(userInfo.userType == 'admin' && userInfo.userId == 'admin'|| userInfo.userId == ClassInfo[2][i].s_registrant || userInfo.userType == 'instructor') { %>
                 <form action="/parm/SetSubMat/<%=ClassInfo[1][0].mat_id%>" method="get" id="setting" onsubmit="return ;" />
                 <%}%>
                 <div class="table-responsive" >
