@@ -169,10 +169,10 @@ if(field === 'class_name') {
             <!-- 번호 -->
             <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 10%;"><center>번호</center></th>
 
-            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 45%;"><center>교수</center></th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 25%;"><center>교수</center></th>
             <!-- 교수수인 경우 수업 표시 X -->
             <%if(field !== "instructor") {%>
-            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 45%;"><center>수업</center></th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 40%;"><center>수업</center></th>
             <%}%>
             
             <!-- 멘토링 진행 홧수 -->
@@ -181,7 +181,7 @@ if(field === 'class_name') {
             <%}%> -->
 
             <%if(field !== "class_name" && field !== "instructor") {%>
-            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 15%;"><center><%= fields[field]%></center></th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 25%;"><center><%= fields[field]%></center></th>
             <%}%>
         </tr>
     </thead>
