@@ -46,7 +46,7 @@ app.use('/fileDownload', require('./routers/fileDownload.js'));
 app.use('/pj', require('./routers/pj/pj.js'));
 app.use('/mbrmgt', require('./routers/mbrmgt/mbrmgt.js'));
 app.use('/teammgt', require('./routers/teammgt/teammgt.js'));
-app.use('/pjmake', require('./routers/parm/parm.js'));
+app.use('/pjmake', require('./routers/pjmake/pjmake.js'));
 app.use('/pjapply', require('./routers/pjapply/pjapply.js'));
 app.use('/parm', require('./routers/parm/parm.js'));
 app.use('/pjmng', require('./routers/pjmng/pjmng.js'));
