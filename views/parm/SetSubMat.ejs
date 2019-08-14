@@ -77,7 +77,12 @@
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>PDF</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="s_pdf" id="s_pdf" type="file" value="<%=ClassInfo[0].s_pdf%>"></td>
+                                        <% if(ClassInfo[0].s_pdf == null) {%>
+                                        <input class="form-control" name="s_pdf" id="s_pdf" type="file" value="<%=ClassInfo[0].s_pdf%>">
+                                        <%} else {%>
+                                        <h6> <%=ClassInfo[0].s_pdf%> </h6>
+                                        <input type="hidden" name="s_pdf" id="s_pdf" value="<%=ClassInfo[0].s_pdf%>"/>
+                                        <%}%>
                                 </tr>
 
                                 </tbody>
