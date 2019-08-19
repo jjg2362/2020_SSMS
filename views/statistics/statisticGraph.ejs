@@ -1,0 +1,167 @@
+<table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+    <tbody>
+        <%for(let i=0; i < 3; i++) {%>
+        <tr role="row" class="odd" >
+            <%for(let j=0; j < 3; j++) {%>
+            <td class="sorting" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 33%;">
+                <div id="<%= `projectChart${i*3 + j}`%>"></div>
+            </td>
+            <%}%>
+        </tr>
+        <%}%>
+    </tbody>
+</table>
+
+<%
+const l = (v) => console.log(v);
+
+const statistic2019 = {
+    project: [],
+    team: [],
+    instructor: [],
+    class: [],
+    company: [],
+    mentor: [],
+    mentoring: 0,
+}
+
+const statistic2018 = {
+    project: [],
+    team: [],
+    instructor: [],
+    class: [],
+    company: [],
+    mentor: [],
+    mentoring: 0,
+}
+
+const allInfoLength = statisticInfo[0].length;
+
+for(let i=0; i < statisticInfo[0].length; i++) {
+    // year
+    const year = JSON.stringify(statisticInfo[0][i].prj_year)
+    const thisSet = year == 2019 ? statistic2019 : statistic2018
+    
+    // 개설 수업수
+    if(typeof(statisticInfo[0][i].class_num) === 'string') {
+        if(!thisSet.class.includes(statisticInfo[0][i].class_num)) {
+            thisSet.class.push(statisticInfo[0][i].class_num);
+        }
+    }
+    
+    
+
+    // 진행 프로젝트 수
+    // 참여 팀수
+    const project = statisticInfo[0][i].prj_id;
+    const team = statisticInfo[0][i].team_name;
+    if(!thisSet.project.includes(project)) {
+        thisSet.project.push(project);
+        thisSet.team.push(team);
+    }
+
+    // 참여 교수수
+    const instructor = statisticInfo[0][i].inst_name;
+    if(!thisSet.instructor.includes(instructor)) thisSet.instructor.push(instructor);
+
+    // 참여 회사수
+    const company = statisticInfo[0][i].company_name;
+    if(!thisSet.company.includes(company)) thisSet.company.push(company);
+
+    // 참여 멘토수
+    const mentor = statisticInfo[0][i].mentor_name;
+    if(!thisSet.mentor.includes(mentor)) thisSet.mentor.push(mentor);
+
+    // 멘토링 진행수
+    const mentoring = statisticInfo[0][i].mentor_cnt;
+    if(!isNaN(mentoring)) thisSet.mentoring += statisticInfo[0][i].mentor_cnt;
+}
+
+const thesisNum = statisticInfo[1].reduce((acc, cur) => {
+    const { thesis_file } = cur;
+    
+    if(thesis_file !== null) {
+        acc.push(thesis_file.replace(/[^0-9]/g,'').substring(0, 4));
+    };
+    return acc;
+}, []).reduce((acc, cur) => {
+    if(cur == 2019) acc['2019'] += 1;
+    else if(cur == 2018) acc['2018'] += 1;
+
+    return acc;
+}, { '2019': 0, '2018': 0, });
+
+const studentNum = statisticInfo[2].reduce((acc, cur) => {
+    if(cur.prj_year == 2019) acc['2019'] += 1;
+    else if(cur.prj_year == 2018) acc['2018'] += 1;
+
+    return acc;
+}, { '2019': 0, '2018': 0 });
+%>
+
+<script type="text/javascript">
+    const l = (v) => console.log(v);
+
+    const statistic2019 = JSON.parse('<%- JSON.stringify(statistic2019)%>');
+    const statistic2018 = JSON.parse('<%- JSON.stringify(statistic2018)%>');
+    const thesisNum = JSON.parse('<%- JSON.stringify(thesisNum)%>');
+    const studentNum = JSON.parse('<%- JSON.stringify(studentNum)%>');
+
+    const fields = ['x', '교수별 주제 수', '참여 팀', '참여 교수', '개설 수업', '참여 기업', '참여 멘토', '멘토링 횟수', '논문 수', '참여 학생'];
+    
+    const data2019 = [ 
+        statistic2019.project.length,
+        statistic2019.team.length,
+        statistic2019.instructor.length,
+        statistic2019.class.length,
+        statistic2019.company.length,
+        statistic2019.mentor.length,
+        statistic2019.mentoring,
+        thesisNum['2019'],
+        studentNum['2019']
+    ]
+
+    const data2018 = [ 
+        statistic2018.project.length,
+        statistic2018.team.length,
+        statistic2018.instructor.length,
+        statistic2018.class.length,
+        statistic2018.company.length,
+        statistic2018.mentor.length,
+        statistic2018.mentoring,
+        thesisNum['2018'],
+        studentNum['2018']
+    ]
+
+    for(let i=0; i<9; i++) {
+        c3.generate({
+            bindto: `#projectChart${i}`,
+            data: {
+                x : 'x',
+                columns: [
+                    ['x', fields[i+1]],
+                    ['2019'].concat([ data2019[i] ]),
+                    ['2018'].concat([ data2018[i] ]),
+                ],
+                colors: {
+                    '2019': '#0000ff',
+                    '2018': '#ff0000',
+                },
+                type: 'bar',
+                labels: true,
+                onclick: function (d, element) { 
+                    // 페이지 이동
+                    l(JSON.stringify(d))
+                },
+                onmouseover: function (d) {
+                    // 마우스커서 변경
+                }
+            },
+            bar: { width: { retio: 0.5 } },
+            axis: { x: { type: 'category' } },
+            tooltip: { grouped: false }, 
+        });
+        
+    }
+    
+</script>
