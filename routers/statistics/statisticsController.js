@@ -374,38 +374,38 @@ exports.getStatisticField = (req, res) => {
     query += "where ads.settings_id = p.settings_id and p.use_yn = 0 ";
     query += "order by prj_year desc, prj_semes desc;";
 
+    query += "select class_num, class_name from class_info;";
+
     if(field === 'class_name') {
         
-        query += "select class_num, class_name from class_info;";
     } else if(field === 'student_num') {
 
-        query += "select class_num, class_name from class_info;";
-
         // 참여 학생목록
-        query += "select p.prj_name, t.team_name, t.class_num, t.prj_id, sti.*, st.major, st.email_ad, st.std_name, st.phone_num, ads.prj_year";
-        query += " from project as p, team as t, std_team_info as sti, student as st, admin_settings as ads";
-        query += " where p.use_yn = 0 and t.prj_id = p.prj_id and sti.team_id = t.team_id and st.std_id = sti.std_id and ads.settings_id = p.settings_id";
-        query += " order by p.prj_id;";
+        // query += "select p.prj_name, t.team_name, t.class_num, t.prj_id, sti.*, st.major, st.email_ad, st.std_name, st.phone_num, ads.prj_year";
+        // query += " from project as p, team as t, std_team_info as sti, student as st, admin_settings as ads";
+        // query += " where p.use_yn = 0 and t.prj_id = p.prj_id and sti.team_id = t.team_id and st.std_id = sti.std_id and ads.settings_id = p.settings_id";
+        // query += " order by p.prj_id;";
+
+        query += "select ads.prj_year, sti.std_id, t.class_num";
+        query += " from admin_settings as ads, team as t, std_team_info as sti";
+        query += " where t.team_id = sti.team_id and ads.settings_id = t.settings_id and sti.use_yn = 1;";
+        // query += "select distinct ads.prj_year, sti.std_id, t.class_num";
+        // query += " from admin_settings as ads, team as t, std_team_info as sti";
+        // query += " where t.team_id = sti.team_id and ads.settings_id = t.settings_id and sti.use_yn = 1;";
     } else if(field === 'instructor') {
 
     } else if(field === 'company_num') {
 
-        query += "select class_num, class_name from class_info;";
     } else if(field === 'team_num') {
 
-        query += "select class_num, class_name from class_info;";
     } else if(field === 'project_num') {
 
-        query += "select class_num, class_name from class_info;";
     } else if(field === 'mentoring_num') {
 
-        query += "select class_num, class_name from class_info;";
     } else if(field === 'mentor_num') {
 
-        query += "select class_num, class_name from class_info;";
     } else if(field === 'thesis_num') {
 
-        query += "select class_num, class_name from class_info;";
 
         // 논문등재수
         query += "select t.class_num, f.thesis_file ";
@@ -435,5 +435,61 @@ exports.getStatisticField = (req, res) => {
                 field: field,
                 userId: req.session.userId, userType: req.session.userType,userInfo: req.session.userInfo, moment: moment, curDate: new Date()});
         });
+    });
+};
+
+exports.getDetailInfo = (req, res) => {
+    //session check
+    if(!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    }else{
+        logger.putLog(req);
+    }
+
+    const year = req.query.year;
+    const instructor = req.query.instructor;
+    const classNum = req.query.classNum;
+
+    //get connection from pool
+    mysqlPool.pool.getConnection((err, connection) => {
+        if(err) { //throw err;
+            console.error('getConnection err : ' + err);
+            return;
+        }
+        //use connection
+        var query = "select ads.prj_year, ads.prj_semes, ads.term_chk, ads.transfer_date from admin_settings as ads ";
+        query += " where ads.transfer_date is not null"
+        query += " order by prj_year desc, prj_semes desc; "
+
+        query += "select distinct p.prj_id, ads.prj_year, ads.prj_semes, ads.term_chk, ads.transfer_date, p.prj_name, p.prj_id, ct_me.cnt as mentor_cnt, t.team_name, ";
+        query += "t.class_num, ins.major, ins.inst_name, me.company_name, me.mentor_name, me.phone_num ";
+        query += "from admin_settings as ads, project as p ";
+        query += "left outer join (select count(*) as cnt, mr.prj_id from mentoring_report as mr, project as p1 where mr.prj_id = p1.prj_id group by p1.prj_id) as ct_me on p.prj_id = ct_me.prj_id ";
+        query += "left outer join (select t.team_name, t.class_num, t.prj_id from team as t, project as p2 where t.prj_id = p2.prj_id group by p2.prj_id) as t on p.prj_id = t.prj_id ";
+        query += "left outer join (select ins.inst_name, ins.inst_id, ins.major, ci.class_num from instructor as ins, class_info as ci where ins.inst_id = ci.inst_id) as ins on t.class_num = ins.class_num ";
+        query += "left outer join (select me.mentor_id, me.company_name , me.mentor_name, me.phone_num from mentor as me, project as p3 where p3.mentor_id = me.mentor_id ) as me on p.mentor_id = me.mentor_id ";
+        query += "where ads.settings_id = p.settings_id and p.use_yn = 0 ";
+        query += "order by prj_year desc, prj_semes desc;";
+
+        connection.query(query, null, (error, results, fields) => {
+            connection.release();
+
+            if(error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+
+            console.log(results[0])
+            //use results and fields
+            res.render('statistics/detailInfo', {
+                PastList: results,
+                year: year,
+                instructor: instructor,
+                classNum: classNum,
+                userId: req.session.userId, userType: req.session.userType, userInfo: req.session.userInfo, moment: moment});
+        });
+
     });
 };

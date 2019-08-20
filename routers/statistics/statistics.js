@@ -40,9 +40,13 @@ router.route('/thesis')
 router.route('/statistic')
     .get(controller.getAllStatistic)
 
-// all statistics
+// statistics field
 router.route('/statisticField')
     .get(controller.getStatisticField);
 
+// detail info
+router.route('/detailInfo')
+    .get(controller.getDetailInfo);
+    
 module.exports = router;
 

@@ -21,11 +21,6 @@
     <!-- Page level plugin CSS-->
     <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
-    <!-- Date Picker -->
-    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
-    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
-
     <!-- Pie Chart stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css"/>
 
@@ -55,12 +50,12 @@
                     class_name : "총수업수",
                     student_num : "총학생수",
                     instructor : "교수수",
-                    company_num : "참여회사수",
+                    company_num : "참여기업수",
                     team_num : "참여팀수",
                     project_num : "교수별주제수",
-                    mentoring_num : "멘토링진행수",
+                    mentoring_num : "멘토링횟수",
                     mentor_num : "참여멘토수",
-                    thesis_num : "논문등재수"
+                    thesis_num : "논문수"
                 };
                 %>
                 <h4> <%=year%>년도 - <%=fields[field]%> </h4>
@@ -88,9 +83,6 @@
 </a>
 </div>
 
-<!-- For Excel Download -->
-<script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
-
 <!-- Bootstrap core JavaScript-->
 <script src="/vendor/jquery/jquery.min.js"></script>
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -108,6 +100,7 @@
 <!-- Custom scripts for this page-->
 <script src="../js/sb-admin-datatables.min.js"></script>
 
+<!-- For Excel Download -->
 <script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
 <script type="text/javascript">
 

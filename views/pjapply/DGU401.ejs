@@ -47,7 +47,6 @@
 
               <div class = "card p-3 mb-3">
                 <div class = "form-row">
-
                   <div class ="col-md-2">
                     <select class="form-control" id="selectDevelopment" name="selectDevelopment" >
                       <option value = "0">=== 개발분야 ===</option>
@@ -80,15 +79,16 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <!-- 팀지정 안된 프로젝트 선별 -->
+                    <% const projectList = PJCodeList[0].filter(cur => !cur.team_id); %>
                     <!-- 지원 가능한 프로젝트 조회 -->
-
-                    <% for(var i = 0; i < PJCodeList[0].length; i++) {%>
-                      <% if(moment(curDate).format('YYYY-MM-DD') <= moment(PJCodeList[0][i].prj_aply_cls_date).format('YYYY-MM-DD')) { %>
+                    <% for(var i = 0; i < projectList.length; i++) {%>
+                      <% if(moment(curDate).format('YYYY-MM-DD') <= moment(projectList[i].prj_aply_cls_date).format('YYYY-MM-DD')) { %>
                         <tr role="row" class="odd" >
                           <td class="sorting_1"><center><%= i+1 %></center></center></td>
-                          <td><center><a href="/pjapply/detail/<%= PJCodeList[0][i].prj_id %>"> <%= PJCodeList[0][i].prj_name %> </a></center></td>
-                          <td><center><%= PJCodeList[0][i].prj_dev_field %></center></td>
-                          <td><center><%= PJCodeList[0][i].keyword1 %> / <%= PJCodeList[0][i].keyword2 %> / <%= PJCodeList[0][i].keyword3 %></center></td>
+                          <td><center><a href="/pjapply/detail/<%= projectList[i].prj_id %>"> <%= projectList[i].prj_name %> </a></center></td>
+                          <td><center><%= projectList[i].prj_dev_field %></center></td>
+                          <td><center><%= projectList[i].keyword1 %> / <%= projectList[i].keyword2 %> / <%= projectList[i].keyword3 %></center></td>
                           </tr>
                          <% }} %>
                         </tbody>

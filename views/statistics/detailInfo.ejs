@@ -31,9 +31,8 @@
     <div class="content-wrapper">
       <!-- 메인 내용 -->
       <div class="container-fluid">
-        <h6>과거 자료 관리 > 과거 자료 조회</h6>
+        <h6>통계 > 세부 조회</h6>
         <hr>
-
 
         <div class="card mb-3">
           <div class="card-body">
@@ -43,14 +42,6 @@
             </a>
             </div>
             <hr>
-            <div class="col-md-4">
-              <select class="form-control" id="semester" name="semester" onchange="changeItem()" >
-                <option value = "전체" >--- 전체 학기 ---</option>
-                <% for(var i = 0; i < PastList[0].length; i++) {%>
-                  <option value = "<%=PastList[0][i].prj_year%>-<%=PastList[0][i].prj_semes%>-<%=PastList[0][i].term_chk%>"><%=PastList[0][i].prj_year%>-<%=PastList[0][i].prj_semes%>-<%=PastList[0][i].term_chk%></option>
-                <% } %>
-              </select>
-            </div>
             <hr>
             <div class="table-responsive">
               <table class="table table-bordered-sm" id="dataTable2" width="100%" cellspacing="0">
@@ -233,6 +224,8 @@
 
         var arr = $('input[name=_selected_]:checked').serializeArray().map(function(item) { return item.value });
 
+        var oTable = $('#dataTable2').dataTable();
+        oTable.fnFilter('<%=year%> <%=instructor%> <%=classNum%>');
 
     });
 

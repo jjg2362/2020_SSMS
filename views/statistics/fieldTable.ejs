@@ -17,11 +17,12 @@ if(field === 'class_name') {
     tableList = yearList.reduce((acc, cur) => {
         if(cur.inst_name === null) return acc;
 
-        const element = `${cur.inst_name}*${classNames[cur.class_num]}`;
+        const element = `${cur.inst_name}*${cur.class_num}*${classNames[cur.class_num]}`;
         if(!acc.includes(element)) acc.push(element);
         return acc;
     }, []);
 } else if(field === 'student_num') {
+    l(fieldInfo[2].filter(cur => cur.std_id == 2013112057));
     let students = JSON.parse(JSON.stringify(fieldInfo[2])).reduce((acc, cur) => {
         if(cur.class_num === null) return acc;
         
@@ -34,10 +35,12 @@ if(field === 'class_name') {
     tableList = yearList.reduce((acc, cur) => {
         if(cur.inst_name === null) return acc;
 
-        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${students[cur.class_num]}`;
+        const element = `${cur.inst_name}*${cur.class_num}*${classNames[cur.class_num]}*${students[cur.class_num]}`;
         if(!acc.includes(element)) acc.push(element);
         return acc;
     }, []);
+    
+    
 } else if(field === 'instructor') {
 
     tableList = yearList.reduce((acc, cur) => {
@@ -57,11 +60,11 @@ if(field === 'class_name') {
 
         return acc;
     }, {});
-
+    
     tableList = yearList.reduce((acc, cur) => {
         if(cur.inst_name === null) return acc;
 
-        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${companys[cur.class_num].length}`;
+        const element = `${cur.inst_name}*${cur.class_num}*${classNames[cur.class_num]}*${companys[cur.class_num].length}`;
         if(!acc.includes(element)) acc.push(element);
         return acc;
     }, []);
@@ -79,7 +82,7 @@ if(field === 'class_name') {
     tableList = yearList.reduce((acc, cur) => {
         if(cur.inst_name === null) return acc;
 
-        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${teams[cur.class_num].length}`;
+        const element = `${cur.inst_name}*${cur.class_num}*${classNames[cur.class_num]}*${teams[cur.class_num].length}`;
         if(!acc.includes(element)) acc.push(element);
         return acc;
     }, []);
@@ -98,7 +101,7 @@ if(field === 'class_name') {
     tableList = yearList.reduce((acc, cur) => {
         if(cur.inst_name === null) return acc;
 
-        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${teams[cur.class_num].length}`;
+        const element = `${cur.inst_name}*${cur.class_num}*${classNames[cur.class_num]}*${teams[cur.class_num].length}`;
         if(!acc.includes(element)) acc.push(element);
         return acc;
     }, []);
@@ -108,8 +111,8 @@ if(field === 'class_name') {
         if(cur.class_num === null) return acc;
         if(cur.mentor_cnt === null) return acc;
         
-        if(acc[cur.class_num] === undefined) acc[cur.class_num] = cur.mentor_cnt;
-        else acc[cur.class_num] += cur.mentor_cnt; 
+        if(acc[cur.class_num+cur.inst_name] === undefined) acc[cur.class_num+cur.inst_name] = cur.mentor_cnt;
+        else acc[cur.class_num+cur.inst_name] += cur.mentor_cnt; 
 
         return acc;
     }, {});
@@ -117,7 +120,7 @@ if(field === 'class_name') {
     tableList = yearList.reduce((acc, cur) => {
         if(cur.inst_name === null) return acc;
 
-        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${mentoringNums[cur.class_num]}`;
+        const element = `${cur.inst_name}*${cur.class_num}*${classNames[cur.class_num]}*${mentoringNums[cur.class_num+cur.inst_name]}`;
         if(!acc.includes(element)) acc.push(element);
         return acc;
     }, []);
@@ -131,11 +134,11 @@ if(field === 'class_name') {
 
         return acc;
     }, {});
-
+    
     tableList = yearList.reduce((acc, cur) => {
         if(cur.inst_name === null) return acc;
 
-        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${mentors[cur.class_num].length}`;
+        const element = `${cur.inst_name}*${cur.class_num}*${classNames[cur.class_num]}*${mentors[cur.class_num].length}`;
         if(!acc.includes(element)) acc.push(element);
         return acc;
     }, []);
@@ -154,7 +157,7 @@ if(field === 'class_name') {
         if(cur.inst_name === null) return acc;
 
         const thesisNum = thesis[cur.class_num] === undefined ? 0 : thesis[cur.class_num];
-        const element = `${cur.inst_name}*${classNames[cur.class_num]}*${thesisNum}`;
+        const element = `${cur.inst_name}*${cur.class_num}*${classNames[cur.class_num]}*${thesisNum}`;
         if(!acc.includes(element)) acc.push(element);
         return acc;
     }, []);
@@ -169,10 +172,11 @@ if(field === 'class_name') {
             <!-- 번호 -->
             <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  aria-sort="descending" style="width: 10%;"><center>번호</center></th>
 
-            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 25%;"><center>교수</center></th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 15%;"><center>교수</center></th>
             <!-- 교수수인 경우 수업 표시 X -->
             <%if(field !== "instructor") {%>
-            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 40%;"><center>수업</center></th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20%;"><center>학수번호</center></th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 35%;"><center>수업</center></th>
             <%}%>
             
             <!-- 멘토링 진행 홧수 -->
@@ -186,14 +190,17 @@ if(field === 'class_name') {
         </tr>
     </thead>
     <tbody>
+        <%let allCnt = 0;%>
         <%for(let i = 0; i < tableList.length; i++) {
             const values = tableList[i].split('*');%>
-        <tr role="row" class="odd" >
-            <td class="sorting_1"><center><%= i+1 %></center></center></td>
-            <%for(let j = 0; j < values.length; j++) {%>
-            <td><center><%= values[j]%></center></td>
-            <%}%>
-        </tr>
+            <tr role="row" class="odd" >
+                <td class="sorting_1"><center><%= i+1 %></center></center></td>
+                <%for(let j = 0; j < values.length-1; j++) {%>
+                <td><center><%= values[j]%></center></td>
+                <%}%>
+                <td><center><a href="/statistics/detailInfo?year=<%=year%>&instructor=<%= values[0]%>&classNum=<%= values[1]%>"><%= values[values.length-1]%></a></center></td>
+            </tr>
+            <%allCnt += Number(values[values.length-1]);%>
         <%}%>
     </tbody>
 </table>

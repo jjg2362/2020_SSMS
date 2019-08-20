@@ -205,7 +205,11 @@
         <% } %>
 
           <div class="card-group">
-          <% for(var i = 0; i < sta_sort.length; i++) { %>
+          <% for(var i = 0; i < sta_sort.length; i++) { 
+              // 진행중인 프로젝트만 출력
+              if(!NoticePJImgList[1][sta_sort[i]].team_id) { }
+              else continue;
+          %>
                <div class="card border-dark mb-3">
                  <div class="card-body row">
 
