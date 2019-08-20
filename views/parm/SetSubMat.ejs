@@ -77,7 +77,12 @@
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>PDF</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="s_pdf" id="s_pdf" type="file" value="<%=ClassInfo[0].s_pdf%>"></td>
+                                        <% if(ClassInfo[0].s_pdf == null) {%>
+                                        <input class="form-control" name="s_pdf" id="s_pdf" type="file" value="<%=ClassInfo[0].s_pdf%>">
+                                        <%} else {%>
+                                        <h6> <%=ClassInfo[0].s_pdf%> </h6>
+                                        <input type="hidden" name="s_pdf" id="s_pdf" value="<%=ClassInfo[0].s_pdf%>"/>
+                                        <%}%>
                                 </tr>
 
                                 </tbody>
@@ -88,14 +93,14 @@
                                 <div class = "col-md-4">
                                     <label> </label>
                                 </div>
-                                <input  name="parm_id" id="parm_id" type="hidden" value="<%=ClassInfo[0].mat_id%>"></td>
+                                <input  name="mat_id" id="mat_id" type="hidden" value="<%=ClassInfo[0].mat_id%>"></td>
 
                                 <div class = "col-md-2">
                                     <center> <input type ="submit" class="btn btn-primary btn-block" name = "MakeProject" value="과제 등록"  /> </center>
                                 </div>
 
                                 <div class = "col-md-2">
-                                    <center> <div class="btn btn-danger" name = "MakeProject" value="취소" onclick="CheckCancel();">취소</div> </center>
+                                    <center> <div class="btn btn-danger" name = "MakeProject" value="취소" onclick="CheckCancel();">메인</div> </center>
                                 </div>
 
                             </div>

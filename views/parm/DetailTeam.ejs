@@ -55,42 +55,42 @@
 
                                             <tr role="row" class="odd">
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>팀명</center></th>
-                                                <td class="" colspan="2"><%=ClassInfo[1][0].team_name%></td>
+                                                <td class="" colspan="2"><%=ClassInfo[2][0].team_name%></td>
                                             </tr>
 
                                             <tr role="row" class="odd">
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>주제</center></th>
-                                                <td class="" colspan="2"><%=ClassInfo[1][0].team_sub%></td>
+                                                <td class="" colspan="2"><%=ClassInfo[2][0].team_sub%></td>
                                             </tr>
 
                                             <tr role="row" class="odd">
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>생성 배경</center></th>
-                                                <td class="" colspan="2"><%=ClassInfo[1][0].team_bckgrd%></td>
+                                                <td class="" colspan="2"><%=ClassInfo[2][0].team_bckgrd%></td>
                                             </tr>
 
                                             <tr role="row" class="odd">
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>동향 기술</center></th>
-                                                <td class="" colspan="2"><%=ClassInfo[1][0].team_ncst%></td>
+                                                <td class="" colspan="2"><%=ClassInfo[2][0].team_ncst%></td>
                                             </tr>
 
                                             <tr role="row" class="odd">
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>keyword1</center></th>
-                                                <td class="" colspan="2"><%=ClassInfo[1][0].team_cate%></td>
+                                                <td class="" colspan="2"><%=ClassInfo[2][0].team_cate%></td>
                                             </tr>
 
                                             <tr role="row" class="odd">
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>keyword2</center></th>
-                                                <td class="" colspan="2"><%=ClassInfo[1][0].team_cate2%></td>
+                                                <td class="" colspan="2"><%=ClassInfo[2][0].team_cate2%></td>
                                             </tr>
 
                                             <tr role="row" class="odd">
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>keyword3</center></th>
-                                                <td class="" colspan="2"><%=ClassInfo[1][0].team_cate3%></td>
+                                                <td class="" colspan="2"><%=ClassInfo[2][0].team_cate3%></td>
                                             </tr>
 
                                             <tr role="row" class="odd">
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>팀장</center></th>
-                                                <td class="" colspan="2"><%=ClassInfo[1][0].std_id%></td>
+                                                <td class="" colspan="2"><%=ClassInfo[2][0].std_id%></td>
                                             </tr>
 
                                             </tbody>
@@ -105,7 +105,7 @@
                                             </div>
                                             <% if(userInfo.userType == 'admin' && userInfo.userId == 'admin' || userInfo.userType == 'instructor') { %>
                                             <div class = "col-md-2">
-                                                <center> <a href ="/parm/SetTeam/<%=ClassInfo[1][0].team_id%>" class="btn btn-primary btn-block">팀 수정</a></center>
+                                                <center> <a href ="/parm/SetTeam/<%=ClassInfo[2][0].team_id%>" class="btn btn-primary btn-block">팀 수정</a></center>
                                             </div>
                                             <%}%>
                                             <div class = "col-md-2">
@@ -121,16 +121,16 @@
                             <table class="table table-bordered display" id="dataTable1" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <% for(var key = 0; key < allUserInfosFields[2].length; key++) { %>
-                                        <th><%= allUserInfosFields[2][key].name %></th>
+                                    <% for(var key = 0; key < allUserInfosFields[3].length; key++) { %>
+                                        <th><%= allUserInfosFields[3][key].name %></th>
                                     <% } %>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% for(var i = 0; i < ClassInfo[2].length; i++) { %>
+                                <% for(var i = 0; i < ClassInfo[3].length; i++) { %>
                                     <tr>
-                                        <% for(var key in ClassInfo[2][i]) { %>
-                                            <td><center><%= ClassInfo[2][i][key] %></center></td>
+                                        <% for(var key in ClassInfo[3][i]) { %>
+                                            <td><center><%= ClassInfo[3][i][key] %></center></td>
                                         <% } %>
                                     </tr>
                                 <% } %>
@@ -141,7 +141,7 @@
 
                         <form action="/parm/AddTeamMem" method="post" id="setting" onsubmit="return CheckForm();" />
                         <input type = "hidden" value ="0" name ="Classnum" id = "Classnum" />
-                        <input type = "hidden" value ="<%=ClassInfo[1][0].team_id%>" name ="team_id" id = "team_id" />
+                        <input type = "hidden" value ="<%=ClassInfo[2][0].team_id%>" name ="team_id" id = "team_id" />
 
                         <div class="table-responsive" id="ProjectInfo">
                             <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
