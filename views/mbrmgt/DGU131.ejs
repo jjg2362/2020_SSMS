@@ -108,11 +108,11 @@
                     <tr>
                       <% for(var key in allUserInfos[1][i]) { %>
                         <% if((key == '메일인증' && allUserInfos[1][i][key] == 1)) { %>
-                          <td> O </td>
+                          <td style='mso-number-format:"\@"'> O </td>
                         <% } else if((key == '메일인증' && allUserInfos[1][i][key] != 1)) { %>
-                          <td> X </td>
+                          <td style='mso-number-format:"\@"'> X </td>
                         <% } else { %>
-                            <td><%= allUserInfos[1][i][key] %></td>
+                            <td style='mso-number-format:"\@"'><%= allUserInfos[1][i][key] %></td>
                         <% } %>
                       <% } %>
                     </tr>
