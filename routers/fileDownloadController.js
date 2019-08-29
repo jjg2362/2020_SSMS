@@ -16,10 +16,18 @@ exports.getFileDownload = (req, res) => {
 
 //file download
 exports.getFileDownloadWant = (req, res) => {
-    var fileFolder = req.params.fileFolder;
-    var fileName = req.params.fileName;
-
-    res.download('public/' + '/' + fileFolder + '/' + fileName, fileName.substring(14));
+    const fileFolder = req.params.fileFolder;
+    const fileName = req.params.fileName;
+    let fullPath = 'public/' + '/' + fileFolder + '/' + fileName;
+    
+    res.download(fullPath, fileName.substring(14), function(err) {
+        if(err) {
+            fullPath = "/2018ssmsdata/ssms/" + fullPath;
+            res.download(fullPath, fileName.substring(14));
+        } else {
+            console.log(fullPath);
+        }        
+    });
 };
 
 exports.getFileDownloadWantTest = (req, res) => {
@@ -29,7 +37,7 @@ exports.getFileDownloadWantTest = (req, res) => {
     let fullPath = firstFolder + '/' + fileFolder + '/' + fileName;
     if(firstFolder === 'ssmsdata')
         fullPath = '/' + fullPath;
-
+console.log(fullPath);
     res.download(fullPath, fileName.substring(14));
 };
 

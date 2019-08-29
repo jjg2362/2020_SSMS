@@ -32,7 +32,7 @@
           <h6>과거 자료 관리 > 과거 자료 조회 > <%=PJList[5][0].prj_name%></h6>
         </div>
         <hr class="mt-2">
-
+<% console.log(PJList[5][0])%>
         <div class="card  mb-3 pt-3 pl-3 pr-3">
           <div class="card-body">
             <h5>  <%= PJList[5][0].prj_name %>  </h5>
@@ -570,7 +570,9 @@
 
     function abilityDownload2(fullPath) {
       var downloadPath = fullPath.substring(7);
+      console.log("/fileDownload/" + downloadPath + "/want")
       location.href = "/fileDownload/" + downloadPath + "/want";
+
     }
 
     $(document).ready(function () {
