@@ -38,7 +38,7 @@
             <h6>팜 > 팜 목록 </h6>
         </div>
         <hr class="mt-2">
-        <%if(PJCodeList[4][0] != null && userInfo.userType == 'instructor') {%>
+        <%if(PJCodeList[4][0] != null) {%>
             <div class="container-fluid">
                 <h6>회원관리 > 사용자 조회(User)</h6>
                 <hr>
@@ -63,14 +63,14 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <!-- 학생(전체) 테이블 -->
-                        <div class="table-responsive" id="div-dataTable4">
+                        <div class="table-responsive" id="div-dataTable4" >
                             <table class="table table-bordered display" id="dataTable4" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
                                     <% for(var key = 0; key < allUserInfosFields[5].length; key++) { %>
                                         <% if(allUserInfosFields[5][key].name == '팜') { %>
                                         <%}else{ %>
-                                            <th><%= allUserInfosFields[5][key].name %></th>
+                                            <th><center><%= allUserInfosFields[5][key].name %></center></th>
                                         <%}%>
                                     <% } %>
                                 </tr>
@@ -86,7 +86,7 @@
                                             <% } else if(key == '팜') { %>
                                             <input type="hidden" id="parm_id" name="parm_id" value="<%=PJCodeList[5][i].팜%>">
                                             <% } else { %>
-                                                <td><%= PJCodeList[5][i][key] %></td>
+                                                <td><center><%= PJCodeList[5][i][key] %></center></td>
                                             <% } %>
                                         <% } %>
                                     </tr>
@@ -102,7 +102,11 @@
                                 <thead>
                                 <tr>
                                     <% for(var key = 0; key < allUserInfosFields[6].length; key++) { %>
-                                        <th><%= allUserInfosFields[6][key].name %></th>
+                                        <% if(allUserInfosFields[6][key].name == '팀번호'){%>
+                                            <th><center>삭제</center></th>
+                                        <%} else{%>
+                                            <th><center><%= allUserInfosFields[6][key].name %></center></th>
+                                        <%}%>
                                     <% } %>
                                 </tr>
                                 </thead>
@@ -112,11 +116,13 @@
                                         <% for(var key in PJCodeList[6][i]) { %>
                                             <% if(key == '팀명') { %>
                                                 <td>
-                                                    <a href="/parm/DetailTeam/<%= PJCodeList[6][i].팀번호 %>"> <%= PJCodeList[6][i][key] %></a>
+                                                    <center><a href="/parm/DetailTeam/<%= PJCodeList[6][i].팀번호 %>"> <%= PJCodeList[6][i][key] %></a></center>
                                                 </td>
-                                            <% } else { %>
+                                            <% } else if(key == '팀번호'){ %>
+                                            <td><a href ="/parm/DeleteTeam?team_id=<%=PJCodeList[6][i].팀번호%>&parm_id=<%=PJCodeList[4][0].parm_id%>" class="btn btn-danger w-100" data-value = "-">-</a></td>
+                                            <% } else{%>
                                                 <td><center> <%= PJCodeList[6][i][key] %></center></td>
-                                            <% } %>
+                                            <%}%>
                                         <% } %>
                                     </tr>
                                 <% } %>
@@ -130,7 +136,7 @@
                                 <thead>
                                 <tr>
                                     <% for(var key = 0; key < allUserInfosFields[7].length; key++) { %>
-                                        <th><%= allUserInfosFields[7][key].name %></th>
+                                        <th><center><%= allUserInfosFields[7][key].name %></center></th>
                                     <% } %>
                                 </tr>
                                 </thead>
@@ -138,14 +144,14 @@
                                 <% for(var i = 0; i < PJCodeList[7].length; i++) { %>
                                     <tr>
                                         <% for(var key in PJCodeList[7][i]) { %>
-                                            <% for(var key in PJCodeList[7][i]) { %>
-                                                <% if(key == '과제이름') { %>
-                                                    <td>
-                                                        <a href="/parm/DetailMat/<%= PJCodeList[7][i].과제번호 %>"> <%= PJCodeList[7][i][key] %></a>
-                                                    </td>
-                                                <% } else { %>
-                                                    <td><center> <%= PJCodeList[7][i][key] %></center></td>
-                                                <% } %>
+                                            <% if(key == '과제명') { %>
+                                                <td>
+                                                    <center> <a href="/parm/DetailMat/<%= PJCodeList[7][i].과제번호 %>"> <%= PJCodeList[7][i][key] %></a></center>
+                                                </td>
+                                            <% } else if(key == '과제번호'){ %>
+                                            <td><a href ="/parm/DeleteMat?mat_id=<%=PJCodeList[7][i].과제번호%>&parm_id=<%=PJCodeList[4][0].parm_id%>" class="btn btn-danger w-100" data-value = "-">-</a></td>
+                                            <%} else{%>
+                                                <td><center> <%= PJCodeList[7][i][key] %></center></td>
                                             <% } %>
                                         <% } %>
                                     </tr>
@@ -161,7 +167,7 @@
                                     <% for(var key = 0; key < allUserInfosFields[8].length; key++) { %>
                                         <% if(allUserInfosFields[8][key].name == '팜') { %>
                                         <%}else{ %>
-                                            <th><%= allUserInfosFields[8][key].name %></th>
+                                            <th><center><%= allUserInfosFields[8][key].name %></center></th>
                                         <%}%>
                                     <% } %>
                                 </tr>
@@ -177,7 +183,7 @@
                                             <% } else if(key == '팜') { %>
                                             <input type="hidden" id="parm_id" name="parm_id" value="<%=PJCodeList[8][i].팜%>">
                                             <% } else { %>
-                                                <td><%= PJCodeList[8][i][key] %></td>
+                                                <td><center><%= PJCodeList[8][i][key] %></center></td>
                                             <% } %>
                                         <% } %>
                                     </tr>
@@ -202,86 +208,81 @@
             </div>
         <%}else if(PJCodeList[1][0] != null && PJCodeList[1][0].perm_yn == 1) {%>
 
+            <a href="/parm/PARMMAIN?parm_id=<%= PJCodeList[1][0].id%>" class="btn btn-primary w-25" value="내 팜 가기">내 팜 가기</a>
             <div class="container-fluid">
-                <h6>회원관리 > 사용자 조회(User)</h6>
+
                 <hr>
-                <div class="form-group" style="text-align: center;">
-                    <div class="form-row">
-
-                        <div class="col-md-2">
-                            <input style="margin-right: 2%;" type="radio" value="1" name="sType" onclick="changeType()" checked="checked">팀
-                        </div>
-                        <div class="col-md-2">
-                            <input style="margin-right: 2%;" type="radio" value="2" name="sType" onclick="changeType()">과제
-                        </div>
-
-
-                    </div>
-                </div>
-
+                <h6>내 팀 보기</h6>
+                <hr>
                 <div class="card mb-3">
                     <div class="card-body">
                         <!-- team 테이블 -->
                         <div class="table-responsive" id="div-dataTable1">
-                             <br>
+                            <br>
                             <table class="table table-bordered display" id="dataTable1" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <% for(var key = 0; key < allUserInfosFields[2].length; key++) { %>
-                                        <th><%= allUserInfosFields[2][key].name %></th>
-                                    <% } %>
+                                    <th><center>팀번호</center></th>
+                                    <th><center>팀명</center></th>
+                                    <th><center>주제</center></th>
+                                    <th><center>생성배경</center></th>
+                                    <th><center>동향기술</center></th>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <% for(var i = 0; i < PJCodeList[2].length; i++) { %>
-                                    <tr>
-                                        <% for(var key in PJCodeList[2][i]) { %>
-                                            <% if(key == '팀명') { %>
-                                                <td>
-                                                    <a href="/parm/DetailTeam/<%= PJCodeList[2][i].팀번호 %>"> <%= PJCodeList[2][i][key] %></a>
-                                                </td>
-                                            <% } else { %>
-                                                <td><center> <%= PJCodeList[2][i][key] %></center></td>
-                                            <% } %>
-                                        <% } %>
-                                    </tr>
-                                <% } %>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- mat 테이블 -->
-                        <div class="table-responsive" id="div-dataTable2"style="display:none">
-                            <a href ="/parm/AddMat/<%=PJCodeList[0][0].parm_id%>" class="btn btn-primary btn-block">과제 추가</a><br>
-                            <table class="table table-bordered display" id="dataTable2" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <% for(var key = 0; key < allUserInfosFields[3].length; key++) { %>
-                                        <th><%= allUserInfosFields[3][key].name %></th>
-                                    <% } %>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <% for(var i = 0; i < PJCodeList[3].length; i++) { %>
-                                    <tr>
-                                        <% for(var key in PJCodeList[3][i]) { %>
-                                            <% if(key == '과제이름') { %>
-                                                <td>
-                                                    <a href="/parm/DetailMat/<%= PJCodeList[3][i].과제번호 %>"> <%= PJCodeList[3][i][key] %></a>
-                                                </td>
-                                            <% } else { %>
-                                                <td><center> <%= PJCodeList[3][i][key] %></center></td>
-                                            <% } %>
-                                        <% } %>
-                                    </tr>
-                                <% } %>
-                                </tbody>
-                            </table>
-                        </div>
 
+                                </thead>
+                                <tbody>
+                                <% for(var i = 0; i < PJCodeList[2].length; i++) {%>
+                                    <tr>
+                                        <td><%= PJCodeList[2][i].team_id %></td>
+                                        <td><a href="/parm/DetailTeam/<%= PJCodeList[2][i].team_id %>"><%= PJCodeList[2][i].team_name %></a></td>
+                                        <td><%= PJCodeList[2][i].team_sub %></td>
+                                        <td><%= PJCodeList[2][i].team_bckgrd %></td>
+                                        <td><%= PJCodeList[2][i].team_ncst %></td>
+                                    </tr>
+                                <%} %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <div class="container-fluid">
+                <hr>
+                <h6>내 과제 보기</h6>
+                <hr>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <!-- mat 테이블 -->
+                        <div class="table-responsive" id="div-dataTable2">
+                            <table class="table table-bordered display" id="dataTable2" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>과제번호</th>
+                                        <th>과제명</th>
+                                        <th>분야</th>
+                                        <th>담당팀</th>
+                                        <th>추천인</th>
+                                        <th>최종기간</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(var i = 0; i < PJCodeList[3].length; i++) {%>
+                                        <tr>
+                                            <td><%= PJCodeList[3][i].mat_id %></td>
+                                            <td><a href="/parm/DetailMat/<%= PJCodeList[3][i].mat_id %>"><%= PJCodeList[3][i].mat_name %></a></td>
+                                            <td><%= PJCodeList[3][i].mat_cat %></td>
+                                            <td><%= PJCodeList[3][i].mat_team %></td>
+                                            <td><%= PJCodeList[3][i].mat_recom %></td>
+                                            <td><%= PJCodeList[3][i].mat_date %></td>
+                                        </tr>
+                                    <%} %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <%}else if(PJCodeList[1][0] != null && PJCodeList[1][0].perm_yn == 0) {%>
 
             <div class="container-fluid">
@@ -372,8 +373,6 @@
             "iDisplayLength": 300
         });
 
-        $("#div-dataTable1").show();
-        $("#div-dataTable2").hide();
         $("#div-dataTable4").show();
         $("#div-dataTable5").hide();
         $("#div-dataTable6").hide();
@@ -387,22 +386,6 @@
         let selectedValue = $("input[type=radio][name=sType]:checked").val();
 
         switch(selectedValue) {
-            case "1":
-                $("#div-dataTable1").show();
-                $("#div-dataTable2").hide();
-                $("#div-dataTable4").hide();
-                $("#div-dataTable5").hide();
-                $("#div-dataTable6").hide();
-                $("#div-dataTable7").hide();
-                break;
-            case "2":
-                $("#div-dataTable2").show();
-                $("#div-dataTable1").hide();
-                $("#div-dataTable4").hide();
-                $("#div-dataTable5").hide();
-                $("#div-dataTable6").hide();
-                $("#div-dataTable7").hide();
-                break;
             case "4":
                 $("#div-dataTable4").show();
                 $("#div-dataTable1").hide();
@@ -427,7 +410,6 @@
                 $("#div-dataTable2").hide();
                 $("#div-dataTable7").hide();
                 break;
-
             case "7":
                 $("#div-dataTable7").show();
                 $("#div-dataTable1").hide();
@@ -437,7 +419,6 @@
                 $("#div-dataTable2").hide();
                 break;
         }
-
     }
 function okfunc(){
     alert("가입되었습니다.");

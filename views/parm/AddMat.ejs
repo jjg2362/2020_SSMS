@@ -50,9 +50,46 @@
                             <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                 <tbody id="dataTableTBody">
                                 <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과제 타입</center></th>
+                                    <td class="" colspan="2">
+                                        <select class="form-control" id="mat_type" name="mat_type">
+                                            <option value = "없음">--- Type ---</option>
+                                            <% for(var i = 0; i < ClassInfo.length; i++) {%>
+                                            <option value = "<%=ClassInfo[i].type_name%>"><%=ClassInfo[i].type_name%></option>
+                                            <% } %>
+                                        </select>
+                                </tr>
+
+                                <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과제 명</center></th>
                                     <td class="" colspan="2">
                                         <input class="form-control" name="mat_name" id="mat_name" type="text"></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>상속 팀</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="mat_heb" id="mat_heb" type="text"></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>담당 팀</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="mat_team" id="mat_team" type="text"></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>카테고리1</center></th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>카테고리2</center></th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>카테고리3</center></th>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="" colspan="1">
+                                        <input class="form-control" name="mat_cat" id="mat_cat" type="text"></td>
+                                    <td class="" colspan="1">
+                                        <input class="form-control" name="mat_cat2" id="mat_cat2" type="text"></td>
+                                    <td class="" colspan="1">
+                                        <input class="form-control" name="mat_cat3" id="mat_cat3" type="text"></td>
                                 </tr>
 
                                 <tr role="row" class="odd">
@@ -60,24 +97,6 @@
                                     <td class="" colspan="2">
                                         <input class="form-control" name="mat_comm" id="mat_comm" type="text"></td>
                                 </tr>
-
-
-                                <tr role="row" class="odd">
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>카테고리1</center></th>
-                                    <td class="" colspan="2">
-                                        <input class="form-control" name="mat_cat" id="mat_cat" type="text"></td>
-                                </tr>
-                                <tr role="row" class="odd">
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>카테고리2</center></th>
-                                    <td class="" colspan="2">
-                                        <input class="form-control" name="mat_cat2" id="mat_cat2" type="text"></td>
-                                </tr>
-                                <tr role="row" class="odd">
-                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>카테고리3</center></th>
-                                    <td class="" colspan="2">
-                                        <input class="form-control" name="mat_cat3" id="mat_cat3" type="text"></td>
-                                </tr>
-
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>출판물</center></th>
                                     <td class="" colspan="2">
@@ -94,6 +113,12 @@
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>PDF</center></th>
                                     <td class="" colspan="2">
                                         <input class="form-control" name="mat_pdf" id="mat_pdf" type="file" ></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>최종기간</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="mat_date" id="mat_date" type="text" ></td>
                                 </tr>
 
                                 <tr role="row" class="odd">

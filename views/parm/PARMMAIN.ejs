@@ -36,65 +36,45 @@
         <hr>
         <div class="form-group" style="text-align: center;">
             <div class="form-row">
+                <% if(allUserInfos[5][0] != null){%>
                 <div class="col-md-2">
                     <input style="margin-right: 2%;" type="radio" value="0" name="sType" onclick="changeType()" checked="checked">학생(전체)
                 </div>
+                    <div class="col-md-2">
+                        <input style="margin-right: 2%;" type="radio" value="1" name="sType" onclick="changeType()">팀
+                    </div>
+                    <%}%>
+                    <% if( allUserInfos[5][0] == null){%>
                 <div class="col-md-2">
-                    <input style="margin-right: 2%;" type="radio" value="1" name="sType" onclick="changeType()">팀
+                    <input style="margin-right: 2%;" type="radio" value="1" name="sType" onclick="changeType()"checked="checked">팀
                 </div>
+                        <%}%>
                 <div class="col-md-2">
                     <input style="margin-right: 2%;" type="radio" value="2" name="sType" onclick="changeType()">과제
                 </div>
-                <div class="col-md-2">
-                    <input style="margin-right: 2%;" type="radio" value="3" name="sType" onclick="changeType()">가입대기
-                </div>
+                    <% if(allUserInfos[5][0] != null){%>
+                        <div class="col-md-2">
+                            <input style="margin-right: 2%;" type="radio" value="3" name="sType" onclick="changeType()">가입대기
+                        </div>
+                <%}%>
 
             </div>
         </div>
 
         <div class="card mb-3">
             <div class="card-body">
+                <% if(allUserInfos[5][0] != null){%>
+
                 <!-- 학생(전체) 테이블 -->
                 <div class="table-responsive" id="div-dataTable0" >
                     <table class="table table-bordered display" id="dataTable0" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <% for(var key = 0; key < allUserInfosFields[0].length; key++) { %>
-                                <% if(allUserInfosFields[0][key].name == '팜') { %>
-                                <%}else{ %>
-                                    <th><%= allUserInfosFields[0][key].name %></th>
-                                <%}%>
-                            <% } %>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <% for(var i = 0; i < allUserInfos[0].length; i++) { %>
-                            <tr>
-                                <% for(var key in allUserInfos[0][i]) { %>
-                                    <% if(key == '수락') { %>
-                                        <td>
-                                            <a href ="/parm/DeleteUser/<%=allUserInfos[0][i].학번%>/<%=allUserInfos[0][i].팜%>" class="btn btn-danger w-100" data-value = "-">-</a>
-                                        </td>
-                                    <% } else if(key == '팜') { %>
-                                        <input type="hidden" id="parm_id" name="parm_id" value="<%=allUserInfos[0][i].팜%>">
-                                    <% } else { %>
-                                        <td><%= allUserInfos[0][i][key] %></td>
-                                    <% } %>
-                                <% } %>
-                            </tr>
-                        <% } %>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- team 테이블 -->
-                <div class="table-responsive" id="div-dataTable1"style="display:none">
-                    <a href ="/parm/AddTeam/<%=parm_id%>" class="btn btn-primary btn-block">팀 추가</a>
-                    <br>
-                    <table class="table table-bordered display" id="dataTable1" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
                             <% for(var key = 0; key < allUserInfosFields[1].length; key++) { %>
-                                <th><%= allUserInfosFields[1][key].name %></th>
+                                <% if(allUserInfosFields[1][key].name == '팜') { %>
+                                <%}else{ %>
+                                    <th><center><%= allUserInfosFields[1][key].name %></center></th>
+                                <%}%>
                             <% } %>
                         </tr>
                         </thead>
@@ -102,12 +82,14 @@
                         <% for(var i = 0; i < allUserInfos[1].length; i++) { %>
                             <tr>
                                 <% for(var key in allUserInfos[1][i]) { %>
-                                    <% if(key == '팀명') { %>
+                                    <% if(key == '수락') { %>
                                         <td>
-                                            <a href="/parm/DetailTeam/<%= allUserInfos[1][i].팀번호 %>"> <%= allUserInfos[1][i][key] %></a>
+                                            <a href ="/parm/DeleteUser/<%=allUserInfos[1][i].학번%>/<%=allUserInfos[1][i].팜%>" class="btn btn-danger w-100" data-value = "-">-</a>
                                         </td>
-                                      <% } else { %>
-                                            <td><center> <%= allUserInfos[1][i][key] %></center></td>
+                                    <% } else if(key == '팜') { %>
+                                        <input type="hidden" id="parm_id" name="parm_id" value="<%=allUserInfos[1][i].팜%>">
+                                    <% } else { %>
+                                        <td><center><%= allUserInfos[1][i][key] %></center></td>
                                     <% } %>
                                 <% } %>
                             </tr>
@@ -115,14 +97,27 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- mat 테이블 -->
-                <div class="table-responsive" id="div-dataTable2"style="display:none">
-                    <a href ="/parm/AddMat/<%=parm_id%>" class="btn btn-primary btn-block">과제 추가</a><br>
-                    <table class="table table-bordered display" id="dataTable2" width="100%" cellspacing="0">
+                    <%}%>
+
+                <!-- team 테이블 -->
+                    <% if(allUserInfos[5][0] != null){%>
+
+                    <div class="table-responsive" id="div-dataTable1"style="display:none">
+                        <a href ="/parm/AddTeam/<%=allUserInfos[5][0].parm_id%>" class="btn btn-primary btn-block">팀 추가</a>
+                        <%} else{%>
+                        <div class="table-responsive" id="div-dataTable1">
+                       <%}%>
+
+                        <br>
+                    <table class="table table-bordered display" id="dataTable1" width="100%" cellspacing="0">
                         <thead>
                         <tr>
                             <% for(var key = 0; key < allUserInfosFields[2].length; key++) { %>
-                                <th><%= allUserInfosFields[2][key].name %></th>
+                                <% if(allUserInfosFields[2][key].name == '팀번호' && ( allUserInfos[5][0] != null)){%>
+                                    <th><center>삭제</center></th>
+                                <%} else{%>
+                                <th><center><%= allUserInfosFields[2][key].name %></center></th>
+                                <%}%>
                             <% } %>
                         </tr>
                         </thead>
@@ -130,12 +125,47 @@
                         <% for(var i = 0; i < allUserInfos[2].length; i++) { %>
                             <tr>
                                 <% for(var key in allUserInfos[2][i]) { %>
-                                    <% if(key == '과제이름') { %>
+                                    <% if(key == '팀명') { %>
                                         <td>
-                                            <a href="/parm/DetailMat/<%= allUserInfos[2][i].과제번호 %>"> <%= allUserInfos[2][i][key] %></a>
+                                            <center><a href="/parm/DetailTeam/<%= allUserInfos[2][i].팀번호 %>?parm_id=<%allUserInfos[5][0].parm_id%>"> <%= allUserInfos[2][i][key] %></a></center>
                                         </td>
-                                    <% } else { %>
-                                        <td><center> <%= allUserInfos[2][i][key] %></center></td>
+                                      <% } else if(key == '팀번호' && (allUserInfos[5][0] != null)){ %>
+                                        <td><a href ="/parm/DeleteTeam?team_id=<%=allUserInfos[2][i].팀번호%>&parm_id=<%=allUserInfos[5][0].parm_id%>" class="btn btn-danger w-100" data-value = "-">-</a></td>
+                                    <% } else{%>
+                                            <td><center> <%= allUserInfos[2][i][key] %></center></td>
+                                        <%}%>
+                                <% } %>
+                            </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- mat 테이블 -->
+                         <div class="table-responsive" id="div-dataTable2"style="display:none">
+                             <% if(allUserInfos[5][0] != null){%>
+                             <a href ="/parm/AddMat/<%=allUserInfos[5][0].parm_id%>" class="btn btn-primary btn-block">과제 추가</a><br>
+
+                            <%}%>
+                    <table class="table table-bordered display" id="dataTable2" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <% for(var key = 0; key < allUserInfosFields[3].length; key++) { %>
+                                <th><center><%= allUserInfosFields[3][key].name %></center></th>
+                            <% } %>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(var i = 0; i < allUserInfos[3].length; i++) { %>
+                            <tr>
+                                <% for(var key in allUserInfos[3][i]) { %>
+                                    <% if(key == '과제명') { %>
+                                        <td>
+                                            <center> <a href="/parm/DetailMat/<%= allUserInfos[3][i].과제번호 %>?parm_id=<%allUserInfos[5][0].parm_id%>"> <%= allUserInfos[3][i][key] %></a></center>
+                                        </td>
+                                    <% } else if(key == '과제번호' && (allUserInfos[5][0] != null)){ %>
+                                        <td><a href ="/parm/DeleteMat?mat_id=<%=allUserInfos[3][i].과제번호%>&parm_id=<%=allUserInfos[5][0].parm_id%>" class="btn btn-danger w-100" data-value = "-">-</a></td>
+                                        <%} else{%>
+                                        <td><center> <%= allUserInfos[3][i][key] %></center></td>
                                     <% } %>
                                 <% } %>
                             </tr>
@@ -144,30 +174,31 @@
                     </table>
                 </div>
                 <!--가입 대기-->
+                            <% if(allUserInfos[5][0] != null){%>
                 <div class="table-responsive" id="div-dataTable3"style="display:none">
                     <table class="table table-bordered display" id="dataTable3" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <% for(var key = 0; key < allUserInfosFields[3].length; key++) { %>
-                                <% if(allUserInfosFields[3][key].name == '팜') { %>
+                            <% for(var key = 0; key < allUserInfosFields[4].length; key++) { %>
+                                <% if(allUserInfosFields[4][key].name == '팜') { %>
                                 <%}else{ %>
-                                    <th><%= allUserInfosFields[3][key].name %></th>
+                                    <th><center><%= allUserInfosFields[4][key].name %></center></th>
                                 <%}%>
                             <% } %>
                         </tr>
                         </thead>
                         <tbody>
-                        <% for(var i = 0; i < allUserInfos[3].length; i++) { %>
+                        <% for(var i = 0; i < allUserInfos[4].length; i++) { %>
                             <tr>
-                                <% for(var key in allUserInfos[3][i]) { %>
+                                <% for(var key in allUserInfos[4][i]) { %>
                                     <% if(key == '수락') { %>
                                         <td>
-                                            <a href = "/parm/AddUser/<%=allUserInfos[3][i].학번%>/<%=allUserInfos[3][i].팜%>" class="btn btn-danger w-100" data-value = "+">+</a>
+                                            <a href = "/parm/AddUser/<%=allUserInfos[4][i].학번%>/<%=allUserInfos[4][i].팜%>" class="btn btn-danger w-100" data-value = "+">+</a>
                                         </td>
                                     <% } else if(key == '팜') { %>
-                                        <input type="hidden" id="parm_id" name="parm_id" value="<%=allUserInfos[3][i].팜%>">
+                                        <input type="hidden" id="parm_id" name="parm_id" value="<%=allUserInfos[4][i].팜%>">
                                     <% } else { %>
-                                        <td><%= allUserInfos[3][i][key] %></td>
+                                        <td><center><%= allUserInfos[4][i][key] %></center></td>
                                     <% } %>
                                 <% } %>
                             </tr>
@@ -175,6 +206,7 @@
                         </tbody>
                     </table>
                 </div>
+                            <%}%>
             </div>
         </div>
     </div>
@@ -211,7 +243,7 @@
 <script type="text/javascript">
 
     function addUser(){
-        window.location.href = "/parm/AddUser?std_id="+ $(allUserInfos[0][0][key].std_id)+"&parm_id="+$(allUserInfos[0][0][key].parm_id);
+        window.location.href = "/parm/AddUser?std_id="+ $(allUserInfos[0][0][key].std_id)+"&parm_id="+$(allUserInfos[5][0].parm_id);
     }
 
     function addMat(){
@@ -224,11 +256,6 @@
             "iDisplayLength": 300
         });
 
-        $("#div-dataTable0").show();
-        $("#div-dataTable1").hide();
-        $("#div-dataTable2").hide();
-        $("#div-dataTable3").hide();
-        $("#div-dataTable4").hide();
 
         $("#btnExport").on('click', function () {
 

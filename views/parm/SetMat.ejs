@@ -43,72 +43,98 @@
                     <h5> 과제 생성 </h5>
                 </div>
 
-                <form action="/parm/SetMat/<%=ClassInfo[0].mat_id%>" method="post" id="setting" enctype="multipart/form-data" onsubmit="return CheckForm();" >
-                    <input type="hidden" name="parm_id" id="parm_id" value="<%=ClassInfo[0].parm_id%>">
+                <form action="/parm/SetMat/<%=ClassInfo[0][0].mat_id%>" method="post" id="setting" enctype="multipart/form-data" onsubmit="return CheckForm();" >
+                    <input type="hidden" name="parm_id" id="parm_id" value="<%=ClassInfo[0][0].parm_id%>">
                 <div class="table-responsive" >
                     <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                         <div class="row">
                             <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                 <tbody id="dataTableTBody">
                                 <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과제 타입</center></th>
+                                    <td class="" colspan="2">
+                                        <select class="form-control" id="mat_type" name="mat_type">
+                                            <option value = "없음">--- Type ---</option>
+                                            <% for(var i = 0; i < ClassInfo[1].length; i++) {%>
+                                            <option value = "<%=ClassInfo[1][i].type_name%>"><%=ClassInfo[1][i].type_name%></option>
+                                            <% } %>
+                                        </select>
+                                </tr>
+
+                                <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과제 명</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="mat_name" id="mat_name" type="text" value="<%=ClassInfo[0].mat_name%>"></td>
+                                        <input class="form-control" name="mat_name" id="mat_name" type="text" value="<%=ClassInfo[0][0].mat_name%>"></td>
                                 </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>상속 팀</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="mat_heb" id="mat_heb" type="text" value="<%=ClassInfo[0][0].mat_heb%>"></td>
+                                </tr>
+
+                                <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>담당 팀</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="mat_team" id="mat_team" type="text" value="<%=ClassInfo[0][0].mat_team%>"></td>
+                                </tr>
+
 
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과제 카테고리</center></th>
-                                    <td class="" colspan="2">
-                                        <input class="form-control" name="mat_cate" id="mat_cate" type="text" value="<%=ClassInfo[0].mat_cat%>"></td>
-                                </tr>
-
-                                <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과제 카테고리2</center></th>
-                                    <td class="" colspan="2">
-                                        <input class="form-control" name="mat_cate2" id="mat_cate2" type="text" value="<%=ClassInfo[0].mat_cat2%>"></td>
-                                </tr>
-
-                                <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과제 카테고리3</center></th>
-                                    <td class="" colspan="2">
-                                        <input class="form-control" name="mat_cate3" id="mat_cate3" type="text" value="<%=ClassInfo[0].mat_cat3%>"></td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="" colspan="1">
+                                        <input class="form-control" name="mat_cat" id="mat_cat" type="text" value="<%=ClassInfo[0][0].mat_cat%>"></td>
+                                    <td class="" colspan="1">
+                                        <input class="form-control" name="mat_cat2" id="mat_cat2" type="text" value="<%=ClassInfo[0][0].mat_cat2%>"></td>
+                                    <td class="" colspan="1">
+                                        <input class="form-control" name="mat_cat3" id="mat_cat3" type="text" value="<%=ClassInfo[0][0].mat_cat3%>"></td>
                                 </tr>
 
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>과제 내용</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="mat_comm" id="mat_comm" type="text" value="<%=ClassInfo[0].mat_comm%>"></td>
+                                        <input class="form-control" name="mat_comm" id="mat_comm" type="text" value="<%=ClassInfo[0][0].mat_comm%>"></td>
                                 </tr>
 
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>출판물</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="mat_pub" id="mat_pub" type="text" value="<%=ClassInfo[0].mat_pub%>"></td>
+                                        <input class="form-control" name="mat_pub" id="mat_pub" type="text" value="<%=ClassInfo[0][0].mat_pub%>"></td>
                                 </tr>
 
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>URL</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="mat_url" id="mat_url" type="text" value="<%=ClassInfo[0].mat_url%>"></td>
+                                        <input class="form-control" name="mat_url" id="mat_url" type="text" value="<%=ClassInfo[0][0].mat_url%>"></td>
                                 </tr>
-
 
                                 <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>PDF</center></th>
                                     <td class="" colspan="2">
-                                        <% if(ClassInfo[0].mat_pdf == null) {%>
-                                            <input class="form-control" name="mat_pdf" id="mat_pdf" type="file" value="<%=ClassInfo[0].mat_pdf%>"><%=ClassInfo[0].mat_pdf%>
+                                        <% if(ClassInfo[0][0].mat_pdf == null) {%>
+                                            <input class="form-control" name="mat_pdf" id="mat_pdf" type="file" value="<%=ClassInfo[0][0].mat_pdf%>">
                                         <%} else {%>
-                                           <h6> <%=ClassInfo[0].mat_pdf%> </h6>
-                                            <input type="hidden" id="mat_pdf" name="mat_pdf" value="<%=ClassInfo[0].mat_pdf%>"/>
+                                           <h6> <%=ClassInfo[0][0].mat_pdf%> </h6>
+                                            <input type="hidden" id="mat_pdf" name="mat_pdf" value="<%=ClassInfo[0][0].mat_pdf%>"/>
                                         <%}%>
                                     </td>
                                 </tr>
 
                                 <tr role="row" class="odd">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>최종기간</center></th>
+                                    <td class="" colspan="2">
+                                        <input class="form-control" name="mat_date" id="mat_date" type="text" value="<%=ClassInfo[0][0].mat_date%>"></td>
+                                </tr>
+
+
+                                <tr role="row" class="odd">
                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>추천인</center></th>
                                     <td class="" colspan="2">
-                                        <input class="form-control" name="mat_recom" id="mat_recom" type="text" value="<%=ClassInfo[0].mat_recom%>"></td>
+                                        <input class="form-control" name="mat_recom" id="mat_recom" type="text" value="<%=ClassInfo[0][0].mat_recom%>"></td>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -119,7 +145,7 @@
                                 <div class = "col-md-4">
                                     <label> </label>
                                 </div>
-                                <input  name="parm_id" id="parm_id" type="hidden" value="<%=ClassInfo[0].parm_id%>"></td>
+                                <input  name="parm_id" id="parm_id" type="hidden" value="<%=ClassInfo[0][0].parm_id%>"></td>
 
                                 <div class = "col-md-2">
                                     <center> <input type ="submit" class="btn btn-primary btn-block" name = "MakeProject" value="과제 등록"  /> </center>

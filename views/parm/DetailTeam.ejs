@@ -92,7 +92,6 @@
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:20%;"><center>팀장</center></th>
                                                 <td class="" colspan="2"><%=ClassInfo[2][0].std_id%></td>
                                             </tr>
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -103,15 +102,21 @@
                                             <div class = "col-md-4">
                                                 <label> </label>
                                             </div>
-                                            <% if(userInfo.userType == 'admin' && userInfo.userId == 'admin' || userInfo.userType == 'instructor') { %>
+                                            <% if(userInfo.userType == 'admin' || ClassInfo[4][0] != null){ %>
                                             <div class = "col-md-2">
                                                 <center> <a href ="/parm/SetTeam/<%=ClassInfo[2][0].team_id%>" class="btn btn-primary btn-block">팀 수정</a></center>
                                             </div>
-                                            <%}%>
                                             <div class = "col-md-2">
-                                                <center> <a href ="/parm/PARMMAIN?parm_id=<%=ClassInfo[0][0].parm_id%>" class="btn btn-danger">메인</a> </center>
+                                                <center> <a href ="/parm/DeleteTeam?team_id=<%=ClassInfo[2][0].team_id%>&parm_id=<%= parm_id %>"  class="btn btn-danger">팀 삭제</a> </center>
                                             </div>
-
+                                            <div class = "col-md-2">
+                                                <center> <a href ="/parm/PARMMAIN?parm_id=<%=parm_id%>" class="btn btn-danger">메인</a> </center>
+                                            </div>
+                                            <%} else{%>
+                                            <div class = "col-md-2">
+                                                <center> <div onclick="onClose()" class="btn btn-danger">메인</div> </center>
+                                            </div>
+                                            <%}%>
                                         </div>
                                     </div>
                                 </div>
@@ -121,8 +126,14 @@
                             <table class="table table-bordered display" id="dataTable1" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <% for(var key = 0; key < allUserInfosFields[3].length; key++) { %>
-                                        <th><%= allUserInfosFields[3][key].name %></th>
+                                    <% for(var i = 0; i < allUserInfosFields[3].length; i++) { %>
+                                        <% if(allUserInfosFields[3][i].name == '탈퇴'){%>
+                                            <% if(userInfo.userType == 'admin' && userInfo.userId == 'admin' || userInfo.userType == 'instructor') { %>
+                                                <th><center><%= allUserInfosFields[3][i].name %></center></th>
+                                            <%}%>
+                                        <%} else{%>
+                                            <th><center><%= allUserInfosFields[3][i].name %></center></th>
+                                            <%}%>
                                     <% } %>
                                 </tr>
                                 </thead>
@@ -130,14 +141,20 @@
                                 <% for(var i = 0; i < ClassInfo[3].length; i++) { %>
                                     <tr>
                                         <% for(var key in ClassInfo[3][i]) { %>
-                                            <td><center><%= ClassInfo[3][i][key] %></center></td>
+                                            <% if(key == '탈퇴'){%>
+                                                <% if(userInfo.userType == 'admin' && userInfo.userId == 'admin' || userInfo.userType == 'instructor') { %>
+                                                    <td><a href="/parm/subTeamMem/<%= ClassInfo[3][i].학번 %>/<%=ClassInfo[2][0].team_id%>" class="btn btn-danger w-100" onclick="deleteMember()">-</td>
+                                                <%}%>
+                                            <%}else{%>
+                                                <td><center><%= ClassInfo[3][i][key] %></center></td>
+                                            <%}%>
                                         <% } %>
                                     </tr>
                                 <% } %>
                                 </tbody>
                             </table>
                         </div>
-                        <% if(userInfo.userType == 'admin' && userInfo.userId == 'admin' || userInfo.userType == 'instructor') { %>
+                        <% if(userInfo.userType == 'admin'  || ClassInfo[4][0] != null) { %>
 
                         <form action="/parm/AddTeamMem" method="post" id="setting" onsubmit="return CheckForm();" />
                         <input type = "hidden" value ="0" name ="Classnum" id = "Classnum" />
@@ -310,6 +327,18 @@
                 alert("더 이상 삭제할 수 없습니다.");
             }
         }
+    }
+
+    function deleteMember() {
+        if (confirm("삭제하시겠습니까? ") == true ) {
+           return true;
+        }else{
+            return false;
+        }
+
+    }
+    function onClose(){
+        history.back();
     }
 
 </script>

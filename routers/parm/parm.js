@@ -39,6 +39,9 @@ router.route('/PARMMAIN')
 router.route('/subUser')
     .delete(controller.deleteSubUser);
 
+router.route('/subTeamMem/:std_id/:team_id')
+    .get(controller.deleteTeamMem);
+
 router.route('/JoinParm')
     .get(controller.joinUser);
 
@@ -51,17 +54,23 @@ router.route('/DetailMat/:mat_id')
 router.route('/DetailTeam/:team_id')
     .get(controller.detailTeam);
 
-router.route('/AddUser/:std_id/:parm_id')
-    .get(controller.addUser);
-
 router.route('/DeleteUser/:std_id/:parm_id')
     .get(controller.deleteUser);
+
+router.route('/DeleteTeam')
+    .get(controller.deleteTeam);
+
+router.route('/DeleteMat')
+    .get(controller.deleteMat);
 
 router.route('/joinUser/:std_id/:parm_id')
     .get(controller.joinMem);
 
 router.route('/joinUser2/:std_id/:parm_id')
     .get(controller.joinMem2);
+
+router.route('/AddUser/:std_id/:parm_id')
+    .get(controller.addUser);
 
 router.route('/AddMat/:parm_id')
     .get(controller.getAddMat)
@@ -75,6 +84,9 @@ router.route('/AddTeam/:parm_id')
     .get(controller.getAddTeam)
     .post(controller.postAddTeam);
 
+router.route('/AddTeamMem')
+    .post(controller.postAddTeamMem);
+
 router.route('/SetTeam/:team_id')
     .get(controller.getSetTeam)
     .post(controller.postSetTeam);
@@ -86,8 +98,5 @@ router.route('/SetMat/:mat_id')
 router.route('/SetSubMat/:mat_s_id')
     .get(controller.getSetSubMat)
     .post(controller.postSetSubMat);
-
-router.route('/AddTeamMem')
-    .post(controller.postAddTeamMem);
 
 module.exports = router;
