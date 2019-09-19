@@ -915,7 +915,7 @@ exports.detailTeam = (req, res) => {
     //use connection
     var query = "select parm_id from parm_team as pt where pt.team_id ='"+req.params.team_id+"';";
     query += "select team_id from parm_team as pt where pt.team_id ='"+req.params.team_id+"';";
-    query += "select pt.team_id, pt.team_name, pt.team_sub, pt.team_bckgrd, pt.team_ncst, pt.team_cate, pt.team_cate2, pt.team_cate3, pt.std_id, ps.std_name, ps. from parm_team as pt left outer join parm_std as ps on pt.std_id = ps.std_id where pt.team_id ='"+req.params.team_id+"';";
+    query += "select pt.team_id, pt.team_name, pt.team_sub, pt.team_bckgrd, pt.team_ncst, pt.team_cate, pt.team_cate2, pt.team_cate3, pt.std_id, ps.std_name from parm_team as pt left outer join parm_std as ps on pt.std_id = ps.std_id where pt.team_id ='"+req.params.team_id+"';";
     query += "select pts.std_id as '학번', ps.std_name as '이름', ps.std_major as '전공', ps.std_phone as '번호', ps.std_email as '메일', ps.std_id as '탈퇴' from parm_team_std as pts left outer join parm_std as ps on pts.std_id = ps.std_id where pts.team_id = '"+req.params.team_id+"';";
     query += "SELECT parm_id from parm_auth where sub_user_id = '"+req.session.userId+"';";
 

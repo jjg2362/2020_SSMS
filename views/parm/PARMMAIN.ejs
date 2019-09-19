@@ -102,10 +102,10 @@
                 <!-- team 테이블 -->
                     <% if(allUserInfos[5][0] != null){%>
 
-                    <div class="table-responsive" id="div-dataTable1"style="display:none">
-                        <a href ="/parm/AddTeam/<%=allUserInfos[5][0].parm_id%>" class="btn btn-primary btn-block">팀 추가</a>
-                        <%} else{%>
-                        <div class="table-responsive" id="div-dataTable1">
+                        <div class="table-responsive" id="div-dataTable1"style="display:none">
+                            <a href ="/parm/AddTeam/<%=allUserInfos[5][0].parm_id%>" class="btn btn-primary btn-block">팀 추가</a>
+                            <%} else{%>
+                            <div class="table-responsive" id="div-dataTable1">
                        <%}%>
 
                         <br>
@@ -127,7 +127,7 @@
                                 <% for(var key in allUserInfos[2][i]) { %>
                                     <% if(key == '팀명') { %>
                                         <td>
-                                            <center><a href="/parm/DetailTeam/<%= allUserInfos[2][i].팀번호 %>?parm_id=<%allUserInfos[5][0].parm_id%>"> <%= allUserInfos[2][i][key] %></a></center>
+                                            <center><a href="/parm/DetailTeam/<%= allUserInfos[2][i].팀번호 %>?parm_id=<%=parm_id%>"> <%= allUserInfos[2][i][key] %></a></center>
                                         </td>
                                       <% } else if(key == '팀번호' && (allUserInfos[5][0] != null)){ %>
                                         <td><a href ="/parm/DeleteTeam?team_id=<%=allUserInfos[2][i].팀번호%>&parm_id=<%=allUserInfos[5][0].parm_id%>" class="btn btn-danger w-100" data-value = "-">-</a></td>
@@ -160,7 +160,7 @@
                                 <% for(var key in allUserInfos[3][i]) { %>
                                     <% if(key == '과제명') { %>
                                         <td>
-                                            <center> <a href="/parm/DetailMat/<%= allUserInfos[3][i].과제번호 %>?parm_id=<%allUserInfos[5][0].parm_id%>"> <%= allUserInfos[3][i][key] %></a></center>
+                                            <center> <a href="/parm/DetailMat/<%= allUserInfos[3][i].과제번호 %>?parm_id=<%=parm_id%>"> <%= allUserInfos[3][i][key] %></a></center>
                                         </td>
                                     <% } else if(key == '과제번호' && (allUserInfos[5][0] != null)){ %>
                                         <td><a href ="/parm/DeleteMat?mat_id=<%=allUserInfos[3][i].과제번호%>&parm_id=<%=allUserInfos[5][0].parm_id%>" class="btn btn-danger w-100" data-value = "-">-</a></td>
