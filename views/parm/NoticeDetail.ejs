@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+</head>
+
+
+<!-- 메인 페이지 -->
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+        <!-- 메인 내용 -->
+        <div class="container-fluid">
+            <div class="mb-0 mt-4">
+                <h6>공지사항 > <%= PostingInfo[0].posting_title %></h6>
+            </div>
+            <hr class="mt-2">
+            <div class="card card-register mx-auto mt-5 mb-5">
+                    <div class="card-body">
+                        <div class ="form-row">
+                            <div class = "col-md-10">
+                                <h5> <%= PostingInfo[0].posting_title %> </h5>
+                            </div>
+                            <div class = "col-md-2">
+                                <h7> <%= moment(PostingInfo[0].post_date).format('YYYY-MM-DD') %> </h7>
+                            </div>
+                        </div>
+                        <hr class="mt-2">
+                        <input type = "hidden" name = "PostingsId" id = "PostingsId" value ="<%=PostingInfo[0].posting_id %>" />
+
+                        <p class="card-text small">
+                        <p style="width: 100%; color: #6c757d;">내용</p>
+                        <textarea class="form-control mb-4" name="content" id="content" type="text" rows = "25" readonly><%=PostingInfo[0].post_content%></textarea>
+
+                        <br>
+                        <% if(PostingInfo[0].post_apdx != ''&&PostingInfo[0].post_apdx != null) { %>
+                        <p style="width: 100%; color: #6c757d;">첨부파일 </p>
+                        <p style="width: 50%;"></p>
+                        <% var id1 = PostingInfo[0].post_apdx.split('/') %>
+                        <% var id2 = id1[2].length %>
+                        <% var id3 = id1[2].substr(14,id2) %>
+                        <a onclick="abilityDownload2('<%= PostingInfo[0].post_apdx %>');" href="javascript:void(0)">
+                        <%= id3 %>
+                        </a>
+                        <br>
+                        <% } %>
+                        </p>
+                        <div class = "form-group mt-4">
+                            <div class="form-row">
+
+                                <% if(userInfo.userType == 'admin') { %>
+                                    <div class = "col-md-2">
+                                        <a href="/parm/Notice">
+                                        <input  type="submit" class="btn btn-primary btn-block" name = "BacktoLists" value="목록" />
+                                        </a>
+                                    </div>
+                                    <div class = "col-md-6"></div>
+                                    <div class = "col-md-2">
+                                        <form action="/parm/edit" method="post">
+                                            <input type = "hidden" name = "PostingsId" id = "PostingsId" value ="<%=PostingInfo[0].posting_id %>" />
+                                            <input  type="submit" class="btn btn-primary btn-block" name = "edit" value="수정" />
+                                        </form>
+                                    </div>
+
+                                    <form action="/parm/delete/Editposting" method="post" id="posting" onsubmit="return CheckRemove();">
+                                        <input type = "hidden" name = "PostingsId" id = "PostingsId" value ="<%=PostingInfo[0].posting_id %>" />
+                                        <div class = "col-md-2">
+                                            <input  type="submit" class="btn btn-primary btn-danger" name = "delete" value="삭제" />
+                                        </div>
+                                    </form>
+
+                                <% } else { %>
+                                    <div class = "col-md-2">
+                                        <a href="/parm/Notice">
+                                            <input  type="submit" class="btn btn-primary btn-block" name = "BacktoLists" value="목록" />
+                                        </a>
+                                    </div>
+                                    <div class = "col-md-5"></div>
+                                    <div class = "col-md-5"></div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<!-- include footer -->
+<% include ../footer.html %>
+
+<!-- 맨위로 가기 버튼 -->
+<a class="scroll-to-top rounded" href="#page-top">
+                                                 <i class="fa fa-angle-up"></i>
+                                                                             </a>
+                                                                               </div>
+
+<!-- Bootstrap core JavaScript-->
+     <script src="/vendor/jquery/jquery.min.js"></script>
+                                                  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+     <script src="/js/sb-admin.min.js"></script>
+
+                                         <script type="text/javascript">
+
+
+                                                                       function CheckForm(){
+    var _posting_name = document.getElementById("posting_name").value;
+    var _content = document.getElementById("content").value;
+    var _appendix = document.getElementById("appendix").value;
+
+
+if (_posting_name==""){
+alert("제목을 입력해주세요.");
+    document.getElementById("posting_name").focus();
+    return false;
+}
+
+if (_content ==''){
+alert("내용을 입력해주세요.");
+    document.getElementById("content").focus();
+    return false;
+}
+
+if (confirm("'"+_posting_name+"' 게시물을 저장하시겠습니까? ") == true ) {
+    return true ;
+}else{
+     return false;
+ }
+
+}
+function abilityDownload2(fullPath) {
+    var downloadPath = fullPath.substring(7);
+    location.href = "/fileDownload/" + downloadPath + "/want";
+}
+</script>
+  </body>
+    </html>

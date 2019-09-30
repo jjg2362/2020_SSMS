@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="/public/css/datepicker3.css" />
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap-datepicker.kr.js"></script>
+</head>
+
+
+<!-- 메인 페이지 -->
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- 네비게이션 바 불러오기 -->
+<% include ../navBar.ejs %>
+
+</body>
+<!-- 메인 -->
+<div class="content-wrapper">
+<!-- 메인 내용 -->
+<div class="container-fluid">
+<div class="mb-0 mt-4">
+<h6>공지사항 > 게시물등록</h6>
+</div>
+<hr class="mt-2">
+<div class="card card-register mx-auto mt-5 mb-5">
+<div class="card-body">
+<div class ="form-row">
+<h5> 게시물 등록 </h5>
+</div>
+<hr class="mt-2">
+<form action="/parm/NoticeMake" method="post" id="posting" onsubmit="return CheckForm();" enctype="multipart/form-data"/>
+
+<label for="pst_make_title">제목</label>
+<input class="form-control mb-4" name="posting_name" id="posting_name" type="text"></input>
+
+<label for="pst_make_content">내용</label>
+<textarea class="form-control mb-4" name="content" id="content" type="text"  rows = "20" onkeyup = "chkword(this, 300)"></textarea>
+
+<label for="pst_make_apdx">첨부파일</label>
+<input class="form-control mb-4" name="appendix" id="appendix" type="file"></input>
+
+<div class = "form-group mt-4">
+<div class="form-row">
+<div class = "col-md-4">
+<label> </label>
+</div>
+<div class = "col-md-4">
+<input  type="submit" class="btn btn-primary btn-block" name = "RegistPost" value="게시물 등록" />
+</div>
+</div>
+</div>
+
+</form>
+</div>
+</div>
+</div>
+
+
+
+
+<!-- include footer -->
+<% include ../footer.html %>
+
+<!-- 맨위로 가기 버튼 -->
+<a class="scroll-to-top rounded" href="#page-top">
+                                                 <i class="fa fa-angle-up"></i>
+                                                                             </a>
+                                                                               </div>
+
+<!-- Bootstrap core JavaScript-->
+     <script src="/vendor/jquery/jquery.min.js"></script>
+                                                  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+     <script src="/js/sb-admin.min.js"></script>
+
+                                         <script type="text/javascript">
+
+                                                                       function CheckForm(){
+    var _posting_name = document.getElementById("posting_name").value;
+    var _content = document.getElementById("content").value;
+    var _appendix = document.getElementById("appendix").value;
+
+
+if (_posting_name==""){
+alert("제목을 입력해주세요.");
+    document.getElementById("posting_name").focus();
+    return false;
+}
+
+if (_content ==''){
+alert("내용을 입력해주세요.");
+    document.getElementById("content").focus();
+    return false;
+}
+
+if (confirm("'"+_posting_name+"' 게시물을 저장하시겠습니까? ") == true ) {
+    return true ;
+}else{
+     return false;
+ }
+
+}
+</script>
+  </body>
+    </html>

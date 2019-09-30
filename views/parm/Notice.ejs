@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+</head>
+
+<!-- 메인 페이지 -->
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- 네비게이션 바 불러오기 -->
+<% include ../navBar.ejs %>
+
+<!-- 메인 -->
+<div class="content-wrapper">
+    <!-- 메인 내용 -->
+    <div class="container-fluid">
+        <div class="mb-0 mt-4">
+            <h6>공지사항 > 공지사항 목록 </h6>
+        </div>
+        <hr class="mt-2">
+        <div class="card mb-2 mt-2 pt-1 pl-3 pr-3">
+            <div class="card-body">
+                <div class = "form-row">
+                    <div class = "col-md-11">
+                        <h4>공지사항</h4>
+                    </div>
+                    <% if(userInfo.userType == 'admin') { %>
+                        <form action="/parm/NoticeMake" method="get" >
+                            <div class = "col-md-1">
+                                <input type = "submit" class="btn btn-primary btn-sm" name = "RegistPost" value="글쓰기" />
+                            </div>
+                        </form>
+                    <% } %>
+                </div>
+                <hr class="mt-2">
+                <form action="/parm/Notice" method="get" >
+                    <div class="table-responsive">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                            <div class="row">
+                                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending" style="width: 5%;"><center>번호</center></th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 63%;"><center>제목</center></th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 10%;"><center>작성자</center></th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 15%;"><center>작성일</center></th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 17%;"><center>파일</center></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- 게시물 조회 -->
+                                    <% for(var i = 0; i < PostingList.length; i++) {%>
+
+                                        <tr role="row" class="odd" >
+                                            <td class="sorting_1"><center><%= i+1 %></center></td>
+                                            <td><a href="/parm/NoticeDetail/<%= PostingList[i].posting_id %>"> <%= PostingList[i].posting_title %></a>
+                                                <%if(moment().diff(moment(PostingList[i].post_date).format('YYYY-MM-DD'),"days")<=7){ %>
+                                                    <img src="/image/icon_new.gif"/>
+                                                <% } %>
+                                            </td>
+                                            <td><center><%= PostingList[i].post_user %></center></td>
+                                            <td><center><%= moment(PostingList[i].post_date).format('YYYY-MM-DD') %></center></td>
+                                            <% if(PostingList[i].post_apdx == ''||PostingList[i].post_apdx == null) { %>
+                                                <td><center>-</center></td>
+                                            <% } else { %>
+                                                <td><center><img src="https://www.dongguk.edu/mbs/kr/images/board/ico_file.gif"/></center></td>
+                                            <% } %>
+                                        </tr>
+                                    <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- include footer -->
+    <% include ../footer.html %>
+
+    <!-- 맨위로 가기 버튼 -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin.min.js"></script>
+</body>
+</html>

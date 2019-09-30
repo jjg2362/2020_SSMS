@@ -99,4 +99,23 @@ router.route('/SetSubMat/:mat_s_id')
     .get(controller.getSetSubMat)
     .post(controller.postSetSubMat);
 
+router.route('/Notice')
+    .get(controller.getPostingListPage);
+
+router.route('/NoticeMake')
+    .get(controller.getPostingPage)
+    .post(controller.postPostingPage);
+
+router.route('/NoticeDetail/:PostingsId')
+    .get(controller.getShowPostingPage);
+
+router.route('/delete/Editposting')
+    .post(controller.postDeletePosting);
+
+router.route('/edit')
+    .post(controller.getEditPostings);
+
+router.route('/editPost')
+    .post(controller.postEditPostings);
+
 module.exports = router;

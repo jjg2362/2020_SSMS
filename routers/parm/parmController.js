@@ -1445,7 +1445,7 @@ exports.postSetSubMat = (req, res) => {
         return;
       }
 
-      var query = "update parm_mat_std set ? where mat_s_id="+req.params.mat_s_id+";";
+      var query = "update parm_mat_std set ? where mat_s_id=" + req.params.mat_s_id + ";";
 
       //use connection
       connection.query(query, math_info, (error, results, fields) => {
@@ -1457,7 +1457,299 @@ exports.postSetSubMat = (req, res) => {
         }
 
         logger.putLogDetail(req, 'SubMaterial PDF Submitted.');
-        res.redirect('../DetailMat/'+req.body.mat_id);
+        res.redirect('../DetailMat/' + req.body.mat_id);
+      });
+    });
+  });
+};
+
+
+
+exports.getPostingListPage = (req, res) => {
+  //session check
+  if (!req.session.userId) {
+    console.log('do not have a session.');
+    res.redirect('/');
+    return;
+  } else {
+    logger.putLog(req);
+  }
+
+  //get connection from pool
+  mysqlPool.pool.getConnection((err, connection) => {
+    if (err) { //throw err;
+      console.error('getConnection err : ' + err);
+      return;
+    }
+    //use connection
+    var query = "select * from parm_notice ";
+    query += " order by post_date desc;"
+
+    connection.query(query, null, (error, results, fields) => {
+      connection.release();
+
+      if (error) { //throw error;
+        console.error('query error : ' + error);
+        return;
+      }
+
+      //use results and fields
+      res.render('parm//Notice', {
+        PostingList: results,
+        userId: req.session.userId,
+        userType: req.session.userType,
+        userInfo: req.session.userInfo,
+        moment: moment
+      });
+    });
+  });
+};
+
+exports.getPostingPage = (req, res) => {
+  logger.putLog(req);
+  res.render('parm/NoticeMake', {
+    userId: req.session.userId,
+    userType: req.session.userType,
+    userInfo: req.session.userInfo,
+    moment: moment
+  });
+
+};
+
+exports.postPostingPage = (req, res) => {
+  logger.putLog(req);
+  var fileInfo = {
+    path: 'public/MaterialFile/',
+    namePrefix: 'MAT',
+    viewNames: ['appendix']
+  };
+
+  fileUpload(fileInfo).multipartForm(req, res, (err) => {
+    if (err) {
+      console.log('file upload error : ' + err);
+      return;
+    }
+    if (!req.session.userId) {
+      console.log('do not have a session.');
+      res.redirect('/');
+      return;
+    }
+
+    var postings = {
+
+      posting_id: req.body.PostingsId,
+      posting_title: req.body.posting_name,
+      post_content: req.body.content,
+      post_date: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
+      post_user: req.session.userId,
+      amender: req.session.userId,
+      amend_date: moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
+      registrant: req.session.userId,
+      regis_date: moment(Date()).format('YYYY-MM-DD hh:mm:ss')
+
+    }
+
+    if (req.files['appendix'] !== undefined) {
+      postings.post_apdx = req.files['appendix'][0].path;
+      console.log('submit Posting Appendix: ' + req.files['appendix'][0].path + ', id: ' + req.session.userId);
+      console.log("file upload success.");
+    }
+    //get connection from pool
+    mysqlPool.pool.getConnection((err, connection) => {
+      if (err) { //throw err;
+        console.error('getConnection err : ' + err);
+        return;
+      }
+
+      //use connection
+      var query = "insert into parm_notice ";
+      query += " set ?";
+
+      connection.query(query, postings, (error, results, fields) => {
+        connection.release();
+
+        if (error) { //throw error;
+          console.error('query error : ' + error);
+          return;
+        }
+        console.log('Posting success.');
+        res.redirect('/parm/Notice');
+
+      });
+    });
+  });
+};
+
+exports.getShowPostingPage = (req, res) => {
+
+  if(!req.session.userId) {
+    console.log('do not have a session.');
+    res.redirect('/');
+    return;
+  }else{
+    logger.putLog(req);
+  }
+  //get connection from pool
+  mysqlPool.pool.getConnection((err, connection) => {
+    if(err) { //throw err;
+      console.error('getConnection err : ' + err);
+      return;
+    }
+
+    var query = "select * from parm_notice";
+    query += " where posting_id = '" + req.params.PostingsId + "' ;";
+    console.log(query);
+
+    connection.query(query, (error, results, fields) => {
+      connection.release();
+
+      if(error) { //throw error;
+        console.error('query error : ' + error);
+        return;
+      }
+
+
+      //use results and fields
+      if(results.length > 0) {
+        // console.log('Show Posting page');
+        res.render('parm/NoticeDetail', {PostingInfo: results, moment : moment, userInfo: req.session.userInfo});
+      } else {
+        res.redirect('/');
+      }
+    });
+  });
+};
+
+exports.postDeletePosting = (req, res) =>{
+  if(!req.session.userId) {
+    console.log('do not have a session.');
+    res.redirect('/');
+    return;
+  }else{
+    logger.putLog(req);
+  }
+
+  var query = "";
+  query +="delete from parm_notice where posting_id = '" +req.body.PostingsId+"' ; " ;
+
+  //get connection from pool
+  mysqlPool.pool.getConnection((err, connection) => {
+    if(err) { //throw err;
+      console.error('getConnection err : ' + err);
+      return;
+    }
+
+
+    connection.query(query, null, (error, results, fields) => {
+      connection.release();
+
+      if(error) { //throw error;
+        console.error('query error : ' + error);
+        return;
+      }
+      console.log(query);
+      console.log('delete Posting success.');
+      res.redirect('/parm/Notice');
+
+    });
+  });
+};
+exports.getEditPostings = (req, res) => {
+
+  if(!req.session.userId) {
+    console.log('do not have a session.');
+    res.redirect('/');
+    return;
+  }else{
+    logger.putLog(req);
+  }
+  //get connection from pool
+  mysqlPool.pool.getConnection((err, connection) => {
+    if(err) { //throw err;
+      console.error('getConnection err : ' + err);
+      return;
+    }
+
+    var query = "select * from parm_notice";
+    query += " where posting_id = '" + req.body.PostingsId + "' ;";
+    console.log(query);
+
+    connection.query(query, (error, results, fields) => {
+      connection.release();
+
+      if(error) { //throw error;
+        console.error('query error : ' + error);
+        return;
+      }
+
+      //use results and fields
+      if(results.length > 0) {
+        // console.log('Posting Editing page');
+        res.render('parm/NoticeEdit', {PostingInfo: results, moment : moment, userInfo: req.session.userInfo});
+      } else {
+        res.redirect('/');
+      }
+    });
+  });
+};
+exports.postEditPostings = (req, res) => {
+  logger.putLog(req);
+  var fileInfo = {
+    path: 'public/MaterialFile/',
+    namePrefix: 'MAT',
+    viewNames: ['appendix']
+  };
+
+  fileUpload(fileInfo).multipartForm(req, res, (err) => {
+    if(err) {
+      console.log('file upload error : ' + err);
+      return;
+    }
+    if(!req.session.userId) {
+      console.log('do not have a session.');
+      res.redirect('/');
+      return;
+    }
+
+    var postings = {
+
+      posting_id: req.body.PostingsId,
+      posting_title: req.body.posting_name,
+      post_content : req.body.content,
+      post_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
+      post_user : req.session.userId,
+      amender : req.session.userId,
+      amend_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss')
+    }
+
+    if(req.files['appendix'] !== undefined) {
+      postings.post_apdx = req.files['appendix'][0].path;
+      console.log("file upload success.");
+    }
+    //get connection from pool
+    mysqlPool.pool.getConnection((err, connection) => {
+      if(err) { //throw err;
+        console.error('getConnection err : ' + err);
+        return;
+      }
+
+      //use connection
+      var query = "update parm_notice ";
+      query += " set ? ";
+      query += " where posting_id = '"+req.body.PostingsId +"'; "
+
+      console.log(query);
+
+      connection.query(query, postings, (error, results, fields) => {
+        connection.release();
+
+        if(error) { //throw error;
+          console.error('query error : ' + error);
+          return;
+        }
+        // console.log('Editing Posting success.');
+        res.redirect('Notice');
+
       });
     });
   });
