@@ -10,7 +10,7 @@ module.exports = (fileInfo) => {
       cb(null, fileInfo.path);
     }, filename: (req, file, cb) => {
       cb(null, moment().format('YYYYMMDDHHmmss') + file.originalname);
-    }
+    }, limit:{fileSize:20*1024*1024}
   });
 
   var viewNameArray = new Array(fileInfo.viewNames.length);
@@ -19,7 +19,7 @@ module.exports = (fileInfo) => {
     viewNameArray[i] = {name: fileInfo.viewNames[i]};
   }
 
-  var multipartForm = multer({ storage: storage}).fields(viewNameArray);
+  var multipartForm = multer({ storage: storage, fileSize: 20*1024*1024}).fields(viewNameArray);
 
   return {
     multipartForm: multipartForm
