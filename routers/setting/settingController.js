@@ -18,7 +18,7 @@ var zipFolder = require('zip-folder');
 
 var archiver = require('archiver');
 
-var output = file_system.createWriteStream('target.zip');
+var output = fs.createWriteStream('target.zip');
 var archive = archiver('zip');
 
 exports.downloadProjectFile = (req,res)=>{
@@ -168,7 +168,7 @@ exports.downloadMentorProjectFile = (req,res)=>{
             }
 
 
-            results = JSON.parse(JSON.stringify(results))
+            results = JSON.parse(JSON.stringify(results));
 
             var fileArr = new Array();
 
