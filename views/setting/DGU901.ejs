@@ -43,13 +43,19 @@
             </a>
             </div>
             <hr>
-            <div class="col-md-4">
+            <div class="col-md-6">
               <select class="form-control" id="semester" name="semester" onchange="changeItem()" >
                 <option value = "전체" >--- 전체 학기 ---</option>
                 <% for(var i = 0; i < PastList[0].length; i++) {%>
-                  <option value = "<%=PastList[0][i].prj_year%>-<%=PastList[0][i].prj_semes%>-<%=PastList[0][i].term_chk%>"><%=PastList[0][i].prj_year%>-<%=PastList[0][i].prj_semes%>-<%=PastList[0][i].term_chk%></option>
+                  <option value = "<%=PastList[0][i].settings_id%>"><%=PastList[0][i].prj_year%>-<%=PastList[0][i].prj_semes%>-<%=PastList[0][i].term_chk%></option>
                 <% } %>
               </select>
+              <br>
+              <input type="button" id="mentorProjectFile"  class="btn btn-primary btn-link"  value="계획서(PPT) 다운"/>
+              <input type="button" id="ProjectPlan" class="btn btn-primary btn-link"  value="수행계획서 다운"/>
+              <input type="button" id="mentoringReport" class="btn btn-primary btn-link"  value="멘토일지 다운"/>
+              <input type="button" id="FinalProductFile" class="btn btn-primary btn-link"  value="최종보고서 다운"/>
+              <br>
             </div>
             <hr>
             <div class="table-responsive">
@@ -130,11 +136,11 @@
     function changeItem(){
 
       var itemidSelect = document.getElementById("semester");
-      var itemID = itemidSelect.options[itemidSelect.selectedIndex].value;
+      var itemID = itemidSelect.options[itemidSelect.selectedIndex].text;
 
       var strBody = "";
 
-      if( itemID == "전체"){
+      if( itemID == "--- 전체 학기 ---"){
           <% for(var i = 0; i < PastList[1].length; i++) {%>
             strBody += "<tr>";
               strBody += "<td>" + '<%= PastList[1][i].prj_year %>' + "-" + '<%= PastList[1][i].prj_semes %>' + "</td>";
@@ -186,7 +192,7 @@
 
         $("#btnExport").on('click', function () {
             var itemidSelect = document.getElementById("semester");
-            var itemID = itemidSelect.options[itemidSelect.selectedIndex].value;
+            var itemID = itemidSelect.options[itemidSelect.selectedIndex].text;
             var uri = $("#dataTable2").excelexportjs({
                 containerid: "dataTable2"
                 , datatype:  'table'
@@ -226,6 +232,81 @@
             }
         }
 
+      $("#mentorProjectFile").click(function(){
+        var itemidSelect = document.getElementById("semester");
+        var itemID = itemidSelect.options[itemidSelect.selectedIndex].value;
+        ajaxMentorProjectCall();
+      });
+      function ajaxMentorProjectCall(){
+        console.log()
+         $.ajax({
+           url:'/setting/DGU901/downloadMentorProjectFile',
+          type:'post',
+          data:{'item_id':itemID},
+          success:function(result){
+            console.log(result)
+            var downloadPath = result.substring(10);
+            location.href = "/fileDownload/" + downloadPath+"/transfer";
+          }
+        });
+      }
+
+      $("#ProjectPlan").click(function(){
+        var itemidSelect = document.getElementById("semester");
+        var itemID = itemidSelect.options[itemidSelect.selectedIndex].value;
+        ajaxMentorProjectCall();
+      });
+      function ajaxMentorProjectCall(){
+        console.log()
+        $.ajax({
+          url:'/setting/DGU901/downloadProjectPlanFile',
+          type:'post',
+          data:{'item_id':itemID},
+          success:function(result){
+            console.log(result)
+            var downloadPath = result.substring(10);
+            location.href = "/fileDownload/" + downloadPath+"/transfer";
+          }
+        });
+      }
+
+      $("#mentoringReport").click(function(){
+        var itemidSelect = document.getElementById("semester");
+        var itemID = itemidSelect.options[itemidSelect.selectedIndex].value;
+        ajaxMentorProjectCall();
+      });
+      function ajaxMentorProjectCall(){
+        console.log(arr)
+        $.ajax({
+          url:'/setting/DGU901/downloadMentoringReportFile',
+          type:'post',
+          data:{'item_id':itemID},
+          success:function(result){
+            console.log(result)
+            var downloadPath = result.substring(10);
+            location.href = "/fileDownload/" + downloadPath+"/transfer";
+          }
+        });
+      }
+
+      $("#FinalProductFile").click(function(){
+        var itemidSelect = document.getElementById("semester");
+        var itemID = itemidSelect.options[itemidSelect.selectedIndex].value;
+        ajaxMentorProjectCall();
+      });
+      function ajaxMentorProjectCall(){
+        console.log()
+        $.ajax({
+          url:'/setting/DGU901/downloadFinalProductFileFile',
+          type:'post',
+          data:{'item_id':itemID},
+          success:function(result){
+            console.log(result)
+            var downloadPath = result.substring(10);
+            location.href = "/fileDownload/" + downloadPath+"/transfer";
+          }
+        });
+      }
 
         $('input[name=_selected_all_]').on('change', function(){
           $('input[name=_selected_]').prop('checked', this.checked);

@@ -9,6 +9,18 @@ router.route('/DGU901')
 router.route('/DGU901/downloadProjectFile')
     .post(controller.downloadProjectFile);
 
+router.route('/DGU901/downloadMentorProjectFile')
+    .post(controller.downloadMentorProjectFile);
+
+router.route('/DGU901/downloadProjectPlanFile')
+    .post(controller.downloadProjectPlanFile);
+
+router.route('/DGU901/downloadMentoringReportFile')
+    .post(controller.downloadMentoringReportFile);
+
+router.route('/DGU901/downloadFinalProductFileFile')
+    .post(controller.downloadFinalProductFileFile);
+
 router.route('/DGU902')
   .get(controller.getMovingListPage);
 

@@ -16,6 +16,11 @@ var fs = require('fs');
 
 var zipFolder = require('zip-folder');
 
+var archiver = require('archiver');
+
+var output = file_system.createWriteStream('target.zip');
+var archive = archiver('zip');
+
 exports.downloadProjectFile = (req,res)=>{
     //session check
     if(!req.session.userId) {
@@ -134,6 +139,195 @@ exports.downloadProjectFile = (req,res)=>{
     });
 };
 
+exports.downloadMentorProjectFile = (req,res)=>{
+    //session check
+    if(!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    }else{
+        logger.putLog(req);
+    }
+
+    console.log('got dgu901 post')
+    console.log('\n\n')
+
+    //get connection from pool
+    mysqlPool.pool.getConnection((err, connection) => {
+        if(err) { //throw err;
+            console.error('getConnection err : ' + err);
+            return;
+        }
+        var query = "select * from project where settings_id = '"+req.params.item_id+"';";
+        connection.query(query, null, (error, results, fields) => {
+            connection.release();
+
+            if(error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+
+
+            results = JSON.parse(JSON.stringify(results))
+
+            var fileArr = new Array();
+
+            for(var i in prj_id){
+
+                var tempArr = new Array();
+                var tempPrjID = prj_id[i];
+
+                for(var r in results){//세 개의 쿼리 결과를 하나씩 확인
+                    for(var rr in results[r]){ // 한 쿼리 결과의 한 줄씩 본다.
+                        if(results[r][rr].prj_id==tempPrjID){ //
+                            var keys = Object.keys(results[r][rr]); //key 값들을 가져오고
+                            keys.splice(keys.indexOf('prj_id'),1) //key 값 중 prj_id 삭제
+                            for (var k in keys){
+                                var tempKey = keys[k];
+                                if(results[r][rr][tempKey]){
+                                    tempArr.push(results[r][rr][tempKey])
+                                }
+                            }
+                        }
+                    }
+                }
+                fileArr.push(tempArr);
+            }
+            // console.log(fileArr,fileArr[0][0])
+            var topDirName = '/home/dev/sd/public/transferedFileDownload/'+moment().format('YYMMDD_kkmmss')+'_transferedProject';
+            fs.mkdirSync(topDirName,{recursive:true})
+            // console.log(fileArr[9])
+            for(var i in fileArr){
+                var dirName = i.toString()+'_'+fileArr[i].splice(0,1)[0];
+                // console.log(dirName);
+                dirName = dirName.replace('/','_');
+                fs.mkdirSync(topDirName+'/'+dirName,function(err){
+                    if(err){
+                        console.log(err);
+                    }
+                });
+                // console.log(dirName)
+                // console.log(__dirname)
+                // console.log(i,'th files:',fileArr[i])
+                for(var j in fileArr[i]){
+                    filePath = '/home/dev/sd/'+fileArr[i][j]
+                    destPath = topDirName + '/' + dirName+'/'+fileArr[i][j].split('/')[2]
+                    // console.log(filePath,destPath)
+                    if(fs.existsSync(filePath)) {
+                        fs.copyFileSync(filePath, destPath, (err) => {
+                            if (err) throw err;
+                            console.log("error:", err)
+                        });
+                    }
+                }
+            }
+            console.log(topDirName)
+            console.log(topDirName.substr(17))
+            res.set('Content-type', 'text/plain')
+            zipFolder(topDirName, topDirName+'.zip', function(err) {
+                if(err) {
+                    res.send('public/PersonalCompetence/PersonalCompetenceFile.hwp')
+                } else {
+                    res.send(topDirName.substr(10)+'.zip')
+                }
+            });
+        });
+    });
+};
+
+exports.downloadProjectPlanFile = (req,res)=>{
+    //session check
+    if(!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    }else{
+        logger.putLog(req);
+    }
+
+    console.log('got dgu901 post')
+    console.log('\n\n')
+
+    //get connection from pool
+    mysqlPool.pool.getConnection((err, connection) => {
+        if(err) { //throw err;
+            console.error('getConnection err : ' + err);
+            return;
+        }
+        var query = "select ppr.* from project_plan_report as ppr where prj_id in (select prj_id from project where settings_id = '"+req.params.item_id+"');";
+        connection.query(query, null, (error, results, fields) => {
+            connection.release();
+
+            if(error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+        });
+    });
+};
+
+exports.downloadMentoringReportFile = (req,res)=>{
+    //session check
+    if(!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    }else{
+        logger.putLog(req);
+    }
+
+    console.log('got dgu901 post')
+    console.log('\n\n')
+
+    //get connection from pool
+    mysqlPool.pool.getConnection((err, connection) => {
+        if(err) { //throw err;
+            console.error('getConnection err : ' + err);
+            return;
+        }
+        var query = "select mr.* from mentoring_report as mr where prj_id in (select prj_id from project where settings_id = '"+req.params.item_id+"');";
+        connection.query(query, null, (error, results, fields) => {
+            connection.release();
+
+            if(error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+        });
+    });
+};
+
+exports.downloadFinalProductFileFile = (req,res)=>{
+    //session check
+    if(!req.session.userId) {
+        console.log('do not have a session.');
+        res.redirect('/');
+        return;
+    }else{
+        logger.putLog(req);
+    }
+
+    console.log('got dgu901 post')
+    console.log('\n\n')
+
+    //get connection from pool
+    mysqlPool.pool.getConnection((err, connection) => {
+        if(err) { //throw err;
+            console.error('getConnection err : ' + err);
+            return;
+        }
+        var query = "select fp.* from final_product as fp where prj_id in (select prj_id from project where settings_id = '"+req.params.item_id+"');";
+        connection.query(query, null, (error, results, fields) => {
+            connection.release();
+
+            if(error) { //throw error;
+                console.error('query error : ' + error);
+                return;
+            }
+        });
+    });
+};
+
 
 exports.getPastListPage = (req, res) => {
     //session check
@@ -152,7 +346,7 @@ exports.getPastListPage = (req, res) => {
             return;
         }
         //use connection
-        var query = "select ads.prj_year, ads.prj_semes, ads.term_chk, ads.transfer_date from admin_settings as ads ";
+        var query = "select ads.settings_id, ads.prj_year, ads.prj_semes, ads.term_chk, ads.transfer_date from admin_settings as ads ";
         query += " where ads.transfer_date is not null"
         query += " order by prj_year desc, prj_semes desc; "
 
