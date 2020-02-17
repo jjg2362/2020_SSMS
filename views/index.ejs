@@ -146,16 +146,16 @@
 
               <div class="card-body py-2 mt-1">
                 <div class="form-row">
-                  <div class="col-md-10">
+                  <div class="col-md-10" style="width: 100%;">
                      <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined') { %>
-                      <h6 class="card-title mb-1"><a href="/msgbrd/show/<%= NoticePJImgList[0][i].posting_id %>"> <%= NoticePJImgList[0][i].posting_title %> </a>
-
+                      <h6 class="card-title mb-1" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="/msgbrd/show/<%= NoticePJImgList[0][i].posting_id %>"> <%= NoticePJImgList[0][i].posting_title %> </a>
+ 
                         <%if(moment(curDate).diff(moment(NoticePJImgList[0][i].post_date).format('YYYY-MM-DD'),"days")<=7) {%>
                         <img src="/image/icon_new.gif"/>
                         <% } %>
                         </h6>
                      <% } else { %>
-                      <h6 class="card-title mb-1"><a href="/mbrmgt/DGU121"> <%= NoticePJImgList[0][i].posting_title %>
+                      <h6 class="card-title mb-1" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="/mbrmgt/DGU121"> <%= NoticePJImgList[0][i].posting_title %>
                         <%if(moment(curDate).diff(moment(NoticePJImgList[0][i].post_date).format('YYYY-MM-DD'),"days")<=7){ %>
                         <img src="/image/icon_new.gif"/>
                       <% } %>
@@ -164,7 +164,7 @@
                       <% } %>
                   </div>
 
-                  <div class="col-md-2" style="text-align:right">
+                  <div class="col-md-2" style="text-align:right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                      <%= moment(NoticePJImgList[0][i].post_date).format('YYYY-MM-DD') %>
                   </div>
 
@@ -204,10 +204,10 @@
             <% sta_sort.push(comple[i]) ; %>
         <% } %>
 
-          <div class="card-group">
+          <div class="_card-group">
           <% for(var i = 0; i < sta_sort.length; i++) { %>
-               <div class="card border-dark mb-3">
-                 <div class="card-body row">
+               <div class="_card mb-3">
+                 <div class="_card-body row">
 
                    <div class="col-sm-10">
 
@@ -243,16 +243,16 @@
                        회사 : &nbsp <%= NoticePJImgList[1][sta_sort[i]].company_name %>
                      </div>
 
-                     <div class="col-md-3">
+                     <div class="col-md-10">
                        멘토 : &nbsp <%= NoticePJImgList[1][sta_sort[i]].mentor_name %>
                      </div>
-                     <div class="col-md-5">
+                     <div class="col-md-10">
                        <div class="form-row">
                          <p class="text-danger"> 1지망 :  <%= NoticePJImgList[1][sta_sort[i]].pc1 %> 팀 </p>
                          <p>, 2지망 : <%= NoticePJImgList[1][sta_sort[i]].pc2 %> 팀, 3지망 : <%= NoticePJImgList[1][sta_sort[i]].pc3 %> 팀</p>
                        </div>
                      </div>
-                     <div class="col-md-5">
+                     <div class="col-md-10">
                        <%= NoticePJImgList[1][sta_sort[i]].term_chk %>
                      </div>
                    </div>

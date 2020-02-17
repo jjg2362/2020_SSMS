@@ -100,7 +100,8 @@ exports.postMakeproject = (req, res) => {
         registrant : req.session.userId,
         amend_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
         amender : req.session.userId,
-        pre_matching : req.body.preMat
+        pre_matching : req.body.preMat,
+        recommended_Prof: req.body.inputProf
         }
 
     }else if(req.session.userType == "admin") {
@@ -125,10 +126,9 @@ exports.postMakeproject = (req, res) => {
         registrant : req.session.userId,
         amend_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
         amender : req.session.userId,
-        pre_matching : req.body.preMat
-
+        pre_matching : req.body.preMat,
+        recommended_Prof: req.body.inputProf
         }
-
     }
 
     if(req.files['inputProjectFile'] !== undefined) {
@@ -156,7 +156,6 @@ exports.postMakeproject = (req, res) => {
         }
           logger.putLogDetail(req,'Register success.');
         res.redirect('DGU311');
-
       });
     });
   });
@@ -185,8 +184,6 @@ exports.getManageproject = (req, res) => {
       var query = "select * from project";
       query += " where mentor_id = '"+ req.session.userId +"' and use_yn=1 ";
       query += " order by prj_id desc;"
-
-
     }
 
     connection.query(query, null, (error, results, fields) => {
@@ -399,7 +396,6 @@ exports.postAdditionPj = (req, res) => {
 
 
     var project = {
-
       prj_name: req.body.PjName,
       prj_outline: req.body.prj_outline,
       settings_id: req.body.Term,
@@ -419,7 +415,8 @@ exports.postAdditionPj = (req, res) => {
       registrant : req.session.userId,
       amend_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
       amender : req.session.userId,
-      pre_matching : req.body.preMat
+      pre_matching : req.body.preMat,
+      recommended_Prof : req.body.inputProf
     }
 
     if(req.files['inputProjectFile'] !== undefined) {
@@ -600,7 +597,8 @@ exports.postEditproject = (req, res) => {
       internship_yn: req.body.internship_yn,
       amend_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
       amender : req.session.userId,
-      pre_matching : req.body.preMat
+      pre_matching : req.body.preMat,
+      recommended_Prof : req.body.inputProf
     };
 
     var project2 = {
@@ -621,7 +619,8 @@ exports.postEditproject = (req, res) => {
       amend_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
       amender : req.session.userId,
       mentor_id : req.body.selectMentor,
-      pre_matching : req.body.preMat
+      pre_matching : req.body.preMat,
+      recommended_Prof : req.body.inputProf
     }
 
 

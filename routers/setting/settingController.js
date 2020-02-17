@@ -171,28 +171,22 @@ exports.downloadMentorProjectFile = (req,res)=>{
             results = JSON.parse(JSON.stringify(results));
 
             var fileArr = new Array();
+            var tempArr = new Array();
 
-            for(var i in prj_id){
-
-                var tempArr = new Array();
-                var tempPrjID = prj_id[i];
-
-                for(var r in results){//세 개의 쿼리 결과를 하나씩 확인
-                    for(var rr in results[r]){ // 한 쿼리 결과의 한 줄씩 본다.
-                        if(results[r][rr].prj_id==tempPrjID){ //
-                            var keys = Object.keys(results[r][rr]); //key 값들을 가져오고
-                            keys.splice(keys.indexOf('prj_id'),1) //key 값 중 prj_id 삭제
-                            for (var k in keys){
-                                var tempKey = keys[k];
-                                if(results[r][rr][tempKey]){
-                                    tempArr.push(results[r][rr][tempKey])
-                                }
-                            }
+            for(var r in results){//세 개의 쿼리 결과를 하나씩 확인
+                for(var rr in results[r]){ // 한 쿼리 결과의 한 줄씩 본다.
+                    var keys = Object.keys(results[r][rr]); //key 값들을 가져오고
+                    keys.splice(keys.indexOf('prj_id'),1) //key 값 중 prj_id 삭제
+                    for (var k in keys){
+                        var tempKey = keys[k];
+                        if(results[r][rr][tempKey]){
+                            tempArr.push(results[r][rr][tempKey])
                         }
                     }
                 }
-                fileArr.push(tempArr);
             }
+            fileArr.push(tempArr);
+
             // console.log(fileArr,fileArr[0][0])
             var topDirName = '/home/dev/sd/public/transferedFileDownload/'+moment().format('YYMMDD_kkmmss')+'_transferedProject';
             fs.mkdirSync(topDirName,{recursive:true})
