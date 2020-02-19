@@ -168,6 +168,10 @@ body.fixed-nav {
   box-sizing: border-box;
 }
 ._card-group ._card:nth-child(2n){margin-right: 0;}
+@media(max-width:768px){
+  ._card-group ._card{width: 100%; margin-right: 0;}
+  .col-sm-1 {display: none;}
+}
 
 @media (min-width: 992px) {
   #mainNav .navbar-brand {
@@ -468,11 +472,6 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   .card-columns {
     column-count: 2;
   }
-}
-@media(max-width:768px){
-  ._card-group ._card{width: 100%; margin-right: 0;}
-  .col-sm-1 {display: none;}
-
 }
 
 @media (min-width: 1200px) {
