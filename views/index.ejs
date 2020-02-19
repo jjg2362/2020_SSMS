@@ -239,7 +239,7 @@
 
                  <div class="card-body py-2 small">
                    <div class="form-row">
-                     <div class="col-md-4">
+                     <div class="col-md-10">
                        회사 : &nbsp <%= NoticePJImgList[1][sta_sort[i]].company_name %>
                      </div>
 
@@ -275,6 +275,9 @@
                         <a href="#"> #<%= NoticePJImgList[1][sta_sort[i]].keyword3 %> </a>
                    <% } %>
                    &nbsp
+                   <% if(NoticePJImgList[1][i].recommended_Prof != null) { %>
+                    <p>추천교수 : <%= NoticePJImgList[1][sta_sort[i]].recommended_Prof %> </p>
+               <% } %>
                  </div>
 
                </div>

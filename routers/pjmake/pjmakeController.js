@@ -101,11 +101,10 @@ exports.postMakeproject = (req, res) => {
         amend_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
         amender : req.session.userId,
         pre_matching : req.body.preMat,
-        recommended_Prof: req.body.inputProf
+        recommended_Prof : req.body.inputProf
         }
 
     }else if(req.session.userType == "admin") {
-
       var project = {
         prj_name: prjName + req.body.PjName,
         prj_outline: req.body.prj_outline,
@@ -127,7 +126,7 @@ exports.postMakeproject = (req, res) => {
         amend_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
         amender : req.session.userId,
         pre_matching : req.body.preMat,
-        recommended_Prof: req.body.inputProf
+        recommended_Prof : req.body.inputProf
         }
     }
 

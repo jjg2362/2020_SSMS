@@ -160,13 +160,14 @@ body.fixed-nav {
 ._card-group ._card{
   float:left;
   width: 49%;
-  min-height: 400px;
-  padding: 2%;
+  height: 250px;
+  padding: 17px;
   margin-right: 2%;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: 5px;
+  box-sizing: border-box;
 }
-
+._card-group ._card:nth-child(2n){margin-right: 0;}
 
 @media (min-width: 992px) {
   #mainNav .navbar-brand {
@@ -460,12 +461,18 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   .card-columns {
     column-count: 1;
   }
+
 }
 
 @media (min-width: 768px) {
   .card-columns {
     column-count: 2;
   }
+}
+@media(max-width:768px){
+  ._card-group ._card{width: 100%; margin-right: 0;}
+  .col-sm-1 {display: none;}
+
 }
 
 @media (min-width: 1200px) {
