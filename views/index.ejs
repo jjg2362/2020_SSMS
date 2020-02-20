@@ -239,7 +239,7 @@
 
                  <div class="card-body py-2 small">
                    <div class="form-row">
-                     <div class="col-md-10">
+                     <div class="col-md-4">
                        회사 : &nbsp <%= NoticePJImgList[1][sta_sort[i]].company_name %>
                      </div>
 
@@ -278,12 +278,13 @@
                    <% if(NoticePJImgList[1][i].recommended_Prof != null) { %>
                     <p>추천교수 : <%= NoticePJImgList[1][sta_sort[i]].recommended_Prof %> </p>
                <% } %>
+               &nbsp
                  </div>
 
                </div>
                <%if(i%2==1) {%>
                  </div>
-                 <div class="card-group">
+                 <div class="_card-group">
                <% } %>
           <% } %>
 
