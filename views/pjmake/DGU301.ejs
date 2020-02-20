@@ -464,7 +464,11 @@
         document.getElementById("inputDevelopment1").focus();
         return false;
       }
-
+      if (_inputProf == '') {
+        alert("추천교수를 입력하세요.(없다면 '없음'이라고 기입해주세요.)");
+        document.getElementById("inputProf").focus();
+        return false;
+      }
 
       if (_Term == "0") {
         alert("분류를 선택하세요.");
@@ -481,11 +485,7 @@
         document.getElementById("inputProjectFile").focus();
         return false;
       }
-      if (_inputProf == '') {
-        alert("추천교수를 입력하세요.(없다면 '없음'이라고 기입해주세요.)");
-        document.getElementById("inputProf").focus();
-        return false;
-      }
+      
 
 
 
