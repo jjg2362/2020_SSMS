@@ -2,9 +2,19 @@
 <header id="header">
    <div class="header clearfix">
       <!-- 네비게이션 상단 좌측 로고 -->
-      <a class="logo" href="/"><img src="\image\logo_normal.png"/></a>
+      <div class="logo">
+         <a href="/"><img src="\image\logo_normal.png"/></a>
+      </div>
 
       <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined') { %>
+      <div id="mNav" onclick="ClickMobileNav()">
+         <div class="mNav">
+            <span></span>
+            <span></span>
+            <span></span>
+         </div>
+      </div>
+
       <ul class="nav-left">
          <!-- 회원관리 -->
          <% if(userInfo.userType == 'admin') { %>
@@ -241,3 +251,10 @@
       </ul>
    </div>
 </header>
+
+<script>
+   function ClickMobileNav() {
+      var mNav = document.getElementById("mNav");
+      mNav.classList.toggle("on");
+   }
+</script>

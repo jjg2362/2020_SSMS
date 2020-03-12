@@ -1,471 +1,445 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
-    <title>동국대학교 산학연계프로젝트</title>
+   <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <link rel="SHORTCUT ICON" href="\image\Dongguk.ico" />
+      <title>동국대학교 산학연계프로젝트</title>
 
-    <!-- Bootstrap core CSS-->
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Bootstrap core CSS-->
+      <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Custom fonts for this template-->
-    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <!-- Custom fonts for this template-->
+      <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- Custom styles for this template-->
-    <link href="../css/sb-admin.css" rel="stylesheet">
+      <!-- Custom styles for this template-->
+      <link href="../css/sb-admin.css" rel="stylesheet" />
 
-    <!-- Page level plugin CSS-->
-    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+      <!-- Page level plugin CSS-->
+      <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+   </head>
 
-  </head>
+   <!-- 메인 페이지 -->
+   <body class="fixed-nav sticky-footer" id="page-top">
+      <!-- 네비게이션 바 불러오기 -->
+      <% include ../navBar.ejs %>
 
-  <!-- 메인 페이지 -->
-  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-    <!-- 네비게이션 바 불러오기 -->
-    <% include ../navBar.ejs %>
+      <!-- 메인 -->
+      <div class="content-wrapper">
+         <!-- 메인 내용 -->
+         <div class="container-fluid">
+            <h6>회원관리 > 사용자 조회(User)</h6>
+            <hr />
+            <div class="form-group" style="text-align: center;">
+               <div class="form-row">
+                  <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="0" name="sType" onclick="changeType()" checked="checked" />학생(전체)</div>
+                  <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="1" name="sType" onclick="changeType()" />멘토</div>
+                  <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="2" name="sType" onclick="changeType()" />교수</div>
+                  <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="3" name="sType" onclick="changeType()" />조교</div>
+                  <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="4" name="sType" onclick="changeType()" />학생(팀 없음)</div>
 
-    <!-- 메인 -->
-    <div class="content-wrapper">
-      <!-- 메인 내용 -->
-      <div class="container-fluid">
-        <h6>회원관리 > 사용자 조회(User)</h6>
-        <hr>
-        <div class="form-group" style="text-align: center;">
-          <div class="form-row">
-            <div class="col-md-2">
-              <input style="margin-right: 2%;" type="radio" value="0" name="sType" onclick="changeType()" checked="checked">학생(전체)
-            </div>
-            <div class="col-md-2">
-              <input style="margin-right: 2%;" type="radio" value="1" name="sType" onclick="changeType()">멘토
-            </div>
-            <div class="col-md-2">
-              <input style="margin-right: 2%;" type="radio" value="2" name="sType" onclick="changeType()">교수
-            </div>
-            <div class="col-md-2">
-              <input style="margin-right: 2%;" type="radio" value="3" name="sType" onclick="changeType()">조교
-            </div>
-            <div class="col-md-2">
-              <input style="margin-right: 2%;" type="radio" value="4" name="sType" onclick="changeType()">학생(팀 없음)
+                  <a id="btnExport" href="#" download="">
+                     <input type="button" class="btn btn-primary" value="Excel" />
+                  </a>
+               </div>
             </div>
 
-            <a id="btnExport" href="#" download="">
-              <input type="button" class="btn btn-primary"  value="Excel"/>
-            </a>
-          </div>
-        </div>
-
-
-
-
-
-
-
-        <div class="card mb-3">
-          <div class="card-body">
-            <!-- 학생(전체) 테이블 -->
-            <div class="table-responsive" id="div-dataTable0">
-              <table class="table table-bordered display" id="dataTable0" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <% for(var key = 0; key < allUserInfosFields[0].length; key++) { %>
-                      <th><%= allUserInfosFields[0][key].name %></th>
-                    <% } %>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% for(var i = 0; i < allUserInfos[0].length; i++) { %>
-                     <tr>
-                       <% for(var key in allUserInfos[0][i]) { %>
-                         <% if((key == '팀' && allUserInfos[0][i][key] == 1) || (key == '팀수락' && allUserInfos[0][i][key] == 1) || (key == '메일인증' && allUserInfos[0][i][key] == 1)) { %>
-                           <td> O </td>
-                         <% } else if((key == '팀' && allUserInfos[0][i][key] != 1) || (key == '팀수락' && allUserInfos[0][i][key] != 1) || (key == '메일인증' && allUserInfos[0][i][key] != 1)) { %>
-                           <td> X </td>
-                         <% } else { %>
-                           <td><%= allUserInfos[0][i][key] %></td>
-                         <% } %>
-                       <% } %>
-                     </tr>
-                  <% } %>
-                </tbody>
-              </table>
+            <div class="card mb-3">
+               <div class="card-body">
+                  <!-- 학생(전체) 테이블 -->
+                  <div class="table-responsive" id="div-dataTable0">
+                     <table class="table table-bordered display" id="dataTable0" width="100%" cellspacing="0">
+                        <thead>
+                           <tr>
+                              <% for(var key = 0; key < allUserInfosFields[0].length; key++) { %>
+                              <th><%= allUserInfosFields[0][key].name %></th>
+                              <% } %>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <% for(var i = 0; i < allUserInfos[0].length; i++) { %>
+                           <tr>
+                              <% for(var key in allUserInfos[0][i]) { %> <% if((key == '팀' && allUserInfos[0][i][key] == 1) || (key == '팀수락' && allUserInfos[0][i][key] == 1) || (key == '메일인증'
+                              && allUserInfos[0][i][key] == 1)) { %>
+                              <td>O</td>
+                              <% } else if((key == '팀' && allUserInfos[0][i][key] != 1) || (key == '팀수락' && allUserInfos[0][i][key] != 1) || (key == '메일인증' && allUserInfos[0][i][key] != 1)) {
+                              %>
+                              <td>X</td>
+                              <% } else { %>
+                              <td><%= allUserInfos[0][i][key] %></td>
+                              <% } %> <% } %>
+                           </tr>
+                           <% } %>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- 멘토 테이블 -->
+                  <div class="table-responsive" id="div-dataTable1">
+                     <table class="table table-bordered display" id="dataTable1" width="100%" cellspacing="0">
+                        <thead>
+                           <tr>
+                              <% for(var key = 0; key < allUserInfosFields[1].length; key++) { %>
+                              <th><%= allUserInfosFields[1][key].name %></th>
+                              <% } %>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <% for(var i = 0; i < allUserInfos[1].length; i++) { %>
+                           <tr>
+                              <% for(var key in allUserInfos[1][i]) { %> <% if((key == '메일인증' && allUserInfos[1][i][key] == 1)) { %>
+                              <td style='mso-number-format:"\@"'>O</td>
+                              <% } else if((key == '메일인증' && allUserInfos[1][i][key] != 1)) { %>
+                              <td style='mso-number-format:"\@"'>X</td>
+                              <% } else { %>
+                              <td style='mso-number-format:"\@"'><%= allUserInfos[1][i][key] %></td>
+                              <% } %> <% } %>
+                           </tr>
+                           <% } %>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- 교수 테이블 -->
+                  <div class="table-responsive" id="div-dataTable2">
+                     <table class="table table-bordered display" id="dataTable2" width="100%" cellspacing="0">
+                        <thead>
+                           <tr>
+                              <% for(var key = 0; key < allUserInfosFields[2].length; key++) { %>
+                              <th><%= allUserInfosFields[2][key].name %></th>
+                              <% } %>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <% for(var i = 0; i < allUserInfos[2].length; i++) { %>
+                           <tr>
+                              <% for(var key in allUserInfos[2][i]) { %> <% if((key == '메일인증' && allUserInfos[2][i][key] == 1)) { %>
+                              <td>O</td>
+                              <% } else if((key == '메일인증' && allUserInfos[2][i][key] != 1)) { %>
+                              <td>X</td>
+                              <% } else { %>
+                              <td><%= allUserInfos[2][i][key] %></td>
+                              <% } %> <% } %>
+                           </tr>
+                           <% } %>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- 조교 테이블 -->
+                  <div class="table-responsive" id="div-dataTable3">
+                     <table class="table table-bordered display" id="dataTable3" width="100%" cellspacing="0">
+                        <thead>
+                           <tr>
+                              <% for(var key = 0; key < allUserInfosFields[3].length; key++) { %>
+                              <th><%= allUserInfosFields[3][key].name %></th>
+                              <% } %>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <% for(var i = 0; i < allUserInfos[3].length; i++) { %>
+                           <tr>
+                              <% for(var key in allUserInfos[3][i]) { %> <% if((key == '메일인증' && allUserInfos[3][i][key] == 1)) { %>
+                              <td>O</td>
+                              <% } else if((key == '메일인증' && allUserInfos[3][i][key] != 1)) { %>
+                              <td>X</td>
+                              <% } else { %>
+                              <td><%= allUserInfos[3][i][key] %></td>
+                              <% } %> <% } %>
+                           </tr>
+                           <% } %>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- 학생(팀없음) 테이블 -->
+                  <div class="table-responsive" id="div-dataTable4">
+                     <table class="table table-bordered display" id="dataTable4" width="100%" cellspacing="0">
+                        <thead>
+                           <tr>
+                              <% for(var key = 0; key < allUserInfosFields[4].length; key++) { %>
+                              <th><%= allUserInfosFields[4][key].name %></th>
+                              <% } %>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <% for(var i = 0; i < allUserInfos[4].length; i++) { %>
+                           <tr>
+                              <% for(var key in allUserInfos[4][i]) { %> <% if((key == '팀' && allUserInfos[4][i][key] == 1) || (key == '팀수락' && allUserInfos[4][i][key] == 1) || (key == '메일인증'
+                              && allUserInfos[4][i][key] == 1)) { %>
+                              <td>O</td>
+                              <% } else if((key == '팀' && allUserInfos[4][i][key] != 1) || (key == '팀수락' && allUserInfos[4][i][key] != 1) || (key == '메일인증' && allUserInfos[4][i][key] != 1)) {
+                              %>
+                              <td>X</td>
+                              <% } else { %>
+                              <td><%= allUserInfos[4][i][key] %></td>
+                              <% } %> <% } %>
+                           </tr>
+                           <% } %>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
             </div>
-            <!-- 멘토 테이블 -->
-            <div class="table-responsive" id="div-dataTable1">
-              <table class="table table-bordered display" id="dataTable1" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                  <% for(var key = 0; key < allUserInfosFields[1].length; key++) { %>
-                    <th><%= allUserInfosFields[1][key].name %></th>
-                  <% } %>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% for(var i = 0; i < allUserInfos[1].length; i++) { %>
-                    <tr>
-                      <% for(var key in allUserInfos[1][i]) { %>
-                        <% if((key == '메일인증' && allUserInfos[1][i][key] == 1)) { %>
-                          <td style='mso-number-format:"\@"'> O </td>
-                        <% } else if((key == '메일인증' && allUserInfos[1][i][key] != 1)) { %>
-                          <td style='mso-number-format:"\@"'> X </td>
-                        <% } else { %>
-                            <td style='mso-number-format:"\@"'><%= allUserInfos[1][i][key] %></td>
-                        <% } %>
-                      <% } %>
-                    </tr>
-                  <% } %>
-                </tbody>
-              </table>
-            </div>
-            <!-- 교수 테이블 -->
-            <div class="table-responsive" id="div-dataTable2">
-              <table class="table table-bordered display" id="dataTable2" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <% for(var key = 0; key < allUserInfosFields[2].length; key++) { %>
-                      <th><%= allUserInfosFields[2][key].name %></th>
-                    <% } %>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% for(var i = 0; i < allUserInfos[2].length; i++) { %>
-                    <tr>
-                      <% for(var key in allUserInfos[2][i]) { %>
-                        <% if((key == '메일인증' && allUserInfos[2][i][key] == 1)) { %>
-                          <td> O </td>
-                        <% } else if((key == '메일인증' && allUserInfos[2][i][key] != 1)) { %>
-                          <td> X </td>
-                        <% } else { %>
-                          <td><%= allUserInfos[2][i][key] %></td>
-                        <% } %>
-                      <% } %>
-                    </tr>
-                  <% } %>
-                </tbody>
-              </table>
-            </div>
-            <!-- 조교 테이블 -->
-            <div class="table-responsive" id="div-dataTable3">
-              <table class="table table-bordered display" id="dataTable3" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <% for(var key = 0; key < allUserInfosFields[3].length; key++) { %>
-                      <th><%= allUserInfosFields[3][key].name %></th>
-                    <% } %>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% for(var i = 0; i < allUserInfos[3].length; i++) { %>
-                    <tr>
-                      <% for(var key in allUserInfos[3][i]) { %>
-                        <% if((key == '메일인증' && allUserInfos[3][i][key] == 1)) { %>
-                          <td> O </td>
-                        <% } else if((key == '메일인증' && allUserInfos[3][i][key] != 1)) { %>
-                          <td> X </td>
-                        <% } else { %>
-                          <td><%= allUserInfos[3][i][key] %></td>
-                        <% } %>
-                      <% } %>
-                    </tr>
-                  <% } %>
-                </tbody>
-              </table>
-            </div>
-            <!-- 학생(팀없음) 테이블 -->
-            <div class="table-responsive" id="div-dataTable4">
-              <table class="table table-bordered display" id="dataTable4" width="100%" cellspacing="0">
-                <thead>
-                <tr>
-                  <% for(var key = 0; key < allUserInfosFields[4].length; key++) { %>
-                    <th><%= allUserInfosFields[4][key].name %></th>
-                  <% } %>
-                </tr>
-                </thead>
-                <tbody>
-                  <% for(var i = 0; i < allUserInfos[4].length; i++) { %>
-                    <tr>
-                      <% for(var key in allUserInfos[4][i]) { %>
-                        <% if((key == '팀' && allUserInfos[4][i][key] == 1) || (key == '팀수락' && allUserInfos[4][i][key] == 1) || (key == '메일인증' && allUserInfos[4][i][key] == 1)) { %>
-                          <td> O </td>
-                        <% } else if((key == '팀' && allUserInfos[4][i][key] != 1) || (key == '팀수락' && allUserInfos[4][i][key] != 1) || (key == '메일인증' && allUserInfos[4][i][key] != 1)) { %>
-                          <td> X </td>
-                        <% } else { %>
-                          <td><%= allUserInfos[4][i][key] %></td>
-                        <% } %>
-                      <% } %>
-                    </tr>
-                  <% } %>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-        </div>
+         </div>
+         <!-- 맨위로 가기 버튼 -->
+         <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+         </a>
       </div>
 
       <!-- include footer -->
       <% include ../footer.html %>
 
-      <!-- 맨위로 가기 버튼 -->
-      <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fa fa-angle-up"></i>
-      </a>
-    </div>
+      <!-- Bootstrap core JavaScript-->
+      <script src="../vendor/jquery/jquery.min.js"></script>
+      <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="../js/sb-admin.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="../js/sb-admin.min.js"></script>
+      <!-- Page level plugin JavaScript-->
+      <script src="../vendor/datatables/jquery.dataTables.js"></script>
+      <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
 
-    <!-- Page level plugin JavaScript-->
-    <script src="../vendor/datatables/jquery.dataTables.js"></script>
-    <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+      <!-- Custom scripts for this page-->
+      <script src="../js/sb-admin-datatables.min.js"></script>
 
-    <!-- Custom scripts for this page-->
-    <script src="../js/sb-admin-datatables.min.js"></script>
+      <script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
 
+      <script type="text/javascript">
 
-    <script type="text/javascript" src="../js/jquery.battatech.excelexport.js"></script>
+         $(document).ready(function () {
 
-    <script type="text/javascript">
+           $("table.display").dataTable({
+               "iDisplayLength": 300
+           });
 
-    $(document).ready(function () {
+           $("#div-dataTable1").hide();
+           $("#div-dataTable2").hide();
+           $("#div-dataTable3").hide();
+           $("#div-dataTable4").hide();
 
-      $("table.display").dataTable({
-          "iDisplayLength": 300
-      });
+           $("#btnExport").on('click', function () {
 
-      $("#div-dataTable1").hide();
-      $("#div-dataTable2").hide();
-      $("#div-dataTable3").hide();
-      $("#div-dataTable4").hide();
+               let selectedValue = $("input[type=radio][name=sType]:checked").val();
+               var uri = $("#dataTable" + selectedValue).excelexportjs({
+                   containerid: 'dataTable' + selectedValue
+                   , datatype:  'table'
+                   , returnUri: true
+               });
 
-      $("#btnExport").on('click', function () {
+               if(selectedValue=='0'){
+                 var name = <%=moment(curDate).format('YYYYMMDD') %>+"_학생(전체).xls";
+                 $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
+               }
+               else if(selectedValue=="1"){
+                 var name = <%=moment(curDate).format('YYYYMMDD') %>+"_멘토.xls";
+                 $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
+               }
+               else if(selectedValue=="2"){
+                 var name =<%=moment(curDate).format('YYYYMMDD') %>+"_교수.xls";
+                 $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
+               }
+               else if(selectedValue=="3"){
+                 var name = <%=moment(curDate).format('YYYYMMDD') %>+"_조교.xls";
+                 $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
+               }
+               else if(selectedValue=="4"){
+                 var name = <%=moment(curDate).format('YYYYMMDD') %>+"_학생(팀없음).xls";
+                 $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
+               }
 
-          let selectedValue = $("input[type=radio][name=sType]:checked").val();
-          var uri = $("#dataTable" + selectedValue).excelexportjs({
-              containerid: 'dataTable' + selectedValue
-              , datatype:  'table'
-              , returnUri: true
-          });
+           });
+         });
 
-          if(selectedValue=='0'){
-            var name = <%=moment(curDate).format('YYYYMMDD') %>+"_학생(전체).xls";
-            $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
-          }
-          else if(selectedValue=="1"){
-            var name = <%=moment(curDate).format('YYYYMMDD') %>+"_멘토.xls";
-            $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
-          }
-          else if(selectedValue=="2"){
-            var name =<%=moment(curDate).format('YYYYMMDD') %>+"_교수.xls";
-            $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
-          }
-          else if(selectedValue=="3"){
-            var name = <%=moment(curDate).format('YYYYMMDD') %>+"_조교.xls";
-            $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
-          }
-          else if(selectedValue=="4"){
-            var name = <%=moment(curDate).format('YYYYMMDD') %>+"_학생(팀없음).xls";
-            $(this).attr('download', name).attr('href', uri).attr('target', '_blank');
-          }
+         function changeType() {
+           let selectedValue = $("input[type=radio][name=sType]:checked").val();
 
-      });
-    });
+           switch(selectedValue) {
+             case "0":
+               $("#div-dataTable0").show();
+               $("#div-dataTable1").hide();
+               $("#div-dataTable2").hide();
+               $("#div-dataTable3").hide();
+               $("#div-dataTable4").hide();
+               break;
+             case "1":
+               $("#div-dataTable1").show();
+               $("#div-dataTable0").hide();
+               $("#div-dataTable2").hide();
+               $("#div-dataTable3").hide();
+               $("#div-dataTable4").hide();
+               break;
+             case "2":
+               $("#div-dataTable2").show();
+               $("#div-dataTable0").hide();
+               $("#div-dataTable1").hide();
+               $("#div-dataTable3").hide();
+               $("#div-dataTable4").hide();
+               break;
+             case "3":
+               $("#div-dataTable3").show();
+               $("#div-dataTable0").hide();
+               $("#div-dataTable1").hide();
+               $("#div-dataTable2").hide();
+               $("#div-dataTable4").hide();
+               break;
+             case "4":
+               $("#div-dataTable4").show();
+               $("#div-dataTable0").hide();
+               $("#div-dataTable1").hide();
+               $("#div-dataTable2").hide();
+               $("#div-dataTable3").hide();
+               break;
+           }
 
-    function changeType() {
-      let selectedValue = $("input[type=radio][name=sType]:checked").val();
+         }
 
-      switch(selectedValue) {
-        case "0":
-          $("#div-dataTable0").show();
-          $("#div-dataTable1").hide();
-          $("#div-dataTable2").hide();
-          $("#div-dataTable3").hide();
-          $("#div-dataTable4").hide();
-          break;
-        case "1":
-          $("#div-dataTable1").show();
-          $("#div-dataTable0").hide();
-          $("#div-dataTable2").hide();
-          $("#div-dataTable3").hide();
-          $("#div-dataTable4").hide();
-          break;
-        case "2":
-          $("#div-dataTable2").show();
-          $("#div-dataTable0").hide();
-          $("#div-dataTable1").hide();
-          $("#div-dataTable3").hide();
-          $("#div-dataTable4").hide();
-          break;
-        case "3":
-          $("#div-dataTable3").show();
-          $("#div-dataTable0").hide();
-          $("#div-dataTable1").hide();
-          $("#div-dataTable2").hide();
-          $("#div-dataTable4").hide();
-          break;
-        case "4":
-          $("#div-dataTable4").show();
-          $("#div-dataTable0").hide();
-          $("#div-dataTable1").hide();
-          $("#div-dataTable2").hide();
-          $("#div-dataTable3").hide();
-          break;
-      }
+           function changeTypeOld() {
+             var selectedValue = $("input[type=radio][name=sType]:checked").val();
+             var strHead = "";
+             var strBody = "";
 
-    }
+             switch(selectedValue) {
+               case "0":
+                 strHead += "<tr>";
+                   <% for(var key = 0; key < allUserInfosFields[0].length; key++) { %>
+                     strHead += "<th>" + '<%= allUserInfosFields[0][key].name %>' + "</th>";
+                   <% } %>
+                 strHead += "</tr>";
 
-      function changeTypeOld() {
-        var selectedValue = $("input[type=radio][name=sType]:checked").val();
-        var strHead = "";
-        var strBody = "";
+                 <% for(var i = 0; i < allUserInfos[0].length; i++) { %>
+                   strBody += "<tr>";
+                   <% for(var key in allUserInfos[0][i]) { %>
 
-        switch(selectedValue) {
-          case "0":
-            strHead += "<tr>";
-              <% for(var key = 0; key < allUserInfosFields[0].length; key++) { %>
-                strHead += "<th>" + '<%= allUserInfosFields[0][key].name %>' + "</th>";
-              <% } %>
-            strHead += "</tr>";
+                     <% if((key == '팀' && allUserInfos[0][i][key] == 1) || (key == '팀수락' && allUserInfos[0][i][key] == 1) || (key == '메일인증' && allUserInfos[0][i][key] == 1)) { %>
+                       strBody += "<td> O </td>";
+                     <% } else if((key == '팀' && allUserInfos[0][i][key] != 1) || (key == '팀수락' && allUserInfos[0][i][key] != 1) || (key == '메일인증' && allUserInfos[0][i][key] != 1)) { %>
+                       strBody += "<td> X </td>";
+                     <% } else { %>
+                       strBody += "<td>" + '<%= allUserInfos[0][i][key] %>' + "</td>";
+                     <% } %>
 
-            <% for(var i = 0; i < allUserInfos[0].length; i++) { %>
-              strBody += "<tr>";
-              <% for(var key in allUserInfos[0][i]) { %>
+                   <% } %>
+                   strBody += "</tr>";
+                 <% } %>
+               break;
 
-                <% if((key == '팀' && allUserInfos[0][i][key] == 1) || (key == '팀수락' && allUserInfos[0][i][key] == 1) || (key == '메일인증' && allUserInfos[0][i][key] == 1)) { %>
-                  strBody += "<td> O </td>";
-                <% } else if((key == '팀' && allUserInfos[0][i][key] != 1) || (key == '팀수락' && allUserInfos[0][i][key] != 1) || (key == '메일인증' && allUserInfos[0][i][key] != 1)) { %>
-                  strBody += "<td> X </td>";
-                <% } else { %>
-                  strBody += "<td>" + '<%= allUserInfos[0][i][key] %>' + "</td>";
-                <% } %>
+               case "1":
 
-              <% } %>
-              strBody += "</tr>";
-            <% } %>
-          break;
+                 strHead += "<tr>";
+                   <% for(var key = 0; key < allUserInfosFields[1].length; key++) { %>
+                     strHead += "<th>" + '<%= allUserInfosFields[1][key].name %>' + "</th>";
+                   <% } %>
+                 strHead += "</tr>";
 
-          case "1":
+                 <% for(var i = 0; i < allUserInfos[1].length; i++) { %>
+                   strBody += "<tr>";
+                   <% for(var key in allUserInfos[1][i]) { %>
 
-            strHead += "<tr>";
-              <% for(var key = 0; key < allUserInfosFields[1].length; key++) { %>
-                strHead += "<th>" + '<%= allUserInfosFields[1][key].name %>' + "</th>";
-              <% } %>
-            strHead += "</tr>";
+                     <% if((key == '메일인증' && allUserInfos[1][i][key] == 1)) { %>
+                       strBody += "<td> O </td>";
+                     <% } else if((key == '메일인증' && allUserInfos[1][i][key] != 1)) { %>
+                       strBody += "<td> X </td>";
+                     <% } else { %>
+                       strBody += "<td>" + '<%= allUserInfos[1][i][key] %>' + "</td>";
+                     <% } %>
 
-            <% for(var i = 0; i < allUserInfos[1].length; i++) { %>
-              strBody += "<tr>";
-              <% for(var key in allUserInfos[1][i]) { %>
+                   <% } %>
+                   strBody += "</tr>";
+                 <% } %>
+               break;
 
-                <% if((key == '메일인증' && allUserInfos[1][i][key] == 1)) { %>
-                  strBody += "<td> O </td>";
-                <% } else if((key == '메일인증' && allUserInfos[1][i][key] != 1)) { %>
-                  strBody += "<td> X </td>";
-                <% } else { %>
-                  strBody += "<td>" + '<%= allUserInfos[1][i][key] %>' + "</td>";
-                <% } %>
+               case "2":
+                 strHead += "<tr>";
+                   <% for(var key = 0; key < allUserInfosFields[2].length; key++) { %>
+                     strHead += "<th>" + '<%= allUserInfosFields[2][key].name %>' + "</th>";
+                   <% } %>
+                 strHead += "</tr>";
 
-              <% } %>
-              strBody += "</tr>";
-            <% } %>
-          break;
+                 <% for(var i = 0; i < allUserInfos[2].length; i++) { %>
+                   strBody += "<tr>";
+                   <% for(var key in allUserInfos[2][i]) { %>
 
-          case "2":
-            strHead += "<tr>";
-              <% for(var key = 0; key < allUserInfosFields[2].length; key++) { %>
-                strHead += "<th>" + '<%= allUserInfosFields[2][key].name %>' + "</th>";
-              <% } %>
-            strHead += "</tr>";
+                     <% if((key == '메일인증' && allUserInfos[2][i][key] == 1)) { %>
+                       strBody += "<td> O </td>";
+                     <% } else if((key == '메일인증' && allUserInfos[2][i][key] != 1)) { %>
+                       strBody += "<td> X </td>";
+                     <% } else { %>
+                       strBody += "<td>" + '<%= allUserInfos[2][i][key] %>' + "</td>";
+                     <% } %>
 
-            <% for(var i = 0; i < allUserInfos[2].length; i++) { %>
-              strBody += "<tr>";
-              <% for(var key in allUserInfos[2][i]) { %>
-
-                <% if((key == '메일인증' && allUserInfos[2][i][key] == 1)) { %>
-                  strBody += "<td> O </td>";
-                <% } else if((key == '메일인증' && allUserInfos[2][i][key] != 1)) { %>
-                  strBody += "<td> X </td>";
-                <% } else { %>
-                  strBody += "<td>" + '<%= allUserInfos[2][i][key] %>' + "</td>";
-                <% } %>
-
-              <% } %>
-              strBody += "</tr>";
-            <% } %>
-          break;
+                   <% } %>
+                   strBody += "</tr>";
+                 <% } %>
+               break;
 
 
 
 
 
-          case "3":
-            strHead += "<tr>";
-              <% for(var key = 0; key < allUserInfosFields[3].length; key++) { %>
-                strHead += "<th>" + '<%= allUserInfosFields[3][key].name %>' + "</th>";
-              <% } %>
-            strHead += "</tr>";
+               case "3":
+                 strHead += "<tr>";
+                   <% for(var key = 0; key < allUserInfosFields[3].length; key++) { %>
+                     strHead += "<th>" + '<%= allUserInfosFields[3][key].name %>' + "</th>";
+                   <% } %>
+                 strHead += "</tr>";
 
-            <% for(var i = 0; i < allUserInfos[3].length; i++) { %>
-              strBody += "<tr>";
-              <% for(var key in allUserInfos[3][i]) { %>
+                 <% for(var i = 0; i < allUserInfos[3].length; i++) { %>
+                   strBody += "<tr>";
+                   <% for(var key in allUserInfos[3][i]) { %>
 
-                <% if((key == '메일인증' && allUserInfos[3][i][key] == 1)) { %>
-                  strBody += "<td> O </td>";
-                <% } else if((key == '메일인증' && allUserInfos[3][i][key] != 1)) { %>
-                  strBody += "<td> X </td>";
-                <% } else { %>
-                  strBody += "<td>" + '<%= allUserInfos[3][i][key] %>' + "</td>";
-                <% } %>
+                     <% if((key == '메일인증' && allUserInfos[3][i][key] == 1)) { %>
+                       strBody += "<td> O </td>";
+                     <% } else if((key == '메일인증' && allUserInfos[3][i][key] != 1)) { %>
+                       strBody += "<td> X </td>";
+                     <% } else { %>
+                       strBody += "<td>" + '<%= allUserInfos[3][i][key] %>' + "</td>";
+                     <% } %>
 
-              <% } %>
-              strBody += "</tr>";
-            <% } %>
-          break;
-
-
+                   <% } %>
+                   strBody += "</tr>";
+                 <% } %>
+               break;
 
 
 
-          case "4":
-            strHead += "<tr>";
-              <% for(var key = 0; key < allUserInfosFields[4].length; key++) { %>
-                strHead += "<th>" + '<%= allUserInfosFields[4][key].name %>' + "</th>";
-              <% } %>
-            strHead += "</tr>";
 
-            <% for(var i = 0; i < allUserInfos[4].length; i++) { %>
-              strBody += "<tr>";
-              <% for(var key in allUserInfos[4][i]) { %>
 
-                <% if((key == '팀' && allUserInfos[4][i][key] == 1) || (key == '팀수락' && allUserInfos[4][i][key] == 1) || (key == '메일인증' && allUserInfos[4][i][key] == 1)) { %>
-                  strBody += "<td> O </td>";
-                <% } else if((key == '팀' && allUserInfos[4][i][key] != 1) || (key == '팀수락' && allUserInfos[4][i][key] != 1) || (key == '메일인증' && allUserInfos[4][i][key] != 1)) { %>
-                  strBody += "<td> X </td>";
-                <% } else { %>
-                  strBody += "<td>" + '<%= allUserInfos[4][i][key] %>' + "</td>";
-                <% } %>
+               case "4":
+                 strHead += "<tr>";
+                   <% for(var key = 0; key < allUserInfosFields[4].length; key++) { %>
+                     strHead += "<th>" + '<%= allUserInfosFields[4][key].name %>' + "</th>";
+                   <% } %>
+                 strHead += "</tr>";
 
-              <% } %>
-              strBody += "</tr>";
-            <% } %>
-          break;
-        }
+                 <% for(var i = 0; i < allUserInfos[4].length; i++) { %>
+                   strBody += "<tr>";
+                   <% for(var key in allUserInfos[4][i]) { %>
 
-        $("#dataTable2 > thead").empty();
-        $("#dataTable2 > tbody").empty();
+                     <% if((key == '팀' && allUserInfos[4][i][key] == 1) || (key == '팀수락' && allUserInfos[4][i][key] == 1) || (key == '메일인증' && allUserInfos[4][i][key] == 1)) { %>
+                       strBody += "<td> O </td>";
+                     <% } else if((key == '팀' && allUserInfos[4][i][key] != 1) || (key == '팀수락' && allUserInfos[4][i][key] != 1) || (key == '메일인증' && allUserInfos[4][i][key] != 1)) { %>
+                       strBody += "<td> X </td>";
+                     <% } else { %>
+                       strBody += "<td>" + '<%= allUserInfos[4][i][key] %>' + "</td>";
+                     <% } %>
 
-        $("#dataTable2 > thead:last").append(strHead);
-        $("#dataTable2 > tbody:last").append(strBody);
-      }
-    </script>
-  </body>
+                   <% } %>
+                   strBody += "</tr>";
+                 <% } %>
+               break;
+             }
+
+             $("#dataTable2 > thead").empty();
+             $("#dataTable2 > tbody").empty();
+
+             $("#dataTable2 > thead:last").append(strHead);
+             $("#dataTable2 > tbody:last").append(strBody);
+           }
+      </script>
+   </body>
 </html>

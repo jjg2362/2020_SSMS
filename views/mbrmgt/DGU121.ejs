@@ -1,220 +1,200 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
-    <title>동국대학교 산학연계프로젝트</title>
+   <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <link rel="SHORTCUT ICON" href="\image\Dongguk.ico" />
+      <title>동국대학교 산학연계프로젝트</title>
 
-    <!-- Bootstrap core CSS-->
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Bootstrap core CSS-->
+      <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Custom fonts for this template-->
-    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <!-- Custom fonts for this template-->
+      <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- Custom styles for this template-->
-    <link href="../css/sb-admin.css" rel="stylesheet">
-  </head>
+      <!-- Custom styles for this template-->
+      <link href="../css/sb-admin.css" rel="stylesheet" />
+   </head>
 
-  <!-- 메인 페이지 -->
-  <body class="fixed-nav sticky-footer bg-dark sidenav-toggled" id="page-top">
-    <!-- 네비게이션 바 불러오기 -->
-    <% include ../navBar.ejs %>
+   <!-- 메인 페이지 -->
+   <body class="fixed-nav sticky-footer sidenav-toggled" id="page-top">
+      <!-- 네비게이션 바 불러오기 -->
+      <% include ../navBar.ejs %>
 
-    <!-- 메인 -->
-    <div class="content-wrapper">
-      <!-- 메인 내용 -->
-      <div class="container-fluid">
-        <h6>회원관리 > 로그인</h6>
-        <hr>
+      <!-- 메인 -->
+      <div class="content-wrapper">
+         <!-- 메인 내용 -->
+         <div class="container-fluid">
+            <h6>회원관리 > 로그인</h6>
+            <hr />
 
-        <div class="card card-login mx-auto mt-5">
-          <div class="card-body">
-            <!-- 로그인 폼 -->
-            <form id="loginForm">
-              <div class="form-group">
-                <label> 타입 </label>
+            <div class="card card-login mx-auto mt-5">
+               <div class="card-body">
+                  <!-- 로그인 폼 -->
+                  <form id="loginForm">
+                     <div class="form-group">
+                        <label> 타입 </label>
 
-                <div class="form-row">
-                  <div class="col-md-2">
-                    <input style="margin-right: 2%;" type="radio" value="student" name="loginType" checked="checked">학생
-                  </div>
-                  <div class="col-md-2">
-                    <input style="margin-right: 2%;" type="radio" value="mentor" name="loginType">멘토
-                  </div>
-                  <div class="col-md-2">
-                    <input style="margin-right: 2%;" type="radio" value="instructor" name="loginType">교수
-                  </div>
-                  <div class="col-md-2">
-                    <input style="margin-right: 2%;" type="radio" value="assistant" name="loginType">조교
-                  </div>
-                  <!-- <div class="col-md-2">
+                        <div class="form-row">
+                           <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="student" name="loginType" checked="checked" />학생</div>
+                           <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="mentor" name="loginType" />멘토</div>
+                           <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="instructor" name="loginType" />교수</div>
+                           <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="assistant" name="loginType" />조교</div>
+                           <!-- <div class="col-md-2">
                     <input style="margin-right: 2%;" type="radio" value="outsider" name="loginType">일반
                   </div> -->
-                  <div class="col-md-2">
-                    <input style="margin-right: 2%;" type="radio" value="admin" name="loginType">연구
-                  </div>
-                </div>
-              </div>
+                           <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="admin" name="loginType" />연구</div>
+                        </div>
+                     </div>
 
-              <div class="form-group">
-                <label for="loginID"> 아이디 or 학번 </label>
-                <!-- 아이디 입력 -->
-                <input class="form-control" name="loginId" id="loginID" type="text" placeholder="아이디 or 학번" required maxlength="20">
-              </div>
+                     <div class="form-group">
+                        <label for="loginID"> 아이디 or 학번 </label>
+                        <!-- 아이디 입력 -->
+                        <input class="form-control" name="loginId" id="loginID" type="text" placeholder="아이디 or 학번" required maxlength="20" />
+                     </div>
 
-              <div class="form-group">
-                <label for="loginPassword"> 비밀번호 </label>
-                <!-- 패스워드 입력 -->
-                <input class="form-control" name="loginPwd" id="loginPassword" type="password" placeholder="비밀번호" required maxlength="20">
-              </div>
+                     <div class="form-group">
+                        <label for="loginPassword"> 비밀번호 </label>
+                        <!-- 패스워드 입력 -->
+                        <input class="form-control" name="loginPwd" id="loginPassword" type="password" placeholder="비밀번호" required maxlength="20" />
+                     </div>
 
-              <p id="validationCheck" style="color: #ff0000"> &nbsp </p>
+                     <p id="validationCheck" style="color: #ff0000">&nbsp</p>
 
-              <!-- 로그인 버튼 -->
-              <input id="loginButton" type="submit" class="btn btn-primary btn-block" value="로그인"/>
-            </form>
-          </div>
-        </div>
+                     <!-- 로그인 버튼 -->
+                     <input id="loginButton" type="submit" class="btn btn-primary btn-block" value="로그인" />
+                  </form>
+               </div>
+            </div>
 
-        <div class="text-center">
-          <p class="d-block small mt-3" onclick="resetPassword()" style="color: #007bff; cursor: pointer;"> 비밀번호 찾기 </p>
-        </div>
+            <div class="text-center">
+               <p class="d-block small mt-3" onclick="resetPassword()" style="color: #007bff; cursor: pointer;">비밀번호 찾기</p>
+            </div>
+         </div>
 
+         ≈
+
+         <!-- 맨위로 가기 버튼 -->
+         <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+         </a>
       </div>
 
-      <!-- include footer -->
       <% include ../footer.html %>
 
-      <!-- 맨위로 가기 버튼 -->
-      <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fa fa-angle-up"></i>
-      </a>
-    </div>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+         <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h4 class="modal-title">비밀번호 찾기</h4>
+                  <button id="modalClose" type="button" class="close" data-dismiss="modal">×</button>
+               </div>
+               <div id="modalBody" class="modal-body" style="text-align: center;">
+                  <div class="text-center mt-4 mb-5">
+                     <!-- <h4>Forgot your password?</h4> -->
+                     <p>가입시 등록한 아이디와 이메일을 입력해 주세요.</p>
+                     <p>이메일로 임시 비밀번호를 발급해드립니다.</p>
+                     <!-- <p>Enter your email address and we will send you instructions on how to reset your password.</p> -->
+                  </div>
+                  <form id="forgotForm">
+                     <div class="form-group">
+                        <div class="form-row">
+                           <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="student" name="forgotType" checked="checked" />학생</div>
+                           <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="mentor" name="forgotType" />멘토</div>
+                           <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="instructor" name="forgotType" />교수</div>
+                           <div class="col-md-2"><input style="margin-right: 2%;" type="radio" value="assistant" name="forgotType" />조교</div>
+                        </div>
+                     </div>
+                     <div class="form-group" style="text-align: left;">
+                        <label for="forgotId"> 아이디 or 학번 </label>
+                        <input class="form-control" id="forgotId" name="forgotId" type="text" placeholder="아이디 or 학번" maxlength="20" />
+                     </div>
+                     <div class="form-group" style="text-align: left;">
+                        <label for="forgotEmail"> 이메일 </label>
+                        <input class="form-control" id="forgotEmail" name="forgotEmail" type="email" placeholder="이메일" maxlength="30" />
+                     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog">
+                     <p id="forgotCheck" style="color: #ff0000; text-align: left;">&nbsp</p>
 
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title"> 비밀번호 찾기 </h4>
-            <button id="modalClose" type="button" class="close" data-dismiss="modal">×</button>
-          </div>
-          <div id="modalBody" class="modal-body" style="text-align: center;">
-            <div class="text-center mt-4 mb-5">
-              <!-- <h4>Forgot your password?</h4> -->
-              <p>가입시 등록한 아이디와 이메일을 입력해 주세요.</p>
-              <p>이메일로 임시 비밀번호를 발급해드립니다.</p>
-              <!-- <p>Enter your email address and we will send you instructions on how to reset your password.</p> -->
+                     <div id="forgorButton" class="btn btn-primary btn-block">비밀번호 찾기</div>
+                  </form>
+               </div>
             </div>
-            <form id="forgotForm">
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-2">
-                    <input style="margin-right: 2%;" type="radio" value="student" name="forgotType" checked="checked">학생
-                  </div>
-                  <div class="col-md-2">
-                    <input style="margin-right: 2%;" type="radio" value="mentor" name="forgotType">멘토
-                  </div>
-                  <div class="col-md-2">
-                    <input style="margin-right: 2%;" type="radio" value="instructor" name="forgotType">교수
-                  </div>
-                  <div class="col-md-2">
-                    <input style="margin-right: 2%;" type="radio" value="assistant" name="forgotType">조교
-                  </div>
-                </div>
-              </div>
-              <div class="form-group" style="text-align: left;">
-                <label for="forgotId"> 아이디 or 학번 </label>
-                <input class="form-control" id="forgotId" name="forgotId" type="text" placeholder="아이디 or 학번" maxlength="20">
-              </div>
-              <div class="form-group" style="text-align: left;">
-                <label for="forgotEmail"> 이메일 </label>
-                <input class="form-control" id="forgotEmail" name="forgotEmail" type="email" placeholder="이메일" maxlength="30">
-              </div>
-
-              <p id="forgotCheck" style="color: #ff0000; text-align: left;"> &nbsp </p>
-
-              <div id="forgorButton" class="btn btn-primary btn-block">비밀번호 찾기</div>
-            </form>
-          </div>
-        </div>
-
+         </div>
       </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Bootstrap core JavaScript-->
+      <script src="../vendor/jquery/jquery.min.js"></script>
+      <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="../js/sb-admin.min.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="../js/sb-admin.min.js"></script>
 
-    <script type="text/javascript">
-      function resetPassword() {
-        $("#myModal").modal();
-      }
+      <script type="text/javascript">
+         function resetPassword() {
+            $("#myModal").modal();
+         }
 
-      $(document).ready(function() {
-        $("#loginButton").on('click', function(event) {
-          event.preventDefault();
+         $(document).ready(function() {
+            $("#loginButton").on("click", function(event) {
+               event.preventDefault();
 
-          $.ajax({
-            url: "/mbrmgt/DGU121",
-            type: "post",
-            cache: false,
-            data: $("#loginForm").serialize(),
-            success: function(result) {
-              if(result == 'lgOk') {
-                location.href = "/";
-              } else {
-                $("#validationCheck").text("Login Failed. " + result);
-              }
-            }
-          });
-        });
+               $.ajax({
+                  url: "/mbrmgt/DGU121",
+                  type: "post",
+                  cache: false,
+                  data: $("#loginForm").serialize(),
+                  success: function(result) {
+                     if (result == "lgOk") {
+                        location.href = "/";
+                     } else {
+                        $("#validationCheck").text("Login Failed. " + result);
+                     }
+                  }
+               });
+            });
 
-        $("#forgorButton").on('click', function(event) {
-          event.preventDefault();
+            $("#forgorButton").on("click", function(event) {
+               event.preventDefault();
 
-          var pattern = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+               var pattern = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-          if($("#forgotId").val() == "") {
-            alert('아이디를 입력해 주세요');
+               if ($("#forgotId").val() == "") {
+                  alert("아이디를 입력해 주세요");
 
-            return false;
-          }
+                  return false;
+               }
 
-          if($("#forgotEmail").val() == "" || !pattern.test($("#forgotEmail").val())) {
-            alert('메일 주소를 정확히 입력해 주세요');
+               if ($("#forgotEmail").val() == "" || !pattern.test($("#forgotEmail").val())) {
+                  alert("메일 주소를 정확히 입력해 주세요");
 
-            return false;
-          }
+                  return false;
+               }
 
-          $.ajax({
-            url: "/mbrmgt/DGU121/forgotPw",
-            type: "post",
-            cache: false,
-            data: $("#forgotForm").serialize(),
-            success: function(result) {
-              if(result == 'noId') {
-                $("#forgotCheck").text("일치하는 아이디/이메일이 없습니다.");
-              } else {
-                alert("메일이 발송되었습니다.");
-                $("#modalClose").click();
-              }
-            }
-          });
-        });
-      });
-    </script>
-  </body>
+               $.ajax({
+                  url: "/mbrmgt/DGU121/forgotPw",
+                  type: "post",
+                  cache: false,
+                  data: $("#forgotForm").serialize(),
+                  success: function(result) {
+                     if (result == "noId") {
+                        $("#forgotCheck").text("일치하는 아이디/이메일이 없습니다.");
+                     } else {
+                        alert("메일이 발송되었습니다.");
+                        $("#modalClose").click();
+                     }
+                  }
+               });
+            });
+         });
+      </script>
+   </body>
 </html>

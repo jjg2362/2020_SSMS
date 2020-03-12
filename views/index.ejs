@@ -19,27 +19,21 @@
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&amp;subset=korean"
         rel="stylesheet">
 </head>
-
 <!-- 메인 페이지 -->
 <body>
   <!-- 헤더 영역 -->
-  <% include navBar.ejs %>
+  <% include navBar %>
 
   <!-- 배너 영역 -->
   <section id="banner">
-    <div class="container">
-      <div class="row">
-        <div class="banner">
-          <h1>배너영역입니다.</h1>
-        </div>
-      </div>
+    <div class="banner">
     </div>
   </section>
   <!-- //배너 영역 -->
   
   <!-- 공지사항 영역 -->
   <section id="notice">
-    <div class="container">
+    <div class="content-wrapper">
       <div class="row">
         <h1 class="ir_so">공지사항 영역입니다.</h1>
         <div class="notice clearfix">
@@ -81,7 +75,7 @@
 
   <!-- 프로젝트 영역 -->
   <section id="project">
-    <div class="container">
+    <div class="content-wrapper">
       <div class="row">
         <h1 class="ir_so">프로젝트 영역입니다</h1>
         <div class="project">
@@ -207,12 +201,11 @@
   <% include footer.html %>
 
   <!-- 맨위로 가기 버튼 -->
-  <!-- <a class="scroll-to-top rounded" href="#page-top">
+  <a class="scroll-to-top rounded" href="#page-top">
     <i class="fa fa-angle-up"></i>
-  </a> -->
+  </a> 
+  <!-- Bootstrap core JavaScript-->
 </body>
-
-<!-- Bootstrap core JavaScript-->
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -222,15 +215,11 @@
 <!-- Custom scripts for all pages-->
 <script src="../js/sb-admin.min.js"></script>
 
-<script src="http://malsup.github.com/jquery.cycle2.js"></script>
+<!-- Page level plugin JavaScript-->
+<script src="../vendor/datatables/jquery.dataTables.js"></script>
+<script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
 
-<script>
-  $(document).ready(function () {
-    if ($("#navBarStatus").val()) {
-      $("body").removeClass("sidenav-toggled");
-    }
-  });
-</script>
-</body>
-
+<!-- Custom scripts for this page-->
+<script src="../js/sb-admin-datatables.min.js"></script>
+  
 </html>

@@ -1,288 +1,283 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
-    <title>동국대학교 산학연계프로젝트</title>
+   <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <link rel="SHORTCUT ICON" href="\image\Dongguk.ico" />
+      <title>동국대학교 산학연계프로젝트</title>
 
-    <!-- Bootstrap core CSS-->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Bootstrap core CSS-->
+      <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Custom fonts for this template-->
-    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <!-- Custom fonts for this template-->
+      <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- Custom styles for this template-->
-    <link href="/css/sb-admin.css" rel="stylesheet">
-  </head>
+      <!-- Custom styles for this template-->
+      <link href="/css/sb-admin.css" rel="stylesheet" />
+   </head>
 
-  <!-- 메인 페이지 -->
-  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-    <!-- 네비게이션 바 불러오기 -->
-    <% include ../navBar.ejs %>
+   <!-- 메인 페이지 -->
+   <body class="fixed-nav sticky-footer" id="page-top">
+      <!-- 네비게이션 바 불러오기 -->
+      <% include ../navBar.ejs %>
 
-    <!-- 메인 -->
-    <div class="content-wrapper">
-      <!-- 메인 내용 -->
-      <div class="container-fluid">
-        <h6>회원관리 > 마이페이지 수정</h6>
-        <hr>
+      <!-- 메인 -->
+      <div class="content-wrapper">
+         <!-- 메인 내용 -->
+         <div class="container-fluid">
+            <h6>회원관리 > 마이페이지 수정</h6>
+            <hr />
 
-        <div class="card card-register mx-auto mt-5 mb-5">
-          <div class="card-body">
-            <p class="font-weight-bold"> My Profile </p>
-            <hr>
+            <div class="card card-register mx-auto mt-5 mb-5">
+               <div class="card-body">
+                  <p class="font-weight-bold">My Profile</p>
+                  <hr />
 
-            <form action="/mbrmgt/DGU111/edit" method="post">
-              <table cellpadding="10px" style="width: 90%; margin: auto;">
-                <tr>
-                  <td style="width: 20%; color: #6c757d;">
-                    가입 유형:
-                  </td>
+                  <form action="/mbrmgt/DGU111/edit" method="post">
+                     <table cellpadding="10px" style="width: 90%; margin: auto;">
+                        <tr>
+                           <td style="width: 20%; color: #6c757d;">
+                              가입 유형:
+                           </td>
 
-                  <td class="px-5">
-                    <%= userInfo.userType %>
-                  </td>
-                </tr>
+                           <td class="px-5">
+                              <%= userInfo.userType %>
+                           </td>
+                        </tr>
 
-                <% for(var key in myInfo[0]) { %>
-                  <% if(key != '회사명') { %>
-                    <tr>
-                      <td style="width: 20%; color: #6c757d;">
-                        <%= key %>:
-                      </td>
+                        <% for(var key in myInfo[0]) { %> <% if(key != '회사명') { %>
+                        <tr>
+                           <td style="width: 20%; color: #6c757d;">
+                              <%= key %>:
+                           </td>
 
-                      <% if(key == '아이디') { %>
-                        <td class="px-5">
-                          <%= myInfo[0][key] %>
-                        </td>
-                      <% } else { %>
-                        <td class="px-5">
-                          <input type="text" value="<%= myInfo[0][key] %>" name="<%= key %>"/>
-                        </td>
-                      <% } %>
-                    </tr>
-                  <% } %>
-                <% } %>
+                           <% if(key == '아이디') { %>
+                           <td class="px-5">
+                              <%= myInfo[0][key] %>
+                           </td>
+                           <% } else { %>
+                           <td class="px-5">
+                              <input type="text" value="<%= myInfo[0][key] %>" name="<%= key %>" />
+                           </td>
+                           <% } %>
+                        </tr>
+                        <% } %> <% } %> <% if(userInfo.userType == 'mentor') { %>
+                        <tr>
+                           <td style="width: 20%; color: #6c757d;">
+                              <label for="inputCompany"> 회사명 </label>
+                           </td>
+                           <td class="px-5">
+                              <input name="registerCompany" id="inputCompany" type="text" readonly="readonly" style="background-color:transparent;" value="<%= myInfo[0]['회사명'] %>" />
+                              <input class="btn btn-primary" id="buttonCompany" type="button" value="검색" onclick="findCompany();" />
+                              <input class="btn btn-primary" id="buttonCreateCompany" type="button" value="추가" onclick="createCompany();" />
+                           </td>
+                        </tr>
+                        <% } %>
+                     </table>
 
-                <% if(userInfo.userType == 'mentor') { %>
-                     <tr>
-                       <td style="width: 20%; color: #6c757d;">
-                         <label for="inputCompany"> 회사명 </label>
-                       </td>
-                       <td class="px-5">
-                         <input name="registerCompany" id="inputCompany" type="text" readonly="readonly" style="background-color:transparent;" value="<%= myInfo[0]['회사명'] %>">
-                         <input class="btn btn-primary" id="buttonCompany" type="button" value="검색" onclick="findCompany();">
-                         <input class="btn btn-primary" id="buttonCreateCompany" type="button" value="추가" onclick="createCompany();">
-                       </td>
-                     </tr>
-                <% } %>
-              </table>
+                     <hr />
+                     <% if(userInfo.userType != 'admin') { %>
+                     <input type="submit" class="btn btn-primary btn-block" value="완료" />
+                     <% } %>
+                  </form>
+               </div>
+            </div>
+         </div>
 
-              <hr>
-              <% if(userInfo.userType != 'admin') { %>
-                <input type="submit" class="btn btn-primary btn-block" value="완료"/>
-              <% } %>
-            </form>
-          </div>
-        </div>
+         <!-- 맨위로 가기 버튼 -->
+         <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+         </a>
       </div>
-
       <!-- include footer -->
       <% include ../footer.html %>
 
-      <!-- 맨위로 가기 버튼 -->
-      <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fa fa-angle-up"></i>
-      </a>
-    </div>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal1" role="dialog">
+         <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h4 class="modal-title"></h4>
+                  <button id="myModalClose1" type="button" class="close" data-dismiss="modal">×</button>
+               </div>
+               <div class="modal-body" style="">
+                  <div class="form-group">
+                     <div class="form-row">
+                        <div class="order-md-1" style="padding-right: 15px;">
+                           <label for="inCompany"> 회사명 </label>
+                           <input class="form-control" name="searchCompany" id="inCompany" onkeydown="return noEnterKey(event)" type="text" placeholder="Enter Company" />
+                        </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal1" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title"></h4>
-            <button id="myModalClose1" type="button" class="close" data-dismiss="modal">×</button>
-          </div>
-          <div class="modal-body" style="">
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="order-md-1" style="padding-right: 15px;">
-                    <label for="inCompany"> 회사명 </label>
-                    <input class="form-control" name="searchCompany" id="inCompany" onkeydown="return noEnterKey(event)" type="text" placeholder="Enter Company">
+                        <div class="order-md-2" style="padding-left: 15px;">
+                           <label for="buttonCompany"> &nbsp </label>
+                           <input class="btn btn-primary btn-block" id="buttonCompany" type="button" value="검색/추가" onclick="findCpany();" />
+                        </div>
+                     </div>
                   </div>
 
-                  <div class="order-md-2" style="padding-left: 15px;">
-                    <label for="buttonCompany"> &nbsp </label>
-                    <input class="btn btn-primary btn-block" id="buttonCompany" type="button" value="검색/추가" onclick="findCpany();">
+                  <div class="form-group">
+                     <table class="table" id="companyTable">
+                        <thead>
+                           <tr>
+                              <th>사업자번호</th>
+                              <th>회사명</th>
+                              <th>선택</th>
+                           </tr>
+                        </thead>
+
+                        <tbody>
+                           <tr>
+                              <td colspan="3" style="text-align: center;">
+                                 없음
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
                   </div>
-                </div>
-              </div>
-
-            <div class="form-group">
-              <table class="table" id="companyTable">
-                <thead>
-                  <tr>
-                    <th> 사업자번호 </th>
-                    <th> 회사명 </th>
-                    <th> 선택 </th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <td colspan="3" style="text-align: center;">
-                      없음
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+               </div>
             </div>
-          </div>
-        </div>
-
+         </div>
       </div>
-    </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal2" role="dialog">
-      <div class="modal-dialog">
+      <!-- Modal -->
+      <div class="modal fade" id="myModal2" role="dialog">
+         <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h4 class="modal-title"></h4>
+                  <button id="myModalClose2" type="button" class="close" data-dismiss="modal">×</button>
+               </div>
+               <div class="modal-body" style="">
+                  <form id="createCompanyForm" name="createCompanyForm" method="post" enctype="multipart/form-data">
+                     <div class="form-group">
+                        <div class="form-row">
+                           <div class="col-md-6" style="padding-right: 15px;">
+                              <label for="insertCompany"> 회사명 </label>
+                              <input class="form-control" name="insertCompany" id="insertCompany" type="text" placeholder="Enter Company" />
+                           </div>
 
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title"></h4>
-            <button id="myModalClose2" type="button" class="close" data-dismiss="modal">×</button>
-          </div>
-          <div class="modal-body" style="">
-            <form id="createCompanyForm" name="createCompanyForm" method="post" enctype="multipart/form-data">
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-6" style="padding-right: 15px;">
-                    <label for="insertCompany"> 회사명 </label>
-                    <input class="form-control" name="insertCompany" id="insertCompany" type="text" placeholder="Enter Company">
-                  </div>
+                           <div class="col-md-6" style="">
+                              <label for="insertCompanyNum"> 사업자번호 </label>
+                              <input class="form-control" name="insertCompanyNum" id="insertCompanyNum" type="text" placeholder="Enter CompanyNum" />
+                           </div>
+                        </div>
+                     </div>
 
-                  <div class="col-md-6" style="">
-                    <label for="insertCompanyNum"> 사업자번호 </label>
-                    <input class="form-control" name="insertCompanyNum" id="insertCompanyNum" type="text" placeholder="Enter CompanyNum">
-                  </div>
-                </div>
-              </div>
+                     <div class="form-group">
+                        <div class="order-md-3" style="">
+                           <label for="inputCompany"> 사업자등록증 </label>
+                           <input class="form-control" name="registerBusinessFile" id="inputBusinessFile" type="file" />
+                        </div>
+                     </div>
 
-              <div class="form-group">
-                <div class="order-md-3" style="">
-                  <label for="inputCompany"> 사업자등록증 </label>
-                  <input class="form-control" name="registerBusinessFile" id="inputBusinessFile" type="file">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <input class="btn btn-primary btn-block" id="buttonCreateCpany" type="button" value="추가" onclick="createCpany();">
-              </div>
-            </form>
-          </div>
-        </div>
-
+                     <div class="form-group">
+                        <input class="btn btn-primary btn-block" id="buttonCreateCpany" type="button" value="추가" onclick="createCpany();" />
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
       </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Bootstrap core JavaScript-->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin.min.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="/js/sb-admin.min.js"></script>
 
-    <script type="text/javascript">
-    function noEnterKey(e) {
-      if(e.keyCode == 13) {
-        return false;
-      }
-    }
-
-    function findCompany() {
-      $("#myModal1").modal();
-    }
-
-    function findCpany() {
-      var name = document.getElementById('inCompany').value;
-
-      $.ajax({
-        url: '/mbrmgt/findCompany',
-        type: 'post',
-        data: {
-          'company_name': name
-        },
-        success: function(result) {
-          if(result.length != 0) {
-            $('#companyTable > tbody').children().remove();
-            var str = "";
-
-            for(var i in result) {
-              var bcn = result[i].business_certif_num;
-              var cn = result[i].company_name;
-
-              str += "<tr>";
-              str += "<td>" + bcn + "</td>";
-              str += "<td>" + cn + "</td>";
-              str += "<td> <input class='btn btn-dark' name='' id='' type='button' value='+' onclick=selectCompany('" + bcn + "','" + cn + "')> </td>";
-              str += "</tr>";
+      <script type="text/javascript">
+         function noEnterKey(e) {
+            if (e.keyCode == 13) {
+               return false;
             }
+         }
 
-            $("#companyTable > tbody:last").append(str);
-          } else {
-            $('#companyTable > tbody').children().remove();
-            $("#companyTable > tbody:last").append("<tr><td colspan='3' style='text-align: center;'> 없음 </td></tr>");
-          }
-        }
-      });
-    }
+         function findCompany() {
+            $("#myModal1").modal();
+         }
 
-    function selectCompany(bcn, cn) {
-      document.getElementById('inputCompany').value = cn;
+         function findCpany() {
+            var name = document.getElementById("inCompany").value;
 
-      $("#myModalClose1").click();
-    }
+            $.ajax({
+               url: "/mbrmgt/findCompany",
+               type: "post",
+               data: {
+                  company_name: name
+               },
+               success: function(result) {
+                  if (result.length != 0) {
+                     $("#companyTable > tbody")
+                        .children()
+                        .remove();
+                     var str = "";
 
-    function createCompany() {
-      $("#myModal2").modal();
-    }
+                     for (var i in result) {
+                        var bcn = result[i].business_certif_num;
+                        var cn = result[i].company_name;
 
-    function createCpany() {
-      var name = document.getElementById('insertCompany').value;
-      var number = document.getElementById('insertCompanyNum').value;
+                        str += "<tr>";
+                        str += "<td>" + bcn + "</td>";
+                        str += "<td>" + cn + "</td>";
+                        str += "<td> <input class='btn btn-dark' name='' id='' type='button' value='+' onclick=selectCompany('" + bcn + "','" + cn + "')> </td>";
+                        str += "</tr>";
+                     }
 
-      var formData = new FormData(document.getElementById('createCompanyForm'));
+                     $("#companyTable > tbody:last").append(str);
+                  } else {
+                     $("#companyTable > tbody")
+                        .children()
+                        .remove();
+                     $("#companyTable > tbody:last").append("<tr><td colspan='3' style='text-align: center;'> 없음 </td></tr>");
+                  }
+               }
+            });
+         }
 
-      $.ajax({
-        url: '/mbrmgt/createCompany',
-        type: 'post',
-        processData: false,
-        contentType: false,
-        data: formData,
-        success: function(result) {
-          if(result == "s1") {
-            alert('회사가 등록되었습니다.');
+         function selectCompany(bcn, cn) {
+            document.getElementById("inputCompany").value = cn;
 
-            document.getElementById('inputCompany').value = name;
+            $("#myModalClose1").click();
+         }
 
-            $("#myModalClose2").click();
-          } else {
-            alert('not success');
-          }
-        }
-      });
-    }
-    </script>
-  </body>
+         function createCompany() {
+            $("#myModal2").modal();
+         }
+
+         function createCpany() {
+            var name = document.getElementById("insertCompany").value;
+            var number = document.getElementById("insertCompanyNum").value;
+
+            var formData = new FormData(document.getElementById("createCompanyForm"));
+
+            $.ajax({
+               url: "/mbrmgt/createCompany",
+               type: "post",
+               processData: false,
+               contentType: false,
+               data: formData,
+               success: function(result) {
+                  if (result == "s1") {
+                     alert("회사가 등록되었습니다.");
+
+                     document.getElementById("inputCompany").value = name;
+
+                     $("#myModalClose2").click();
+                  } else {
+                     alert("not success");
+                  }
+               }
+            });
+         }
+      </script>
+   </body>
 </html>
