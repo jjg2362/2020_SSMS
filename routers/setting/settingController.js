@@ -860,8 +860,8 @@ exports.getAddClassPage = (req, res) => {
          return;
       }
       //use connection
-      var query = "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk from admin_settings as s  ";
-      query += "where use_yn = 1 ";
+      var query1 = "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk from admin_settings as s  ";
+      query1 += "where use_yn = 1 ";
       query1 += " order by settings_id desc; ";
 
       query1 += "select i.inst_id, i.inst_name, i.major from instructor as i ";
