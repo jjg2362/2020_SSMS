@@ -175,6 +175,38 @@
             <% } %>
 
           </div>
+
+          <!-- 프로젝트 분류별 갯수 출력 -->
+          <div class="card mb-4">
+            <div class="card-body-row">
+                <div class="col-md-10">
+                  <h6 class="card-title mb-2 mt-2"> 프로젝트 정보</h6>
+                </div>
+            </div>
+            <hr class="my-0">
+
+              <div class="card-body py-2 mt-1 small">
+            <% for(var i = 0; i < NoticePJImgList[3].length / 2; i++) { %>
+              <div class="form-group" style="margin-bottom: 0.5rem;">
+                <div class="form-row">
+                <div class="col-md-6">
+                  <div style="display: flex; width: 100%;">
+                      <span style="flex: 0 0 80%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">&nbsp;<%= NoticePJImgList[3][i].term_chk %></span>
+                      <span style="flex: 1; display: block;"><%= NoticePJImgList[3][i].count %> 개</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div style="display: flex;  width: 100%;">
+                      <span style="flex: 0 0 80%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">&nbsp;<%= NoticePJImgList[3][i + 1].term_chk %></span>
+                      <span style="flex: 1; display: block;"><%= NoticePJImgList[3][i + 1].count %> 개</span>
+                  </div>
+                </div>
+                </div>
+              </div>
+              <% } %>
+
+              </div>
+          </div>
         </div>
 
         <!-- </div> -->
