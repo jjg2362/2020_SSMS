@@ -1078,6 +1078,7 @@ exports.getPjCartInfo = (req, res) => {
          connection.release();
 
          if (error) {
+           
             //throw error;
             console.error("query error : " + error);
             return;

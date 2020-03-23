@@ -50,7 +50,7 @@
                 </thead>
                 <tbody>
                   <% for(var i = 0; i < teamInfo.length; i++) { %>
-                       <tr onclick=aaa('<%= teamInfo[i].std_name %>','<%= teamInfo[i].major %>','<%= teamInfo[i].phone_num %>','<%= teamInfo[i].email_ad %>') style="cursor: pointer;">
+                       <tr onclick=aaa('<%= teamInfo[i].std_name %>','<%= teamInfo[i].major %>','<%= teamInfo[i].phone_num %>','<%= teamInfo[i].email_ad  %>') style="cursor: pointer;">
                          <td><%= teamInfo[i].team_name %></td>
                          <td>
                            <% if(!(teamInfo[i].std_resume) || teamInfo[i].std_resume =='undefined' ) { %>
