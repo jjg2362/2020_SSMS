@@ -1492,12 +1492,12 @@ exports.getTeamPjInfo = (req, res) => {
   }
 
   var query = "select t.team_id, t.team_name from team as t ";
-  query += "where t.use_yn = '1' and t.prj_id is null; ";
+  query += "where t.use_yn = '1' and t.prj_id is null order by t.team_name; ";
 
   query +=
     "select distinct p.prj_id, p.prj_name, p.mentor_id from project as p ";
   query +=
-    "where p.use_yn ='1' and p.prj_id not in (select distinct prj_id from team where use_yn ='1' and prj_id is not null); ";
+    "where p.use_yn ='1' and p.prj_id not in (select distinct prj_id from team where use_yn ='1' and prj_id is not null) order by p.prj_name; ";
 
   query += "select t.*, p.prj_name from team as t , project as p  ";
   query +=
