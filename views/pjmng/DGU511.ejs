@@ -245,7 +245,7 @@
                          <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending" style="width:10%;"><center>멘토링 날짜</center></th>
                          <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>학생 보고서</center></th>
                          <!-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>멘토 보고서</center></th> -->
-                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>작성 멘토</center></th>
+                         <!-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>작성 멘토</center></th> -->
                          <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>확인여부</center></th>
                        </tr>
                      </thead>
@@ -271,7 +271,7 @@
                                </div>
                              </div>
                            </td>
-                           <td>
+                           <!-- <td>
                              <div class = "form-row">
                                <div class = "col-md-12">
                                  <%if(mtrInfo[0][i].ment_report_mtr!=''&&mtrInfo[0][i].ment_report_mtr!=null) { %>
@@ -285,7 +285,7 @@
                                </div>
                              </div>
                            </td>
-                           <td><center><%=mtrInfo[0][i].mentor_id%></center></td>
+                           <td><center><%=mtrInfo[0][i].mentor_id%></center></td> -->
                            <% if(mtrInfo[0][i].chk_yn == 0) { %>
                              <td>
                                <% var chk1 = "/pjmng/makechk/confirmchk"+(i+1) %>
