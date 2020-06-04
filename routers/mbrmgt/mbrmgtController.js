@@ -1,54 +1,61 @@
 //mbrmgt controller
 
 //use moment
-var moment = require('moment');
+var moment = require("moment");
 
 //use nodemailer
-var nodemailer = require('nodemailer');
+var nodemailer = require("nodemailer");
 
 //use mysqlPool
-var mysqlPool = require('../../middlewares/mysqlPool.js');
+var mysqlPool = require("../../middlewares/mysqlPool.js");
 
 //use multer
-var fileUpload = require('../../middlewares/fileUpload.js');
+var fileUpload = require("../../middlewares/fileUpload.js");
 
-var logger = require('../../middlewares/logger.js')
+var logger = require("../../middlewares/logger.js");
 
 //show register page -> DGU101
 exports.getRegister = (req, res) => {
   //session check
-  if(req.session.userId) {
-    console.log('already have a session.');
-    res.redirect('/');
+  if (req.session.userId) {
+    console.log("already have a session.");
+    res.redirect("/");
     return;
-  }else{
-      logger.putLog(req);
+  } else {
+    logger.putLog(req);
   }
 
-  var query = "select code_value, code_nm from code where code_id = 'job_type' order by code_value;";
-  query += "select code_value, code_nm from code where code_id = 'business_field' order by code_value;";
+  var query =
+    "select code_value, code_nm from code where code_id = 'job_type' order by code_value;";
+  query +=
+    "select code_value, code_nm from code where code_id = 'business_field' order by code_value;";
   query += "select agmt.join from agmt;";
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
-    if(err) { //throw err;
-      console.error('getConnection err : ' + err);
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
       return;
     }
 
     connection.query(query, (error, results, fields) => {
-      if(error) { //throw error;
-        console.error('query error : ' + error);
+      if (error) {
+        //throw error;
+        console.error("query error : " + error);
         return;
       }
 
       connection.release();
 
-      res.render('mbrmgt/DGU101', {jt: results[0], bf: results[1], ag: results[2][0]});
+      res.render("mbrmgt/DGU101", {
+        jt: results[0],
+        bf: results[1],
+        ag: results[2][0],
+      });
     });
   });
 };
-
 
 //get register info and process register info  -> DGU101
 exports.postRegister = (req, res) => {
@@ -56,22 +63,23 @@ exports.postRegister = (req, res) => {
   //create register user info
   var registerUser = {
     email_ad: req.body.registerEmail,
-    phone_num: req.body.registerTel
-  }
+    phone_num: req.body.registerTel,
+  };
 
   var type = req.body.registerType;
 
   //add register user info
-  switch(type) {
+  switch (type) {
     //student
     case "student":
       registerUser.std_id = req.body.registerId;
       registerUser.std_name = req.body.registerName;
       registerUser.std_grade = req.body.registerGrade;
 
-      if(req.body.registerDepartment == "융합소프트웨어") {
-        registerUser.major = req.body.registerDepartment + " " + req.body.registerAddDepartment;
-      } else if(req.body.registerDepartment == "5") {
+      if (req.body.registerDepartment == "융합소프트웨어") {
+        registerUser.major =
+          req.body.registerDepartment + " " + req.body.registerAddDepartment;
+      } else if (req.body.registerDepartment == "5") {
         registerUser.major = req.body.registerAddDepartment;
       } else {
         registerUser.major = req.body.registerDepartment;
@@ -88,9 +96,9 @@ exports.postRegister = (req, res) => {
       registerUser.job_position = req.body.registerJobPosition;
       registerUser.job_dept = req.body.registerJobDept;
 
-      if(req.body.registerPrivateCheck == "true") {
-       registerUser.priv_info_agrmnt = 1;
-     } else {
+      if (req.body.registerPrivateCheck == "true") {
+        registerUser.priv_info_agrmnt = 1;
+      } else {
         registerUser.priv_info_agrmnt = 0;
       }
 
@@ -101,8 +109,9 @@ exports.postRegister = (req, res) => {
       registerUser.inst_id = req.body.registerId;
       registerUser.inst_name = req.body.registerName;
 
-      if(req.body.registerDepartment == "융합소프트웨어") {
-        registerUser.major = req.body.registerDepartment + " " + req.body.registerAddDepartment;
+      if (req.body.registerDepartment == "융합소프트웨어") {
+        registerUser.major =
+          req.body.registerDepartment + " " + req.body.registerAddDepartment;
       } else {
         registerUser.major = req.body.registerDepartment;
       }
@@ -126,34 +135,47 @@ exports.postRegister = (req, res) => {
 
   var checkQuery = "";
 
-  checkQuery += "select std_id from student where std_id = '" + req.body.registerId +"';";
-  checkQuery += "select mentor_id from mentor where mentor_id = '" + req.body.registerId +"';";
-  checkQuery += "select inst_id from instructor where inst_id = '" + req.body.registerId +"';";
-  checkQuery += "select assis_id from assistant where assis_id = '" + req.body.registerId +"';";
-  checkQuery += "select out_id from outsider where out_id = '" + req.body.registerId +"';";
+  checkQuery +=
+    "select std_id from student where std_id = '" + req.body.registerId + "';";
+  checkQuery +=
+    "select mentor_id from mentor where mentor_id = '" +
+    req.body.registerId +
+    "';";
+  checkQuery +=
+    "select inst_id from instructor where inst_id = '" +
+    req.body.registerId +
+    "';";
+  checkQuery +=
+    "select assis_id from assistant where assis_id = '" +
+    req.body.registerId +
+    "';";
+  checkQuery +=
+    "select out_id from outsider where out_id = '" + req.body.registerId + "';";
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
-    if(err) { //throw err;
-      console.error('getConnection err : ' + err);
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
       return;
     }
 
     connection.query(checkQuery, (checkError, checkResults, checkFields) => {
-      if(checkError) { //throw error;
-        console.error('query error : ' + checkError);
+      if (checkError) {
+        //throw error;
+        console.error("query error : " + checkError);
         return;
       }
 
       var checkResultsSum = 0;
 
-      for(var i in checkResults) {
+      for (var i in checkResults) {
         checkResultsSum += checkResults[i].length;
       }
 
-      if(checkResultsSum > 0 ) {
-        console.log('already id exist');
-        res.send('dupId');
+      if (checkResultsSum > 0) {
+        console.log("already id exist");
+        res.send("dupId");
       } else {
         //use connection
         var query = "insert into " + type;
@@ -162,29 +184,46 @@ exports.postRegister = (req, res) => {
         connection.query(query, registerUser, (error, results, fields) => {
           connection.release();
 
-          if(error) { //throw error;
-            console.error('query error : ' + error);
+          if (error) {
+            //throw error;
+            console.error("query error : " + error);
             return;
           }
 
           //sender info
           var transporter = nodemailer.createTransport({
-            service: 'gmail',
+            service: "gmail",
             auth: {
-              user: 'wssdev123@gmail.com',
-              pass: 'roma123$'
-            }
+              user: "wssdev123@gmail.com",
+              pass: "roma123$",
+            },
           });
 
           //receiver info
           var mailOptions = {
-            from: '산학연계프로젝트<wssdev123@gmail.com>',
+            from: "산학연계프로젝트<wssdev123@gmail.com>",
             to: registerUser.email_ad,
-            subject: '산학연계프로젝트 회원가입 인증 메일입니다.',
-            html: '<p>아래의 링크를 클릭해주세요 !</p>'
-                  + "<a href='" + "http://" + global.domain + "/mbrmgt/auth?id=" + req.body.registerId + "&type=" + type + "&email=" + registerUser.email_ad +"&token=abcdefg'>"
-                  + "http://" + global.domain + "/mbrmgt/auth?id=" + req.body.registerId + "&email=" + registerUser.email_ad +"&token=abcdefg"
-                  + "</a>"
+            subject: "산학연계프로젝트 회원가입 인증 메일입니다.",
+            html:
+              "<p>아래의 링크를 클릭해주세요 !</p>" +
+              "<a href='" +
+              "http://" +
+              global.domain +
+              "/mbrmgt/auth?id=" +
+              req.body.registerId +
+              "&type=" +
+              type +
+              "&email=" +
+              registerUser.email_ad +
+              "&token=abcdefg'>" +
+              "http://" +
+              global.domain +
+              "/mbrmgt/auth?id=" +
+              req.body.registerId +
+              "&email=" +
+              registerUser.email_ad +
+              "&token=abcdefg" +
+              "</a>",
           };
 
           //mail transport
@@ -192,13 +231,13 @@ exports.postRegister = (req, res) => {
             if (error) {
               console.log(error);
             } else {
-              console.log('Email sent: ' + info.response);
+              console.log("Email sent: " + info.response);
             }
           });
 
           //use results and fields
-          console.log('Register success.');
-          res.send('regOK');
+          console.log("Register success.");
+          res.send("regOK");
         });
       }
     });
@@ -215,8 +254,9 @@ exports.getAuth = (req, res) => {
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
-    if(err) { //throw err;
-      console.error('getConnection err : ' + err);
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
       return;
     }
 
@@ -247,33 +287,32 @@ exports.getAuth = (req, res) => {
     connection.query(query, (error, results, fields) => {
       connection.release();
 
-      if(error) { //throw error;
-        console.error('query error : ' + error);
+      if (error) {
+        //throw error;
+        console.error("query error : " + error);
         return;
       }
 
       //use results and fields
-      res.render('mbrmgt/auth', {userInfo: req.session.userInfo});
+      res.render("mbrmgt/auth", { userInfo: req.session.userInfo });
     });
   });
-
 };
-
 
 //
 exports.getFindCompany = (req, res) => {
   logger.putLog(req);
-  res.render('mbrmgt/findCompany', {domain: global.domain});
+  res.render("mbrmgt/findCompany", { domain: global.domain });
 };
-
 
 //
 exports.postFindCompany = (req, res) => {
   logger.putLog(req);
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
-    if(err) { //throw err;
-      console.error('getConnection err : ' + err);
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
       return;
     }
 
@@ -283,8 +322,9 @@ exports.postFindCompany = (req, res) => {
     connection.query(query, (error, results, fields) => {
       connection.release();
 
-      if(error) { //throw error;
-        console.error('query error : ' + error);
+      if (error) {
+        //throw error;
+        console.error("query error : " + error);
         return;
       }
 
@@ -294,54 +334,62 @@ exports.postFindCompany = (req, res) => {
   });
 };
 
-
-
 //
 exports.getCreateCompany = (req, res) => {
   logger.putLog(req);
-  res.render('mbrmgt/createCompany', {domain: global.domain});
+  res.render("mbrmgt/createCompany", { domain: global.domain });
 };
 
 //
 exports.postCreateCompany = (req, res) => {
   logger.putLog(req);
   var fileInfo = {
-    path: 'public/companyBF/',
-    namePrefix: 'COMPANYBFILE_',
-    viewNames: ['registerBusinessFile']
+    path: "public/companyBF/",
+    namePrefix: "COMPANYBFILE_",
+    viewNames: ["registerBusinessFile"],
   };
 
   fileUpload(fileInfo).multipartForm(req, res, (err) => {
-    if(err) {
-      console.log('file upload error : ' + err);
+    if (err) {
+      console.log("file upload error : " + err);
       return;
     }
 
     var companyInfo = {
-      company_name:  req.body.insertCompany,
-      business_certif_num: req.body.insertCompanyNum
+      company_name: req.body.insertCompany,
+      business_certif_num: req.body.insertCompanyNum,
     };
 
-    if(req.files['registerBusinessFile'] !== undefined) {
-      companyInfo.business_certif = req.files['registerBusinessFile'][0].path;
+    if (req.files["registerBusinessFile"] !== undefined) {
+      companyInfo.business_certif = req.files["registerBusinessFile"][0].path;
       console.log("file upload success.");
     }
 
     //get connection from pool
     mysqlPool.pool.getConnection((err, connection) => {
-      if(err) { //throw err;
-        console.error('getConnection err : ' + err);
+      if (err) {
+        //throw err;
+        console.error("getConnection err : " + err);
         return;
       }
 
-      var query = "insert into company_info(company_name, business_certif_num, business_certif)";
-      query += " values('" + companyInfo.company_name + "', '" + companyInfo.business_certif_num + "', '" + companyInfo.business_certif + "');";
+      var query =
+        "insert into company_info(company_name, business_certif_num, business_certif)";
+      query +=
+        " values('" +
+        companyInfo.company_name +
+        "', '" +
+        companyInfo.business_certif_num +
+        "', '" +
+        companyInfo.business_certif +
+        "');";
 
       connection.query(query, (error, results, fields) => {
         connection.release();
 
-        if(error) { //throw error;
-          console.error('query error : ' + error);
+        if (error) {
+          //throw error;
+          console.error("query error : " + error);
           return;
         }
 
@@ -352,31 +400,29 @@ exports.postCreateCompany = (req, res) => {
   });
 };
 
-
-
 //show register complete page -> DGU101/complete
 exports.getRegisterComplete = (req, res) => {
   //session check
-  if(req.session.userId) {
-    console.log('already have a session.');
-    res.redirect('/');
+  if (req.session.userId) {
+    console.log("already have a session.");
+    res.redirect("/");
     return;
-  }else{
-      logger.putLog(req);
+  } else {
+    logger.putLog(req);
   }
 
-  res.render('mbrmgt/DGU101complete');
+  res.render("mbrmgt/DGU101complete");
 };
 
 //show my page -> DGU111
 exports.getMypage = (req, res) => {
   //session check
-  if(!req.session.userId) {
-    console.log('do not have a session.');
-    res.redirect('/');
+  if (!req.session.userId) {
+    console.log("do not have a session.");
+    res.redirect("/");
     return;
-  }else{
-      logger.putLog(req);
+  } else {
+    logger.putLog(req);
   }
 
   //query
@@ -384,27 +430,32 @@ exports.getMypage = (req, res) => {
 
   switch (req.session.userInfo.userType) {
     case "student":
-      query += " std_id as '학번', major as '전공', std_name as '이름', phone_num as '전화번호', email_ad as '이메일' from student";
+      query +=
+        " std_id as '학번', major as '전공', std_name as '이름', phone_num as '전화번호', email_ad as '이메일' from student";
       query += " where std_id = ?";
       break;
 
     case "mentor":
-      query += " mentor_id as '아이디', mentor_name as '이름', phone_num as '전화번호', email_ad as '이메일', job_position as '직급', job_dept as '부서', company_name as '회사명' from mentor";
+      query +=
+        " mentor_id as '아이디', mentor_name as '이름', phone_num as '전화번호', email_ad as '이메일', job_position as '직급', job_dept as '부서', company_name as '회사명' from mentor";
       query += " where mentor_id = ?";
       break;
 
     case "instructor":
-      query += " inst_id as '아이디', inst_name as '이름', phone_num as '전화번호', email_ad as '이메일' from instructor";
+      query +=
+        " inst_id as '아이디', inst_name as '이름', phone_num as '전화번호', email_ad as '이메일' from instructor";
       query += " where inst_id = ?";
       break;
 
     case "assistant":
-      query += " assis_id as '아이디', assis_name as '이름', phone_num as '전화번호', email_ad as '이메일' from assistant";
+      query +=
+        " assis_id as '아이디', assis_name as '이름', phone_num as '전화번호', email_ad as '이메일' from assistant";
       query += " where assis_id = ?";
       break;
 
     case "outsider":
-      query += " out_id as '아이디', out_name as '이름', phone_num as '전화번호', email_ad as '이메일' from outsider";
+      query +=
+        " out_id as '아이디', out_name as '이름', phone_num as '전화번호', email_ad as '이메일' from outsider";
       query += " where out_id = ?";
       break;
 
@@ -416,35 +467,43 @@ exports.getMypage = (req, res) => {
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
-    if(err) { //throw err;
-      console.error('getConnection err : ' + err);
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
       return;
     }
 
-    connection.query(query, [req.session.userInfo.userId], (error, results, fields) => {
-      connection.release();
+    connection.query(
+      query,
+      [req.session.userInfo.userId],
+      (error, results, fields) => {
+        connection.release();
 
-      if(error) { //throw error;
-        console.error('query error : ' + error);
-        return;
+        if (error) {
+          //throw error;
+          console.error("query error : " + error);
+          return;
+        }
+
+        //use results and fields
+        res.render("mbrmgt/DGU111", {
+          myInfo: results,
+          userInfo: req.session.userInfo,
+        });
       }
-
-      //use results and fields
-      res.render('mbrmgt/DGU111', {myInfo: results, userInfo: req.session.userInfo});
-    });
+    );
   });
 };
-
 
 //
 exports.getMypageEdit = (req, res) => {
   //session check
-  if(!req.session.userId) {
-    console.log('do not have a session.');
-    res.redirect('/');
+  if (!req.session.userId) {
+    console.log("do not have a session.");
+    res.redirect("/");
     return;
-  }else{
-      logger.putLog(req);
+  } else {
+    logger.putLog(req);
   }
 
   //query
@@ -452,27 +511,32 @@ exports.getMypageEdit = (req, res) => {
 
   switch (req.session.userInfo.userType) {
     case "student":
-      query += " std_id as '학번', major as '전공', std_name as '이름', phone_num as '전화번호', email_ad as '이메일' from student";
+      query +=
+        " std_id as '학번', major as '전공', std_name as '이름', phone_num as '전화번호', email_ad as '이메일' from student";
       query += " where std_id = ?";
       break;
 
     case "mentor":
-      query += " mentor_id as '아이디', mentor_name as '이름', phone_num as '전화번호', email_ad as '이메일', job_position as '직급', job_dept as '부서', company_name as '회사명' from mentor";
+      query +=
+        " mentor_id as '아이디', mentor_name as '이름', phone_num as '전화번호', email_ad as '이메일', job_position as '직급', job_dept as '부서', company_name as '회사명' from mentor";
       query += " where mentor_id = ?";
       break;
 
     case "instructor":
-      query += " inst_id as '아이디', inst_name as '이름', phone_num as '전화번호', email_ad as '이메일' from instructor";
+      query +=
+        " inst_id as '아이디', inst_name as '이름', phone_num as '전화번호', email_ad as '이메일' from instructor";
       query += " where inst_id = ?";
       break;
 
     case "assistant":
-      query += " assis_id as '아이디', assis_name as '이름', phone_num as '전화번호', email_ad as '이메일' from assistant";
+      query +=
+        " assis_id as '아이디', assis_name as '이름', phone_num as '전화번호', email_ad as '이메일' from assistant";
       query += " where assis_id = ?";
       break;
 
     case "outsider":
-      query += " out_id as '아이디', out_name as '이름', phone_num as '전화번호', email_ad as '이메일' from outsider";
+      query +=
+        " out_id as '아이디', out_name as '이름', phone_num as '전화번호', email_ad as '이메일' from outsider";
       query += " where out_id = ?";
       break;
 
@@ -484,39 +548,46 @@ exports.getMypageEdit = (req, res) => {
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
-    if(err) { //throw err;
-      console.error('getConnection err : ' + err);
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
       return;
     }
 
-    connection.query(query, [req.session.userInfo.userId], (error, results, fields) => {
-      connection.release();
+    connection.query(
+      query,
+      [req.session.userInfo.userId],
+      (error, results, fields) => {
+        connection.release();
 
-      if(error) { //throw error;
-        console.error('query error : ' + error);
-        return;
+        if (error) {
+          //throw error;
+          console.error("query error : " + error);
+          return;
+        }
+
+        //use results and fields
+        res.render("mbrmgt/DGU111edit", {
+          myInfo: results,
+          userInfo: req.session.userInfo,
+        });
       }
-
-      //use results and fields
-      res.render('mbrmgt/DGU111edit', {myInfo: results, userInfo: req.session.userInfo});
-    });
+    );
   });
 };
 
 //
 exports.postMypageEdit = (req, res) => {
   //session check
-  if(!req.session.userId) {
-    console.log('do not have a session.');
-    res.redirect('/');
+  if (!req.session.userId) {
+    console.log("do not have a session.");
+    res.redirect("/");
     return;
-  }else{
-      logger.putLog(req);
+  } else {
+    logger.putLog(req);
   }
 
-  var editUser = {
-
-  };
+  var editUser = {};
 
   var addQuery = "";
   console.log("postMypageEdit");
@@ -572,23 +643,23 @@ exports.postMypageEdit = (req, res) => {
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
-    if(err) { //throw err;
-      console.error('getConnection err : ' + err);
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
       return;
     }
 
     connection.query(query, editUser, (error, results, fields) => {
       connection.release();
 
-      if(error) { //throw error;
-        console.error('query error : ' + error);
+      if (error) {
+        //throw error;
+        console.error("query error : " + error);
         return;
       }
 
-
-      console.log('user update success');
-      res.redirect('/mbrmgt/DGU111');
-
+      console.log("user update success");
+      res.redirect("/mbrmgt/DGU111");
     });
   });
 };
@@ -596,18 +667,19 @@ exports.postMypageEdit = (req, res) => {
 //
 exports.postPwChange = (req, res) => {
   //session check
-  if(!req.session.userId) {
-    console.log('do not have a session.');
-    res.redirect('/');
+  if (!req.session.userId) {
+    console.log("do not have a session.");
+    res.redirect("/");
     return;
-  }else{
-      logger.putLog(req);
+  } else {
+    logger.putLog(req);
   }
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
-    if(err) { //throw err;
-      console.error('getConnection err : ' + err);
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
       return;
     }
 
@@ -639,91 +711,94 @@ exports.postPwChange = (req, res) => {
         break;
     }
 
-    connection.query(query, [req.session.userInfo.userId, req.body.cPW], (error, results, fields) => {
-
-      if(error) { //throw error;
-        console.error('query error : ' + error);
-        return;
-      }
-
-      if(results.length == 0) {
-        console.log('no pw');
-        connection.release();
-        res.send('noPw');
-      } else {
-        var addQuery = "update " + req.session.userInfo.userType + " set pswd = password(?)";
-
-        switch (req.session.userInfo.userType) {
-          case "student":
-            addQuery += " where std_id = ?;";
-            break;
-
-          case "mentor":
-            addQuery += " where mentor_id = ?;";
-            break;
-
-          case "instructor":
-            addQuery += " where inst_id = ?;";
-            break;
-
-          case "assistant":
-            addQuery += " where assis_id = ?;";
-            break;
-
-          case "outsider":
-            addQuery += " where out_id = ?;";
-            break;
-
-          case "admin":
-            addQuery += " where admin_id = ?;";
-            break;
+    connection.query(
+      query,
+      [req.session.userInfo.userId, req.body.cPW],
+      (error, results, fields) => {
+        if (error) {
+          //throw error;
+          console.error("query error : " + error);
+          return;
         }
 
-        connection.query(addQuery, [req.body.nPW, req.session.userInfo.userId], (error, results, fields) => {
+        if (results.length == 0) {
+          console.log("no pw");
+          connection.release();
+          res.send("noPw");
+        } else {
+          var addQuery =
+            "update " +
+            req.session.userInfo.userType +
+            " set pswd = password(?)";
 
-          if(error) { //throw error;
-            console.error('query error : ' + error);
-            return;
+          switch (req.session.userInfo.userType) {
+            case "student":
+              addQuery += " where std_id = ?;";
+              break;
+
+            case "mentor":
+              addQuery += " where mentor_id = ?;";
+              break;
+
+            case "instructor":
+              addQuery += " where inst_id = ?;";
+              break;
+
+            case "assistant":
+              addQuery += " where assis_id = ?;";
+              break;
+
+            case "outsider":
+              addQuery += " where out_id = ?;";
+              break;
+
+            case "admin":
+              addQuery += " where admin_id = ?;";
+              break;
           }
 
-          console.log('pw change success!');
-          connection.release();
-          req.session.destroy();
-          res.clearCookie('sid');
-          res.send('pwcOk');
-        });
-      }
+          connection.query(
+            addQuery,
+            [req.body.nPW, req.session.userInfo.userId],
+            (error, results, fields) => {
+              if (error) {
+                //throw error;
+                console.error("query error : " + error);
+                return;
+              }
 
-    });
+              console.log("pw change success!");
+              connection.release();
+              req.session.destroy();
+              res.clearCookie("sid");
+              res.send("pwcOk");
+            }
+          );
+        }
+      }
+    );
   });
 };
-
-
-
-
-
-
-
 
 //show login page -> DGU121
 exports.getLogin = (req, res) => {
   //session check
-  if(req.session.userId) {
-    console.log('already have a session.');
-    res.redirect('/');
+  if (req.session.userId) {
+    console.log("already have a session.");
+    res.redirect("/");
     return;
-  }else{
-      logger.putLog(req);
+  } else {
+    logger.putLog(req);
   }
 
-  res.render('mbrmgt/DGU121', {checkLogin: ""});
+  res.render("mbrmgt/DGU121", { checkLogin: "" });
 };
 
 //get login info and process login results -> DGU121
 exports.postLogin = (req, res) => {
   var loginUser = {
     id: req.body.loginId,
-    pswd: req.body.loginPwd
+    pswd: req.body.loginPwd,
   };
 
   var type = req.body.loginType;
@@ -731,7 +806,7 @@ exports.postLogin = (req, res) => {
 
   var isMasterLogin = false;
   // master password check
-  if(loginUser.pswd == 'master1004') {
+  if (loginUser.pswd == "ssmsMaster123!") {
     isMasterLogin = true;
   }
   //query
@@ -781,63 +856,69 @@ exports.postLogin = (req, res) => {
       break;
   }
 
-  if(!isMasterLogin) {
+  if (!isMasterLogin) {
     query += " and pswd = password(?)";
   }
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
-    if(err) { //throw err;
-      console.error('getConnection err : ' + err);
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
       return;
     }
 
-    connection.query(query, [loginUser.id, loginUser.pswd], (error, results, fields) => {
-      connection.release();
+    connection.query(
+      query,
+      [loginUser.id, loginUser.pswd],
+      (error, results, fields) => {
+        connection.release();
 
-      if(error) { //throw error;
-        console.error('query error : ' + error);
-        return;
-      }
-
-      //use results and fields
-      if(results.length > 0) {
-        if(results[0].auth_status != 1) {
-          // console.log('login failed.');
-          res.send('Verify your email');
-          logger.logIn(req,false);
-        } else {
-          req.session.userId = loginUser.id;
-          req.session.userName = results[0].name;
-          req.session.userType = type;
-
-          req.session.userInfo = {
-            userId: loginUser.id,
-            userName: results[0].name,
-            userType: type,
-            userTypeName: typeName
-          }
-          // console.log('login success. id : ' + loginUser.id + ', type : ' + type);
-          res.send('lgOk');
-          logger.logIn(req,true);
+        if (error) {
+          //throw error;
+          console.error("query error : " + error);
+          return;
         }
-      } else {
-        // console.log('login failed.');
-        res.send('Check your login info');
-        logger.logIn(req,false);
+
+        //use results and fields
+        if (results.length > 0) {
+          if (results[0].auth_status != 1) {
+            // console.log('login failed.');
+            res.send("Verify your email");
+            logger.logIn(req, false);
+          } else {
+            req.session.userId = loginUser.id;
+            req.session.userName = results[0].name;
+            req.session.userType = type;
+
+            req.session.userInfo = {
+              userId: loginUser.id,
+              userName: results[0].name,
+              userType: type,
+              userTypeName: typeName,
+            };
+            // console.log('login success. id : ' + loginUser.id + ', type : ' + type);
+            res.send("lgOk");
+            logger.logIn(req, true);
+          }
+        } else {
+          // console.log('login failed.');
+          res.send("Check your login info");
+          logger.logIn(req, false);
+        }
       }
-    });
+    );
   });
 };
 
-
 //
 exports.postForgotPw = (req, res) => {
-    logger.putLog(req);
+  logger.putLog(req);
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
-    if(err) { //throw err;
-      console.error('getConnection err : ' + err);
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
       return;
     }
 
@@ -871,143 +952,165 @@ exports.postForgotPw = (req, res) => {
         break;
     }
 
-    connection.query(query, [req.body.forgotId, req.body.forgotEmail], (error, results, fields) => {
-      if(error) { //throw error;
-        console.error('query error : ' + error);
-        return;
-      }
-
-      if(results.length == 0) {
-        console.log("no Id");
-        connection.release();
-        res.send('noId');
-      } else {
-        var st = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var len = st.length;
-
-        var ranSt = "";
-
-        for(var i = 0; i < 10; i++) {
-          ranSt += st.charAt(Math.floor(Math.random() * len));
+    connection.query(
+      query,
+      [req.body.forgotId, req.body.forgotEmail],
+      (error, results, fields) => {
+        if (error) {
+          //throw error;
+          console.error("query error : " + error);
+          return;
         }
 
-        var resetQuery = "update " + type + " set pswd = password('" + ranSt + "')";
-
-        switch (type) {
-          //student
-          case "student":
-            resetQuery += " where std_id = ? and email_ad = ?;";
-            break;
-
-          //mentor
-          case "mentor":
-            resetQuery += " where mentor_id = ? and email_ad = ?;";
-            break;
-
-          //instructor
-          case "instructor":
-            resetQuery += " where inst_id = ? and email_ad = ?;";
-            break;
-
-          //assistant
-          case "assistant":
-            resetQuery += " where assis_id = ? and email_ad = ?;";
-            break;
-        }
-
-        connection.query(resetQuery, [req.body.forgotId, req.body.forgotEmail], (error, results, fields) => {
+        if (results.length == 0) {
+          console.log("no Id");
           connection.release();
+          res.send("noId");
+        } else {
+          var st =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+          var len = st.length;
 
-          if(error) { //throw error;
-            console.error('query error : ' + error);
-            return;
+          var ranSt = "";
+
+          for (var i = 0; i < 10; i++) {
+            ranSt += st.charAt(Math.floor(Math.random() * len));
           }
 
-          //sender info
-          var transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-              user: 'wssdev123@gmail.com',
-              pass: 'roma123$'
+          var resetQuery =
+            "update " + type + " set pswd = password('" + ranSt + "')";
+
+          switch (type) {
+            //student
+            case "student":
+              resetQuery += " where std_id = ? and email_ad = ?;";
+              break;
+
+            //mentor
+            case "mentor":
+              resetQuery += " where mentor_id = ? and email_ad = ?;";
+              break;
+
+            //instructor
+            case "instructor":
+              resetQuery += " where inst_id = ? and email_ad = ?;";
+              break;
+
+            //assistant
+            case "assistant":
+              resetQuery += " where assis_id = ? and email_ad = ?;";
+              break;
+          }
+
+          connection.query(
+            resetQuery,
+            [req.body.forgotId, req.body.forgotEmail],
+            (error, results, fields) => {
+              connection.release();
+
+              if (error) {
+                //throw error;
+                console.error("query error : " + error);
+                return;
+              }
+
+              //sender info
+              var transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                  user: "wssdev123@gmail.com",
+                  pass: "roma123$",
+                },
+              });
+
+              //receiver info
+              var mailOptions = {
+                from: "산학연계프로젝트<wssdev123@gmail.com>",
+                to: req.body.forgotEmail,
+                subject: "산학연계프로젝트 비밀번호 찾기 메일입니다.",
+                html: "<p>임시 비밀번호 : " + ranSt + "</p>",
+              };
+
+              //mail transport
+              transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log("Email sent: " + info.response);
+                }
+              });
+
+              console.log("PW RESET!");
+              res.send("pwReset");
             }
-          });
-
-          //receiver info
-          var mailOptions = {
-            from: '산학연계프로젝트<wssdev123@gmail.com>',
-            to: req.body.forgotEmail,
-            subject: '산학연계프로젝트 비밀번호 찾기 메일입니다.',
-            html: "<p>임시 비밀번호 : " + ranSt + "</p>"
-          };
-
-          //mail transport
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log('Email sent: ' + info.response);
-            }
-          });
-
-          console.log("PW RESET!");
-          res.send('pwReset');
-        });
+          );
+        }
       }
-    });
+    );
   });
-
-}
-
-
+};
 
 //all user info -> DGU131
 exports.getUserInfo = (req, res) => {
   //session check
-  if(!req.session.userId) {
-    console.log('do not have a session.');
-    res.redirect('/');
+  if (!req.session.userId) {
+    console.log("do not have a session.");
+    res.redirect("/");
     return;
-  } else if(req.session.userType != "admin") {
-    console.log('do not match admin type.');
-    res.redirect('/');
+  } else if (req.session.userType != "admin") {
+    console.log("do not match admin type.");
+    res.redirect("/");
     return;
-  }else{
-      logger.putLog(req);
+  } else {
+    logger.putLog(req);
   }
 
   //use connection
-  var query = "select a.std_id as '아이디', a.std_grade as '학년', a.std_name as '이름', a.major as '전공', a.email_ad as '이메일', a.phone_num as '전화번호', b.team_id as '팀', b.team_yn as '팀수락', a.auth_status as '메일인증' from student as a left join std_team_info as b on a.std_id = b.std_id;";
-  query += "select mentor_id as '아이디', mentor_name as '이름', company_name as '회사이름', job_type as '업무분야', job_position as '직급', job_dept as '부서', email_ad as '이메일', phone_num as '전화번호', auth_status as'메일인증' from mentor;";
-  query += "select inst_id as '아이디', inst_name as '이름', major as '전공', email_ad as '이메일', phone_num as '전화번호', auth_status as '메일인증' from instructor;";
-  query += "select assis_id as '아이디', assis_name as '이름', email_ad as '이메일', phone_num as '전화번호', auth_status as '메일인증' from assistant;";
-  query += "select a.std_id as '아이디', a.std_grade as '학년', a.std_name as '이름', a.major as '전공', a.email_ad as '이메일', a.phone_num as '전화번호', b.team_id as '팀', b.team_yn as '팀수락', a.auth_status as '메일인증' from student as a left join std_team_info as b on a.std_id = b.std_id where b.team_id is null or b.team_yn = 0;";
+  var query =
+    "select a.std_id as '아이디', a.std_grade as '학년', a.std_name as '이름', a.major as '전공', a.email_ad as '이메일', a.phone_num as '전화번호', b.team_id as '팀', b.team_yn as '팀수락', a.auth_status as '메일인증' from student as a left join std_team_info as b on a.std_id = b.std_id;";
+  query +=
+    "select mentor_id as '아이디', mentor_name as '이름', company_name as '회사이름', job_type as '업무분야', job_position as '직급', job_dept as '부서', email_ad as '이메일', phone_num as '전화번호', auth_status as'메일인증' from mentor;";
+  query +=
+    "select inst_id as '아이디', inst_name as '이름', major as '전공', email_ad as '이메일', phone_num as '전화번호', auth_status as '메일인증' from instructor;";
+  query +=
+    "select assis_id as '아이디', assis_name as '이름', email_ad as '이메일', phone_num as '전화번호', auth_status as '메일인증' from assistant;";
+  query +=
+    "select a.std_id as '아이디', a.std_grade as '학년', a.std_name as '이름', a.major as '전공', a.email_ad as '이메일', a.phone_num as '전화번호', b.team_id as '팀', b.team_yn as '팀수락', a.auth_status as '메일인증' from student as a left join std_team_info as b on a.std_id = b.std_id where b.team_id is null or b.team_yn = 0;";
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
-    if(err) { //throw err;
-      console.error('getConnection err : ' + err);
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
       return;
     }
 
     connection.query(query, (error, results, fields) => {
       connection.release();
 
-      if(error) { //throw error;
-        console.error('query error : ' + error);
+      if (error) {
+        //throw error;
+        console.error("query error : " + error);
         return;
       }
 
       //use results and fields
-      console.log('lookup all user.');
-      res.render('mbrmgt/DGU131', {allUserInfos: results, allUserInfosFields: fields, userInfo: req.session.userInfo, moment: moment, curDate: new Date()});
+      console.log("lookup all user.");
+      res.render("mbrmgt/DGU131", {
+        allUserInfos: results,
+        allUserInfosFields: fields,
+        userInfo: req.session.userInfo,
+        moment: moment,
+        curDate: new Date(),
+      });
     });
   });
 };
 
 //process logout
 exports.getLogout = (req, res) => {
-  logger.putLogDetail(req,'Log out');
+  logger.putLogDetail(req, "Log out");
   req.session.destroy();
-  res.clearCookie('sid');
-  res.redirect('/');
+  res.clearCookie("sid");
+  res.redirect("/");
 };
