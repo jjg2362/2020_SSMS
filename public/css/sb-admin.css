@@ -672,7 +672,7 @@ footer.sticky-footer {
 
 footer.sticky-footer img {
   max-width: 50%;
-  height: inherit;
+  height: 69px;
 }
 
 @media (min-width: 992px) {
