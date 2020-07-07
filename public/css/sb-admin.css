@@ -199,8 +199,10 @@ body.fixed-nav {
 }
 
 @media (min-width: 992px) {
-  #mainNav .navbar-brand {
-    width: 250px;
+  #mainNav .navbar-ebook img,
+  #mainNav .navbar-youtube img {
+    width: 18px;
+    margin-right: 0.5rem;
   }
   #mainNav .navbar-collapse {
     overflow: visible;

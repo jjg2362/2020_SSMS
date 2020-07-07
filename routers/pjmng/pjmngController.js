@@ -402,6 +402,66 @@ exports.getSearchproject2 = (req,res)=>{
     });
   });
 };
+exports.getSearchproject3 = (req, res) => {
+  //session check
+  if (!req.session.userId) {
+    console.log("do not have a session.");
+    res.redirect("/");
+    return;
+  } else if (req.session.userType != "admin") {
+    console.log("do not match admin type.");
+    res.redirect("/");
+    return;
+  } else {
+    logger.putLog(req);
+  }
+
+  //use connection
+  var query =
+    "select b.class_type, d.class_num, b.team_id, d.team_name, a.std_id , d.leader_id, a.std_grade , a.std_name , a.major ,   ";
+  query += "a.email_ad ,a.phone_num , b.std_resume , ";
+  query +=
+    "e.prj_name as pc1_name, f.prj_name as pc2_name, g.prj_name as pc3_name , d.mentor_id , p.prj_name ";
+  query += "from student as a ";
+  query +=
+    "left join std_team_info as b on a.std_id = b.std_id and a.std_id = b.leader_id ";
+  query += "left join project_cart as c on b.team_id= c.team_id  ";
+  query += "left join team as d on d.team_id = b.team_id ";
+  query += "left join project as p on p.prj_id=d.prj_id ";
+  query +=
+    "left join (select prj_id,prj_name from project) as e on e.prj_id=c.project1 ";
+  query +=
+    "left join (select prj_id,prj_name from project) as f on f.prj_id=c.project2 ";
+  query +=
+    "left join (select prj_id,prj_name from project) as g on g.prj_id=c.project3 where d.use_yn=1 order by b.class_type, b.team_id desc;";
+
+  //get connection from pool
+  mysqlPool.pool.getConnection((err, connection) => {
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
+      return;
+    }
+
+    connection.query(query, (error, results, fields) => {
+      connection.release();
+
+      if (error) {
+        //throw error;
+        console.error("query error : " + error);
+        return;
+      }
+
+      //use results and fields
+      // console.log('lookup all team.');
+      res.render("pjmng/DGU532", {
+        teamInfo: results,
+        userInfo: req.session.userInfo
+      });
+    });
+  });
+};
+
 
 //show Mentoring Report lists
 exports.getMentoringReport = (req,res)=>{

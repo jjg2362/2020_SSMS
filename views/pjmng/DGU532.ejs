@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico" />
+    <title>동국대학교 산학연계프로젝트</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom fonts for this template-->
+    <link
+      href="../vendor/font-awesome/css/font-awesome.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin.css" rel="stylesheet" />
+
+    <!-- Page level plugin CSS-->
+    <link
+      href="../vendor/datatables/dataTables.bootstrap4.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <!-- 메인 페이지 -->
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- 네비게이션 바 불러오기 -->
+    <% include ../navBar.ejs %>
+
+    <!-- 메인 -->
+    <div class="content-wrapper">
+      <!-- 메인 내용 -->
+      <div class="container-fluid">
+        <h6>팀 관리 > 팀 진행사항</h6>
+        <hr />
+        <div class="card mb-3">
+          <div class="card-body">
+            <div style="margin-left: 50%;">
+              * 엑셀 다운로드는 Chrome 브라우저에서 동작합니다 *
+            </div>
+            <a id="btnExport" href="#" download="" style="margin-left: 92%;">
+              <input type="button" class="btn btn-primary" value="Excel 다운" />
+            </a>
+            <hr />
+
+            <div class="table-responsive">
+              <table
+                class="table table-bordered-sm"
+                id="dataTable"
+                width="100%"
+                cellspacing="0"
+              >
+                <thead>
+                  <tr>
+                    <th>프로젝트 명</th>
+                    <th>수행계획서</th>
+                    <th>진도점검표</th>
+                    <th>최종보고서</th>
+                    <th>소스파일</th>
+                    <th>결과발표회</th>
+                    <th>특허</th>
+                    <th>프로그램</th>
+                    <th>논문</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var i = 0; i < teamInfo.length; i++) { %>
+                  <tr>
+                    <td><%= teamInfo[i].team_name %></td>
+                    <td>
+                      <% if(!(teamInfo[i].std_resume) || teamInfo[i].std_resume
+                      =='undefined' ) { %> <%= teamInfo[i].std_id %> <% } else {
+                      %> <%= teamInfo[i].std_id %> <% } %>
+                    </td>
+
+                    <% if (teamInfo[i].pc1_name != null) {%>
+                    <td><%= teamInfo[i].pc1_name %></td>
+                    <% }else { %>
+                    <td>없음</td>
+                    <%}%> <% if (teamInfo[i].pc2_name != null) {%>
+                    <td><%= teamInfo[i].pc2_name %></td>
+                    <% }else { %>
+                    <td>없음</td>
+                    <%}%> <% if (teamInfo[i].pc3_name != null) {%>
+                    <td><%= teamInfo[i].pc3_name %></td>
+                    <% }else { %>
+                    <td>없음</td>
+                    <%}%>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- include footer -->
+      <% include ../footer.html %>
+
+      <!-- 맨위로 가기 버튼 -->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../js/sb-admin.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="../vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for this page-->
+    <script src="../js/sb-admin-datatables.min.js"></script>
+
+    <script
+      type="text/javascript"
+      src="../js/jquery.battatech.excelexport.js"
+    ></script>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#btnExport").on("click", function () {
+          var uri = $("#dataTable").excelexportjs({
+            containerid: "dataTable",
+            datatype: "table",
+            returnUri: true,
+          });
+          $(this)
+            .attr("download", "팀진행사항.xls")
+            .attr("href", uri)
+            .attr("target", "_blank");
+        });
+      });
+
+      function showLeaderInfo(name, major, phoennum, email) {
+        alert(
+          "이름 : " +
+            name +
+            "\n전공 : " +
+            major +
+            "\n전화번호 : " +
+            phoennum +
+            "\n메일 : " +
+            email
+        );
+      }
+    </script>
+  </body>
+</html>
