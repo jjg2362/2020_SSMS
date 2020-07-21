@@ -62,40 +62,58 @@
               >
                 <thead>
                   <tr>
-                    <th>프로젝트 명</th>
-                    <th>수행계획서</th>
-                    <th>진도점검표</th>
-                    <th>최종보고서</th>
-                    <th>소스파일</th>
-                    <th>결과발표회</th>
-                    <th>특허</th>
-                    <th>프로그램</th>
-                    <th>논문</th>
+                    <th style="text-align: center;">팀명</th>
+                    <th style="text-align: center;">수행계획서</th>
+                    <!-- <th style="text-align: center;">멘토링보고서</th> -->
+                    <th style="text-align: center;">최종보고서</th>
+                    <th style="text-align: center;">소스파일</th>
+                    <th style="text-align: center;">동영상</th>
+                    <th style="text-align: center;">특허</th>
+                    <th style="text-align: center;">프로그램</th>
+                    <th style="text-align: center;">논문</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% for(var i = 0; i < teamInfo.length; i++) { %>
+                  <% for(let i = 0; i < FinalLists.length; i++) {%>
                   <tr>
-                    <td><%= teamInfo[i].team_name %></td>
-                    <td>
-                      <% if(!(teamInfo[i].std_resume) || teamInfo[i].std_resume
-                      =='undefined' ) { %> <%= teamInfo[i].std_id %> <% } else {
-                      %> <%= teamInfo[i].std_id %> <% } %>
+                    <td style="text-align: center;">
+                      <%= FinalLists[i].team_name %>
                     </td>
-
-                    <% if (teamInfo[i].pc1_name != null) {%>
-                    <td><%= teamInfo[i].pc1_name %></td>
-                    <% }else { %>
-                    <td>없음</td>
-                    <%}%> <% if (teamInfo[i].pc2_name != null) {%>
-                    <td><%= teamInfo[i].pc2_name %></td>
-                    <% }else { %>
-                    <td>없음</td>
-                    <%}%> <% if (teamInfo[i].pc3_name != null) {%>
-                    <td><%= teamInfo[i].pc3_name %></td>
-                    <% }else { %>
-                    <td>없음</td>
-                    <%}%>
+                    <!-- 수행계획서 확인 -->
+                    <td style="text-align: center;">
+                      <% if(FinalLists[i].prj_plan_report != null) { %> O <% }
+                      else {%> X <% } %>
+                    </td>
+                    <!-- 최종보고서 확인 -->
+                    <td style="text-align: center;">
+                      <% if(FinalLists[i].fin_report != null) { %> O <% } else
+                      {%> X <% } %>
+                    </td>
+                    <!-- 소스파일 확인 -->
+                    <td style="text-align: center;">
+                      <% if(FinalLists[i].product1 != null) { %> O <% } else {%>
+                      X <% } %>
+                    </td>
+                    <!-- 결과발표회동영상 확인 -->
+                    <td style="text-align: center;">
+                      <% if(FinalLists[i].demo_vid != null) { %> O <% } else {%>
+                      X <% } %>
+                    </td>
+                    <!-- 특허 확인 -->
+                    <td style="text-align: center;">
+                      <% if(FinalLists[i].patent_doc != null) { %> O <% } else
+                      {%> X <% } %>
+                    </td>
+                    <!-- 프로그램 확인 -->
+                    <td style="text-align: center;">
+                      <% if(FinalLists[i].prg_regis != null) { %> O <% } else
+                      {%> X <% } %>
+                    </td>
+                    <!-- 논문 확인 -->
+                    <td style="text-align: center;">
+                      <% if(FinalLists[i].thesis_file != null) { %> O <% } else
+                      {%> X <% } %>
+                    </td>
                   </tr>
                   <% } %>
                 </tbody>

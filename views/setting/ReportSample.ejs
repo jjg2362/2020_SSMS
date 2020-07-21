@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico" />
     <title>동국대학교 산학연계프로젝트</title>
 
     <!-- Bootstrap core CSS-->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Custom fonts for this template-->
-    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link
+      href="/vendor/font-awesome/css/font-awesome.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
 
     <!-- Custom styles for this template-->
-    <link href="/css/sb-admin.css" rel="stylesheet">
+    <link href="/css/sb-admin.css" rel="stylesheet" />
   </head>
 
   <!-- 메인 페이지 -->
@@ -29,143 +36,232 @@
       <!-- 메인 내용 -->
       <div class="container-fluid">
         <div class="mb-0 mt-4">
-          <h6>설정 > 양식관리 </h6>
+          <h6>설정 > 양식관리</h6>
         </div>
-        <hr class="mt-2">
+        <hr class="mt-2" />
         <div class="card card-register mx-auto mt-5 mb-5">
           <div class="card-body">
-            <form action="/setting/reportsample" method="post" enctype="multipart/form-data" >
+            <form
+              action="/setting/reportsample"
+              method="post"
+              enctype="multipart/form-data"
+            >
               <h4>양식 관리</h4>
-              <hr class="mt-2">
+              <hr class="mt-2" />
               <div class="form-row mt-3">
                 <label for="upload_prj_aply">개인역량 점검표:&nbsp</label>
-                <% if(apdxInfo[0].prj_aply_apdx != '' && apdxInfo[0].prj_aply_apdx != null) { %>
-                  <% var id1 = apdxInfo[0].prj_aply_apdx.split('/') %>
-                  <% var id2 = id1[2].length %>
-                  <% var id3 = id1[2].substr(14,id2) %>
-                  <a onclick="abilityDownload2('<%= apdxInfo[0].prj_aply_apdx %>');" href="javascript:void(0)">
-                    <%= id3 %>
-                  </a>
+                <% if(apdxInfo[0].prj_aply_apdx != '' &&
+                apdxInfo[0].prj_aply_apdx != null) { %> <% var id1 =
+                apdxInfo[0].prj_aply_apdx.split('/') %> <% var id2 =
+                id1[2].length %> <% var id3 = id1[2].substr(14,id2) %>
+                <a
+                  onclick="abilityDownload2('<%= apdxInfo[0].prj_aply_apdx %>');"
+                  href="javascript:void(0)"
+                >
+                  <%= id3 %>
+                </a>
                 <% } %>
               </div>
-              <input class="form-control" name="PrjAply" id="PrjAplyFile" type="file" >
+              <input
+                class="form-control"
+                name="PrjAply"
+                id="PrjAplyFile"
+                type="file"
+              />
               <div class="form-row mt-3">
                 <label for="upload_topic">주제제안서:&nbsp</label>
-                <% if(apdxInfo[0].topic_sgst_apdx != '' && apdxInfo[0].topic_sgst_apdx != null) { %>
-                  <% var id11 = apdxInfo[0].topic_sgst_apdx.split('/') %>
-                  <% var id21 = id11[2].length %>
-                  <% var id31 = id11[2].substr(14,id21) %>
-                  <a onclick="abilityDownload2('<%= apdxInfo[0].topic_sgst_apdx %>');" href="javascript:void(0)">
-                    <%= id31 %>
-                  </a>
+                <% if(apdxInfo[0].topic_sgst_apdx != '' &&
+                apdxInfo[0].topic_sgst_apdx != null) { %> <% var id11 =
+                apdxInfo[0].topic_sgst_apdx.split('/') %> <% var id21 =
+                id11[2].length %> <% var id31 = id11[2].substr(14,id21) %>
+                <a
+                  onclick="abilityDownload2('<%= apdxInfo[0].topic_sgst_apdx %>');"
+                  href="javascript:void(0)"
+                >
+                  <%= id31 %>
+                </a>
                 <% } %>
               </div>
-              <input class="form-control" name="TopicSgst" id="TopicSgstFile" type="file" >
+              <input
+                class="form-control"
+                name="TopicSgst"
+                id="TopicSgstFile"
+                type="file"
+              />
               <div class="form-row mt-3">
                 <label for="upload_prjplan">프로젝트수행계획서:&nbsp</label>
-                <% if(apdxInfo[0].prj_plan_apdx != '' && apdxInfo[0].prj_plan_apdx != null) { %>
-                  <% var id12 = apdxInfo[0].prj_plan_apdx.split('/') %>
-                  <% var id22 = id12[2].length %>
-                  <% var id32 = id12[2].substr(14,id22) %>
-                  <a onclick="abilityDownload2('<%= apdxInfo[0].prj_plan_apdx %>');" href="javascript:void(0)">
-                    <%= id32 %>
-                  </a>
+                <% if(apdxInfo[0].prj_plan_apdx != '' &&
+                apdxInfo[0].prj_plan_apdx != null) { %> <% var id12 =
+                apdxInfo[0].prj_plan_apdx.split('/') %> <% var id22 =
+                id12[2].length %> <% var id32 = id12[2].substr(14,id22) %>
+                <a
+                  onclick="abilityDownload2('<%= apdxInfo[0].prj_plan_apdx %>');"
+                  href="javascript:void(0)"
+                >
+                  <%= id32 %>
+                </a>
                 <% } %>
               </div>
-              <input class="form-control" name="PrjPlan" id="PrjPlanFile" type="file" >
+              <input
+                class="form-control"
+                name="PrjPlan"
+                id="PrjPlanFile"
+                type="file"
+              />
               <div class="form-row mt-3">
-                <label for="upload_mtrreport">진도점검표:&nbsp</label>
-                <% if(apdxInfo[0].mtr_report_apdx != '' && apdxInfo[0].mtr_report_apdx != null) { %>
-                  <% var id13 = apdxInfo[0].mtr_report_apdx.split('/') %>
-                  <% var id23 = id13[2].length %>
-                  <% var id33 = id13[2].substr(14,id23) %>
-                  <a onclick="abilityDownload2('<%= apdxInfo[0].mtr_report_apdx %>');" href="javascript:void(0)">
-                    <%= id33 %>
-                  </a>
+                <label for="upload_mtrreport">멘토링보고서:&nbsp</label>
+                <% if(apdxInfo[0].mtr_report_apdx != '' &&
+                apdxInfo[0].mtr_report_apdx != null) { %> <% var id13 =
+                apdxInfo[0].mtr_report_apdx.split('/') %> <% var id23 =
+                id13[2].length %> <% var id33 = id13[2].substr(14,id23) %>
+                <a
+                  onclick="abilityDownload2('<%= apdxInfo[0].mtr_report_apdx %>');"
+                  href="javascript:void(0)"
+                >
+                  <%= id33 %>
+                </a>
                 <% } %>
               </div>
-              <input class="form-control" name="MtrReport" id="MtrReportFile" type="file" >
+              <input
+                class="form-control"
+                name="MtrReport"
+                id="MtrReportFile"
+                type="file"
+              />
               <div class="form-row mt-3">
                 <label for="upload_finreport">최종보고서:&nbsp</label>
-                <% if(apdxInfo[0].fin_report_apdx != '' && apdxInfo[0].fin_report_apdx != null) { %>
-                  <% var id14 = apdxInfo[0].fin_report_apdx.split('/') %>
-                  <% var id24 = id14[2].length %>
-                  <% var id34 = id14[2].substr(14,id24) %>
-                  <a onclick="abilityDownload2('<%= apdxInfo[0].fin_report_apdx %>');" href="javascript:void(0)">
-                    <%= id34 %>
-                  </a>
+                <% if(apdxInfo[0].fin_report_apdx != '' &&
+                apdxInfo[0].fin_report_apdx != null) { %> <% var id14 =
+                apdxInfo[0].fin_report_apdx.split('/') %> <% var id24 =
+                id14[2].length %> <% var id34 = id14[2].substr(14,id24) %>
+                <a
+                  onclick="abilityDownload2('<%= apdxInfo[0].fin_report_apdx %>');"
+                  href="javascript:void(0)"
+                >
+                  <%= id34 %>
+                </a>
                 <% } %>
               </div>
-              <input class="form-control" name="FinReport" id="FinReportFile" type="file" >
+              <input
+                class="form-control"
+                name="FinReport"
+                id="FinReportFile"
+                type="file"
+              />
               <div class="form-row mt-3">
                 <label for="upload_patentdoc">특허출원명세서:&nbsp</label>
-                <% if(apdxInfo[0].patent_doc_apdx != '' && apdxInfo[0].patent_doc_apdx != null) { %>
-                  <% var id15 = apdxInfo[0].patent_doc_apdx.split('/') %>
-                  <% var id25 = id15[2].length %>
-                  <% var id35 = id15[2].substr(14,id25) %>
-                  <a onclick="abilityDownload2('<%= apdxInfo[0].patent_doc_apdx %>');" href="javascript:void(0)">
-                    <%= id35 %>
-                  </a>
+                <% if(apdxInfo[0].patent_doc_apdx != '' &&
+                apdxInfo[0].patent_doc_apdx != null) { %> <% var id15 =
+                apdxInfo[0].patent_doc_apdx.split('/') %> <% var id25 =
+                id15[2].length %> <% var id35 = id15[2].substr(14,id25) %>
+                <a
+                  onclick="abilityDownload2('<%= apdxInfo[0].patent_doc_apdx %>');"
+                  href="javascript:void(0)"
+                >
+                  <%= id35 %>
+                </a>
                 <% } %>
               </div>
-              <input class="form-control" name="PatentDoc" id="PatentDocFile" type="file" >
+              <input
+                class="form-control"
+                name="PatentDoc"
+                id="PatentDocFile"
+                type="file"
+              />
               <div class="form-row mt-3">
                 <label for="upload_prgregis">프로그램등록명세서:&nbsp</label>
-                <% if(apdxInfo[0].prg_regis_apdx != '' && apdxInfo[0].prg_regis_apdx != null) { %>
-                  <% var id16 = apdxInfo[0].prg_regis_apdx.split('/') %>
-                  <% var id26 = id16[2].length %>
-                  <% var id36 = id16[2].substr(14,id26) %>
-                  <a onclick="abilityDownload2('<%= apdxInfo[0].prg_regis_apdx %>');" href="javascript:void(0)">
-                    <%= id36 %>
-                  </a>
+                <% if(apdxInfo[0].prg_regis_apdx != '' &&
+                apdxInfo[0].prg_regis_apdx != null) { %> <% var id16 =
+                apdxInfo[0].prg_regis_apdx.split('/') %> <% var id26 =
+                id16[2].length %> <% var id36 = id16[2].substr(14,id26) %>
+                <a
+                  onclick="abilityDownload2('<%= apdxInfo[0].prg_regis_apdx %>');"
+                  href="javascript:void(0)"
+                >
+                  <%= id36 %>
+                </a>
                 <% } %>
               </div>
-              <input class="form-control" name="PrgRegis" id="PrgRegisFile" type="file" >
+              <input
+                class="form-control"
+                name="PrgRegis"
+                id="PrgRegisFile"
+                type="file"
+              />
               <div class="form-row mt-3">
                 <label for="upload_ivtaply">발명신고서:&nbsp</label>
-                <% if(apdxInfo[0].ivt_aply_apdx != '' && apdxInfo[0].ivt_aply_apdx != null) { %>
-                  <% var id17 = apdxInfo[0].ivt_aply_apdx.split('/') %>
-                  <% var id27 = id17[2].length %>
-                  <% var id37 = id17[2].substr(14,id27) %>
-                  <a onclick="abilityDownload2('<%= apdxInfo[0].ivt_aply_apdx %>');" href="javascript:void(0)">
-                    <%= id37 %>
-                  </a>
+                <% if(apdxInfo[0].ivt_aply_apdx != '' &&
+                apdxInfo[0].ivt_aply_apdx != null) { %> <% var id17 =
+                apdxInfo[0].ivt_aply_apdx.split('/') %> <% var id27 =
+                id17[2].length %> <% var id37 = id17[2].substr(14,id27) %>
+                <a
+                  onclick="abilityDownload2('<%= apdxInfo[0].ivt_aply_apdx %>');"
+                  href="javascript:void(0)"
+                >
+                  <%= id37 %>
+                </a>
                 <% } %>
               </div>
-              <input class="form-control" name="IvtAply" id="IvtAplyFile" type="file" >
+              <input
+                class="form-control"
+                name="IvtAply"
+                id="IvtAplyFile"
+                type="file"
+              />
               <div class="form-row mt-3">
                 <label for="upload_ivtagrmt">발명합의서:&nbsp</label>
-                <% if(apdxInfo[0].ivt_agrmt_apdx != '' && apdxInfo[0].ivt_agrmt_apdx != null) { %>
-                  <% var id18 = apdxInfo[0].ivt_agrmt_apdx.split('/') %>
-                  <% var id28 = id18[2].length %>
-                  <% var id38 = id18[2].substr(14,id28) %>
-                  <a onclick="abilityDownload2('<%= apdxInfo[0].ivt_agrmt_apdx %>');" href="javascript:void(0)">
-                    <%= id38 %>
-                  </a>
+                <% if(apdxInfo[0].ivt_agrmt_apdx != '' &&
+                apdxInfo[0].ivt_agrmt_apdx != null) { %> <% var id18 =
+                apdxInfo[0].ivt_agrmt_apdx.split('/') %> <% var id28 =
+                id18[2].length %> <% var id38 = id18[2].substr(14,id28) %>
+                <a
+                  onclick="abilityDownload2('<%= apdxInfo[0].ivt_agrmt_apdx %>');"
+                  href="javascript:void(0)"
+                >
+                  <%= id38 %>
+                </a>
                 <% } %>
               </div>
-              <input class="form-control" name="IvtAgrmt" id="IvtAgrmtFile" type="file" >
+              <input
+                class="form-control"
+                name="IvtAgrmt"
+                id="IvtAgrmtFile"
+                type="file"
+              />
               <div class="form-row mt-3">
                 <label for="upload_usrmnl">사용메뉴얼:&nbsp</label>
-                <% if(apdxInfo[0].user_manual != '' && apdxInfo[0].user_manual != null) { %>
-                  <% var id19 = apdxInfo[0].user_manual.split('/') %>
-                  <% var id29 = id19[2].length %>
-                  <% var id39 = id19[2].substr(14,id29) %>
-                  <a onclick="abilityDownload2('<%= apdxInfo[0].user_manual %>');" href="javascript:void(0)">
-                    <%= id39 %>
-                  </a>
+                <% if(apdxInfo[0].user_manual != '' && apdxInfo[0].user_manual
+                != null) { %> <% var id19 = apdxInfo[0].user_manual.split('/')
+                %> <% var id29 = id19[2].length %> <% var id39 =
+                id19[2].substr(14,id29) %>
+                <a
+                  onclick="abilityDownload2('<%= apdxInfo[0].user_manual %>');"
+                  href="javascript:void(0)"
+                >
+                  <%= id39 %>
+                </a>
                 <% } %>
               </div>
-              <input class="form-control" name="Usermanul" id="Usermanualfile" type="file" >
-              <div class = "form-group mt-4">
+              <input
+                class="form-control"
+                name="Usermanul"
+                id="Usermanualfile"
+                type="file"
+              />
+              <div class="form-group mt-4">
                 <div class="form-row">
-                  <div class = "col-md-5">
+                  <div class="col-md-5">
                     <label> </label>
                   </div>
-                  <div class = "col-md-2">
-                    <input  type="submit" class="btn btn-primary btn-block" name = "SaveState" value="저장" />
+                  <div class="col-md-2">
+                    <input
+                      type="submit"
+                      class="btn btn-primary btn-block"
+                      name="SaveState"
+                      value="저장"
+                    />
                   </div>
-                  <div class = "col-md-5">
+                  <div class="col-md-5">
                     <label> </label>
                   </div>
                 </div>
