@@ -1,23 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="SHORTCUT ICON" href="\image\Dongguk.ico" />
     <title>동국대학교 산학연계프로젝트</title>
 
     <!-- Bootstrap core CSS-->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Custom fonts for this template-->
-    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link
+      href="/vendor/font-awesome/css/font-awesome.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
 
     <!-- Custom styles for this template-->
-    <link href="/css/sb-admin.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="/css/sb-admin.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
@@ -31,51 +41,100 @@
     <div class="content-wrapper">
       <!-- 메인 내용 -->
       <div class="container-fluid">
-        <form action="/pjmng/DGU513" onsubmit="return CheckForm();" method="post" enctype="multipart/form-data">
+        <form
+          action="/pjmng/DGU513"
+          onsubmit="return CheckForm();"
+          method="post"
+          enctype="multipart/form-data"
+        >
           <div class="mb-0 mt-4">
-            <h6>프로젝트 운영 > 프로젝트 점검 > <%=TeamInfo[0][0].team_name%> > 진도점검표 등록</h6>
+            <h6>
+              프로젝트 운영 > 프로젝트 점검 > <%=TeamInfo[0][0].team_name%> >
+              진도점검표 등록
+            </h6>
           </div>
-          <hr class="mt-2">
-            <div class="card card-register mx-auto mt-5 mb-5">
-              <div class="card-header">
-                <div class = "form-row">
-                  <div class = "col-md-10">
-                    <h4>진도점검표 등록</h4>
-                  </div>
-                  <div class = "col-md-2">
-                    <a onclick="abilityDownload('<%= TeamInfo[1][0].mtr_report_apdx %>');" href="javascript:void(0)">
-                      <input class="form-control" type = "button" value="양식다운"/>
-                    </a>
-                  </div>
+          <hr class="mt-2" />
+          <div class="card card-register mx-auto mt-5 mb-5">
+            <div class="card-header">
+              <div class="form-row">
+                <div class="col-md-10">
+                  <h4>진도점검표 등록</h4>
                 </div>
-                <h7>*(작성법) 양식을 다운한 후 “멘토링 진행 (학생 작성 부분)”만 작성후 업로드 합니다</h7>
+                <div class="col-md-2">
+                  <a
+                    onclick="abilityDownload('<%= TeamInfo[1][0].mtr_report_apdx %>');"
+                    href="javascript:void(0)"
+                  >
+                    <input
+                      class="form-control"
+                      type="button"
+                      value="양식다운"
+                    />
+                  </a>
+                </div>
               </div>
-              <div class="card-body">
-                <input type = "hidden" value ="<%=TeamInfo[0][0].prj_id%> " name ="PJId" id = "PJId" />
-                <input type = "hidden" value ="<%=TeamInfo[0][0].team_id%> " name ="TEAMId" id = "TEAMId" />
-                <input type = "hidden" value ="<%=TeamInfo[0][0].mentor_id%> " name ="MENTORId" id = "MENTORId" />
+              <h7
+                >*(작성법) 양식을 다운한 후 “멘토링 진행 (학생 작성 부분)”만
+                작성후 업로드 합니다</h7
+              >
+            </div>
+            <div class="card-body">
+              <input
+                type="hidden"
+                value="<%=TeamInfo[0][0].prj_id%> "
+                name="PJId"
+                id="PJId"
+              />
+              <input
+                type="hidden"
+                value="<%=TeamInfo[0][0].team_id%> "
+                name="TEAMId"
+                id="TEAMId"
+              />
+              <input
+                type="hidden"
+                value="<%=TeamInfo[0][0].mentor_id%> "
+                name="MENTORId"
+                id="MENTORId"
+              />
 
-                <div class="form-group">
-                  <!-- 파일업로드 -->
-                  <div class ="form-row">
-                    <div class = "col-md-4">
-                      <label for="mentoring_date">멘토링 날짜</label>
-                      <input  class="form-control" name ="meetingdate" id="meetingdate" type="text" placeholder="연도-월-일">
-                    </div>
-                    <div class = "col-md-8">
-                      <label for="mentoring_report_file">보고서 파일(20mb 이하 파일만 가능합니다.)</label>
-                      <input class="form-control" name="appendix" id="appendix" type="file" >
-                    </div>
+              <div class="form-group">
+                <!-- 파일업로드 -->
+                <div class="form-row">
+                  <div class="col-md-4">
+                    <label for="mentoring_date">멘토링 날짜</label>
+                    <input
+                      class="form-control"
+                      name="meetingdate"
+                      id="meetingdate"
+                      type="text"
+                      placeholder="연도-월-일"
+                    />
+                  </div>
+                  <div class="col-md-8">
+                    <label for="mentoring_report_file">보고서 파일</label>
+                    <input
+                      class="form-control"
+                      name="appendix"
+                      id="appendix"
+                      type="file"
+                    />
                   </div>
                 </div>
-                <div class="form-group">
-                  <input class="form-control" name="ReportSubmission" id="SubmitMentoringReport" type="submit" value="제출">
-                </div>
+              </div>
+              <div class="form-group">
+                <input
+                  class="form-control"
+                  name="ReportSubmission"
+                  id="SubmitMentoringReport"
+                  type="submit"
+                  value="제출"
+                />
               </div>
             </div>
-          </form>
-        </div>
-
+          </div>
+        </form>
+      </div>
 
       <!-- include footer -->
       <% include ../footer.html %>
@@ -96,33 +155,34 @@
         var downloadPath = fullPath.substring(7);
         location.href = "/fileDownload/" + downloadPath;
       }
-      $(function(){
-        $("#meetingdate").datepicker({ dateFormat:'yy-mm-dd'});
-
+      $(function () {
+        $("#meetingdate").datepicker({ dateFormat: "yy-mm-dd" });
       });
-      function CheckForm(){
-          var _meetingdate = document.getElementById("meetingdate").value;
-          var _appendix = document.getElementById("appendix").value;
+      function CheckForm() {
+        var _meetingdate = document.getElementById("meetingdate").value;
+        var _appendix = document.getElementById("appendix").value;
 
+        if (_meetingdate == "") {
+          alert("멘토링 날짜를 입력해주세요.");
+          document.getElementById("meetingdate").focus();
+          return false;
+        }
 
-          if (_meetingdate==""){
-            alert("멘토링 날짜를 입력해주세요.");
-            document.getElementById("meetingdate").focus();
-            return false;
-          }
+        if (_appendix == "") {
+          alert("파일을 선택해주세요.");
+          document.getElementById("appendix").focus();
+          return false;
+        }
 
-          if (_appendix ==''){
-            alert("파일을 선택해주세요.");
-            document.getElementById("appendix").focus();
-            return false;
-          }
-
-          if (confirm("멘토링날짜: "+_meetingdate+"\n보고서를 제출하시겠습니까? ") == true ) {
-            return true ;
-          }else{
-            return false;
-          }
-
+        if (
+          confirm(
+            "멘토링날짜: " + _meetingdate + "\n보고서를 제출하시겠습니까? "
+          ) == true
+        ) {
+          return true;
+        } else {
+          return false;
+        }
       }
     </script>
     <!-- Custom scripts for all pages-->
