@@ -32,9 +32,6 @@
           <h6>프로젝트 운영 > 결과물 등록 > <%=FinalLists[0][0].team_name%></h6>
         </div>
         <hr class="mt-2">
-
-        
-
         <% if((userInfo.userType == 'student' && FinalLists[0][0].leader_id == userInfo.userId)||userInfo.userType == 'mentor') { %>
           <!-- 수행계획서 -->
           <% if(FinalLists[3][0].prj_plan_report == null) { %>
@@ -103,7 +100,7 @@
           <% } %>
 
           <!-- 멘토링보고서 -->
-          <% if(FinalLists[4][0].ment_report_std == null) { %>
+          <% if(FinalLists[4][0] == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
               <div class="card-header">
                 <div class = "form-row">
@@ -153,7 +150,7 @@
                         <% var id1 = FinalLists[4][0].ment_report_std.split('/') %>
                         <% var id2 = id1[id1.length - 1].length %>
                         <% var id3 = id1[id1.length - 1].substr(14,id2) %>
-                        <a onclick="abilityDownload2('<%= FinalLists[0][0].fin_report %>');" href="javascript:void(0)">
+                        <a onclick="abilityDownload2('<%= FinalLists[4][0].ment_report_std.split %>');" href="javascript:void(0)">
                           <%= id3 %>
                         </a>
                       </div>
@@ -717,7 +714,7 @@
           <% } %>
 
           <!-- 멘토링보고서 -->
-          <% if(FinalLists[4][0].ment_report_std == null) { %>
+          <% if(FinalLists[4][0] == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
               <div class="card-header">
                 <div class = "form-row">

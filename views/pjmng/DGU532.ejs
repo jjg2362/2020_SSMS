@@ -55,14 +55,18 @@
 
             <div class="table-responsive">
               <table
-                class="table table-bordered-sm"
+                class="table table-bordered-sm table-hover"
                 id="dataTable"
                 width="100%"
                 cellspacing="0"
               >
                 <thead>
                   <tr>
+                    <th style="text-align: center;">연도</th>
+                    <th style="text-align: center;">학기</th>
+                    <th style="text-align: center;">분류</th>
                     <th style="text-align: center;">팀명</th>
+                    <th style="text-align: center;">프로젝트명</th>
                     <th style="text-align: center;">수행계획서</th>
                     <!-- <th style="text-align: center;">멘토링보고서</th> -->
                     <th style="text-align: center;">최종보고서</th>
@@ -77,7 +81,21 @@
                   <% for(let i = 0; i < FinalLists.length; i++) {%>
                   <tr>
                     <td style="text-align: center;">
+                      <%= FinalLists[i].prj_year %>
+                    </td>
+                    <td style="text-align: center;">
+                      <%= FinalLists[i].prj_semes %>
+                    </td>
+                    <td style="text-align: center;">
+                      <%= FinalLists[i].term_chk %>
+                    </td>
+                    <td style="text-align: center;">
                       <%= FinalLists[i].team_name %>
+                    </td>
+                    <td style="text-align: center;">
+                      <a href="/pjmng/DGU521/page/<%=FinalLists[i].prj_id %>">>
+                        <%= FinalLists[i].prj_name %>
+                      </a>
                     </td>
                     <!-- 수행계획서 확인 -->
                     <td style="text-align: center;">

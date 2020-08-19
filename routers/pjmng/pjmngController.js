@@ -500,9 +500,11 @@ exports.getSearchproject3 = (req, res) => {
     logger.putLog(req);
   }
   var query =
-    "select f.*,t.*, pp.prj_plan_report from final_product as f, team as t, project_plan_report as pp ";
+    "select p.prj_id, a.prj_year, a.prj_semes, a.term_chk, p.prj_name, f.*,t.*, pp.prj_plan_report from final_product as f, team as t, project_plan_report as pp, project as p, admin_settings as a";
   query +=
-    " where t.team_id = f.team_id and pp.team_id = t.team_id and t.use_yn = 1;";
+    " where t.team_id = f.team_id and pp.team_id = t.team_id and t.use_yn = 1 and t.prj_id = p.prj_id and a.settings_id = p.settings_id;";
+    // query+= "select ci.class_name, a.prj_year, a.prj_semes from admin_settings as a, class_info as ci where a.settings_id = p.settings_id and ci.settings_id = p.settings_id"
+
 
   mysqlPool.pool.getConnection((err, connection) => {
     if (err) {
@@ -2057,25 +2059,22 @@ exports.getFinalReport = (req, res) => {
   } else {
     logger.putLog(req);
   }
+  var projectId = req.params.PJId;
   // 최종보고서
   var query = "select f.*,t.* from final_product as f, team as t";
   query +=
-    " where f.prj_id = '" + req.params.PJId + "' and t.team_id = f.team_id; ";
+    " where f.prj_id = '" + projectId + "' and t.team_id = f.team_id; ";
   query += "select * from apdx_file_info where use_yn = 1;";
   query += "select * from agmt where use_yn = 1;";
   //수행계획서
   query +=
   " select prj_plan_report from project_plan_report where prj_id = '" +
-  req.params.PJId +
+  projectId +
   "';";
   // 멘토링 보고서
-    query +=
-      "select m.* from mentoring_report as m";
-    query +=
-      " where m.prj_id = '" +
-      req.params.PJId +
-      "'";
-    query += " order by m.sub_date;";
+  query += "select m.* from mentoring_report as m";
+  query += " where m.prj_id = '" + projectId + "'";
+  query += " order by m.sub_date;";
 
   mysqlPool.pool.getConnection((err, connection) => {
     if (err) {
