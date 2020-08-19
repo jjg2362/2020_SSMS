@@ -32,7 +32,142 @@
           <h6>프로젝트 운영 > 결과물 등록 > <%=FinalLists[0][0].team_name%></h6>
         </div>
         <hr class="mt-2">
+
+        
+
         <% if((userInfo.userType == 'student' && FinalLists[0][0].leader_id == userInfo.userId)||userInfo.userType == 'mentor') { %>
+          <!-- 수행계획서 -->
+          <% if(FinalLists[3][0].prj_plan_report == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-10">
+                    <h4>수행계획서 등록</h4>
+                  </div>
+                  <div class = "col-md-2">
+                    <a onclick="abilityDownload2('<%= FinalLists[1][0].prj_plan_apdx %>');" href="javascript:void(0)">
+                      <input class="form-control" type = "button" value="양식다운"/>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <form action="/pjmng/DGU521/PostReport" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <!-- 파일업로드 -->
+                    <input class="form-control" name="FinalReportFile" id="inputFinalReportFile" type="file" >
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" name="ReportSubmission" id="SubmitFinalReport" type="submit" value="제출">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-10">
+                    <h4>수행계획서 수정/삭제</h4>
+                  </div>
+                  <div class = "col-md-2">
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <form action="/pjmng/DGU521/DeleteReport" method="post"  enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <!-- 보고서 목록 -->
+                    <div class = "form-row">
+                      <div class="col-md-4\">
+                      </div>
+                      <div class="col-md-8">
+                        <% var id1 = FinalLists[3][0].prj_plan_report.split('/') %>
+                        <% var id2 = id1[id1.length - 1].length %>
+                        <% var id3 = id1[id1.length - 1].substr(14,id2) %>
+                        <a onclick="abilityDownload2('<%= FinalLists[3][0].prj_plan_report %>');" href="javascript:void(0)">
+                          <%= id3 %>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="ReportDeletion" id="submitReportDeletion" type="submit" value="삭제">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } %>
+
+          <!-- 멘토링보고서 -->
+          <% if(FinalLists[4][0].ment_report_std == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-10">
+                    <h4>멘토링보고서 등록</h4>
+                  </div>
+                  <div class = "col-md-2">
+                    <a onclick="abilityDownload2('<%= FinalLists[1][0].mtr_report_apdx %>');" href="javascript:void(0)">
+                      <input class="form-control" type = "button" value="양식다운"/>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <form action="/pjmng/DGU521/PostReport" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <!-- 파일업로드 -->
+                    <input class="form-control" name="FinalReportFile" id="inputFinalReportFile" type="file" >
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" name="ReportSubmission" id="SubmitFinalReport" type="submit" value="제출">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-10">
+                    <h4>멘토링보고서 수정/삭제</h4>
+                  </div>
+                  <div class = "col-md-2">
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <form action="/pjmng/DGU521/DeleteReport" method="post"  enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <!-- 보고서 목록 -->
+                    <div class = "form-row">
+                      <div class="col-md-4\">
+                      </div>
+                      <div class="col-md-8">
+                        <% var id1 = FinalLists[4][0].ment_report_std.split('/') %>
+                        <% var id2 = id1[id1.length - 1].length %>
+                        <% var id3 = id1[id1.length - 1].substr(14,id2) %>
+                        <a onclick="abilityDownload2('<%= FinalLists[0][0].fin_report %>');" href="javascript:void(0)">
+                          <%= id3 %>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" name="ReportDeletion" id="submitReportDeletion" type="submit" value="삭제">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } %>
+          
+          <!-- 최종보고서 -->
           <% if(FinalLists[0][0].fin_report == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
               <div class="card-header">
@@ -60,7 +195,7 @@
                     </a><div style="DISPLAY: none">
                       <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].fin_agmt%></textarea>
                     </div>
-                    <input style=";" type="checkbox" name="RegisterReportCheck" id="UseReportCheck" value="true"/> 약관에 동의합니다
+                    <input style="" type="checkbox" name="RegisterReportCheck" id="UseReportCheck" value="true"/> 약관에 동의합니다
                   </div>
                   <div class="form-group">
                     <input class="form-control" name="ReportSubmission" id="SubmitFinalReport" type="submit" value="제출">
@@ -538,6 +673,92 @@
               </div>
             </div>
         <%} else { %>
+          <!-- 수행계획서 -->
+          <% if(FinalLists[3][0].prj_plan_report == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-12">
+                    <h4>수행계획서</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h7>제출정보가 없습니다.</h7>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-12">
+                    <h4>수행계획서</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <!-- 보고서 목록 -->
+                  <div class = "form-row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8">
+                      <% var id1 = FinalLists[3][0].prj_plan_report.split('/') %>
+                      <% var id2 = id1[id1.length - 1].length %>
+                      <% var id3 = id1[id1.length - 1].substr(14,id2) %>
+                      <a onclick="abilityDownload2('<%= FinalLists[3][0].prj_plan_report %>');" href="javascript:void(0)">
+                        <%= id3 %>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+
+          <!-- 멘토링보고서 -->
+          <% if(FinalLists[4][0].ment_report_std == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-12">
+                    <h4>멘토링보고서</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h7>제출정보가 없습니다.</h7>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-12">
+                    <h4>멘토링보고서</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <!-- 보고서 목록 -->
+                  <div class = "form-row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8">
+                      <% var id1 = FinalLists[4][0].ment_report_std.split('/') %>
+                      <% var id2 = id1[id1.length - 1].length %>
+                      <% var id3 = id1[id1.length - 1].substr(14,id2) %>
+                      <a onclick="abilityDownload2('<%= FinalLists[4][0].ment_report_std %>');" href="javascript:void(0)">
+                        <%= id3 %>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+
           <% if(FinalLists[0][0].fin_report == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
               <div class="card-header">

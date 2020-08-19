@@ -2057,11 +2057,25 @@ exports.getFinalReport = (req, res) => {
   } else {
     logger.putLog(req);
   }
+  // 최종보고서
   var query = "select f.*,t.* from final_product as f, team as t";
   query +=
     " where f.prj_id = '" + req.params.PJId + "' and t.team_id = f.team_id; ";
   query += "select * from apdx_file_info where use_yn = 1;";
   query += "select * from agmt where use_yn = 1;";
+  //수행계획서
+  query +=
+  " select prj_plan_report from project_plan_report where prj_id = '" +
+  req.params.PJId +
+  "';";
+  // 멘토링 보고서
+    query +=
+      "select m.* from mentoring_report as m";
+    query +=
+      " where m.prj_id = '" +
+      req.params.PJId +
+      "'";
+    query += " order by m.sub_date;";
 
   mysqlPool.pool.getConnection((err, connection) => {
     if (err) {
@@ -2072,6 +2086,8 @@ exports.getFinalReport = (req, res) => {
 
     connection.query(query, (error, results, fields) => {
       connection.release();
+
+      console.log(results);
 
       if (error) {
         //throw error;
