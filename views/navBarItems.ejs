@@ -204,6 +204,14 @@
           <span class="nav-link-text">프로젝트 운영</span>
         </a>
         <ul class="sidenav-second-level collapse" id="accordion5">
+          <li>
+            <a href="/pjmng/DGU522">보고서 제출</a>
+          </li>
+          <% if(userInfo.userType == 'admin') { %>
+            <li>
+              <a href="/pjmng/DGU532">총괄</a>
+            </li>
+            <% } %>
           <% if(userInfo.userType == 'instructor') { %>
           <li>
             <a href="/pjmng/DGU500">내 수업</a>
@@ -212,16 +220,8 @@
           <li>
             <a href="/pjmng/DGU502">수행계획서</a>
           </li>
-          <% if(userInfo.userType == 'admin') { %>
           <li>
-            <a href="/pjmng/DGU532">프로젝트 제출사항</a>
-          </li>
-          <% } %>
-          <li>
-            <a href="/pjmng/DGU512">멘토링 보고서</a>
-          </li>
-          <li>
-            <a href="/pjmng/DGU522">결과물 등록</a>
+            <a href="/pjmng/DGU512">멘토링보고서</a>
           </li>
         </ul>
       </li>

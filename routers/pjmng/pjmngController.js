@@ -2071,7 +2071,7 @@ exports.getFinalReport = (req, res) => {
   " select prj_plan_report from project_plan_report where prj_id = '" +
   projectId +
   "';";
-  // 멘토링 보고서
+  // 멘토링보고서
   query += "select m.* from mentoring_report as m";
   query += " where m.prj_id = '" + projectId + "'";
   query += " order by m.sub_date;";
