@@ -51,6 +51,19 @@
             <a id="btnExport" href="#" download="" style="margin-left: 92%;">
               <input type="button" class="btn btn-primary" value="Excel 다운" />
             </a>
+
+            <div class="card-body">
+                <div class="form-group">
+                  <select class="form-control" id="selectDevelopment" name="selectDevelopment" >
+                    <option value = "0">=== 개발분야 ===</option>
+                    <% for(let i = 0; i < Options1.length; i++) { %>
+                    <option value="<%= Options1[i].settings_id %>"><%= Options1[i].prj_year %> - <%= Options1[i].prj_semes %> - <%= Options1[i].term_chk %></option>
+                    <% } %>
+                  </select>
+                </div>
+                <button onclick=onSubmitSearchForm()>제출</button>
+            </div>
+            
             <hr />
 
             <div class="table-responsive">
@@ -187,17 +200,9 @@
         });
       });
 
-      function showLeaderInfo(name, major, phoennum, email) {
-        alert(
-          "이름 : " +
-            name +
-            "\n전공 : " +
-            major +
-            "\n전화번호 : " +
-            phoennum +
-            "\n메일 : " +
-            email
-        );
+      function onSubmitSearchForm() {
+        selected =  $("#selectDevelopment option:selected").val();
+        console.log($("#selectDevelopment option:selected").val())
       }
     </script>
   </body>

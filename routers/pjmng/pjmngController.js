@@ -503,8 +503,7 @@ exports.getSearchproject3 = (req, res) => {
     "select p.prj_id, a.prj_year, a.prj_semes, a.term_chk, p.prj_name, f.*,t.*, pp.prj_plan_report from final_product as f, team as t, project_plan_report as pp, project as p, admin_settings as a";
   query +=
     " where t.team_id = f.team_id and pp.team_id = t.team_id and t.use_yn = 1 and t.prj_id = p.prj_id and a.settings_id = p.settings_id;";
-    // query+= "select ci.class_name, a.prj_year, a.prj_semes from admin_settings as a, class_info as ci where a.settings_id = p.settings_id and ci.settings_id = p.settings_id"
-
+  query += "select a.settings_id, a.prj_year, a.prj_semes, a.term_chk from admin_settings as a where a.use_yn=1;"
 
   mysqlPool.pool.getConnection((err, connection) => {
     if (err) {
@@ -516,7 +515,7 @@ exports.getSearchproject3 = (req, res) => {
     connection.query(query, (error, results, fields) => {
       connection.release();
 
-      console.log(results[0]);
+      console.log(results[1]);
 
       if (error) {
         //throw error;
@@ -526,7 +525,8 @@ exports.getSearchproject3 = (req, res) => {
 
       //use results and fields
       res.render("pjmng/DGU532", {
-        FinalLists: results,
+        FinalLists: results[0],
+        Options1: results[1],
         userInfo: req.session.userInfo,
       });
     });
