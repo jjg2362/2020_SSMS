@@ -2180,8 +2180,6 @@ exports.postFinalLists = (req, res) => {
 
     var query = "";
 
-    console.log(req)
-
     if (req.params.formType == "PostReport") {
       query +=
         "update final_product set fin_report = '" +
@@ -2235,17 +2233,17 @@ exports.postFinalLists = (req, res) => {
       );
       query +=
         "update final_product set manual = '" +
-        req.files["ManualFile"][0].path +
+        req.files["Manual"][0].path +
         "',";
       if (req.body.RegisterManualCheck == "true") {
-        query += " manual_agrmnt = 1 ";
+        query += " manual_agrmt = 1 ";
       } else {
-        query += " manual_agrmnt = 0 ";
+        query += " manual_agrmt = 0 ";
       }
       query += " where prj_id = '" + req.body.PJId + "'";
     } else if (req.params.formType == "DeleteManualFile") {
       query += "update final_product";
-      query += " set manual = null and manual_agrmnt = null";
+      query += " set manual = null and manual_agrmt = null";
       query += " where prj_id = '" + req.body.PJId + "'";
     }
     if (req.params.formType == "PostVideo") {
