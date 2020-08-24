@@ -229,7 +229,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <input class="form-control" name="ReportDeletion" id="submitReportDeletion" type="submit" value="삭제">
                   </div>
@@ -242,7 +241,7 @@
               <div class="card-header">
                 <div class = "form-row">
                   <div class = "col-md-10">
-                    <h4>사용자메뉴얼 및 소스파일 등록</h4>
+                    <h4>소스파일 등록</h4>
                   </div>
                   <div class = "col-md-2">
                     <a onclick="abilityDownload2('<%= FinalLists[1][0].user_manual %>');" href="javascript:void(0)">
@@ -250,7 +249,6 @@
                     </a>
                   </div>
                 </div>
-                <h7>사용자메뉴얼 및 소스파일 업로드시 압축 파일(zip)로 묶어서 올리세요! </h7>
               </div>
               <div class="card-body">
                 <form action="/pjmng/DGU521/PostProduct" method="post" enctype="multipart/form-data">
@@ -264,9 +262,9 @@
                     <a onclick="this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';" href="javascript:void(0)">
                     정보이용동의약관
                     </a><div style="DISPLAY: none">
-                      <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].manual_agmt%></textarea>
+                      <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].product_agmt%></textarea>
                     </div>
-                    <input style=";" type="checkbox" name="RegisterProductCheck" id="UseProductCheck" value="true"/> 약관에 동의합니다
+                    <input style="" type="checkbox" name="RegisterProductCheck" id="UseProductCheck" value="true"/> 약관에 동의합니다
                   </div>
                   <div class="form-group">
                     <input class="form-control" name="ProductSubmission" id="SubmitProductFile" type="submit" value="제출">
@@ -303,10 +301,79 @@
               </div>
             </div>
           <% } %>
+          
+          <!-- 매뉴얼 -->
+          <% if(FinalLists[0][0].manual == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <div class = "form-row">
+                  <div class = "col-md-10">
+                    <h4>사용자메뉴얼</h4>
+                  </div>
+                  <div class = "col-md-2">
+                    <a onclick="abilityDownload2('<%= FinalLists[1][0].user_manual %>');" href="javascript:void(0)">
+                      <input class="form-control" type = "button" value="양식다운"/>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <form action="/pjmng/DGU521/PostManual" method="post" enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+
+                  <div class="form-group">
+                    <!-- 파일업로드 -->
+                    <input class="form-control" name="ManualFile" id="inputManualFile" type="file" >
+                  </div>
+                  <div class="form-group">
+                    <a onclick="this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';" href="javascript:void(0)">
+                    정보이용동의약관
+                    </a><div style="DISPLAY: none">
+                      <textarea class="form-control" name="content" id="content" type="text" rows = "6" readonly><%=FinalLists[2][0].manual_agmt%></textarea>
+                    </div>
+                    <input style="" type="checkbox" name="RegisterManualCheck" id="UseManualCheck" value="true"/> 약관에 동의합니다
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" name="ManualSubmission" id="SubmitManualFile" type="submit" value="제출">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header"><h4>파일 수정/삭제</h4></div>
+              <div class="card-body">
+                <form action="/pjmng/DGU521/DeleteManualFile" method="post"  enctype="multipart/form-data">
+                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <div class="form-group">
+                    <!-- 보고서 목록 -->
+                    <div class = "form-row">
+                      <div class="col-md-4\">
+                      </div>
+                      <div class="col-md-8">
+                        <% var id4 = FinalLists[0][0].product1.split('/') %>
+                        <% var id5 = id4[id4.length - 1].length %>
+                        <% var id6 = id4[id4.length - 1].substr(14,id5) %>
+                        <a onclick="abilityDownload2('<%= FinalLists[0][0].manual %>');" href="javascript:void(0)">
+                          <%= id6 %>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="ManualFileDeletion" id="submitManualDeletion" type="submit" value="삭제">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <% } %>
+
           <% if(FinalLists[0][0].demo_vid == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
               <div class="card-header">
                 <h4>결과발표회 동영상</h4>
+                <span>200Mb 이하의 파일만 업로드 해주세요.</span>
               </div>
               <div class="card-body">
                 <form action="/pjmng/DGU521/PostVideo" method="post" enctype="multipart/form-data">
@@ -331,7 +398,10 @@
             </div>
           <% } else { %>
             <div class="card card-register mx-auto mt-5 mb-5">
-              <div class="card-header"><h4>결과발표회 동영상</h4></div>
+              <div class="card-header">
+                <h4>결과발표회 동영상</h4>
+                <span>200Mb 이하의 파일만 업로드 해주세요.</span>
+              </div>
               <div class="card-body">
 
                 <form action="/pjmng/DGU521/DeleteVideo" method="post"  enctype="multipart/form-data">
@@ -800,7 +870,7 @@
           <% if(FinalLists[0][0].product1 == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
               <div class="card-header">
-                <h4>사용자메뉴얼 및 소스파일</h4>
+                <h4>소스파일</h4>
               </div>
               <div class="card-body">
                 <h7>제출정보가 없습니다.</h7>
@@ -809,7 +879,7 @@
           <% } else { %>
             <div class="card card-register mx-auto mt-5 mb-5">
               <div class="card-header">
-                <h4>사용자메뉴얼 및 소스파일</h4>
+                <h4>소스파일</h4>
               </div>
               <div class="card-body">
                 <div class="form-group">
@@ -830,10 +900,11 @@
               </div>
             </div>
           <% } %>
-          <% if(FinalLists[0][0].demo_vid == null) { %>
+          <!-- 매뉴얼 -->
+          <% if(FinalLists[0][0].manual == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
               <div class="card-header">
-                <h4>결과발표회 동영상</h4>
+                <h4>사용자메뉴얼</h4>
               </div>
               <div class="card-body">
                 <h7>제출정보가 없습니다.</h7>
@@ -841,7 +912,45 @@
             </div>
           <% } else { %>
             <div class="card card-register mx-auto mt-5 mb-5">
-              <div class="card-header"><h4>결과발표회 동영상</h4></div>
+              <div class="card-header">
+                <h4>사용자메뉴얼</h4>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <!-- 보고서 목록 -->
+                  <div class = "form-row">
+                    <div class="col-md-4\">
+                    </div>
+                    <div class="col-md-8">
+                      <% var id4 = FinalLists[0][0].product1.split('/') %>
+                      <% var id5 = id4[id4.length - 1].length %>
+                      <% var id6 = id4[id4.length - 1].substr(14,id5) %>
+                      <a onclick="abilityDownload2('<%= FinalLists[0][0].product1 %>');" href="javascript:void(0)">
+                        <%= id6 %>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+
+          <% if(FinalLists[0][0].demo_vid == null) { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <h4>결과발표회 동영상</h4>
+                <span>200Mb 이하의 파일만 업로드 해주세요.</span>
+              </div>
+              <div class="card-body">
+                <h7>제출정보가 없습니다.</h7>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="card card-register mx-auto mt-5 mb-5">
+              <div class="card-header">
+                <h4>결과발표회 동영상</h4>
+                <span>200Mb 이하의 파일만 업로드 해주세요.</span>
+              </div>
               <div class="card-body">
                 <div class="form-group">
                   <div class = "form-row">

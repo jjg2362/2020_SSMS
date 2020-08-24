@@ -499,11 +499,6 @@ exports.getSearchproject3 = (req, res) => {
   } else {
     logger.putLog(req);
   }
-  var query =
-    "select p.prj_id, a.prj_year, a.prj_semes, a.term_chk, p.prj_name, f.*,t.*, pp.prj_plan_report from final_product as f, team as t, project_plan_report as pp, project as p, admin_settings as a";
-  query +=
-    " where t.team_id = f.team_id and pp.team_id = t.team_id and t.use_yn = 1 and t.prj_id = p.prj_id and a.settings_id = p.settings_id;";
-  query += "select a.settings_id, a.prj_year, a.prj_semes, a.term_chk from admin_settings as a where a.use_yn=1;"
 
   mysqlPool.pool.getConnection((err, connection) => {
     if (err) {
@@ -511,25 +506,68 @@ exports.getSearchproject3 = (req, res) => {
       console.error("getConnection err : " + err);
       return;
     }
+  var query =
+    "select p.prj_id, a.prj_year, a.prj_semes, a.term_chk, p.prj_name, f.*,t.*, pp.prj_plan_report from final_product as f, team as t, project_plan_report as pp, project as p, admin_settings as a";
+  query +=
+    " where t.team_id = f.team_id and pp.team_id = t.team_id and t.use_yn = 1 and t.prj_id = p.prj_id and a.settings_id = p.settings_id;";
+  query += "select a.settings_id, a.prj_year, a.prj_semes, a.term_chk from admin_settings as a where a.use_yn=1;"
 
-    connection.query(query, (error, results, fields) => {
-      connection.release();
+  connection.query(query, (error, results, fields) => {
+    connection.release();
 
-      console.log(results[1]);
+    if (error) {
+      //throw error;
+      console.error("query error : " + error);
+      return;
+    }
 
-      if (error) {
-        //throw error;
-        console.error("query error : " + error);
-        return;
-      }
-
-      //use results and fields
-      res.render("pjmng/DGU532", {
-        FinalLists: results[0],
-        Options1: results[1],
-        userInfo: req.session.userInfo,
-      });
+    //use results and fields
+    res.render("pjmng/DGU532", {
+      FinalLists: results[0],
+      Options1: results[1],
+      userInfo: req.session.userInfo,
     });
+  });
+  });
+};
+
+exports.postSearchproject3 = (req, res) => {
+  if (!req.session.userId) {
+    console.log("do not have a session.");
+    res.redirect("/");
+    return;
+  } else {
+    logger.putLog(req);
+  }
+
+  mysqlPool.pool.getConnection((err, connection) => {
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
+      return;
+    }
+  var query =
+    "select p.prj_id, a.prj_year, a.prj_semes, a.term_chk, p.prj_name, f.*,t.*, pp.prj_plan_report from final_product as f, team as t, project_plan_report as pp, project as p, admin_settings as a";
+  query +=
+    " where t.team_id = f.team_id and pp.team_id = t.team_id and t.use_yn = 1 and t.prj_id = p.prj_id and a.settings_id = p.settings_id;";
+  query += "select a.settings_id, a.prj_year, a.prj_semes, a.term_chk from admin_settings as a where a.use_yn=1;"
+
+  connection.query(query, (error, results, fields) => {
+    connection.release();
+
+    if (error) {
+      //throw error;
+      console.error("query error : " + error);
+      return;
+    }
+
+    //use results and fields
+    res.render("pjmng/DGU532", {
+      FinalLists: results[0],
+      Options1: results[1],
+      userInfo: req.session.userInfo,
+    });
+  });
   });
 };
 
@@ -2120,6 +2158,7 @@ exports.postFinalLists = (req, res) => {
       "VideoFile",
       "PatentFile",
       "ProgramFile",
+      "ManualFile",
       "ThesisFile",
       "Other1File",
       "Other2File",
@@ -2185,6 +2224,30 @@ exports.postFinalLists = (req, res) => {
       query += " set product1 = null and product1_agrmnt = null";
       query += " where prj_id = '" + req.body.PJId + "'";
     }
+
+    if (req.params.formType == "PostManual") {
+      console.log(
+        "submit Manual: " +
+          req.files["ManualFile"][0].path +
+          ", id: " +
+          req.session.userId
+      );
+      query +=
+        "update final_product set manual = '" +
+        req.files["ManualFile"][0].path +
+        "',";
+      if (req.body.RegisterManualCheck == "true") {
+        query += " manual_agrmnt = 1 ";
+      } else {
+        query += " manual_agrmnt = 0 ";
+      }
+      query += " where prj_id = '" + req.body.PJId + "'";
+    } else if (req.params.formType == "DeleteManualFile") {
+      query += "update final_product";
+      query += " set manual = null and manual_agrmnt = null";
+      query += " where prj_id = '" + req.body.PJId + "'";
+    }
+
     if (req.params.formType == "PostVideo") {
       console.log(
         "submit Video File: " +
