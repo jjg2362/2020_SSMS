@@ -2233,7 +2233,7 @@ exports.postFinalLists = (req, res) => {
       );
       query +=
         "update final_product set manual = '" +
-        req.files["Manual"][0].path +
+        req.files["ManualFile"][0].path +
         "',";
       if (req.body.RegisterManualCheck == "true") {
         query += " manual_agrmt = 1 ";
