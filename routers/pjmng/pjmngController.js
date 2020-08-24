@@ -2180,6 +2180,8 @@ exports.postFinalLists = (req, res) => {
 
     var query = "";
 
+    console.log(req)
+
     if (req.params.formType == "PostReport") {
       query +=
         "update final_product set fin_report = '" +
@@ -2224,7 +2226,6 @@ exports.postFinalLists = (req, res) => {
       query += " set product1 = null and product1_agrmnt = null";
       query += " where prj_id = '" + req.body.PJId + "'";
     }
-
     if (req.params.formType == "PostManual") {
       console.log(
         "submit Manual: " +
@@ -2247,7 +2248,6 @@ exports.postFinalLists = (req, res) => {
       query += " set manual = null and manual_agrmnt = null";
       query += " where prj_id = '" + req.body.PJId + "'";
     }
-
     if (req.params.formType == "PostVideo") {
       console.log(
         "submit Video File: " +
