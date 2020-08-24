@@ -2423,6 +2423,10 @@ exports.postFinalLists = (req, res) => {
       final_product.prg_regis = req.files["ProgramFile"][0].path;
       console.log("file upload success.");
     }
+    if (req.files["ManualFile"] !== undefined) {
+      final_product.manual = req.files["ManualFile"][0].path;
+      console.log("file upload success.");
+    }
     if (req.files["ThesisFile"] !== undefined) {
       final_product.thesis_file = req.files["ThesisFile"][0].path;
       console.log("file upload success.");
