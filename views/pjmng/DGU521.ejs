@@ -49,14 +49,16 @@
                 </div>
               </div>
               <div class="card-body">
-                <form action="/pjmng/DGU521/PostReport" method="post" enctype="multipart/form-data">
+                <form action="/pjmng/DGU501/file/PostReport" method="post" enctype="multipart/form-data">
                   <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <input type = "hidden" value ="<%=FinalLists[0][0].team_id%> " name ="TEAMId" id = "TEAMId" />
+                  <input type = "hidden" value ="<%=FinalLists[0][0].mentor_id%> " name ="MENTORId" id = "MENTORId" />
                   <div class="form-group">
                     <!-- 파일업로드 -->
-                    <input class="form-control" name="FinalReportFile" id="inputFinalReportFile" type="file" >
+                    <input class="form-control" name="ProjectPlanFile" id="ProjectPlanFile" type="file" >
                   </div>
                   <div class="form-group">
-                    <input class="form-control" name="ReportSubmission" id="SubmitFinalReport" type="submit" value="제출">
+                    <input class="form-control" name="ReportSubmission" id="SubmitPlanReport" type="submit" value="제출">
                   </div>
                 </form>
               </div>
@@ -73,8 +75,10 @@
                 </div>
               </div>
               <div class="card-body">
-                <form action="/pjmng/DGU521/DeleteReport" method="post"  enctype="multipart/form-data">
+                <form action="/pjmng/DGU501/file/DeleteReport" method="post"  enctype="multipart/form-data">
                   <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
+                  <input type = "hidden" value ="<%=FinalLists[0][0].team_id%> " name ="TEAMId" id = "TEAMId" />
+                  <input type = "hidden" value ="<%=FinalLists[0][0].mentor_id%> " name ="MENTORId" id = "MENTORId" />
                   <div class="form-group">
                     <!-- 보고서 목록 -->
                     <div class = "form-row">
