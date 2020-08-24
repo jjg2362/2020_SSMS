@@ -98,6 +98,7 @@ exports.postprjplan = (req, res) => {
           req.files["ProjectPlanFile"][0].path;
         logger.putLogDetail(req, "Project Plan Report file upload success.");
       }
+      
       //get connection from pool
       mysqlPool.pool.getConnection((err, connection) => {
         if (err) {
@@ -122,7 +123,7 @@ exports.postprjplan = (req, res) => {
             }
 
             logger.putLogDetail(req, "Project Plan Report Submitted.");
-            var way = "/pjmng/DGU501/" + req.body.PJId;
+            var way = "/pjmng/DGU521/page/" + req.body.PJId;
             res.redirect(way);
           }
         );
@@ -155,7 +156,7 @@ exports.postprjplan = (req, res) => {
           }
 
           logger.putLogDetail(req, "Project Plan Report Deleted.");
-          var way = "/pjmng/DGU501/" + req.body.PJId;
+          var way = "/pjmng/DGU521/page/" + req.body.PJId;
           res.redirect(way);
         });
       });
