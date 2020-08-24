@@ -150,7 +150,7 @@
                         <% var id1 = FinalLists[4][0].ment_report_std.split('/') %>
                         <% var id2 = id1[id1.length - 1].length %>
                         <% var id3 = id1[id1.length - 1].substr(14,id2) %>
-                        <a onclick="abilityDownload2('<%= FinalLists[4][0].ment_report_std.split %>');" href="javascript:void(0)">
+                        <a onclick="abilityDownload2('<%= FinalLists[4][0].ment_report_std %>');" href="javascript:void(0)">
                           <%= id3 %>
                         </a>
                       </div>
@@ -274,7 +274,7 @@
             </div>
           <% } else { %>
             <div class="card card-register mx-auto mt-5 mb-5">
-              <div class="card-header"><h4>파일 수정/삭제</h4></div>
+              <div class="card-header"><h4>소스파일 수정/삭제</h4></div>
               <div class="card-body">
                 <form action="/pjmng/DGU521/DeleteProductFile" method="post"  enctype="multipart/form-data">
                   <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
@@ -341,7 +341,7 @@
             </div>
           <% } else { %>
             <div class="card card-register mx-auto mt-5 mb-5">
-              <div class="card-header"><h4>파일 수정/삭제</h4></div>
+              <div class="card-header"><h4>사용자메뉴얼 수정/삭제</h4></div>
               <div class="card-body">
                 <form action="/pjmng/DGU521/DeleteManualFile" method="post"  enctype="multipart/form-data">
                   <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
@@ -922,10 +922,10 @@
                     <div class="col-md-4\">
                     </div>
                     <div class="col-md-8">
-                      <% var id4 = FinalLists[0][0].product1.split('/') %>
+                      <% var id4 = FinalLists[0][0].manual.split('/') %>
                       <% var id5 = id4[id4.length - 1].length %>
                       <% var id6 = id4[id4.length - 1].substr(14,id5) %>
-                      <a onclick="abilityDownload2('<%= FinalLists[0][0].product1 %>');" href="javascript:void(0)">
+                      <a onclick="abilityDownload2('<%= FinalLists[0][0].manual %>');" href="javascript:void(0)">
                         <%= id6 %>
                       </a>
                     </div>
@@ -1172,6 +1172,7 @@
           let folderName = arr[arr.length - 2];
           let fileName = arr[arr.length - 1];
           let downloadPath = firstFolder + '/' + folderName + '/' + fileName;
+          console.log(downloadPath);
 
           location.href = "/fileDownload/" + downloadPath + "/test";
 
