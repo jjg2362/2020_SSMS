@@ -118,15 +118,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <!-- <form action="/pjmng/DGU521/PostReport" method="post" enctype="multipart/form-data">
-                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
-                  <div class="form-group">
-                    <input class="form-control" name="FinalReportFile" id="inputFinalReportFile" type="file" >
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" name="ReportSubmission" id="SubmitFinalReport" type="submit" value="제출">
-                  </div>
-                </form> -->
+                <h7>제출정보가 없습니다.</h7>
               </div>
             </div>
           <% } else { %>
@@ -190,26 +182,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- <form action="/pjmng/DGU521/DeleteReport" method="post"  enctype="multipart/form-data">
-                  <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
-                  <div class="form-group">
-                    <div class = "form-row">
-                      <div class="col-md-4\">
-                      </div>
-                      <div class="col-md-8">
-                        <% var id1 = FinalLists[4][0].ment_report_std.split('/') %>
-                        <% var id2 = id1[id1.length - 1].length %>
-                        <% var id3 = id1[id1.length - 1].substr(14,id2) %>
-                        <a onclick="abilityDownload2('<%= FinalLists[4][0].ment_report_std %>');" href="javascript:void(0)">
-                          <%= id3 %>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" name="ReportDeletion" id="submitReportDeletion" type="submit" value="삭제">
-                  </div>
-                </form> -->
               </div>
             </div>
           <% } %>
@@ -848,18 +820,40 @@
                 </div>
               </div>
               <div class="card-body">
-                <div class="form-group">
-                  <!-- 보고서 목록 -->
-                  <div class = "form-row">
-                    <div class="col-md-4">
-                    </div>
-                    <div class="col-md-8">
-                      <% var id1 = FinalLists[4][0].ment_report_std.split('/') %>
-                      <% var id2 = id1[id1.length - 1].length %>
-                      <% var id3 = id1[id1.length - 1].substr(14,id2) %>
-                      <a onclick="abilityDownload2('<%= FinalLists[4][0].ment_report_std %>');" href="javascript:void(0)">
-                        <%= id3 %>
-                      </a>
+                <div class="table-responsive">
+                  <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                    <div class="row">
+                      <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                       <thead>
+                         <tr role="row">
+                           <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending" style="width:10%;"><center>날짜</center></th>
+                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>보고서</center></th>
+                         </tr>
+                       </thead>
+                        <%if(FinalLists[4].length!=0) { %>
+                        <tbody>
+                          <% for(var i = 0; i < FinalLists[4].length; i++) {%>
+                            <tr role="row" class="odd" >
+                              <td class="sorting_1"><center><%= moment(FinalLists[4][i].meeting_date).format('YYYY-MM-DD') %></center></td>
+                              <td>
+                                  <div class = "form-row">
+                                    <div class ="col-md-2"></div>
+                                    <div class = "col-md-8"><center>
+                                      <% var d1 = FinalLists[4][i].ment_report_std.split('/') %>
+                                      <% var d2 = d1[d1.length - 1].length %>
+                                      <% var d3 = d1[d1.length - 1].substr(14,d2) %>
+                                      <a onclick="abilityDownload2('<%= FinalLists[4][i].ment_report_std %>');" href="javascript:void(0)">
+                                        <%= d3 %>
+                                      </a>
+                                      </center>
+                                    </div>
+                                  </div>
+                              </td>
+                            </tr>
+                          <% } %>
+                        </tbody>
+                        <% } %>
+                       </table>
                     </div>
                   </div>
                 </div>
