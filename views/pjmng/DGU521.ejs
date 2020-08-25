@@ -1,3 +1,4 @@
+  
 <!DOCTYPE html>
 <html>
   <head>
@@ -94,7 +95,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <input class="form-control" name="ReportDeletion" id="submitReportDeletion" type="submit" value="삭제">
                   </div>
@@ -102,7 +102,6 @@
               </div>
             </div>
           <% } %>
-
           <!-- 멘토링보고서 -->
           <% if(FinalLists[4][0] == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
@@ -112,23 +111,22 @@
                     <h4>멘토링보고서 등록</h4>
                   </div>
                   <div class = "col-md-2">
-                    <a onclick="abilityDownload2('<%= FinalLists[1][0].mtr_report_apdx %>');" href="javascript:void(0)">
-                      <input class="form-control" type = "button" value="양식다운"/>
+                    <a href="/pjmng/DGU513/<%=FinalLists[0][0].prj_id%>">
+                      <center><div class="form-control"> 추가 </div> </center>
                     </a>
                   </div>
                 </div>
               </div>
               <div class="card-body">
-                <form action="/pjmng/DGU521/PostReport" method="post" enctype="multipart/form-data">
+                <!-- <form action="/pjmng/DGU521/PostReport" method="post" enctype="multipart/form-data">
                   <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
                   <div class="form-group">
-                    <!-- 파일업로드 -->
                     <input class="form-control" name="FinalReportFile" id="inputFinalReportFile" type="file" >
                   </div>
                   <div class="form-group">
                     <input class="form-control" name="ReportSubmission" id="SubmitFinalReport" type="submit" value="제출">
                   </div>
-                </form>
+                </form> -->
               </div>
             </div>
           <% } else { %>
@@ -137,16 +135,64 @@
                 <div class = "form-row">
                   <div class = "col-md-10">
                     <h4>멘토링보고서 수정/삭제</h4>
-                  </div>
+                </div>
                   <div class = "col-md-2">
+                      <a href="/pjmng/DGU513/<%=FinalLists[0][0].prj_id%>">
+                        <center><div class="form-control"> 추가 </div> </center>
+                      </a>
                   </div>
                 </div>
               </div>
               <div class="card-body">
-                <form action="/pjmng/DGU521/DeleteReport" method="post"  enctype="multipart/form-data">
+                <div class="table-responsive">
+                  <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                    <div class="row">
+                      <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                       <thead>
+                         <tr role="row">
+                           <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending" style="width:10%;"><center>날짜</center></th>
+                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>보고서</center></th>
+                         </tr>
+                       </thead>
+                        <%if(FinalLists[4].length!=0) { %>
+                        <tbody>
+                          <% for(var i = 0; i < FinalLists[4].length; i++) {%>
+                            <tr role="row" class="odd" >
+                              <td class="sorting_1"><center><%= moment(FinalLists[4][i].meeting_date).format('YYYY-MM-DD') %></center></td>
+                              <td>
+                                  <div class = "form-row">
+                                    <div class ="col-md-2"></div>
+                                    <div class = "col-md-8"><center>
+                                      <% var d1 = FinalLists[4][i].ment_report_std.split('/') %>
+                                      <% var d2 = d1[d1.length - 1].length %>
+                                      <% var d3 = d1[d1.length - 1].substr(14,d2) %>
+                                      <a onclick="abilityDownload2('<%= FinalLists[4][i].ment_report_std %>');" href="javascript:void(0)">
+                                        <%= d3 %>
+                                      </a>
+                                      </center>
+                                    </div>
+                                    <div class = "col-md-2">
+                                      <% var id1 = "/pjmng/delete/DeleteReport"+(i+1) %>
+                                      <% var id2 = "MTDt"+(i+1) %>
+                                      <form action="<%=id1%>" method="post">
+                                        <input type = "hidden" value ="<%=FinalLists[4][0].prj_id%>" name ="PJId" id = "PJId" />
+                                        <input type = "hidden" value ="<%= moment(FinalLists[4][i].meeting_date).format('YYYY-MM-DD') %>" name ="<%=id2%>" id = "<%=id2%>" />
+                                        <input class="btn btn-link btn-primary" name="FileDeletion"+"<%=i+1%>" id="submitDeletion" type="submit" value="삭제"/>
+                                      </form>
+                                    </div>
+                                  </div>
+                              </td>
+                            </tr>
+                          <% } %>
+                        </tbody>
+                        <% } %>
+                       </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- <form action="/pjmng/DGU521/DeleteReport" method="post"  enctype="multipart/form-data">
                   <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
                   <div class="form-group">
-                    <!-- 보고서 목록 -->
                     <div class = "form-row">
                       <div class="col-md-4\">
                       </div>
@@ -163,7 +209,7 @@
                   <div class="form-group">
                     <input class="form-control" name="ReportDeletion" id="submitReportDeletion" type="submit" value="삭제">
                   </div>
-                </form>
+                </form> -->
               </div>
             </div>
           <% } %>
@@ -257,7 +303,6 @@
               <div class="card-body">
                 <form action="/pjmng/DGU521/PostProduct" method="post" enctype="multipart/form-data">
                   <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
-
                   <div class="form-group">
                     <!-- 파일업로드 -->
                     <input class="form-control" name="ProductFile" id="inputProductFile" type="file" >
@@ -297,7 +342,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <input class="form-control" name="ProductFileDeletion" id="submitProductDeletion" type="submit" value="삭제">
                   </div>
@@ -324,7 +368,6 @@
               <div class="card-body">
                 <form action="/pjmng/DGU521/PostManual" method="post" enctype="multipart/form-data">
                   <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
-
                   <div class="form-group">
                     <!-- 파일업로드 -->
                     <input class="form-control" name="ManualFile" id="inputManualFile" type="file" >
@@ -364,7 +407,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <input class="form-control" name="ManualFileDeletion" id="submitManualDeletion" type="submit" value="삭제">
                   </div>
@@ -372,7 +414,6 @@
               </div>
             </div>
           <% } %>
-
           <% if(FinalLists[0][0].demo_vid == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
               <div class="card-header">
@@ -407,7 +448,6 @@
                 <span>200Mb 이하의 파일만 업로드 해주세요.</span>
               </div>
               <div class="card-body">
-
                 <form action="/pjmng/DGU521/DeleteVideo" method="post"  enctype="multipart/form-data">
                   <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
                   <div class="form-group">
@@ -425,7 +465,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <input class="form-control" name="VideoFileDeletion" id="submitVideoDeletion" type="submit" value="삭제">
                   </div>
@@ -562,7 +601,6 @@
                   </div>
                 </form>
               <% } %>
-
               <% if(FinalLists[0][0].thesis_file == null||FinalLists[0][0].thesis_file == '') { %>
                 <form action="/pjmng/DGU521/PostThesis" method="post" enctype="multipart/form-data">
                   <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
@@ -786,7 +824,6 @@
               </div>
             </div>
           <% } %>
-
           <!-- 멘토링보고서 -->
           <% if(FinalLists[4][0] == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
@@ -829,7 +866,6 @@
               </div>
             </div>
           <% } %>
-
           <% if(FinalLists[0][0].fin_report == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
               <div class="card-header">
@@ -938,7 +974,6 @@
               </div>
             </div>
           <% } %>
-
           <% if(FinalLists[0][0].demo_vid == null) { %>
             <div class="card card-register mx-auto mt-5 mb-5">
               <div class="card-header">
@@ -1052,7 +1087,6 @@
                   </div>
                 </form>
               <% } %>
-
               <% if(FinalLists[0][0].thesis_file == null||FinalLists[0][0].thesis_file == '') { %>
                 <form action="/pjmng/DGU521/PostThesis" method="post" enctype="multipart/form-data">
                   <input type = "hidden" value ="<%=FinalLists[0][0].prj_id%> " name ="PJId" id = "PJId" />
@@ -1151,45 +1185,34 @@
               </div>
             </div>
         <% } %>
-
-
       <!-- include footer -->
       <% include ../footer.html %>
-
       <!-- 맨위로 가기 버튼 -->
       <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-angle-up"></i>
       </a>
     </div>
-
     <!-- Bootstrap core JavaScript-->
     <script type="text/javascript">
       // function abilityDownload2(fullPath) {
       //     var downloadPath = fullPath.substring(7);
       //     location.href = "/fileDownload/" + downloadPath + "/want";
       // }
-
       function abilityDownload2(fullPath) {
-
           let arr = fullPath.split('/');
           let firstFolder = arr[arr.length - 3];
           let folderName = arr[arr.length - 2];
           let fileName = arr[arr.length - 1];
           let downloadPath = firstFolder + '/' + folderName + '/' + fileName;
           console.log(downloadPath);
-
           location.href = "/fileDownload/" + downloadPath + "/test";
-
       }
     </script>
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <!-- Core plugin JavaScript-->
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin.min.js"></script>
   </body>
 </html>
-

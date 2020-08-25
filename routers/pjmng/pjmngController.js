@@ -2125,7 +2125,7 @@ exports.getFinalReport = (req, res) => {
     connection.query(query, (error, results, fields) => {
       connection.release();
 
-      console.log(results);
+      console.log(results[4]);
 
       if (error) {
         //throw error;
