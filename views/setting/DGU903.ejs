@@ -32,7 +32,6 @@
           <h6>과거 자료 관리 > 과거 자료 조회 > <%=PJList[5][0].prj_name%></h6>
         </div>
         <hr class="mt-2">
-<% console.log(PJList[5][0])%>
         <div class="card  mb-3 pt-3 pl-3 pr-3">
           <div class="card-body">
             <h5>  <%= PJList[5][0].prj_name %>  </h5>
@@ -62,7 +61,7 @@
                       <p style="width: 100%;"> <%= PJList[5][0].prj_pri_tech %> </p>
                       <br>
 
-                      <p style="width: 100%; color: #6c757d;">개발 목표 - 개발하고자 하는 시스템의 목표</p>
+                      <p style="width: 100%; color: #6c757d;">개발 목표 - 개발하고자 하는 시스템의 목표 </p>
                       <p style="width: 100%;"> <%= PJList[5][0].prj_goal %> </p>
                       <br>
 
@@ -207,7 +206,6 @@
                  <tr role="row">
                    <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending" style="width:10%;"><center>멘토링 날짜</center></th>
                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>학생 보고서</center></th>
-                   <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:35%;"><center>멘토 보고서</center></th>
                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width:10%;"><center>작성 멘토</center></th>
 
                  </tr>
@@ -228,21 +226,11 @@
                            <% var dd2 = dd1[2].length %>
                            <% var dd3 = dd1[2].substr(14,dd2) %>
                            <center><a onclick="abilityDownload2('<%= PJList[1][i].ment_report_std %>');" href="javascript:void(0)">
-                             <%= dd3 %>
+                             <%= dd1[5] %>
                            </a></center>
                          </div>
                        </div>
 
-                     </td>
-                     <td>
-                       <%if(PJList[1][i].ment_report_mtr!=''&&PJList[1][i].ment_report_mtr!=null) { %>
-                         <% var i1 = PJList[1][i].ment_report_mtr.split('/') %>
-                         <% var i2 = i1[2].length %>
-                         <% var i3 = i1[2].substr(14,i2) %>
-                         <center><a onclick="abilityDownload2('<%= PJList[1][i].ment_report_mtr %>');" href="javascript:void(0)">
-                           <%= i3 %>
-                         </a></center>
-                       <% } %>
                      </td>
                      <td><center><%=PJList[1][i].mentor_id%></center></td>
                    </tr>
