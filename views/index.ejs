@@ -106,28 +106,28 @@
             <div class="cycle-slideshow" data-cycle-fx=scrollHorz data-cycle-timeout=3000     data-cycle-speed="2000"  data-cycle-pause-on-hover = "true">
               <div class="cycle-pager"></div>
 
-              <% if (NoticePJImgList[2][0].image1 != null) { %>
-                <%var a = ''+NoticePJImgList[2][0].image1 ;%>
+              <% if (NoticePJImgList[0].image1 != null) { %>
+                <%var a = ''+NoticePJImgList[0].image1 ;%>
                 <% var b = a.substring(6,a.length); %>
                 <img src = "<%= b %>">
               <%}%>
-              <% if (NoticePJImgList[2][0].image2 != null) { %>
-                <%var a = ''+NoticePJImgList[2][0].image2 ;%>
+              <% if (NoticePJImgList[0].image2 != null) { %>
+                <%var a = ''+NoticePJImgList[0].image2 ;%>
                 <% var b = a.substring(6,a.length); %>
                 <img src = "<%= b %>">
               <%}%>
-              <% if (NoticePJImgList[2][0].image3 != null) { %>
-                <%var a = ''+NoticePJImgList[2][0].image3 ;%>
+              <% if (NoticePJImgList[0].image3 != null) { %>
+                <%var a = ''+NoticePJImgList[0].image3 ;%>
                 <% var b = a.substring(6,a.length); %>
                 <img src = "<%= b %>">
               <%}%>
-              <% if (NoticePJImgList[2][0].image4 != null) { %>
-                <%var a = ''+NoticePJImgList[2][0].image4 ;%>
+              <% if (NoticePJImgList[0].image4 != null) { %>
+                <%var a = ''+NoticePJImgList[0].image4 ;%>
                 <% var b = a.substring(6,a.length); %>
                 <img src = "<%= b %>">
               <%}%>
-              <% if (NoticePJImgList[2][0].image5 != null) { %>
-                <%var a = ''+NoticePJImgList[2][0].image5 ;%>
+              <% if (NoticePJImgList[0].image5 != null) { %>
+                <%var a = ''+NoticePJImgList[0].image5 ;%>
                 <% var b = a.substring(6,a.length); %>
                 <img src = "<%= b %>">
               <%}%>
@@ -142,21 +142,20 @@
                 </div>
             </div>
             <hr class="my-0">
-            <% for(var i = 0; i < NoticePJImgList[0].length; i++) { %>
-
+            <% for(var i = 0; i < NoticePost.length; i++) { %>
               <div class="card-body py-2 mt-1">
                 <div class="form-row">
                   <div class="col-md-10" style="width: 100%;">
                      <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined') { %>
-                      <h6 class="card-title mb-1" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="/msgbrd/show/<%= NoticePJImgList[0][i].posting_id %>"> <%= NoticePJImgList[0][i].posting_title %> </a>
+                      <h6 class="card-title mb-1" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="/msgbrd/show/<%= NoticePost[i].posting_id %>"> <%= NoticePost[i].posting_title %> </a>
  
-                        <%if(moment(curDate).diff(moment(NoticePJImgList[0][i].post_date).format('YYYY-MM-DD'),"days")<=7) {%>
+                        <%if(moment(curDate).diff(moment(NoticePost[i].post_date).format('YYYY-MM-DD'),"days")<=7) {%>
                         <img src="/image/icon_new.gif"/>
                         <% } %>
                         </h6>
                      <% } else { %>
-                      <h6 class="card-title mb-1" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="/mbrmgt/DGU121"> <%= NoticePJImgList[0][i].posting_title %>
-                        <%if(moment(curDate).diff(moment(NoticePJImgList[0][i].post_date).format('YYYY-MM-DD'),"days")<=7){ %>
+                      <h6 class="card-title mb-1" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="/mbrmgt/DGU121"> <%= NoticePost[i].posting_title %>
+                        <%if(moment(curDate).diff(moment(NoticePost[i].post_date).format('YYYY-MM-DD'),"days")<=7){ %>
                         <img src="/image/icon_new.gif"/>
                       <% } %>
                     </a></h6>
@@ -165,7 +164,7 @@
                   </div>
 
                   <div class="col-md-2" style="text-align:right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                     <%= moment(NoticePJImgList[0][i].post_date).format('YYYY-MM-DD') %>
+                     <%= moment(NoticePost[i].post_date).format('YYYY-MM-DD') %>
                   </div>
 
                 </div>
@@ -186,13 +185,13 @@
             <hr class="my-0">
 
               <div class="card-body py-2 mt-1 small">
-            <% for(var i = 0; i < (NoticePJImgList[3].length); i++) { %>
+            <% for(var i = 0; i < (ProjectCounter.length); i++) { %>
               <div class="form-group" style="margin-bottom: 0.5rem;">
                 <div class="form-row">
                 <div class="col-md-6">
                   <div style="display: flex; width: 100%;">
-                      <span style="flex: 0 0 80%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">&nbsp;<%= NoticePJImgList[3][i].prj_year %> <%= NoticePJImgList[3][i].prj_semes %> <%= NoticePJImgList[3][i].term_chk %></span>
-                      <span style="flex: 1; display: block;"><%= NoticePJImgList[3][i].count %> 개</span>
+                      <span style="flex: 0 0 80%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">&nbsp;<%= ProjectCounter[i].prj_year %> <%= ProjectCounter[i].prj_semes %> <%= ProjectCounter[i].term_chk %></span>
+                      <span style="flex: 1; display: block;"><%= ProjectCounter[i].count %> 개</span>
                   </div>
                 </div>
                 </div>
@@ -211,12 +210,12 @@
         <% var apply = new Array(); %>
         <% var sta_sort = new Array() ;%>
 
-        <% for(var i = 0; i < NoticePJImgList[1].length; i++) { %>
-          <% if(moment(curDate).format('YYYY-MM-DD') >= moment(NoticePJImgList[1][i].cls_date).format('YYYY-MM-DD')) { %>
+        <% for(var i = 0; i < ProjectList.length; i++) { %>
+          <% if(moment(curDate).format('YYYY-MM-DD') >= moment(ProjectList[i].cls_date).format('YYYY-MM-DD')) { %>
               <% comple.push(i) ; %>
-          <% } else if(NoticePJImgList[1][i].team_id) { %>
+          <% } else if(ProjectList[i].team_id) { %>
               <% ing.push(i) ; %>
-          <% } else if(!NoticePJImgList[1][i].team_id){ %>
+          <% } else if(!ProjectList[i].team_id){ %>
                <% apply.push(i) ; %>
                <% sta_sort=apply ; %>
           <% } %>
@@ -239,22 +238,22 @@
 
 
                      <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined') { %>
-                     <h6 class="card-title mb-1"  style="width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><a href="/pj/<%= NoticePJImgList[1][sta_sort[i]].prj_id %>"> <%= NoticePJImgList[1][sta_sort[i]].prj_name %> </a></h6>
+                     <h6 class="card-title mb-1"  style="width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><a href="/pj/<%= ProjectList[sta_sort[i]].prj_id %>"> <%= ProjectList[sta_sort[i]].prj_name %> </a></h6>
                      <%} else{%>
-                       <h6 class="card-title mb-1"  style="width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><a href="/mbrmgt/DGU121"> <%= NoticePJImgList[1][sta_sort[i]].prj_name %></a> </h6>
+                       <h6 class="card-title mb-1"  style="width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><a href="/mbrmgt/DGU121"> <%= ProjectList[sta_sort[i]].prj_name %></a> </h6>
                        <%}%>
                      <p class="card-text small" style="width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
-                       <%= NoticePJImgList[1][sta_sort[i]].prj_content %>
+                       <%= ProjectList[sta_sort[i]].prj_content %>
                        <!-- <a href="#" style="float: right"> 상세 보기 </a> -->
                      </p>
                    </div>
 
                    <div class="col-sm-1">
-                     <% if(moment(curDate).format('YYYY-MM-DD') >= moment(NoticePJImgList[1][sta_sort[i]].cls_date).format('YYYY-MM-DD')) { %>
+                     <% if(moment(curDate).format('YYYY-MM-DD') >= moment(ProjectList[sta_sort[i]].cls_date).format('YYYY-MM-DD')) { %>
                           <img src="/image/t3.jpg" style="width: 55px; height: 55px;"/>
-                     <% } else if(NoticePJImgList[1][sta_sort[i]].team_id) { %>
+                     <% } else if(ProjectList[sta_sort[i]].team_id) { %>
                           <img src="/image/t2.jpg" style="width: 55px; height: 55px;"/>
-                     <% } else if(!NoticePJImgList[1][sta_sort[i]].team_id){ %>
+                     <% } else if(!ProjectList[sta_sort[i]].team_id){ %>
                           <img src="/image/t1.jpg" style="width: 55px; height: 55px;"/>
                      <% } %>
                    </div>
@@ -266,20 +265,20 @@
                  <div class="card-body py-2 small">
                    <div class="form-row">
                      <div class="col-md-10">
-                       회사 : &nbsp <%= NoticePJImgList[1][sta_sort[i]].company_name %>
+                       회사 : &nbsp <%= ProjectList[sta_sort[i]].company_name %>
                      </div>
 
                      <div class="col-md-10">
-                       멘토 : &nbsp <%= NoticePJImgList[1][sta_sort[i]].mentor_name %>
+                       멘토 : &nbsp <%= ProjectList[sta_sort[i]].mentor_name %>
                      </div>
                      <div class="col-md-10">
                        <div class="form-row">
-                         <p class="text-danger"> 1지망 :  <%= NoticePJImgList[1][sta_sort[i]].pc1 %> 팀 </p>
-                         <p>, 2지망 : <%= NoticePJImgList[1][sta_sort[i]].pc2 %> 팀, 3지망 : <%= NoticePJImgList[1][sta_sort[i]].pc3 %> 팀</p>
+                         <p class="text-danger"> 1지망 :  <%= ProjectList[sta_sort[i]].pc1 %> 팀 </p>
+                         <p>, 2지망 : <%= ProjectList[sta_sort[i]].pc2 %> 팀, 3지망 : <%= ProjectList[sta_sort[i]].pc3 %> 팀</p>
                        </div>
                      </div>
                      <div class="col-md-10">
-                       <%= NoticePJImgList[1][sta_sort[i]].term_chk %>
+                       <%= ProjectList[sta_sort[i]].term_chk %>
                      </div>
                    </div>
                  </div>
@@ -289,20 +288,20 @@
 
 
                  <div class="card-body py-2 small">
-                   <% if(NoticePJImgList[1][i].keyword1 != null) { %>
-                        <a href="#"> #<%= NoticePJImgList[1][sta_sort[i]].keyword1 %> </a>
+                   <% if(ProjectList[i].keyword1 != null) { %>
+                        <a href="#"> #<%= ProjectList[sta_sort[i]].keyword1 %> </a>
                         &nbsp &nbsp
                    <% } %>
-                   <% if(NoticePJImgList[1][i].keyword2 != null) { %>
-                        <a href="#"> #<%= NoticePJImgList[1][sta_sort[i]].keyword2 %> </a>
+                   <% if(ProjectList[i].keyword2 != null) { %>
+                        <a href="#"> #<%= ProjectList[sta_sort[i]].keyword2 %> </a>
                         &nbsp &nbsp
                    <% } %>
-                   <% if(NoticePJImgList[1][i].keyword3 != null) { %>
-                        <a href="#"> #<%= NoticePJImgList[1][sta_sort[i]].keyword3 %> </a>
+                   <% if(ProjectList[i].keyword3 != null) { %>
+                        <a href="#"> #<%= ProjectList[sta_sort[i]].keyword3 %> </a>
                    <% } %>
                    &nbsp
-                   <% if(NoticePJImgList[1][i].recommended_Prof != null) { %>
-                    <p>추천교수 : <%= NoticePJImgList[1][sta_sort[i]].recommended_Prof %> </p>
+                   <% if(ProjectList[i].recommended_Prof != null) { %>
+                    <p>추천교수 : <%= ProjectList[sta_sort[i]].recommended_Prof %> </p>
                <% } %>
                &nbsp
                  </div>

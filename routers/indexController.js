@@ -64,7 +64,10 @@ exports.showIndexPage = (req, res) => {
       // console.log('PJList has been loaded.');
 
       res.render("index", {
-        NoticePJImgList: results,
+        NoticePost: results[0],
+        ProjectList: results[1],
+        NoticePJImgList: results[2],
+        ProjectCounter: results[3],
         userInfo: req.session.userInfo,
         moment: moment,
         curDate: new Date()

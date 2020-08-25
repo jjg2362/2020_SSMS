@@ -32,7 +32,7 @@ exports.getMakeproject = (req, res) => {
 
     query +=
       "select s.settings_id, s.prj_year, s.prj_semes, s.term_chk from admin_settings as s";
-    query += " where s.prj_year = '" + moment(Date()).format("YYYY") + "' ";
+    query += " where s.use_yn=1 and s.prj_year = '" + moment(Date()).format("YYYY") + "' " ;
     query += " order by s.settings_id desc ; ";
 
     query += "select topic_sgst_apdx from apdx_file_info; ";
