@@ -1239,7 +1239,7 @@ exports.postMentoringReport3 = (req, res) => {
         }
 
         logger.putLogDetail(req, "Mentoring Report Deleted.");
-        var way = "/pjmng/DGU511/" + req.body.PJId;
+        var way = "/pjmng/DGU521/page/" + req.body.PJId;
         res.redirect(way);
       });
     });
@@ -1424,7 +1424,7 @@ exports.postMentoringReport3 = (req, res) => {
         }
 
         logger.putLogDetail(req, "Mentoring Report Updated.");
-        var way = "/pjmng/DGU511/" + req.body.PJId;
+        var way = "/pjmng/DGU521/page/" + req.body.PJId;
         res.redirect(way);
       });
     });
