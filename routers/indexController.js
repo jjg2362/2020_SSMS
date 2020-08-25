@@ -25,7 +25,7 @@ exports.showIndexPage = (req, res) => {
     query +=
       "select p.prj_id, IFNULL(pc1.pj1,0) as pc1, IFNULL(pc2.pj2,0) as pc2, IFNULL(pc3.pj3,0) as pc3, ";
     query +=
-      "p.prj_name, p.prj_content, p.cls_date, p.start_date, p.keyword1, p.keyword2, p.keyword3, p.recommended_Prof, m.mentor_name, m.company_name,team_pj.team_name as team_id,";
+      "p.prj_name, p.prj_content, ads.cls_date, ads.strt_date, p.keyword1, p.keyword2, p.keyword3, p.recommended_Prof, m.mentor_name, m.company_name,team_pj.team_name as team_id,";
     query +=
       'p.settings_id, CONCAT(ads.prj_year," ",ads.prj_semes," ", ads.term_chk)as term_chk from project as p ';
     query +=
@@ -50,6 +50,7 @@ exports.showIndexPage = (req, res) => {
     query += "select * from main_notice; ";
     query +=
       "SELECT ads.term_chk, ads.prj_year, ads.prj_semes, COUNT(ads.settings_id) as count from admin_settings as ads LEFT OUTER JOIN project on ads.settings_id=project.settings_id WHERE project.use_yn=1 GROUP BY ads.settings_id;";
+    // s.prj_year = '" + moment(Date()).format("YYYY") + "' "
 
     connection.query(query, null, (error, results, fields) => {
       connection.release();

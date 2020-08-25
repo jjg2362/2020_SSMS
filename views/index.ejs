@@ -211,7 +211,10 @@
         <% var sta_sort = new Array() ;%>
 
         <% for(var i = 0; i < ProjectList.length; i++) { %>
-          <% if(moment(curDate).format('YYYY-MM-DD') >= moment(ProjectList[i].cls_date).format('YYYY-MM-DD')) { %>
+          <% if(moment(curDate).diff(moment(ProjectList[i].strt_date).format('YYYY-MM-DD'),"months") >= 4 && !ProjectList[i].team_id) { %>
+            <% continue; %>
+          <% } %>
+          <% if((moment(curDate).format('YYYY-MM-DD') >= moment(ProjectList[i].cls_date).format('YYYY-MM-DD'))) { %>
               <% comple.push(i) ; %>
           <% } else if(ProjectList[i].team_id) { %>
               <% ing.push(i) ; %>
@@ -233,10 +236,7 @@
           <% for(var i = 0; i < sta_sort.length; i++) { %>
                <div class="_card mb-3">
                  <div class="_card-body row">
-
                    <div class="col-sm-10">
-
-
                      <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined') { %>
                      <h6 class="card-title mb-1"  style="width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><a href="/pj/<%= ProjectList[sta_sort[i]].prj_id %>"> <%= ProjectList[sta_sort[i]].prj_name %> </a></h6>
                      <%} else{%>
