@@ -35,7 +35,7 @@ router.route("/DGU522").get(controller.getSearchproject2);
 
 router.route("/DGU532/")
   .get(controller.getSearchproject3)
-  .post(controller.postSearchproject3);
+  .post(controller.postSearchprojectWithOptions);
 
 router
   .route("/DGU521/page/:PJId")

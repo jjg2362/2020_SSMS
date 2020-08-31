@@ -53,15 +53,23 @@
             </a>
 
             <div class="card-body">
+              <form action="/pjmng/DGU532" method="get"  enctype="multipart/form-data">
                 <div class="form-group">
-                  <select class="form-control" id="selectDevelopment" name="selectDevelopment" >
-                    <option value = "0">=== 개발분야 ===</option>
-                    <% for(let i = 0; i < Options1.length; i++) { %>
-                    <option value="<%= Options1[i].settings_id %>"><%= Options1[i].prj_year %> - <%= Options1[i].prj_semes %> - <%= Options1[i].term_chk %></option>
-                    <% } %>
-                  </select>
+                  <!-- 보고서 목록 -->
+                  <div class = "form-row">
+                    <div class="col-md-4">
+                      <select class="form-control" id="SettingId" name="SettingId" >
+                        <option value = "0">=== 분류 ===</option>
+                        <% for(let i = 0; i < Options1.length; i++) { %>
+                        <option value="<%= Options1[i].settings_id %>"><%= Options1[i].prj_year %> - <%= Options1[i].prj_semes %> - <%= Options1[i].term_chk %></option>
+                        <% } %>
+                      </select>
+                    </div>
                 </div>
-                <button onclick=onSubmitSearchForm()>제출</button>
+                <div class="form-group">
+                  <button>제출</button>
+                </div>
+              </form>
             </div>
             
             <hr />

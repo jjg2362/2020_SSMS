@@ -507,11 +507,15 @@ exports.getSearchproject3 = (req, res) => {
       console.error("getConnection err : " + err);
       return;
     }
-  var query =
-    "select p.prj_id, a.prj_year, a.prj_semes, a.term_chk, p.prj_name, f.*,t.*, pp.prj_plan_report from final_product as f, team as t, project_plan_report as pp, project as p, admin_settings as a";
-  query +=
-    " where t.team_id = f.team_id and pp.team_id = t.team_id and t.use_yn = 1 and t.prj_id = p.prj_id and a.settings_id = p.settings_id;";
-  query += "select a.settings_id, a.prj_year, a.prj_semes, a.term_chk from admin_settings as a where a.use_yn=1;"
+    var query =
+      "select p.prj_id, a.prj_year, a.prj_semes, a.term_chk, p.prj_name, f.*,t.*, pp.prj_plan_report from final_product as f, team as t, project_plan_report as pp, project as p, admin_settings as a";
+    query += " where t.team_id = f.team_id and pp.team_id = t.team_id and t.prj_id = p.prj_id and a.settings_id = p.settings_id";
+    if(req.query.SettingId && req.query.SettingId != 0){
+      query += " and p.settings_id = " + req.query.SettingId;
+    }
+    query += ";";
+
+    query += "select ads.settings_id, ads.prj_year, ads.prj_semes, ads.term_chk from admin_settings as ads order by ads.prj_year, ads.prj_semes, ads.term_chk;;"
 
   connection.query(query, (error, results, fields) => {
     connection.release();
@@ -532,7 +536,7 @@ exports.getSearchproject3 = (req, res) => {
   });
 };
 
-exports.postSearchproject3 = (req, res) => {
+exports.postSearchprojectWithOptions = (req, res) => {
   if (!req.session.userId) {
     console.log("do not have a session.");
     res.redirect("/");
