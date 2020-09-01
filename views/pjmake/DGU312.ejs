@@ -214,14 +214,17 @@
     <script src="/js/sb-admin-datatables.min.js"></script>
 
     <script type="text/javascript">
-    function abilityDownload2(fullPath) {
-        var downloadPath = fullPath.substring(7);
-        location.href = "/fileDownload/" + downloadPath + "/want";
-      }
-
     function abilityDownload(fullPath) {
-      var downloadPath = fullPath.substring(7);
+      let arr = fullPath.split('/');
+      let firstFolder = arr[arr.length - 3];
+      let folderName = arr[arr.length - 2];
+      let fileName = arr[arr.length - 1];
+      let downloadPath = firstFolder + '/' + folderName + '/' + fileName;
+      console.log(arr);
       location.href = "/fileDownload/" + downloadPath;
+
+      // var downloadPath = fullPath.substring(7);
+      // location.href = "/fileDownload/" + downloadPath;
     }
     function CheckRemove(){
       if (confirm ("프로젝트를 정말 삭제하시겠습니까?")==true){
