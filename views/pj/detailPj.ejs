@@ -99,13 +99,21 @@
                         <div class="col-md-6">
                           <p style="width: 100%; color: #6c757d;">주제 제안 파일 </p>
                           <p style="width: 50%;"></p>
-                          <div class="btn btn-primary btn-link" style="width: 100%" onclick="abilityDownload('<%= pjInfo[0][0].appendix %>');" > 주제 제안 자료 다운 </div>
+                          <% if (pjInfo[0][0].appendix){ %>
+                            <div class="btn btn-primary" style="width: 100%" onclick="abilityDownload('<%= pjInfo[0][0].appendix %>');" > 주제 제안 자료 다운 </div>
+                          <% } else { %>
+                            <div class="btn btn btn-secondary" aria-pressed="false" style="width: 100%");" > 주제 제안 자료 없음 </div>
+                          <% } %>
                         </div>
         
                         <div class="col-md-6">
                           <p style="width: 100%; color: #6c757d;">주제 제안 동영상 </p>
-                      <p style="width: 50%;"></p>
-                        <div class="btn btn-primary btn-link" style="width: 100%" onclick="abilityDownload('<%= pjInfo[0][0].appendix_video %>');" > 주제 제안 동영상 다운 </div>
+                          <p style="width: 50%;"></p>
+                          <% if (pjInfo[0][0].appendix_video){ %>
+                            <div class="btn btn-primary" style="width: 100%" onclick="abilityDownload('<%= pjInfo[0][0].appendix_video %>');" > 주제 제안 동영상 다운 </div>
+                          <% } else { %>
+                            <div class="btn btn btn-secondary" aria-pressed="false" style="width: 100%");" > 주제 제안 동영상 없음 </div>
+                          <% } %>
                         </div>
                       </div>
                     </div>
@@ -190,8 +198,12 @@
 
     <script type="text/javascript">
       function abilityDownload(fullPath) {
-        var downloadPath = fullPath.substring(7);
-        location.href = "/fileDownload/" + downloadPath;
+        let arr = fullPath.split('/');
+        let firstFolder = arr[arr.length - 3];
+        let folderName = arr[arr.length - 2];
+        let fileName = arr[arr.length - 1];
+        let downloadPath = firstFolder + '/' + folderName + '/' + fileName;
+        location.href = "/fileDownload/" + downloadPath + "/test";
       }
     </script>
   </body>
