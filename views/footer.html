@@ -12,12 +12,15 @@
   /* 화면의 영역이 작아 푸터의 위치가 화면 내로 올라올 경우 푸터의 위치를 최하단으로 고정 */
   var scrollHeight = window.outerHeight;
   var footer = document.getElementById("footer");
+  var rootHeight = document.getElementById("page-top").offsetHeight;
   var footerHeight = footer.offsetHeight;
-  var footerTop = footer.offsetTop;
 
-  if (footerTop < scrollHeight - footerHeight) {
+  console.log(scrollHeight - rootHeight);
+  console.log(footerHeight);
+
+  if (scrollHeight - rootHeight > footerHeight) {
      footer.style.position = "fixed";
      footer.style.bottom = 0;
      footer.style.left = 0;
-  }
+    }
 </script>
