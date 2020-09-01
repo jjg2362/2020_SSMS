@@ -11,13 +11,13 @@ var logger = require('../../middlewares/logger.js')
 
 exports.getPostingListPage = (req, res) => {
   //session check
-  if(!req.session.userId) {
-    console.log('do not have a session.');
-    res.redirect('/');
-    return;
-  }else{
-      logger.putLog(req);
-  }
+  // if(!req.session.userId) {
+  //   console.log('do not have a session.');
+  //   res.redirect('/');
+  //   return;
+  // }else{
+  //     logger.putLog(req);
+  // }
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
@@ -45,13 +45,13 @@ exports.getPostingListPage = (req, res) => {
 
 exports.getShowPostingPage = (req, res) => {
 
-  if(!req.session.userId) {
-    console.log('do not have a session.');
-    res.redirect('/');
-    return;
-  }else{
-      logger.putLog(req);
-  }
+  // if(!req.session.userId) {
+  //   console.log('do not have a session.');
+  //   res.redirect('/');
+  //   return;
+  // }else{
+  //     logger.putLog(req);
+  // }
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {
     if(err) { //throw err;
@@ -189,7 +189,6 @@ exports.postEditPostings = (req, res) => {
 exports.getPostingPage = (req, res) => {
     logger.putLog(req);
   res.render('msgbrd/DGU702', {userId: req.session.userId, userType: req.session.userType, userInfo: req.session.userInfo, moment: moment});
-
 };
 
 exports.postPostingPage = (req, res) => {
@@ -293,13 +292,13 @@ exports.postDeletePosting = (req, res) =>{
 
 
 exports.getSample = (req,res)=>{
-  if(!req.session.userId) {
-    console.log('do not have a session.');
-    res.redirect('/');
-    return;
-  }else{
-    logger.putLog(req);
-  }
+  // if(!req.session.userId) {
+  //   console.log('do not have a session.');
+  //   res.redirect('/');
+  //   return;
+  // }else{
+  //   logger.putLog(req);
+  // }
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {

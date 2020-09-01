@@ -64,9 +64,9 @@ exports.getMakeproject = (req, res) => {
 exports.postMakeproject = (req, res) => {
   logger.putLog(req);
   var fileInfo = {
-    path: "public/mentorProjectFile/",
+    path: "/ssmsdata/mentorProjectFile/",
     namePrefix: "MENTORROJECTFILE_",
-    viewNames: ["inputProjectFile"]
+    viewNames: ["inputProjectFile","inputProjectVideo"]
   };
 
   fileUpload(fileInfo).multipartForm(req, res, err => {
@@ -83,10 +83,6 @@ exports.postMakeproject = (req, res) => {
     }
 
     var prjName = "";
-
-    if (req.body.preMat == "1") {
-      prjName = "[Pre-Matching] ";
-    }
 
     if (req.session.userType == "mentor") {
       var project = {
@@ -140,6 +136,10 @@ exports.postMakeproject = (req, res) => {
 
     if (req.files["inputProjectFile"] !== undefined) {
       project.appendix = req.files["inputProjectFile"][0].path;
+      logger.putLogDetail(req, "file upload success.");
+    }
+    if (req.files["inputProjectVideo"] !== undefined) {
+      project.appendix_video = req.files["inputProjectVideo"][0].path;
       logger.putLogDetail(req, "file upload success.");
     }
 

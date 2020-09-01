@@ -254,7 +254,6 @@ exports.getSearchproject1 = (req, res) => {
         console.error("query error : " + error);
         return;
       }
-      console.log(results);
       //use results and fields
       res.render("pjmng/DGU502", {
         PJList: results,

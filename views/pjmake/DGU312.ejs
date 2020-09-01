@@ -9,6 +9,7 @@
     <link rel="SHORTCUT ICON" href="\image\Dongguk.ico"/>
     <title>동국대학교 산학연계프로젝트</title>
 
+    <link rel="stylesheet" href="../css/reset.css">
     <!-- Bootstrap core CSS-->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -23,7 +24,7 @@
   </head>
 
   <!-- 메인 페이지 -->
-  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+  <body id="page-top">
     <!-- 네비게이션 바 불러오기 -->
     <% include ../navBar.ejs %>
 
@@ -94,10 +95,19 @@
                       <% } %>
                       <br>
 
-                      <p style="width: 100%; color: #6c757d;">주제 제안 파일 </p>
-                      <p style="width: 50%;"></p>
-                          <div class="btn btn-primary btn-link" style="width: 100%" onclick="abilityDownload2('<%= pjInfo[0].appendix %>');" href="javascript:void(0)" > 주제 제안 자료 다운 </div>
-                      <br>
+                      <div class="form-row">
+                        <div class="col-md-6">
+                          <p style="width: 100%; color: #6c757d;">주제 제안 파일 </p>
+                          <p style="width: 50%;"></p>
+                          <div class="btn btn-primary btn-link" style="width: 100%" onclick="abilityDownload('<%= pjInfo[0].appendix %>');" > 주제 제안 자료 다운 </div>
+                        </div>
+        
+                        <div class="col-md-6">
+                          <p style="width: 100%; color: #6c757d;">주제 제안 동영상 </p>
+                          <p style="width: 50%;"></p>
+                        <div class="btn btn-primary btn-link" style="width: 100%" onclick="abilityDownload('<%= pjInfo[0].appendix_video %>');" > 주제 제안 동영상 다운 </div>
+                        </div>
+                      </div>
                     </div>
                   </p>
                 </div>
@@ -176,14 +186,15 @@
         </div>
       </div>
 
-      <!-- include footer -->
-      <% include ../footer.html %>
+      
 
       <!-- 맨위로 가기 버튼 -->
-      <a class="scroll-to-top rounded" href="#page-top">
+      <!-- <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-angle-up"></i>
-      </a>
+      </a> -->
     </div>
+    <!-- include footer -->
+    <% include ../footer.html %>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

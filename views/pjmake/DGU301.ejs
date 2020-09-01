@@ -10,6 +10,7 @@
   <link rel="SHORTCUT ICON" href="\image\Dongguk.ico" />
   <title>동국대학교 산학연계프로젝트</title>
 
+  <link rel="stylesheet" href="../css/reset.css">
   <!-- Bootstrap core CSS-->
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -28,7 +29,7 @@
 
 <!-- 메인 페이지 -->
 
-<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<body id="page-top">
   <!-- 네비게이션 바 불러오기 -->
   <% include ../navBar.ejs %>
 
@@ -234,7 +235,15 @@
                   </div>
                 </div>
               </div>
-
+            </div>
+            <div class="form-group mt-4">
+              <label for="inputProjectVideo"> 주제 발표 동영상 업로드 &nbsp&nbsp </label><label style=" color: red"> * 파일명 -
+                '회사명_멘토이름' 으로 업로드 해주세요. </label>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <input class="form-control" name="inputProjectVideo" id="inputProjectVideo" type="file">
+                </div>
+              </div>
             </div>
 
             <%if(userType == 'admin') { %>
@@ -263,22 +272,27 @@
                 </div>
               </div>
             </div>
-
-
+            <div class="form-group mt-4">
+              <label for="inputProjectVideo"> 주제 발표 동영상 업로드 &nbsp&nbsp </label><label style=" color: red"> * 파일명 -
+                '회사명_멘토이름' 으로 업로드 해주세요. </label>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <input class="form-control" name="inputProjectVideo" id="inputProjectVideo" type="file">
+                </div>
+              </div>
+            </div>
           </form>
 
         </div>
       </div>
     </div>
-
-    <!-- include footer -->
-    <% include ../footer.html %>
-
     <!-- 맨위로 가기 버튼 -->
-    <a class="scroll-to-top rounded" href="#page-top">
+    <!-- <a class="scroll-to-top rounded" href="#page-top">
       <i class="fa fa-angle-up"></i>
-    </a>
+    </a> -->
   </div>
+  <!-- include footer -->
+  <% include ../footer.html %>
 
   <!-- Bootstrap core JavaScript-->
   <script src="/vendor/jquery/jquery.min.js"></script>
@@ -386,6 +400,7 @@
 
       var _internship_yn = document.getElementById("internship_yn").value;
       var _inputProjectFile = document.getElementById("inputProjectFile").value;
+      var _inputProjectVideo = document.getElementById("inputProjectVideo").value;
       var _inputMentor = document.getElementById("inputMentor").value;
       var _inputProf = document.getElementById("inputProf").value;
 
@@ -485,8 +500,11 @@
         document.getElementById("inputProjectFile").focus();
         return false;
       }
-      
-
+      if (_inputProjectVideo == '') {
+        alert("주제 발표 동영상을 선택하세요.");
+        document.getElementById("inputProjectVideo").focus();
+        return false;
+      }
 
 
 

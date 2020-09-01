@@ -20,7 +20,7 @@ exports.showIndexPage = (req, res) => {
 
     //use connection
     var query = "select posting_id, posting_title, post_date from msgbrd_info ";
-    query += "order by post_date desc limit 7;";
+    query += "order by post_date desc limit 10;";
 
     query +=
       "select p.prj_id, IFNULL(pc1.pj1,0) as pc1, IFNULL(pc2.pj2,0) as pc2, IFNULL(pc3.pj3,0) as pc3, ";
@@ -48,10 +48,9 @@ exports.showIndexPage = (req, res) => {
       "left outer join (select t.team_name,t.prj_id from team as t) as team_pj on team_pj.prj_id = p.prj_id where p.use_yn=1 group by p.prj_id order by ads.prj_year, ads.prj_semes, ads.term_chk; ";
 
     query += "select * from main_notice; ";
-    query +=
-      "SELECT ads.term_chk, ads.prj_year, ads.prj_semes, COUNT(ads.settings_id) as count from admin_settings as ads LEFT OUTER JOIN project on ads.settings_id=project.settings_id WHERE project.use_yn=1 GROUP BY ads.settings_id;";
+    // query +=
+    //   "SELECT ads.term_chk, ads.prj_year, ads.prj_semes, COUNT(ads.settings_id) as count from admin_settings as ads LEFT OUTER JOIN project on ads.settings_id=project.settings_id WHERE project.use_yn=1 GROUP BY ads.settings_id;";
     // s.prj_year = '" + moment(Date()).format("YYYY") + "' "
-
     connection.query(query, null, (error, results, fields) => {
       connection.release();
 
@@ -68,7 +67,7 @@ exports.showIndexPage = (req, res) => {
         NoticePost: results[0],
         ProjectList: results[1],
         NoticePJImgList: results[2],
-        ProjectCounter: results[3],
+        ReportSample: results[3],
         userInfo: req.session.userInfo,
         moment: moment,
         curDate: new Date()

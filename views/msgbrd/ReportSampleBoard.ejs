@@ -12,6 +12,7 @@
     <link rel="SHORTCUT ICON" href="\image\Dongguk.ico" />
     <title>동국대학교 산학연계프로젝트</title>
 
+    <link rel="stylesheet" href="../css/reset.css">
     <!-- Bootstrap core CSS-->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -27,7 +28,7 @@
   </head>
 
   <!-- 메인 페이지 -->
-  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+  <body id="page-top">
     <!-- 네비게이션 바 불러오기 -->
     <% include ../navBar.ejs %>
 
@@ -62,7 +63,7 @@
                 </a>
                 <% } %>
               </div>
-              <% if(userInfo.userType == 'admin') { %>
+              <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined' && userInfo.userType == 'admin') { %>
               <input
                 class="form-control"
                 name="PrjAply"
@@ -84,7 +85,7 @@
                 </a>
                 <% } %>
               </div>
-              <% if(userInfo.userType == 'admin') { %>
+              <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined' && userInfo.userType == 'admin') { %>
               <input
                 class="form-control"
                 name="TopicSgst"
@@ -106,7 +107,7 @@
                 </a>
                 <% } %>
               </div>
-              <% if(userInfo.userType == 'admin') { %>
+              <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined' && userInfo.userType == 'admin') { %>
               <input
                 class="form-control"
                 name="PrjPlan"
@@ -128,7 +129,7 @@
                 </a>
                 <% } %>
               </div>
-              <% if(userInfo.userType == 'admin') { %>
+              <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined' && userInfo.userType == 'admin') { %>
               <input
                 class="form-control"
                 name="MtrReport"
@@ -150,7 +151,7 @@
                 </a>
                 <% } %>
               </div>
-              <% if(userInfo.userType == 'admin') { %>
+              <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined' && userInfo.userType == 'admin') { %>
               <input
                 class="form-control"
                 name="FinReport"
@@ -172,7 +173,7 @@
                 </a>
                 <% } %>
               </div>
-              <% if(userInfo.userType == 'admin') { %>
+              <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined' && userInfo.userType == 'admin') { %>
               <input
                 class="form-control"
                 name="PatentDoc"
@@ -194,7 +195,7 @@
                 </a>
                 <% } %>
               </div>
-              <% if(userInfo.userType == 'admin') { %>
+              <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined' && userInfo.userType == 'admin') { %>
               <input
                 class="form-control"
                 name="PrgRegis"
@@ -216,7 +217,7 @@
                 </a>
                 <% } %>
               </div>
-              <% if(userInfo.userType == 'admin') { %>
+              <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined' && userInfo.userType == 'admin') { %>
               <input
                 class="form-control"
                 name="IvtAply"
@@ -238,7 +239,7 @@
                 </a>
                 <% } %>
               </div>
-              <% if(userInfo.userType == 'admin') { %>
+              <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined' && userInfo.userType == 'admin') { %>
               <input
                 class="form-control"
                 name="IvtAgrmt"
@@ -260,7 +261,7 @@
                 </a>
                 <% } %>
               </div>
-              <% if(userInfo.userType == 'admin') { %>
+              <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined' && userInfo.userType == 'admin') { %>
               <input
                 class="form-control"
                 name="Usermanul"
@@ -290,15 +291,13 @@
           </div>
         </div>
       </div>
-
-      <!-- include footer -->
-      <% include ../footer.html %>
-
       <!-- 맨위로 가기 버튼 -->
-      <a class="scroll-to-top rounded" href="#page-top">
+      <!-- <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-angle-up"></i>
-      </a>
+      </a> -->
     </div>
+    <!-- include footer -->
+    <% include ../footer.html %>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

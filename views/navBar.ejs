@@ -1,56 +1,282 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>동국대학교 산학연계프로젝트</title>
-  </head>
-
-  <body>
-    <!-- 네비게이션 바 -->
-    <nav
-      class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
-      id="mainNav"
-    >
+<!-- 네비게이션 바 -->
+<header id="header">
+   <div class="header clearfix">
       <!-- 네비게이션 상단 좌측 로고 -->
-      <a class="navbar-brand" href="/"
-        ><img src="\image\DGU2.png" />&nbsp 산학관리시스템</a
-      >
-      <a
-        class="navbar-youtube"
-        href="https://www.youtube.com/channel/UCPFMNy_S-9oM8P5o1qH2f_g"
-        target="_blank"
-        ><img src="\image\youtube.png"
-      /></a>
-
-      <a class="navbar-ebook" href="http://me2.do/FpVKxGof" target="_blank"
-        ><img src="\image\ebook.png"
-      /></a>
-
-      <!-- 작은 화면에서 상단 우측 메뉴 버튼 -->
-      <button
-        class="navbar-toggler navbar-toggler-right"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarResponsive"
-        aria-controls="navbarResponsive"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- 네비게이션 좌측 메뉴 div -->
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <!-- 네비게이션 좌측 메뉴 내용들 -->
-        <% include navBarItems.ejs %>
+      <div class="logo">
+         <a href="/"><img src="\image\logo_normal.png"/></a>
       </div>
-    </nav>
-  </body>
-</html>
+
+      <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined') { %>
+      <div id="mNav" onclick="ClickMobileNav()">
+         <div class="mNav">
+            <span></span>
+            <span></span>
+            <span></span>
+         </div>
+      </div>
+
+      <ul class="nav-left">
+         <!-- 회원관리 -->
+         <% if(userInfo.userType == 'admin') { %>
+         <li>
+            <span>회원관리</span>
+            <ul>
+               <li>
+                  <a href="/mbrmgt/DGU131">사용자 조회</a>
+               </li>
+            </ul>
+         </li>
+         <% } %>
+         <li>
+            <span>공지사항</span>
+            <ul>
+               <li>
+                  <a href="/msgbrd/DGU701">공지사항</a>
+               </li>
+               <li>
+                  <a href="/msgbrd/ReportSampleBoard">양식함</a>
+               </li>
+            </ul>
+         </li>
+         <!-- 프로젝트 개설 -->
+         <% if(userInfo.userType == 'admin' || userInfo.userType == 'mentor' ) { %>
+         <li>
+            <span>프로젝트 개설</span>
+            <ul>
+               <li>
+                  <a href="/pjmake/DGU301">계획서 작성</a>
+               </li>
+               <li>
+                  <a href="/pjmake/DGU311">계획서 관리</a>
+               </li>
+               <% if(userInfo.userType == 'admin') { %>
+               <li>
+                  <a href="/pjmake/DGU315/pjmentor">프로젝트 - 멘토 매칭/수정</a>
+               </li>
+               <% } %>
+            </ul>
+         </li>
+         <% } %>
+
+         <!-- 팀 관리 -->
+         <% if(userInfo.userType == 'admin' || userInfo.userType == 'mentor' || userInfo.userType == 'student' || userInfo.userType == 'instructor' || userInfo.userType == 'assistant') { %>
+         <li>
+            <span>팀 관리</span>
+            <ul>
+               <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined') { %> <% if(userInfo.userType == 'admin') { %>
+               <li>
+                  <a href="/teammgt/DGU231">팀 조회</a>
+               </li>
+               <li>
+                <a href="/teammgt/DGU232">팀 진행사항</a>
+              </li>    
+               <li>
+                  <a href="/teammgt/DGU271">프로젝트 조회</a>
+               </li>
+               <li>
+                  <a href="/teammgt/DGU261">팀 - 교과목 매칭</a>
+               </li>
+               <li>
+                  <a href="/teammgt/DGU241">팀 - 프로젝트 매칭</a>
+               </li>
+               <% } else if(userInfo.userType == 'instructor') { %>
+               <li>
+                  <a href="/teammgt/DGU281">팀 조회</a>
+               </li>
+               <% } else if(userInfo.userType == 'assistant') { %>
+               <li>
+                  <a href="/teammgt/DGU291">팀 조회</a>
+               </li>
+               <% } else if(userInfo.userType == 'student' || userInfo.userType == 'admin') { %>
+               <li>
+                  <a href="/teammgt/DGU201">팀 생성 </a>
+               </li>
+               <li>
+                  <a href="/teammgt/DGU211">나의 팀</a>
+               </li>
+
+               <% } else if(userInfo.userType == 'mentor' || userInfo.userType == 'admin') { %>
+               <li>
+                  <a href="/teammgt/DGU221">팀 선정</a>
+               </li>
+               <% } %> <% } %>
+            </ul>
+         </li>
+         <% } %>
+
+         <!-- 프로젝트 지원 -->
+         <% if(userInfo.userType == 'admin' || userInfo.userType == 'student' ) { %>
+         <li>
+            <span class="nav-link-text">프로젝트 관리</span>
+            <ul>
+               <li>
+                  <a href="/pjapply/DGU401">프로젝트 지원</a>
+               </li>
+               <li>
+                  <a href="/pjapply/DGU411">프로젝트 목록</a>
+               </li>
+            </ul>
+         </li>
+         <% } %>
+
+         <!-- 프로젝트 운영 -->
+         <li>
+            <span>프로젝트 운영</span>
+            <ul>
+               <% if(userInfo.userType == 'instructor') { %>
+               <li>
+                  <a href="/pjmng/DGU500">내 수업</a>
+               </li>
+               <% } %>
+               <% if(userInfo.userType == 'admin') { %>
+                <li>
+                  <a href="/pjmng/DGU532">총괄</a>
+                </li>
+                <% } %>
+               <li>
+                <a href="/pjmng/DGU522">보고서 제출</a>
+              </li>
+               <li>
+                  <a href="/pjmng/DGU502">수행계획서</a>
+               </li>
+               <li>
+                  <a href="/pjmng/DGU512">멘토링보고서</a>
+               </li>
+            </ul>
+         </li>
+         <!--평가-->
+         <% if(userInfo.userType == 'mentor' || userInfo.userType == 'student' || userInfo.userType == 'admin') { %>
+         <li>
+            <span>평가</span>
+            <ul>
+               <li>
+                  <a href="/eval/DGU601">만족도조사서</a>
+               </li>
+            </ul>
+         </li>
+         <% } %> 
+         <!-- <% if(userInfo.userType == 'mentor' || userInfo.userType == 'student'|| userInfo.userType == 'instructor') { %>
+         <li>
+            <span>팜</span>
+            <ul>
+               <li><a href="/parm/Notice">팜 공지</a></li>
+               <li><a href="/parm/JoinParm">내 팜들어가기</a></li>
+            </ul>
+         </li>
+         <% } %> -->
+         <li>
+            <span> 통계</span>
+            <ul>
+               <li><a href="/statistics/statistic">실적 조회</a></li>
+            </ul>
+         </li>
+
+         <% if(userInfo.userType == 'admin' && userInfo.userId == 'admin') { %>
+         <!-- <li>
+            <span> 팜</span>
+            <ul>
+               <li><a href="/parm/PARM101">팜 생성</a></li>
+               <li><a href="/parm/Notice">팜 공지</a></li>
+               <li><a href="/parm/PARM102">팜 자료 조회</a></li>
+            </ul>
+         </li> -->
+         <li>
+            <span> 설정</span>
+            <ul>
+               <li>
+                  <a href="/setting/semes_list">학기 일정 관리</a>
+               </li>
+               <li>
+                  <a href="/setting/class_list">개설 과목 관리</a>
+               </li>
+               <li>
+                  <a href="/setting/Agmt">약관 관리</a>
+               </li>
+               <li>
+                  <a href="/setting/surveylink">평가설문지 관리</a>
+               </li>
+               <li>
+                  <a href="/setting/ReportSample">양식 관리</a>
+               </li>
+               <li>
+                  <a href="/setting/MainNotice">공지 관리</a>
+               </li>
+            </ul>
+         </li>
+         <li>
+            <span> 과거 자료 관리</span>
+            <ul>
+               <li>
+                  <a href="/setting/DGU901">과거 자료 조회</a>
+               </li>
+               <li>
+                  <a href="/setting/DGU902">이관 작업</a>
+               </li>
+            </ul>
+         </li>
+         <% } %>
+      </ul>
+      <% } else { %>
+        <ul class="nav-left">
+          <!-- 회원관리 -->
+          <li>
+             <span>공지사항</span>
+             <ul>
+                <li>
+                   <a href="/msgbrd/DGU701">공지사항</a>
+                </li>
+                <li>
+                   <a href="/msgbrd/ReportSampleBoard">양식함</a>
+                </li>
+             </ul>
+          </li>
+        </ul>
+      <% } %>
+
+      <ul class="nav-right">
+         <% if(typeof userInfo == 'undefined' || typeof userInfo.userId == 'undefined') { %>
+         <li>
+            <a href="/mbrmgt/DGU101">
+               <i class="fa fa-user-plus" aria-hidden="true"></i>
+               <span class="ir_pm">회원가입</span>
+            </a>
+         </li>
+         <li>
+            <a href="/mbrmgt/DGU121">
+               <i class="fa fa-fw fa-sign-in"></i>
+               <span class="ir_pm">로그인</span>
+            </a>
+         </li>
+         <% } else { %>
+
+         <li>
+            <span>
+               <em>
+                  <%=userInfo.userName%> <% if(userInfo.userName == "") { %> - <% } %>
+               </em>
+               님
+            </span>
+         </li>
+         <li>
+            <a href="/mbrmgt/DGU111">
+               <i class="fa fa-user" aria-hidden="true"></i>
+               <span class="ir_pm">마이페이지</span>
+            </a>
+         </li>
+         <li>
+            <a href="/mbrmgt/DGU141">
+               <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
+               <span class="ir_pm">로그아웃</span>
+            </a>
+         </li>
+         <% } %>
+      </ul>
+   </div>
+</header>
+
+<script>
+   function ClickMobileNav() {
+      var mNav = document.getElementById("mNav");
+      mNav.classList.toggle("on");
+   }
+</script>

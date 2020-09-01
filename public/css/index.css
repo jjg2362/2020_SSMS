@@ -1,0 +1,218 @@
+#banner {
+    width: 100%;
+ }
+ #notice {
+    width: 100%;
+    background-color: #fcfcfc;
+ }
+ #project {
+    width: 100%;
+ }
+ 
+ /* 배너 영역 */
+ .banner {
+    background: url("../image/banner02.png") center top no-repeat;
+    background-size: cover;
+    height: 500px;
+ }
+ 
+ /* 공지 영역 */
+ .notice {
+    padding: 100px 0;
+ }
+ .notice > div {
+    position: relative;
+    float: left;
+    width: 46%;
+    margin: 0 2%;
+    padding: 17px;
+    box-sizing: border-box;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+ }
+ .notice > div h2 {
+    position: relative;
+    font-size: 18px;
+    font-weight: 500;
+    color: #444;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+ }
+ .notice > div h2:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #dbdbdb;
+ }
+ .notice > div a.icon {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    color: #eb9332;
+    font-size: 22px;
+ }
+ .notice > div .post li {
+    position: relative;
+    padding-left: 8px;
+    margin-bottom: 4px;
+ }
+ .notice > div .post li:last-child {
+    margin-bottom: 0;
+ }
+ .notice > div .post li:before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background-color: #444;
+ }
+ .notice > div .post li a {
+    display: block;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+ }
+ .notice > div .post li a:hover {
+    color: #007bff;
+ }
+ 
+ /* 프로젝트 영역 */
+ .project {
+    padding: 100px 0;
+ }
+ .project .title {
+    text-align: center;
+    font-size: 24px;
+    color: #444;
+    font-weight: 100;
+    text-transform: uppercase;
+ }
+ .card-group {
+    padding: 50px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+ }
+ .card-group .card-item {
+    position: relative;
+    flex: 0 0 auto;
+    width: 32%;
+    height: 350px;
+    padding: 20px;
+    margin-bottom: 42px;
+    box-shadow: 5px 5px 28px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    box-sizing: border-box;
+    -webkit-transition: all 250ms cubic-bezier(0.02, 0.01, 0.47, 1);
+    -moz-transition: all 250ms cubic-bezier(0.02, 0.01, 0.47, 1);
+    transition: 0.25s ease;
+ }
+ .card-group .card-item:hover {
+    transform: translate(0, -20px);
+ }
+ .card-group .card-item .card-body {
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+ }
+ .card-group .card-item .card-body:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+ }
+ .card-group .card-item .card-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 5px;
+ }
+ .card-group .card-item .card-title a {
+    transition: color 0.3s ease;
+ }
+ .card-group .card-item .card-title a:hover {
+    color: #007bff;
+ }
+ .card-group .card-item .card-text {
+    margin-left: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    max-height: 60px;
+ }
+ .card-group .card-item .choice em {
+    color: #dc3545;
+    font-size: 14px;
+ }
+ .card-group .card-item .keywords {
+    margin-bottom: 5px;
+ }
+ .card-group .card-item .keywords a {
+    color: #007bff;
+    font-size: 14px;
+ }
+ .card-group .card-item .card-icon {
+    position: absolute;
+    bottom: 17px;
+    right: 17px;
+ }
+ @media (max-width: 960px) {
+    .notice > div:nth-child(1) {
+       margin-bottom: 20px;
+    }
+    /* 프로젝트 */
+    .card-group .card-item {
+       width: 48%;
+    }
+ }
+ @media (max-width: 768px) {
+    /* 배너 영역 */
+    .banner {
+       height: 400px;
+    }
+ 
+    /* 공지 영역 */
+    .notice > div {
+       width: 100%;
+       margin: 0;
+    }
+ }
+ 
+ /* 사이클 */
+ /* .cycle-slideshow {width:100%}
+       .cycle-slideshow img {width : 100 %; height: auto}
+ .cycle-slideshow, .cycle-slideshow * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+       .cycle-slideshow { width: 100%; height : 500px ;  min-width: 100%; max-width: 100%; margin: 10px auto; padding: 0; position: relative;}
+       .cycle-slideshow div.slide { width: 100%; height: 100% }
+       .cycle-slideshow img {
+           
+           some of these styles will be set by the plugin (by default) but setting them here
+           helps avoid flash-of-unstyled-content
+           
+           position: absolute; top: 0; left: 0;
+           width: 100%; padding: 0; display: block; max-height: 500px;
+       }
+        in case script does not load 
+       .cycle-slideshow img:first-child {
+           position: static; z-index: 100;
+       }
+       .cycle-pager {
+           text-align: center; width: 100%; z-index: 500; position: absolute; top: 85%; overflow: hidden;
+       }
+       .cycle-pager span {
+           font-family: arial; font-size: 50px; width: 16px; height: 16px;
+           display: inline-block; color: #ddd; cursor: pointer;
+ }
+ .cycle-pager span.cycle-pager-active { color: #D69746;}
+ .cycle-pager > * { cursor: pointer;} */
