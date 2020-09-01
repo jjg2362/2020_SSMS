@@ -220,10 +220,11 @@
       let folderName = arr[arr.length - 2];
       let fileName = arr[arr.length - 1];
       let downloadPath = firstFolder + '/' + folderName + '/' + fileName;
-      console.log(arr);
-      location.href = "/fileDownload/" + downloadPath;
+      console.log(downloadPath);
+      location.href = "/fileDownload/" + downloadPath + "/test";
 
       // var downloadPath = fullPath.substring(7);
+      // console.log(downloadPath);
       // location.href = "/fileDownload/" + downloadPath;
     }
     function CheckRemove(){

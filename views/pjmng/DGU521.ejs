@@ -1196,12 +1196,13 @@
       //     location.href = "/fileDownload/" + downloadPath + "/want";
       // }
       function abilityDownload2(fullPath) {
+        console.log(fullPath);
+
           let arr = fullPath.split('/');
           let firstFolder = arr[arr.length - 3];
           let folderName = arr[arr.length - 2];
           let fileName = arr[arr.length - 1];
           let downloadPath = firstFolder + '/' + folderName + '/' + fileName;
-          console.log(downloadPath);
           location.href = "/fileDownload/" + downloadPath + "/test";
       }
     </script>
