@@ -248,7 +248,8 @@ function setCookieMobile ( name, value, expiredays ) {
 }
 function getCookieMobile () {
     var cookiedata = document.cookie;
-    if ( cookiedata.indexOf("todayCookier=done") < 0 ){
+    console.log(cookiedata);
+    if ( cookiedata.indexOf("todayCookie=done") < 0 ){
          $(".modal").show();
     }
     else {
