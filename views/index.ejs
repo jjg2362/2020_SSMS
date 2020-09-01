@@ -206,10 +206,15 @@
   <!-- 푸터 영역 -->
   <% include footer.html %>
 
+  <div class="modal">
+    아아아아아앙
+    <div class="btn_close">버튼</div>
+  </div>
+
   <!-- 맨위로 가기 버튼 -->
-  <a class="scroll-to-top rounded" href="#page-top">
+  <!-- <a class="scroll-to-top rounded" href="#page-top">
     <i class="fa fa-angle-up"></i>
-  </a> 
+  </a>  -->
   <!-- Bootstrap core JavaScript-->
 </body>
 <script src="../vendor/jquery/jquery.min.js"></script>
@@ -226,6 +231,30 @@
 <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
 
 <!-- Custom scripts for this page-->
-<script src="../js/sb-admin-datatables.min.js"></script>
-  
+<script src="../js/sb-admin-datatables.min.js"></script>  
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $(".modal .btn_close").click(function () {
+        setCookieMobile( "todayCookie", "done" , 1);
+        $(".modal").hide();
+    });
+});
+ 
+function setCookieMobile ( name, value, expiredays ) {
+    var todayDate = new Date();
+    todayDate.setDate( todayDate.getDate() + expiredays );
+    document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+}
+function getCookieMobile () {
+    var cookiedata = document.cookie;
+    if ( cookiedata.indexOf("todayCookier=done") < 0 ){
+         $(".modal").show();
+    }
+    else {
+        $(".modal").hide();
+    }
+}
+getCookieMobile();
+</script>
 </html>

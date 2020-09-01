@@ -6,7 +6,6 @@
          <a href="/"><img src="\image\logo_normal.png"/></a>
       </div>
 
-      <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined') { %>
       <div id="mNav" onclick="ClickMobileNav()">
          <div class="mNav">
             <span></span>
@@ -16,17 +15,6 @@
       </div>
 
       <ul class="nav-left">
-         <!-- 회원관리 -->
-         <% if(userInfo.userType == 'admin') { %>
-         <li>
-            <span>회원관리</span>
-            <ul>
-               <li>
-                  <a href="/mbrmgt/DGU131">사용자 조회</a>
-               </li>
-            </ul>
-         </li>
-         <% } %>
          <li>
             <span>공지사항</span>
             <ul>
@@ -38,6 +26,18 @@
                </li>
             </ul>
          </li>
+         <li>
+            <span>외부사이트</span>
+            <ul>
+               <li>
+                  <a href="https://www.youtube.com/channel/UCPFMNy_S-9oM8P5o1qH2f_g" target="_blank">유튜브</a>
+               </li>
+               <li>
+                  <a href="http://me2.do/FpVKxGof" target="_blank">2020 1학기 결과발표회</a>
+               </li>
+            </ul>
+         </li>
+      <% if(typeof userInfo != 'undefined' && typeof userInfo.userId != 'undefined') { %>
          <!-- 프로젝트 개설 -->
          <% if(userInfo.userType == 'admin' || userInfo.userType == 'mentor' ) { %>
          <li>
@@ -204,8 +204,11 @@
             </ul>
          </li>
          <li>
-            <span> 과거 자료 관리</span>
+            <span>자료 관리</span>
             <ul>
+               <li>
+                  <a href="/mbrmgt/DGU131">사용자 조회</a>
+               </li>
                <li>
                   <a href="/setting/DGU901">과거 자료 조회</a>
                </li>
@@ -215,23 +218,9 @@
             </ul>
          </li>
          <% } %>
+      <% }%>
       </ul>
-      <% } else { %>
-        <ul class="nav-left">
-          <!-- 회원관리 -->
-          <li>
-             <span>공지사항</span>
-             <ul>
-                <li>
-                   <a href="/msgbrd/DGU701">공지사항</a>
-                </li>
-                <li>
-                   <a href="/msgbrd/ReportSampleBoard">양식함</a>
-                </li>
-             </ul>
-          </li>
-        </ul>
-      <% } %>
+
 
       <ul class="nav-right">
          <% if(typeof userInfo == 'undefined' || typeof userInfo.userId == 'undefined') { %>
