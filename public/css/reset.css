@@ -54,6 +54,10 @@ table {
    line-height: 1.5;
 }
 
+button{
+   background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer
+}
+
 /* 폰트 스타일 초기화 */
 em,
 address {
@@ -96,20 +100,6 @@ img {
    max-width: 100%;
 }
 
-/* clearfix */
-.clearfix {
-   *zoom: 1;
-}
-.clearfix:before,
-.clearfix:after {
-   display: block;
-   content: "";
-   line-height: 0;
-}
-.clearfix:after {
-   clear: both;
-}
-
 /* IR 효과 */
 .ir_pm {
    display: block;
@@ -135,22 +125,8 @@ img {
    text-indent: -9999px;
 } /* 대체 텍스트가 아닌 접근성을 위한 숨김 텍스트를 제공할 때 */
 
-/* 아이콘 이미지 최적화 작업 */
-.icon {
-   background-image: url(../img/icon.png);
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 1.5dppx) {
-   .icon {
-      background-image: url(../img/icon@2.png);
-      background-size: 500px;
-   }
-}
-
 /* input style */
-input {
-   background-image: none;
-}
+input { background-image: none; }
 input[type="button"],
 input[type="reset"],
 input[type="text"],
@@ -170,83 +146,7 @@ input:checked[type="checkbox"] {
    -webkit-appearance: checkbox;
 }
 
-/* 셀렉트 메뉴 로그인 스타일 */
-.ui_select1 {
-   width: 100%;
-   background: #f8f8f8;
-   height: 24px;
-   border: 1px solid #d9d9d9;
-   padding: 0 2px;
-   border-radius: 5px;
-}
-/* 셀렉트 메뉴 메인 스타일 */
-.ui_select2 {
-   width: 100%;
-   box-sizing: border-box;
-   background: #2c2f34;
-   color: #fff;
-   display: inline-block;
-   height: 36px;
-   margin: 0;
-   padding: 0 10px;
-   vertical-align: middle;
-   text-align: left;
-   white-space: nowrap;
-   font-family: inherit;
-   font-size: inherit;
-   border: 0 none;
-   background: #2c2f34 url(../img/down.svg) no-repeat right 10px center;
-   background-size: 10px;
-   -webkit-appearance: none;
-   -moz-appearance: none;
-   appearance: none;
-}
-/* 로그인 텍스트 박스 스타일1 */
-.ui_input1 {
-   border: 1px solid #d9d9d9;
-   width: 200px;
-   height: 26px;
-   font-size: 13px;
-   text-indent: 14px;
-   background: #f8f8f8;
-   vertical-align: middle;
-}
-/* 로그인 텍스트 박스 스타일1 */
-.ui_input2 {
-   border: 1px solid #d9d9d9;
-   width: 100px;
-   height: 26px;
-   font-size: 13px;
-   text-indent: 14px;
-   background: #f8f8f8;
-   vertical-align: middle;
-}
-/* 메인 텍스트 박스 스타일1 */
-.ui_input3 {
-   background: #2c2f34;
-   color: #fff;
-   border: 0;
-   width: 100%;
-   height: 36px;
-   padding: 0 10px;
-}
-.ui_input4 {
-   border: 1px solid #1dc078;
-   width: 100px;
-   height: 36px;
-   font-size: 14px;
-   text-indent: 14px;
-   background: #fff;
-   vertical-align: middle;
-   padding: 0 5px;
-   border-radius: 5px;
-   box-sizing: border-box;
-}
 .form_inline .form_group {
    display: inline-block;
    vertical-align: middle;
-}
-
-.mt20 {
-   margin-top: 20px !important;
 }

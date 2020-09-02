@@ -203,18 +203,24 @@
   </section>
   <!-- //프로젝트 영역 -->
 
-  <!-- 푸터 영역 -->
-  <% include footer.html %>
-
-  <!-- <div class="modal">
-    아아아아아앙
-    <div class="btn_close">버튼</div>
-  </div> -->
-
   <!-- 맨위로 가기 버튼 -->
   <!-- <a class="scroll-to-top rounded" href="#page-top">
     <i class="fa fa-angle-up"></i>
   </a>  -->
+  <!-- 푸터 영역 -->
+  <% include footer.html %>
+
+  <div id="modal">
+    <div class="modal_footer">
+      <label for="today_check">오늘 하루 보지 않기</label>
+      <input type="checkbox" id="today_check" name="today_check" />
+      <button class="modal_btn_close">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="modal_header">
+    <img src="/image/modal.png"/>    
+  </div>
   <!-- Bootstrap core JavaScript-->
 </body>
 <script src="../vendor/jquery/jquery.min.js"></script>
@@ -235,9 +241,11 @@
 
 <script type="text/javascript">
   $(document).ready(function () {
-    $(".modal .btn_close").click(function () {
+    $("#modal .modal_btn_close").click(function () {
+      if($("input:checkbox[name='today_check']").is(":checked")){
         setCookieMobile( "todayCookie", "done" , 1);
-        $(".modal").hide();
+      }
+        $("#modal").hide();
     });
 });
  
@@ -250,10 +258,10 @@ function getCookieMobile () {
     var cookiedata = document.cookie;
     console.log(cookiedata);
     if ( cookiedata.indexOf("todayCookie=done") < 0 ){
-         $(".modal").show();
+         $("#modal").show();
     }
     else {
-        $(".modal").hide();
+        $("#modal").hide();
     }
 }
 getCookieMobile();
