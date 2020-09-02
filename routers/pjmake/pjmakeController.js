@@ -615,7 +615,6 @@ exports.getEditPj = (req, res) => {
       return;
     }
 
-    // console.log(query);
     connection.query(query, (error, results, fields) => {
       connection.release();
 
@@ -911,8 +910,6 @@ exports.postPjMentorMatching = (req, res) => {
   , amend_date = '${moment(Date()).format("YYYY-MM-DD hh:mm:ss")}'
   , amender = '${req.session.userId}'
   where prj_id = '${req.body.ProjectID}' ;`;
-
-  // console.log(query);
 
   //get connection from pool
   mysqlPool.pool.getConnection((err, connection) => {

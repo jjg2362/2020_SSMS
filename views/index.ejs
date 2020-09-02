@@ -256,7 +256,6 @@ function setCookieMobile ( name, value, expiredays ) {
 }
 function getCookieMobile () {
     var cookiedata = document.cookie;
-    console.log(cookiedata);
     if ( cookiedata.indexOf("todayCookie=done") < 0 ){
          $("#modal").show();
     }

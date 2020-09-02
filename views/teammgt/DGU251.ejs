@@ -162,7 +162,6 @@
       $(document).ready(function() {
 
         var url = window.location.search;
-        console.log("url:", url)
         if(url == "?param=1") {
           $("#selectTeamSearchType").val("1").prop("selected", true);
           $("#selectTeamInType").val("1").prop("selected", true);
@@ -170,8 +169,6 @@
           $("#selectTeamSearchType").val("2").prop("selected", true);
           $("#selectTeamInType").val("2").prop("selected", true);
         }
-
-        // console.log("selected value:", $("#selectTeamSearchType option:selected").val());
         getMemberOfMyInvitation()
 
         //팀원 찾기
@@ -197,8 +194,6 @@
                 $("#stdTable > tbody").empty();
                 $("#stdTable > tbody:last").append(str);
               } else {
-                console.log(result);
-
                 var str = "";
                 for(var key in result) {
                   str += "<tr>";
@@ -306,11 +301,7 @@
           cache: false,
           data: { classType: $("#selectTeamInType option:selected").val() },
           success: function(result) {
-            console.log(result)
-            console.log(result.length)
-
             //location.reload();
-
             var str = "";
             if(result.length == 0) {
               str += "<tr>";

@@ -1672,8 +1672,6 @@ exports.getEditPostings = (req, res) => {
 
     var query = "select * from parm_notice";
     query += " where posting_id = '" + req.body.PostingsId + "' ;";
-    console.log(query);
-
     connection.query(query, (error, results, fields) => {
       connection.release();
 
@@ -1737,8 +1735,6 @@ exports.postEditPostings = (req, res) => {
       var query = "update parm_notice ";
       query += " set ? ";
       query += " where posting_id = '"+req.body.PostingsId +"'; "
-
-      console.log(query);
 
       connection.query(query, postings, (error, results, fields) => {
         connection.release();

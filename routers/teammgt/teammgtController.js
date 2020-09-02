@@ -45,8 +45,6 @@ exports.getTeam = (req, res) => {
     "' and team_yn = 1 and use_yn = 1) ";
   query += "and team.settings_id = admin_settings.settings_id;";
 
-  console.log("지우자 getTeam:");
-  console.log(query);
   mysqlPool.pool.getConnection((err, connection) => {
     if (err) {
       //throw err;
@@ -64,7 +62,6 @@ exports.getTeam = (req, res) => {
       }
 
       //use results and fields
-      console.log(results);
       res.render("teammgt/DGU201", {
         myTeamName: results,
         userInfo: req.session.userInfo,
@@ -595,9 +592,7 @@ exports.getMyTeam = (req, res) => {
       }
       //use results and fields
       console.log("get My Team Info");
-      console.log(results);
       console.log("팀 타입 목록");
-      console.log(results[16]);
       res.render("teammgt/DGU211", {
         myTeamInfo: results,
         userInfo: req.session.userInfo,
@@ -810,7 +805,6 @@ exports.getMyInvitation = (req, res) => {
       }
 
       console.log("DGU211(나의 팀): 현재 사용자를 초대한 학생들(리더)의 정보");
-      console.log(results);
 
       res.send(results);
     });
@@ -874,8 +868,6 @@ exports.getMyTeamInfo = (req, res) => {
       console.log(
         "DGU211(나의 팀): 현재 사용자의 나의 팀 정보(팀명, 팀장, 팀원)"
       );
-      console.log(results);
-
       res.send(results);
     });
   });
@@ -917,8 +909,6 @@ exports.getMyResume = (req, res) => {
       }
 
       console.log("DGU211(나의 팀): 현재 사용자의 개인역량표");
-      console.log(results);
-
       res.send(results);
     });
   });

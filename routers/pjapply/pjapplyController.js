@@ -313,7 +313,6 @@ exports.postProjectCart = (req, res) => {
       query += ", amend_date ='" +moment(Date()).format('YYYY-MM-DD hh:mm:ss')+ "', amender = '" +req.session.userId+"' ";
       query +=  " where team_id = '" + req.body.TeamID +"'; ";
 
-      // console.log(query);
       //get connection from pool
       mysqlPool.pool.getConnection((err, connection) => {
         if(err) { //throw err;
@@ -395,7 +394,6 @@ exports.postCancelProjectCart = (req, res) => {
     }
     query += " amend_date ='" +moment(Date()).format('YYYY-MM-DD hh:mm:ss')+ "', amender = '" +req.session.userId+"' ";
     query +=  " where team_id = '" + req.body.teamID +"' ;";
-    // console.log(query);
 
     //get connection from pool
     mysqlPool.pool.getConnection((err, connection) => {

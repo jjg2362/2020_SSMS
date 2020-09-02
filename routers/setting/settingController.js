@@ -31,7 +31,6 @@ exports.downloadProjectFile = (req, res) => {
   }
 
   console.log("got dgu901 post");
-  console.log("\n\n");
 
   var prj_id = req.body["prj_id"];
   var query_temp = "(";
@@ -138,7 +137,6 @@ exports.downloadProjectFile = (req, res) => {
           }
         }
       }
-      console.log(topDirName);
       console.log(topDirName.substr(17));
       res.set("Content-type", "text/plain");
       zipFolder(topDirName, topDirName + ".zip", function (err) {
@@ -405,8 +403,6 @@ exports.getPastListPage = (req, res) => {
         console.error("query error : " + error);
         return;
       }
-
-      console.log(results[0]);
       //use results and fields
       res.render("setting/DGU901", {
         PastList: results,
@@ -1165,7 +1161,7 @@ exports.getEditClass = (req, res) => {
       //use results and fields
       if (results.length > 0) {
         console.log("lookup project success.");
-        console.log(results[4]);
+
         res.render("setting/EditClass", {
           ClassInfo: results,
           moment: moment,
