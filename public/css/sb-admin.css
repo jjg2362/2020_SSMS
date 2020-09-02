@@ -139,6 +139,7 @@ fieldset {
 .header .nav-left li ul li {
   display: block;
   min-width: 150px;
+  max-width: 200px;
   transition: background-color 0.3s ease;
 }
 .header .nav-left li ul li:hover {
