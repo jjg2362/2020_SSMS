@@ -58,6 +58,8 @@ button{
    background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer
 }
 
+
+
 /* 폰트 스타일 초기화 */
 em,
 address {
@@ -98,6 +100,20 @@ button {
 video,
 img {
    max-width: 100%;
+}
+
+/* clearfix */
+.clearfix {
+   *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+   display: block;
+   content: "";
+   line-height: 0;
+}
+.clearfix:after {
+   clear: both;
 }
 
 /* IR 효과 */
