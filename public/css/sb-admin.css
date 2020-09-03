@@ -224,9 +224,13 @@ legend.scheduler-border {
   font-size: 1rem;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
   .content-wrapper {
-     width: 100%;
+    width: 100%;
+ }
+
+  .header .nav-left > li {
+    font-size: 14px;
   }
 }
 
