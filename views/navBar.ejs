@@ -239,7 +239,7 @@
          <% } else { %>
 
          <li>
-            <span>
+            <span class="name_tag">
                <em>
                   <%=userInfo.userName%> <% if(userInfo.userName == "") { %> - <% } %>
                </em>
@@ -265,7 +265,9 @@
 
 <script>
    function ClickMobileNav() {
-      var mNav = document.getElementById("mNav");
-      mNav.classList.toggle("on");
+      let mNavElement = $("#mNav");
+      let navLeftElement = $('.header .nav-left');
+      mNavElement.toggleClass('on');
+      navLeftElement.toggle();
    }
 </script>

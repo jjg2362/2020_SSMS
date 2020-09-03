@@ -118,7 +118,7 @@ fieldset {
 .header .nav-left li ul {
   display: none;
   position: absolute;
-  top: 65px;
+  top: 55px;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.5);
@@ -240,39 +240,28 @@ legend.scheduler-border {
      transform: translateX(-50%);
   }
   .header .nav-left{
-    display: none;
-  }
-
-  /* .header .nav-left{
     position: fixed;
     top: 60px; left: 0;
     width: 100%; height: auto;
     background-color: rgba(0,0,0,0.5);
     z-index: 10;
-    opacity: 0;
-    display: none; 
+    display: none;
     transition: opacity 0.3s ease;
     padding-left: 0;
-}
-.header .nav-left li{
-  color: #fff;
-}
-
-.header .nav-left.active{opacity: 1; display: block;}
-.header .nav-left ul{display: flex;}
-.header .nav-left ul li{
-    flex:1;
-    text-align: center;
-    margin-left: 0;
-    border-right: 1px solid #dbdbdb;
-    box-sizing: border-box;
-}
-.header .nav-left ul li:last-child{border-right: 0;}
-.header .nav-left ul li ul{left: 0; top: 65px;}
-.header .nav-left ul li ul li{border-right: 0; min-width: 100%;}
-.header .nav-left ul li a{display: block;
-overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: #fff;} */
-
+  }
+  .header .nav-left li{
+    color: #fff;
+  }
+  .header .nav-left li ul {
+    top: 65px;
+    background-color: rgba(0, 0, 0, 1);
+  }
+  .header .nav-left li ul:after {
+    border-bottom-color: rgba(0, 0, 0, 1);
+  }
+  .header .nav-right .name_tag{
+    display: none;
+  }
 
 
   #mNav {
