@@ -224,17 +224,18 @@ legend.scheduler-border {
   font-size: 1rem;
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1240px) {
   .content-wrapper {
     width: 100%;
  }
 
   .header .nav-left > li {
     font-size: 14px;
+    margin-right: 15px;
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1080px) {
   .row {
      padding: 0 24px;
   }
