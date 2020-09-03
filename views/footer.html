@@ -15,9 +15,6 @@
   var rootHeight = document.getElementById("page-top").offsetHeight;
   var footerHeight = footer.offsetHeight;
 
-  console.log(scrollHeight - rootHeight);
-  console.log(footerHeight);
-
   if (scrollHeight - rootHeight > footerHeight) {
      footer.style.position = "fixed";
      footer.style.bottom = 0;

@@ -13,7 +13,6 @@
  .banner {
     background: url("../image/banner02.png") center top no-repeat;
     background-size: cover;
-    height: 500px;
  }
  
  /* 공지 영역 */
@@ -211,9 +210,9 @@
  }
  @media (max-width: 768px) {
     /* 배너 영역 */
-    .banner {
+    /* .banner {
        height: 400px;
-    }
+    } */
  
     /* 공지 영역 */
     .notice > div {
@@ -234,9 +233,9 @@
  }
 
 @media (max-width: 600px) {
-   .banner {
+   /* .banner {
       height: 300px;
-   }
+   } */
 }
  
  /* 사이클 */
