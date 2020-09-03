@@ -220,7 +220,24 @@
        width: 100%;
        margin: 0;
     }
+
+    .card-group .card-item {
+      width: 100%;
+   }
+
+   #modal{
+      width: 100%;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+   }
  }
+
+@media (max-width: 600px) {
+   .banner {
+      height: 300px;
+   }
+}
  
  /* 사이클 */
  /* .cycle-slideshow {width:100%}
