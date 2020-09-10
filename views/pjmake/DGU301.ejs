@@ -245,6 +245,15 @@
                 </div>
               </div>
             </div>
+            <div class="form-group mt-4">
+              <label for="inputProjectVideo2"> 주제 발표 동영상2 업로드 &nbsp&nbsp </label><label style=" color: red"> * 파일명 -
+                '회사명_멘토이름' 으로 업로드 해주세요. </label>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <input class="form-control" name="inputProjectVideo2" id="inputProjectVideo2" type="file">
+                </div>
+              </div>
+            </div>
 
             <%if(userType == 'admin') { %>
             <label>멘토 선택</label>
@@ -392,6 +401,7 @@
       var _internship_yn = document.getElementById("internship_yn").value;
       var _inputProjectFile = document.getElementById("inputProjectFile").value;
       var _inputProjectVideo = document.getElementById("inputProjectVideo").value;
+      var _inputProjectVideo2 = document.getElementById("inputProjectVideo2").value;
       var _inputMentor = document.getElementById("inputMentor").value;
       var _inputProf = document.getElementById("inputProf").value;
 
@@ -484,16 +494,6 @@
       if (_internship_yn == "2") {
         alert("현장실습 수용 여부를 선택하세요.");
         document.getElementById("internship_yn").focus();
-        return false;
-      }
-      if (_inputProjectFile == '') {
-        alert("주제 발표 자료를 선택하세요.");
-        document.getElementById("inputProjectFile").focus();
-        return false;
-      }
-      if (_inputProjectVideo == '') {
-        alert("주제 발표 동영상을 선택하세요.");
-        document.getElementById("inputProjectVideo").focus();
         return false;
       }
 
