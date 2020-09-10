@@ -19,7 +19,7 @@
 .banner_slider .swiper-button-next {
     top: 50%; transform: translateY(-50%);
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: #f0f0f0;
     padding: 5px;
 }
 .banner_slider .container{position: relative;}
