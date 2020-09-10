@@ -95,21 +95,32 @@
                       <% } %>
                       <br>
 
-                      <div class="form-row">
-                        <div class="col-md-6">
-                          <p style="width: 100%; color: #6c757d;">주제 제안 파일 </p>
-                          <p style="width: 50%;"></p>
+                      <div class="form-row mb-3">
+                        <div class="col-md-12">
+                          <p style="width: 100%; color: #6c757d; margin-bottom: 0;">주제 제안 파일 </p>
                           <% if (pjInfo[0].appendix){ %>
                             <div class="btn btn-primary" style="width: 100%" onclick="abilityDownload('<%= pjInfo[0].appendix %>');" > 주제 제안 자료 다운 </div>
                           <% } else { %>
                             <div class="btn btn btn-secondary" aria-pressed="false" style="width: 100%");" > 주제 제안 자료 없음 </div>
                           <% } %>
                         </div>
-        
-                        <div class="col-md-6">
-                          <p style="width: 100%; color: #6c757d;">주제 제안 동영상 </p>
-                          <p style="width: 50%;"></p>
+                      </div>
+
+                      <div class="form-row mb-3">
+                        <div class="col-md-12">
+                          <p style="width: 100%; color: #6c757d; margin-bottom: 0;">주제 제안 동영상 </p>
                           <% if (pjInfo[0].appendix_video){ %>
+                            <div class="btn btn-primary" style="width: 100%" onclick="abilityDownload('<%= pjInfo[0].appendix_video %>');" > 주제 제안 동영상 다운 </div>
+                          <% } else { %>
+                            <div class="btn btn btn-secondary" aria-pressed="false" style="width: 100%");" > 주제 제안 동영상 없음 </div>
+                          <% } %>
+                        </div>
+                      </div>
+
+                      <div class="form-row">
+                        <div class="col-md-12">
+                          <p style="width: 100%; color: #6c757d; margin-bottom: 0;">주제 제안 동영상2 </p>
+                          <% if (pjInfo[0].appendix_video2){ %>
                             <div class="btn btn-primary" style="width: 100%" onclick="abilityDownload('<%= pjInfo[0].appendix_video %>');" > 주제 제안 동영상 다운 </div>
                           <% } else { %>
                             <div class="btn btn btn-secondary" aria-pressed="false" style="width: 100%");" > 주제 제안 동영상 없음 </div>

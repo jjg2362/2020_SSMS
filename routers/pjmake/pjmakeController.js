@@ -652,7 +652,7 @@ exports.postEditproject = (req, res) => {
   var fileInfo = {
     path: "/ssmsdata/mentorProjectFile/",
     namePrefix: "MENTORROJECTFILE_",
-    viewNames: ["inputProjectFile", "inputProjectVideo"]
+    viewNames: ["inputProjectFile", "inputProjectVideo" ,"inputProjectVideo2"]
   };
 
   fileUpload(fileInfo).multipartForm(req, res, err => {
@@ -750,6 +750,10 @@ exports.postEditproject = (req, res) => {
     if (req.files["inputProjectVideo"] !== undefined) {
       project.appendix_video = req.files["inputProjectVideo"][0].path;
       logger.putLogDetail(req, "video upload success.");
+    }
+    if (req.files["inputProjectVideo2"] !== undefined) {
+      project.appendix_video = req.files["inputProjectVideo2"][0].path;
+      logger.putLogDetail(req, "video2 upload success.");
     }
 
     //get connection from pool
