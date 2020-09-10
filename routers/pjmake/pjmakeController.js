@@ -752,7 +752,7 @@ exports.postEditproject = (req, res) => {
       logger.putLogDetail(req, "video upload success.");
     }
     if (req.files["inputProjectVideo2"] !== undefined) {
-      project.appendix_video = req.files["inputProjectVideo2"][0].path;
+      project.appendix_video2 = req.files["inputProjectVideo2"][0].path;
       logger.putLogDetail(req, "video2 upload success.");
     }
 
