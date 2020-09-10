@@ -15,6 +15,8 @@
   <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="../css/sb-admin.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/swiper.css">
+
 
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&amp;subset=korean"
         rel="stylesheet">
@@ -26,8 +28,47 @@
 
   <!-- 배너 영역 -->
   <section id="banner">
-    <div class="banner">
-    </div>
+    <h1 class="ir_so">배너 영역입니다.</h1>
+        <div class="banner_slider">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                  <% if (NoticePJImgList[0].image1 != null) { %>
+                    <%var a = ''+NoticePJImgList[0].image1 ;%>
+                    <% var b = a.substring(6,a.length); %>
+                    <div class="swiper-slide ss" style="background-image: url(b)">
+                    </div>
+                  <%}%>
+                  <% if (NoticePJImgList[0].image2 != null) { %>
+                    <%var a = ''+NoticePJImgList[0].image2 ;%>
+                    <% var b = a.substring(6,a.length); %>
+                    <div class="swiper-slide ss" style="background-image: url(b)">
+                    </div>
+                  <%}%>
+                  <% if (NoticePJImgList[0].image3 != null) { %>
+                    <%var a = ''+NoticePJImgList[0].image3 ;%>
+                    <% var b = a.substring(6,a.length); %>
+                    <div class="swiper-slide ss" style="background-image: url(b)">
+                    </div>
+                  <%}%>
+                  <% if (NoticePJImgList[0].image4 != null) { %>
+                    <%var a = ''+NoticePJImgList[0].image4 ;%>
+                    <% var b = a.substring(6,a.length); %>
+                    <div class="swiper-slide ss" style="background-image: url(b)">
+                    </div>
+                  <%}%>
+                  <% if (NoticePJImgList[0].image5 != null) { %>
+                    <%var a = ''+NoticePJImgList[0].image5 ;%>
+                    <% var b = a.substring(6,a.length); %>
+                    <div class="swiper-slide ss" style="background-image: url(b)">
+                    </div>
+                  <%}%>
+                </div>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    <!-- <div class="banner">
+    </div> -->
   </section>
   <!-- //배너 영역 -->
   
@@ -225,20 +266,16 @@
 </body>
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 <!-- Core plugin JavaScript-->
 <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-
 <!-- Custom scripts for all pages-->
 <script src="../js/sb-admin.min.js"></script>
-
 <!-- Page level plugin JavaScript-->
 <script src="../vendor/datatables/jquery.dataTables.js"></script>
 <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
-
 <!-- Custom scripts for this page-->
 <script src="../js/sb-admin-datatables.min.js"></script>  
-
+<script src="../js/swiper.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function () {
     $("#modal .modal_btn_close").click(function () {
@@ -249,7 +286,7 @@
     });
 
     function resizeBannerWidth() {
-      let banner = $('.banner');
+      let banner = $('.banner_slider');
       let windowWidth = window.innerWidth;
       if((windowWidth * 0.6) < 500){
         banner.css('height', (windowWidth * 0.6) + "px")
@@ -258,6 +295,21 @@
       }
     }
     resizeBannerWidth();
+
+    /* 배너 슬라이드 */
+    var swiper = new Swiper('.swiper-container', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 3000,
+            },
+        });
     
 
     $(window).resize(function() { resizeBannerWidth() });

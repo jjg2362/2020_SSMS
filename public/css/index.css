@@ -10,10 +10,21 @@
  }
  
  /* 배너 영역 */
- .banner {
-    background: url("../image/banner02.png") center top no-repeat;
-    background-size: cover;
- }
+.banner_slider .ss{
+   background-repeat: no-repeat;
+   background-position: center center;
+   background-size: cover;
+}
+.banner_slider .swiper-button-prev,
+.banner_slider .swiper-button-next {
+    top: 50%; transform: translateY(-50%);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 5px;
+}
+.banner_slider .container{position: relative;}
+.banner_slider .swiper-button-prev{left: 10%;}
+.banner_slider .swiper-button-next{right: 10%;}
  
  /* 공지 영역 */
  .notice {
@@ -209,11 +220,6 @@
     }
  }
  @media (max-width: 768px) {
-    /* 배너 영역 */
-    /* .banner {
-       height: 400px;
-    } */
- 
     /* 공지 영역 */
     .notice > div {
        width: 100%;
@@ -230,12 +236,6 @@
       left: 0;
       transform: translateY(-50%);
    }
- }
-
-@media (max-width: 600px) {
-   /* .banner {
-      height: 300px;
-   } */
 }
  
  /* 사이클 */
