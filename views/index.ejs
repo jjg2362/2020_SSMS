@@ -251,7 +251,8 @@
   <!-- 푸터 영역 -->
   <% include footer.html %>
 
-  <div id="modal">
+  <!-- 모달 -->
+  <!-- <div id="modal">
     <div class="modal_footer">
       <label for="today_check">오늘 하루 보지 않기</label>
       <input type="checkbox" id="today_check" name="today_check" />
@@ -261,7 +262,8 @@
     </div>
     <div class="modal_header">
     <img src="/image/modal.png"/>    
-  </div>
+  </div> -->
+
   <!-- Bootstrap core JavaScript-->
 </body>
 <script src="../vendor/jquery/jquery.min.js"></script>
@@ -278,12 +280,12 @@
 <script src="../js/swiper.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function () {
-    $("#modal .modal_btn_close").click(function () {
-      if($("input:checkbox[name='today_check']").is(":checked")){
-        setCookieMobile( "todayCookie", "done" , 1);
-      }
-        $("#modal").hide();
-    });
+    // $("#modal .modal_btn_close").click(function () {
+    //   if($("input:checkbox[name='today_check']").is(":checked")){
+    //     setCookieMobile( "todayCookie", "done" , 1);
+    //   }
+    //     $("#modal").hide();
+    // });
 
     function resizeBannerWidth() {
       let banner = $('.banner_slider');
@@ -329,6 +331,6 @@ function getCookieMobile () {
         $("#modal").hide();
     }
 }
-getCookieMobile();
+// getCookieMobile();
 </script>
 </html>
