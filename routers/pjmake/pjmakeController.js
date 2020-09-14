@@ -725,14 +725,17 @@ exports.postEditproject = (req, res) => {
 
     if (req.files["inputProjectFile"] !== undefined) {
       project.appendix = req.files["inputProjectFile"][0].path;
+      project2.appendix = req.files["inputProjectFile"][0].path;
       logger.putLogDetail(req, "file upload success.");
     }
     if (req.files["inputProjectVideo"] !== undefined) {
       project.appendix_video = req.files["inputProjectVideo"][0].path;
+      project2.appendix_video = req.files["inputProjectVideo"][0].path;
       logger.putLogDetail(req, "video upload success.");
     }
     if (req.files["inputProjectVideo2"] !== undefined) {
       project.appendix_video2 = req.files["inputProjectVideo2"][0].path;
+      project2.appendix_video2 = req.files["inputProjectVideo2"][0].path;
       logger.putLogDetail(req, "video2 upload success.");
     }
 
