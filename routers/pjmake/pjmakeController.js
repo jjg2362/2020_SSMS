@@ -82,11 +82,9 @@ exports.postMakeproject = (req, res) => {
       developmentSelect = req.body.developmentSelect;
     }
 
-    var prjName = "";
-
     if (req.session.userType == "mentor") {
       var project = {
-        prj_name: prjName + req.body.PjName,
+        prj_name: req.body.PjName,
         prj_outline: req.body.prj_outline,
         settings_id: req.body.Term,
         prj_bckgrd: req.body.prj_bckgrd,
@@ -645,14 +643,12 @@ exports.getEditPj = (req, res) => {
     });
   });
 };
-
 exports.postEditproject = (req, res) => {
   logger.putLog(req);
-
   var fileInfo = {
     path: "/ssmsdata/mentorProjectFile/",
     namePrefix: "MENTORROJECTFILE_",
-    viewNames: ["inputProjectFile", "inputProjectVideo" ,"inputProjectVideo2"]
+    viewNames: ["inputProjectFile","inputProjectVideo","inputProjectVideo2"]
   };
 
   fileUpload(fileInfo).multipartForm(req, res, err => {
@@ -666,22 +662,6 @@ exports.postEditproject = (req, res) => {
       developmentSelect = req.body.developmentSelect1;
     } else {
       developmentSelect = req.body.developmentSelect;
-    }
-
-    var prjName = "";
-
-    if (
-      req.body.preMat == "1" &&
-      req.body.PjName.substring(0, 14) != "[Pre-Matching]"
-    ) {
-      prjName = "[Pre-Matching] " + req.body.PjName;
-    } else if (
-      req.body.preMat == "0" &&
-      req.body.PjName.substring(0, 14) == "[Pre-Matching]"
-    ) {
-      prjName = req.body.PjName.substring(15);
-    } else {
-      prjName = req.body.PjName;
     }
 
     var project = {
