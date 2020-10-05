@@ -48,6 +48,8 @@ router.route("/DGU211/my-team/:settings-id").get(controller.getMyTeamName);
 //show Team Select page
 router.route("/DGU221").get(controller.getTeamSelectPj);
 
+router.route("/DGU222").get(controller.getTeamPj);
+
 //show Team Select page
 router.route("/DGU221/std").post(controller.postTeamSelectStd);
 

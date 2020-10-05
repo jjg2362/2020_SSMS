@@ -1168,6 +1168,64 @@ exports.postStdDown = (req, res) => {
   });
 };
 
+//show Team Select page
+exports.getTeamPj = (req, res) => {
+  // //session check
+  if (!req.session.userId) {
+    console.log("do not have a session.");
+    res.redirect("/");
+    return;
+  } else {
+    logger.putLog(req);
+  }
+
+  //get connection from pool
+  mysqlPool.pool.getConnection((err, connection) => {
+    if (err) {
+      //throw err;
+      console.error("getConnection err : " + err);
+      return;
+    }
+
+    var pjQuery = "select prj_id, prj_name from project left join admin_settings on project.settings_id = admin_settings.settings_id where mentor_id = '" + req.session.userInfo.userId +
+       "' and project.use_yn = 1;";
+
+    connection.query(pjQuery, (pjError, pjResults, pjFields) => {
+      if (pjError) {
+        //throw error;
+        console.error("pjQuery error : " + pjError);
+        return;
+      }
+
+      var teamQuery = "";
+      for (var i in pjResults) {
+        teamQuery +=
+        "select team_id, team_name from team where team.prj_id = '" +
+        pjResults[i].prj_id +
+        "' and use_yn = 1;";
+      }
+
+      connection.query(teamQuery, null, (error, results, fields) => {
+        connection.release();
+  
+        if (error) {
+          //throw error;
+          console.error("query error : " + error);
+          return;
+        }
+  
+        console.log(results)
+  
+        //use results and fields
+        res.render("teammgt/DGU222", {
+          pjInfo: results,
+          curDate: new Date()
+        });
+      });
+    })
+  })
+};
+
 //all team info -> DGU231
 exports.getAllTeamInfo = (req, res) => {
   //session check
