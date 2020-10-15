@@ -65,67 +65,59 @@ exports.getMyproject = (req, res) => {
 exports.postprjplan = (req, res) => {
   logger.putLog(req);
   var fileInfo = {
-    path: "/ssmsdata/ProjectPlan/",
-    namePrefix: "PRJPL",
-    viewNames: ["ProjectPlanFile"],
+    path: 'public/ProjectPlan/',
+    namePrefix: 'PRJPL',
+    viewNames: ['ProjectPlanFile']
   };
   fileUpload(fileInfo).multipartForm(req, res, (err) => {
-    if (err) {
-      logger.putLogDetail(req, "file upload error : " + err);
+    if(err) {
+      logger.putLogDetail(req,'file upload error : ' + err);
       return;
     }
-    if (!req.session.userId) {
-      console.log("do not have a session.");
-      res.redirect("/");
+    if(!req.session.userId) {
+      console.log('do not have a session.');
+      res.redirect('/');
       return;
     }
 
-    if (req.params.formType == "ProjectPlanFile") {
+    if(req.params.formType == 'PostReport') {
       var project_plan_report = {
-        prj_id: req.body.PJId,
-        mentor_id: req.body.MENTORId,
-        team_id: req.body.TEAMId,
-        leader_id: req.session.userId,
-        sub_date: moment(Date()).format("YYYY-MM-DD hh:mm:ss"),
-        amender: req.session.userId,
-        amend_date: moment(Date()).format("YYYY-MM-DD hh:mm:ss"),
-        registrant: req.session.userId,
-        regis_date: moment(Date()).format("YYYY-MM-DD hh:mm:ss"),
+        prj_id : req.body.PJId,
+        mentor_id : req.body.MENTORId,
+        team_id : req.body.TEAMId,
+        leader_id : req.session.userId,
+        sub_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
+        amender : req.session.userId,
+        amend_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss'),
+        registrant : req.session.userId,
+        regis_date : moment(Date()).format('YYYY-MM-DD hh:mm:ss')
       };
-      if (req.files["ProjectPlanFile"] !== undefined) {
-        project_plan_report.prj_plan_report =
-          req.files["ProjectPlanFile"][0].path;
-        logger.putLogDetail(req, "Project Plan Report file upload success.");
+      if(req.files['ProjectPlanFile'] !== undefined) {
+        project_plan_report.prj_plan_report = req.files['ProjectPlanFile'][0].path;
+        logger.putLogDetail(req,"Project Plan Report file upload success.");
       }
-      
       //get connection from pool
       mysqlPool.pool.getConnection((err, connection) => {
-        if (err) {
-          //throw err;
-          console.error("getConnection err : " + err);
+        if(err) { //throw err;
+          console.error('getConnection err : ' + err);
           return;
         }
 
         var query = "insert into project_plan_report ";
         query += " set ?";
         //use connection
-        connection.query(
-          query,
-          project_plan_report,
-          (error, results, fields) => {
-            connection.release();
+        connection.query(query, project_plan_report, (error, results, fields) => {
+          connection.release();
 
-            if (error) {
-              //throw error;
-              console.error("query error : " + error);
-              return;
-            }
-
-            logger.putLogDetail(req, "Project Plan Report Submitted.");
-            var way = "/pjmng/DGU521/page/" + req.body.PJId;
-            res.redirect(way);
+          if(error) { //throw error;
+            console.error('query error : ' + error);
+            return;
           }
-        );
+
+          logger.putLogDetail(req,'Project Plan Report Submitted.');
+          var way = '/pjmng/DGU501/'+req.body.PJId;
+          res.redirect(way);
+        });
       });
     } else if (req.params.formType == "DeleteReport") {
       var query = "delete from project_plan_report";
