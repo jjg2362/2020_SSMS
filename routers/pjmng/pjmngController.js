@@ -69,6 +69,7 @@ exports.postprjplan = (req, res) => {
     namePrefix: 'PRJPL',
     viewNames: ['ProjectPlanFile']
   };
+  console.log(req.files)
   fileUpload(fileInfo).multipartForm(req, res, (err) => {
     if(err) {
       logger.putLogDetail(req,'file upload error : ' + err);
@@ -515,7 +516,6 @@ exports.getSearchproject3 = (req, res) => {
       console.error("query error : " + error);
       return;
     }
-
     //use results and fields
     res.render("pjmng/DGU532", {
       FinalLists: results[0],
@@ -2124,7 +2124,7 @@ exports.getFinalReport = (req, res) => {
         console.error("query error : " + error);
         return;
       }
-      console.log(results[3])
+      console.log(results[0][0])
       //use results and fields
       res.render("pjmng/DGU521", {
         FinalLists: results,
