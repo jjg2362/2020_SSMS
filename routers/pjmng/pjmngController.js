@@ -62,7 +62,6 @@ exports.getMyproject = (req, res) => {
     });
   });
 };
-
 exports.postprjplan = (req, res) => {
   logger.putLog(req);
   var fileInfo = {
@@ -81,7 +80,7 @@ exports.postprjplan = (req, res) => {
       return;
     }
 
-    if (req.params.formType == "PostReport") {
+    if (req.params.formType == "ProjectPlanFile") {
       var project_plan_report = {
         prj_id: req.body.PJId,
         mentor_id: req.body.MENTORId,
