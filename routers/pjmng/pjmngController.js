@@ -116,7 +116,7 @@ exports.postprjplan = (req, res) => {
           }
 
           logger.putLogDetail(req,'Project Plan Report Submitted.');
-          var way = '/pjmng/DGU501/'+req.body.PJId;
+          var way = '/pjmng/DGU521/page/'+req.body.PJId;
           res.redirect(way);
         });
       });
