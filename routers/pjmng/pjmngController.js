@@ -2133,7 +2133,7 @@ exports.getFinalReport = (req, res) => {
         console.error("query error : " + error);
         return;
       }
-
+      console.log(results[3])
       //use results and fields
       res.render("pjmng/DGU521", {
         FinalLists: results,
