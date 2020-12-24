@@ -357,7 +357,6 @@ exports.getProjectCart = (req, res) => {
       query += "from project_cart as pc, std_team_info as tinfo ,team as t ";
       query += "where tinfo.std_id = '"+req.session.userId+"' and tinfo.team_id = pc.team_id and tinfo.team_id=t.team_id and tinfo.use_yn ='1' ; ";
 
-
       connection.query(query, null, (error, results, fields) => {
         connection.release();
 
