@@ -131,7 +131,7 @@
         <% var sta_sort = new Array() ;%>
 
         <% for(var i = 0; i < ProjectList.length; i++) { %>
-          <% if(moment(curDate).diff(moment(ProjectList[i].strt_date).format('YYYY-MM-DD'),"months") >= 4 && !ProjectList[i].team_id) { %>
+          <% if(moment(curDate).diff(moment(ProjectList[i].strt_date).format('YYYY-MM-DD'),"months") >= 12 && !ProjectList[i].team_id) { %>
             <% continue; %>
           <% } %>
           <% if((moment(curDate).format('YYYY-MM-DD') >= moment(ProjectList[i].cls_date).format('YYYY-MM-DD'))) { %>
