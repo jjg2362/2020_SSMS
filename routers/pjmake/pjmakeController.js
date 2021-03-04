@@ -433,7 +433,7 @@ exports.getAdditionPj = (req, res) => {
 exports.postAdditionPj = (req, res) => {
   logger.putLog(req);
   var fileInfo = {
-    path: "public/mentorProjectFile/",
+    path: "/ssmsdata/mentorProjectFile/",
     namePrefix: "MENTORROJECTFILE_",
     viewNames: ["inputProjectFile"]
   };
