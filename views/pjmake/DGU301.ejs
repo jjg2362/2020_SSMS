@@ -161,7 +161,7 @@
                 <!-- 연구/ 개발분야 선택 -->
                 <div class="col-md-6 ">
                   <select class="form-control" id="inputDevelopment" name="developmentSelect" onchange="inputDevType()">
-                    <option value="없음">--- 연구 / 개발분야 ---</option>
+                    <option value="없음">연구 / 개발분야</option>
                     <% for(var i = 0; i < CodeTermList[0].length; i++) {%>
                     <option value="<%=CodeTermList[0][i].code_nm%>"><%=CodeTermList[0][i].code_nm%></option>
                     <% } %>
@@ -170,7 +170,7 @@
 
                 <div class="col-md-6">
                   <select class="form-control" id="Term" name="Term">
-                    <option value="0">--- 분류 ---</option>
+                    <option value="0">분류</option>
                     <% for(var i = 0; i < CodeTermList[1].length; i++) {%>
                     <option value="<%=CodeTermList[1][i].settings_id%>">
                       <%=CodeTermList[1][i].prj_year%>-<%=CodeTermList[1][i].prj_semes%>-<%=CodeTermList[1][i].term_chk%>
