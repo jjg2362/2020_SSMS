@@ -108,7 +108,7 @@ exports.postMakeproject = (req, res) => {
       };
     } else if (req.session.userType == "admin") {
       var project = {
-        prj_name: prjName + req.body.PjName,
+        prj_name: req.body.PjName,
         prj_outline: req.body.prj_outline,
         settings_id: req.body.Term,
         prj_bckgrd: req.body.prj_bckgrd,
@@ -452,12 +452,12 @@ exports.postAdditionPj = (req, res) => {
       developmentSelect = req.body.developmentSelect;
     }
 
-    // var mentor_id_Select = "";
-    // if (req.body.inputmentor == "0") {
-    //   mentor_id_Select = req.body.mentorid;
-    // } else {
-    //   mentor_id_Select = req.body.inputmentor;
-    // }
+    var mentor_id_Select = "";
+    if (req.body.inputMentor == "0") {
+      mentor_id_Select = req.body.mentorid;
+    } else {
+      mentor_id_Select = req.body.inputMentor;
+    }
 
     // var prjName = req.body.PjName;
 
@@ -474,9 +474,7 @@ exports.postAdditionPj = (req, res) => {
     // } else {
     //   prjName = req.body.PjName;
     // }
-
-    if (req.session.userType == "mentor") {
-      var project = {
+    var project = {
         prj_name: req.body.PjName,
         prj_outline: req.body.prj_outline,
         settings_id: req.body.Term,
@@ -491,51 +489,34 @@ exports.postAdditionPj = (req, res) => {
         keyword3: req.body.inputKeyword3,
         prj_dev_field: developmentSelect,
         internship_yn: req.body.internship_yn,
-        mentor_id: req.session.userId,
+        mentor_id: mentor_id_Select,
         regis_date: moment(Date()).format("YYYY-MM-DD hh:mm:ss"),
         registrant: req.session.userId,
         amend_date: moment(Date()).format("YYYY-MM-DD hh:mm:ss"),
         amender: req.session.userId,
         pre_matching: req.body.preMat,
         recommended_Prof: req.body.inputProf
-      };
-    } else if (req.session.userType == "admin") {
-      var project = {
-        prj_name: prjName + req.body.PjName,
-        prj_outline: req.body.prj_outline,
-        settings_id: req.body.Term,
-        prj_bckgrd: req.body.prj_bckgrd,
-        prj_ncst: req.body.prj_ncst,
-        prj_pri_tech: req.body.prj_pri_tech,
-        prj_goal: req.body.prj_goal,
-        prj_content: req.body.prj_content,
-        prj_exp_eff: req.body.prj_exp_eff,
-        keyword1: req.body.inputKeyword1,
-        keyword2: req.body.inputKeyword2,
-        keyword3: req.body.inputKeyword3,
-        prj_dev_field: developmentSelect,
-        internship_yn: req.body.internship_yn,
-        mentor_id: req.body.inputMentor,
-        regis_date: moment(Date()).format("YYYY-MM-DD hh:mm:ss"),
-        registrant: req.session.userId,
-        amend_date: moment(Date()).format("YYYY-MM-DD hh:mm:ss"),
-        amender: req.session.userId,
-        pre_matching: req.body.preMat,
-        recommended_Prof: req.body.inputProf
-      };
-    }
+    };
+
+    console.log(req.body)
 
     if (req.files["inputProjectFile"] !== undefined) {
       project.appendix = req.files["inputProjectFile"][0].path;
       logger.putLogDetail(req, "file upload success.");
+    } else {
+      project.appendix = req.body.projectAppendix;
     }
     if (req.files["inputProjectVideo"] !== undefined) {
       project.appendix_video = req.files["inputProjectVideo"][0].path;
       logger.putLogDetail(req, "video upload success.");
+    } else {
+      project.appendix_video = req.body.projectAppendixVideo;
     }
     if (req.files["inputProjectVideo2"] !== undefined) {
       project.appendix_video2 = req.files["inputProjectVideo2"][0].path;
       logger.putLogDetail(req, "video2 upload success.");
+    } else {
+      project.appendix_video2 = req.body.projectAppendixVideo2;
     }
 
     //get connection from pool
